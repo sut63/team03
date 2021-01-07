@@ -11,7 +11,7 @@ import (
 	"github.com/kaews/app/ent/nurse"
 	"github.com/kaews/app/ent/medicalfile"
 	"github.com/kaews/app/ent/patient"
-	"github.com/kaews/app/ent/medicalcare"
+	//"github.com/kaews/app/ent/medicalcare"
 )
 
 // MedicalfileController defines the struct for the medicalfile controller
@@ -24,12 +24,13 @@ type Medicalfile struct {
 	Dentist  	int
 	Nurse	 	int
 	Patient  	int
+	MedicalCare int
 	Detial   	string
 	AddedTime  	string
-	MedicalCare int
+	
 }
 
-// CreateMedicalfile handles POST requests for adding medicalfile entities
+// MedicalfileCreate handles POST requests for adding medicalfile entities
 // @Summary Create medicalfile
 // @Description Create medicalfile
 // @ID create-medicalfile
@@ -40,7 +41,7 @@ type Medicalfile struct {
 // @Failure 400 {object} gin.H
 // @Failure 500 {object} gin.H
 // @Router /medicalfiles [post]
-func (ctl *MedicalfileController) CreateMedicalfile(c *gin.Context) {
+func (ctl *MedicalfileController) MedicalfileCreate(c *gin.Context) {
 	obj := Medicalfile{}
 	if err := c.ShouldBind(&obj); err != nil {
 		c.JSON(400, gin.H{
@@ -85,7 +86,7 @@ func (ctl *MedicalfileController) CreateMedicalfile(c *gin.Context) {
 		return
 	}
 
-	mc, err := ctl.client.MedicalCare.
+	/*mc, err := ctl.client.MedicalCare.
 		Query().
 		Where(medicalcare.IDEQ(int(obj.MedicalCare))).
 		Only(context.Background())
@@ -96,6 +97,7 @@ func (ctl *MedicalfileController) CreateMedicalfile(c *gin.Context) {
 		})
 		return
 	}
+	*/
 
 	time, err := time.Parse(time.RFC3339, obj.AddedTime)
 
@@ -104,7 +106,7 @@ func (ctl *MedicalfileController) CreateMedicalfile(c *gin.Context) {
 		SetPatient(p).
 		SetDentist(d).
 		SetNurse(n).
-		SetMedicalcare(mc).
+		//SetMedicalcare(mc).
 		SetDetail(obj.Detial).
 		SetAddedTime(time).
 		Save(context.Background())
@@ -187,7 +189,7 @@ func (ctl *MedicalfileController) ListMedicalfile(c *gin.Context) { //การ�
 		WithDentist().
 		WithNurse().
 		WithPatient().
-		WithMedicalcare().
+		//WithMedicalcare().
 		Limit(limit).
 		Offset(offset).
 		All(context.Background())
@@ -217,6 +219,6 @@ func NewMedicalfileController(router gin.IRouter, client *ent.Client) *Medicalfi
 func (ctl *MedicalfileController) register() {
 	medicalfiles := ctl.router.Group("/medicalfiles")
 	medicalfiles.GET("", ctl.ListMedicalfile)
-	medicalfiles.POST("", ctl.CreateMedicalfile)
+	medicalfiles.POST("", ctl.MedicalfileCreate)
 	medicalfiles.GET(":id", ctl.GetMedicalfile)
 }
