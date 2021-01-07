@@ -23,7 +23,7 @@ func (Queue) Fields() []ent.Field {
 func (Queue) Edges() []ent.Edge {
 	return []ent.Edge{
 		edge.From("dentist", Dentist.Type).Ref("queue").Unique(),
-		edge.From("employee", Employee.Type).Ref("queue").Unique(),
+		edge.From("nurse", Nurse.Type).Ref("queue").Unique(),
 		edge.From("patient", Patient.Type).Ref("queue").Unique(),
 	}
 }
