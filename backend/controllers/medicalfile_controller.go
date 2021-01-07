@@ -189,7 +189,7 @@ func (ctl *MedicalfileController) ListMedicalfile(c *gin.Context) { //การ�
 		WithDentist().
 		WithNurse().
 		WithPatient().
-		//WithMedicalcare().
+		WithMedicalcare().
 		Limit(limit).
 		Offset(offset).
 		All(context.Background())
