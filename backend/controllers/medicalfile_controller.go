@@ -6,12 +6,12 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/kaews/app/ent"
-	"github.com/kaews/app/ent/dentist"
-	"github.com/kaews/app/ent/nurse"
-	"github.com/kaews/app/ent/medicalfile"
-	"github.com/kaews/app/ent/patient"
-	//"github.com/kaews/app/ent/medicalcare"
+	"github.com/team03/app/ent"
+	"github.com/team03/app/ent/dentist"
+	"github.com/team03/app/ent/nurse"
+	"github.com/team03/app/ent/medicalfile"
+	"github.com/team03/app/ent/patient"
+	"github.com/team03/app/ent/medicalcare"
 )
 
 // MedicalfileController defines the struct for the medicalfile controller
@@ -86,7 +86,7 @@ func (ctl *MedicalfileController) MedicalfileCreate(c *gin.Context) {
 		return
 	}
 
-	/*mc, err := ctl.client.MedicalCare.
+	mc, err := ctl.client.MedicalCare.
 		Query().
 		Where(medicalcare.IDEQ(int(obj.MedicalCare))).
 		Only(context.Background())
@@ -97,7 +97,7 @@ func (ctl *MedicalfileController) MedicalfileCreate(c *gin.Context) {
 		})
 		return
 	}
-	*/
+	
 
 	time, err := time.Parse(time.RFC3339, obj.AddedTime)
 
@@ -106,7 +106,7 @@ func (ctl *MedicalfileController) MedicalfileCreate(c *gin.Context) {
 		SetPatient(p).
 		SetDentist(d).
 		SetNurse(n).
-		//SetMedicalcare(mc).
+		SetMedicalcare(mc).
 		SetDetail(obj.Detial).
 		SetAddedTime(time).
 		Save(context.Background())
