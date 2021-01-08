@@ -227,5 +227,5 @@ func (ctl *DentistController) register() {
 	dentists.POST("", ctl.CreateDentist)
 	dentists.GET("", ctl.ListDentist)
 	//queues.DELETE(":id", ctl.DeleteQueue)
-
+  //test
 }
