@@ -4,13 +4,14 @@ import (
 	"context"
 	"strconv"
 	"time"
-	"github.com/jeffair/app/ent"
-	"github.com/jeffair/app/ent/dentist"
-	"github.com/jeffair/app/ent/room"
-	"github.com/jeffair/app/ent/patient"
-	"github.com/jeffair/app/ent/appointment"
+
 	"github.com/gin-gonic/gin"
- )
+	"github.com/team03/app/ent"
+	"github.com/team03/app/ent/appointment"
+	"github.com/team03/app/ent/dentist"
+	"github.com/team03/app/ent/patient"
+	"github.com/team03/app/ent/room"
+)
 
 //AppointmentController defind the struct for Appointment controller
 type AppointmentController struct {
@@ -19,12 +20,12 @@ type AppointmentController struct {
 }
 
 //Appointment defind the struct for the Appointment controller
-type Appointment struct{
-	Patient int
-	Dentist int
+type Appointment struct {
+	Patient       int
+	Dentist       int
 	AppointDetail string
-	Datetime string
-	AppointRoom int
+	Datetime      string
+	AppointRoom   int
 }
 
 // AppointmentCreate handles POST requests for adding  Appointment entities
@@ -139,7 +140,6 @@ func (ctl *AppointmentController) GetAppointment(c *gin.Context) {
 
 	c.JSON(200, ap)
 }
-
 
 // ListAppointment handles request to get a list of appointment entities
 // @Summary List appointment entities
