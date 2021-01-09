@@ -9,15 +9,24 @@ import (
 
 	"github.com/tanapon395/playlist-video/ent/migrate"
 
-	"github.com/tanapon395/playlist-video/ent/playlist"
-	"github.com/tanapon395/playlist-video/ent/playlist_video"
-	"github.com/tanapon395/playlist-video/ent/resolution"
-	"github.com/tanapon395/playlist-video/ent/user"
-	"github.com/tanapon395/playlist-video/ent/video"
+	"github.com/tanapon395/playlist-video/ent/appointment"
+	"github.com/tanapon395/playlist-video/ent/degree"
+	"github.com/tanapon395/playlist-video/ent/dentalexpense"
+	"github.com/tanapon395/playlist-video/ent/dentist"
+	"github.com/tanapon395/playlist-video/ent/disease"
+	"github.com/tanapon395/playlist-video/ent/expert"
+	"github.com/tanapon395/playlist-video/ent/gender"
+	"github.com/tanapon395/playlist-video/ent/medicalcare"
+	"github.com/tanapon395/playlist-video/ent/medicalfile"
+	"github.com/tanapon395/playlist-video/ent/nurse"
+	"github.com/tanapon395/playlist-video/ent/patient"
+	"github.com/tanapon395/playlist-video/ent/pricetype"
+	"github.com/tanapon395/playlist-video/ent/queue"
+	"github.com/tanapon395/playlist-video/ent/room"
 
-	"github.com/facebook/ent/dialect"
-	"github.com/facebook/ent/dialect/sql"
-	"github.com/facebook/ent/dialect/sql/sqlgraph"
+	"github.com/facebookincubator/ent/dialect"
+	"github.com/facebookincubator/ent/dialect/sql"
+	"github.com/facebookincubator/ent/dialect/sql/sqlgraph"
 )
 
 // Client is the client that holds all ent builders.
@@ -25,16 +34,34 @@ type Client struct {
 	config
 	// Schema is the client for creating, migrating and dropping schema.
 	Schema *migrate.Schema
-	// Playlist is the client for interacting with the Playlist builders.
-	Playlist *PlaylistClient
-	// Playlist_Video is the client for interacting with the Playlist_Video builders.
-	Playlist_Video *Playlist_VideoClient
-	// Resolution is the client for interacting with the Resolution builders.
-	Resolution *ResolutionClient
-	// User is the client for interacting with the User builders.
-	User *UserClient
-	// Video is the client for interacting with the Video builders.
-	Video *VideoClient
+	// Appointment is the client for interacting with the Appointment builders.
+	Appointment *AppointmentClient
+	// Degree is the client for interacting with the Degree builders.
+	Degree *DegreeClient
+	// DentalExpense is the client for interacting with the DentalExpense builders.
+	DentalExpense *DentalExpenseClient
+	// Dentist is the client for interacting with the Dentist builders.
+	Dentist *DentistClient
+	// Disease is the client for interacting with the Disease builders.
+	Disease *DiseaseClient
+	// Expert is the client for interacting with the Expert builders.
+	Expert *ExpertClient
+	// Gender is the client for interacting with the Gender builders.
+	Gender *GenderClient
+	// MedicalCare is the client for interacting with the MedicalCare builders.
+	MedicalCare *MedicalCareClient
+	// Medicalfile is the client for interacting with the Medicalfile builders.
+	Medicalfile *MedicalfileClient
+	// Nurse is the client for interacting with the Nurse builders.
+	Nurse *NurseClient
+	// Patient is the client for interacting with the Patient builders.
+	Patient *PatientClient
+	// PriceType is the client for interacting with the PriceType builders.
+	PriceType *PriceTypeClient
+	// Queue is the client for interacting with the Queue builders.
+	Queue *QueueClient
+	// Room is the client for interacting with the Room builders.
+	Room *RoomClient
 }
 
 // NewClient creates a new client configured with the given options.
@@ -48,11 +75,20 @@ func NewClient(opts ...Option) *Client {
 
 func (c *Client) init() {
 	c.Schema = migrate.NewSchema(c.driver)
-	c.Playlist = NewPlaylistClient(c.config)
-	c.Playlist_Video = NewPlaylist_VideoClient(c.config)
-	c.Resolution = NewResolutionClient(c.config)
-	c.User = NewUserClient(c.config)
-	c.Video = NewVideoClient(c.config)
+	c.Appointment = NewAppointmentClient(c.config)
+	c.Degree = NewDegreeClient(c.config)
+	c.DentalExpense = NewDentalExpenseClient(c.config)
+	c.Dentist = NewDentistClient(c.config)
+	c.Disease = NewDiseaseClient(c.config)
+	c.Expert = NewExpertClient(c.config)
+	c.Gender = NewGenderClient(c.config)
+	c.MedicalCare = NewMedicalCareClient(c.config)
+	c.Medicalfile = NewMedicalfileClient(c.config)
+	c.Nurse = NewNurseClient(c.config)
+	c.Patient = NewPatientClient(c.config)
+	c.PriceType = NewPriceTypeClient(c.config)
+	c.Queue = NewQueueClient(c.config)
+	c.Room = NewRoomClient(c.config)
 }
 
 // Open opens a database/sql.DB specified by the driver name and
@@ -83,13 +119,22 @@ func (c *Client) Tx(ctx context.Context) (*Tx, error) {
 	}
 	cfg := config{driver: tx, log: c.log, debug: c.debug, hooks: c.hooks}
 	return &Tx{
-		ctx:            ctx,
-		config:         cfg,
-		Playlist:       NewPlaylistClient(cfg),
-		Playlist_Video: NewPlaylist_VideoClient(cfg),
-		Resolution:     NewResolutionClient(cfg),
-		User:           NewUserClient(cfg),
-		Video:          NewVideoClient(cfg),
+		ctx:           ctx,
+		config:        cfg,
+		Appointment:   NewAppointmentClient(cfg),
+		Degree:        NewDegreeClient(cfg),
+		DentalExpense: NewDentalExpenseClient(cfg),
+		Dentist:       NewDentistClient(cfg),
+		Disease:       NewDiseaseClient(cfg),
+		Expert:        NewExpertClient(cfg),
+		Gender:        NewGenderClient(cfg),
+		MedicalCare:   NewMedicalCareClient(cfg),
+		Medicalfile:   NewMedicalfileClient(cfg),
+		Nurse:         NewNurseClient(cfg),
+		Patient:       NewPatientClient(cfg),
+		PriceType:     NewPriceTypeClient(cfg),
+		Queue:         NewQueueClient(cfg),
+		Room:          NewRoomClient(cfg),
 	}, nil
 }
 
@@ -104,19 +149,28 @@ func (c *Client) BeginTx(ctx context.Context, opts *sql.TxOptions) (*Tx, error) 
 	}
 	cfg := config{driver: &txDriver{tx: tx, drv: c.driver}, log: c.log, debug: c.debug, hooks: c.hooks}
 	return &Tx{
-		config:         cfg,
-		Playlist:       NewPlaylistClient(cfg),
-		Playlist_Video: NewPlaylist_VideoClient(cfg),
-		Resolution:     NewResolutionClient(cfg),
-		User:           NewUserClient(cfg),
-		Video:          NewVideoClient(cfg),
+		config:        cfg,
+		Appointment:   NewAppointmentClient(cfg),
+		Degree:        NewDegreeClient(cfg),
+		DentalExpense: NewDentalExpenseClient(cfg),
+		Dentist:       NewDentistClient(cfg),
+		Disease:       NewDiseaseClient(cfg),
+		Expert:        NewExpertClient(cfg),
+		Gender:        NewGenderClient(cfg),
+		MedicalCare:   NewMedicalCareClient(cfg),
+		Medicalfile:   NewMedicalfileClient(cfg),
+		Nurse:         NewNurseClient(cfg),
+		Patient:       NewPatientClient(cfg),
+		PriceType:     NewPriceTypeClient(cfg),
+		Queue:         NewQueueClient(cfg),
+		Room:          NewRoomClient(cfg),
 	}, nil
 }
 
 // Debug returns a new debug-client. It's used to get verbose logging on specific operations.
 //
 //	client.Debug().
-//		Playlist.
+//		Appointment.
 //		Query().
 //		Count(ctx)
 //
@@ -138,345 +192,1828 @@ func (c *Client) Close() error {
 // Use adds the mutation hooks to all the entity clients.
 // In order to add hooks to a specific client, call: `client.Node.Use(...)`.
 func (c *Client) Use(hooks ...Hook) {
-	c.Playlist.Use(hooks...)
-	c.Playlist_Video.Use(hooks...)
-	c.Resolution.Use(hooks...)
-	c.User.Use(hooks...)
-	c.Video.Use(hooks...)
+	c.Appointment.Use(hooks...)
+	c.Degree.Use(hooks...)
+	c.DentalExpense.Use(hooks...)
+	c.Dentist.Use(hooks...)
+	c.Disease.Use(hooks...)
+	c.Expert.Use(hooks...)
+	c.Gender.Use(hooks...)
+	c.MedicalCare.Use(hooks...)
+	c.Medicalfile.Use(hooks...)
+	c.Nurse.Use(hooks...)
+	c.Patient.Use(hooks...)
+	c.PriceType.Use(hooks...)
+	c.Queue.Use(hooks...)
+	c.Room.Use(hooks...)
 }
 
-// PlaylistClient is a client for the Playlist schema.
-type PlaylistClient struct {
+// AppointmentClient is a client for the Appointment schema.
+type AppointmentClient struct {
 	config
 }
 
-// NewPlaylistClient returns a client for the Playlist from the given config.
-func NewPlaylistClient(c config) *PlaylistClient {
-	return &PlaylistClient{config: c}
+// NewAppointmentClient returns a client for the Appointment from the given config.
+func NewAppointmentClient(c config) *AppointmentClient {
+	return &AppointmentClient{config: c}
 }
 
 // Use adds a list of mutation hooks to the hooks stack.
-// A call to `Use(f, g, h)` equals to `playlist.Hooks(f(g(h())))`.
-func (c *PlaylistClient) Use(hooks ...Hook) {
-	c.hooks.Playlist = append(c.hooks.Playlist, hooks...)
+// A call to `Use(f, g, h)` equals to `appointment.Hooks(f(g(h())))`.
+func (c *AppointmentClient) Use(hooks ...Hook) {
+	c.hooks.Appointment = append(c.hooks.Appointment, hooks...)
 }
 
-// Create returns a create builder for Playlist.
-func (c *PlaylistClient) Create() *PlaylistCreate {
-	mutation := newPlaylistMutation(c.config, OpCreate)
-	return &PlaylistCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+// Create returns a create builder for Appointment.
+func (c *AppointmentClient) Create() *AppointmentCreate {
+	mutation := newAppointmentMutation(c.config, OpCreate)
+	return &AppointmentCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
-// BulkCreate returns a builder for creating a bulk of Playlist entities.
-func (c *PlaylistClient) CreateBulk(builders ...*PlaylistCreate) *PlaylistCreateBulk {
-	return &PlaylistCreateBulk{config: c.config, builders: builders}
-}
-
-// Update returns an update builder for Playlist.
-func (c *PlaylistClient) Update() *PlaylistUpdate {
-	mutation := newPlaylistMutation(c.config, OpUpdate)
-	return &PlaylistUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+// Update returns an update builder for Appointment.
+func (c *AppointmentClient) Update() *AppointmentUpdate {
+	mutation := newAppointmentMutation(c.config, OpUpdate)
+	return &AppointmentUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
 // UpdateOne returns an update builder for the given entity.
-func (c *PlaylistClient) UpdateOne(pl *Playlist) *PlaylistUpdateOne {
-	mutation := newPlaylistMutation(c.config, OpUpdateOne, withPlaylist(pl))
-	return &PlaylistUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+func (c *AppointmentClient) UpdateOne(a *Appointment) *AppointmentUpdateOne {
+	mutation := newAppointmentMutation(c.config, OpUpdateOne, withAppointment(a))
+	return &AppointmentUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
 // UpdateOneID returns an update builder for the given id.
-func (c *PlaylistClient) UpdateOneID(id int) *PlaylistUpdateOne {
-	mutation := newPlaylistMutation(c.config, OpUpdateOne, withPlaylistID(id))
-	return &PlaylistUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+func (c *AppointmentClient) UpdateOneID(id int) *AppointmentUpdateOne {
+	mutation := newAppointmentMutation(c.config, OpUpdateOne, withAppointmentID(id))
+	return &AppointmentUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
-// Delete returns a delete builder for Playlist.
-func (c *PlaylistClient) Delete() *PlaylistDelete {
-	mutation := newPlaylistMutation(c.config, OpDelete)
-	return &PlaylistDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+// Delete returns a delete builder for Appointment.
+func (c *AppointmentClient) Delete() *AppointmentDelete {
+	mutation := newAppointmentMutation(c.config, OpDelete)
+	return &AppointmentDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
 // DeleteOne returns a delete builder for the given entity.
-func (c *PlaylistClient) DeleteOne(pl *Playlist) *PlaylistDeleteOne {
-	return c.DeleteOneID(pl.ID)
+func (c *AppointmentClient) DeleteOne(a *Appointment) *AppointmentDeleteOne {
+	return c.DeleteOneID(a.ID)
 }
 
 // DeleteOneID returns a delete builder for the given id.
-func (c *PlaylistClient) DeleteOneID(id int) *PlaylistDeleteOne {
-	builder := c.Delete().Where(playlist.ID(id))
+func (c *AppointmentClient) DeleteOneID(id int) *AppointmentDeleteOne {
+	builder := c.Delete().Where(appointment.ID(id))
 	builder.mutation.id = &id
 	builder.mutation.op = OpDeleteOne
-	return &PlaylistDeleteOne{builder}
+	return &AppointmentDeleteOne{builder}
 }
 
-// Query returns a query builder for Playlist.
-func (c *PlaylistClient) Query() *PlaylistQuery {
-	return &PlaylistQuery{config: c.config}
+// Create returns a query builder for Appointment.
+func (c *AppointmentClient) Query() *AppointmentQuery {
+	return &AppointmentQuery{config: c.config}
 }
 
-// Get returns a Playlist entity by its id.
-func (c *PlaylistClient) Get(ctx context.Context, id int) (*Playlist, error) {
-	return c.Query().Where(playlist.ID(id)).Only(ctx)
+// Get returns a Appointment entity by its id.
+func (c *AppointmentClient) Get(ctx context.Context, id int) (*Appointment, error) {
+	return c.Query().Where(appointment.ID(id)).Only(ctx)
 }
 
 // GetX is like Get, but panics if an error occurs.
-func (c *PlaylistClient) GetX(ctx context.Context, id int) *Playlist {
-	pl, err := c.Get(ctx, id)
+func (c *AppointmentClient) GetX(ctx context.Context, id int) *Appointment {
+	a, err := c.Get(ctx, id)
 	if err != nil {
 		panic(err)
 	}
-	return pl
+	return a
 }
 
-// QueryOwner queries the owner edge of a Playlist.
-func (c *PlaylistClient) QueryOwner(pl *Playlist) *UserQuery {
-	query := &UserQuery{config: c.config}
+// QueryPatient queries the patient edge of a Appointment.
+func (c *AppointmentClient) QueryPatient(a *Appointment) *PatientQuery {
+	query := &PatientQuery{config: c.config}
 	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
-		id := pl.ID
+		id := a.ID
 		step := sqlgraph.NewStep(
-			sqlgraph.From(playlist.Table, playlist.FieldID, id),
-			sqlgraph.To(user.Table, user.FieldID),
-			sqlgraph.Edge(sqlgraph.M2O, true, playlist.OwnerTable, playlist.OwnerColumn),
+			sqlgraph.From(appointment.Table, appointment.FieldID, id),
+			sqlgraph.To(patient.Table, patient.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, appointment.PatientTable, appointment.PatientColumn),
 		)
-		fromV = sqlgraph.Neighbors(pl.driver.Dialect(), step)
+		fromV = sqlgraph.Neighbors(a.driver.Dialect(), step)
 		return fromV, nil
 	}
 	return query
 }
 
-// QueryPlaylistVideos queries the playlist_videos edge of a Playlist.
-func (c *PlaylistClient) QueryPlaylistVideos(pl *Playlist) *PlaylistVideoQuery {
-	query := &PlaylistVideoQuery{config: c.config}
+// QueryRoom queries the room edge of a Appointment.
+func (c *AppointmentClient) QueryRoom(a *Appointment) *RoomQuery {
+	query := &RoomQuery{config: c.config}
 	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
-		id := pl.ID
+		id := a.ID
 		step := sqlgraph.NewStep(
-			sqlgraph.From(playlist.Table, playlist.FieldID, id),
-			sqlgraph.To(playlist_video.Table, playlist_video.FieldID),
-			sqlgraph.Edge(sqlgraph.O2M, false, playlist.PlaylistVideosTable, playlist.PlaylistVideosColumn),
+			sqlgraph.From(appointment.Table, appointment.FieldID, id),
+			sqlgraph.To(room.Table, room.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, appointment.RoomTable, appointment.RoomColumn),
 		)
-		fromV = sqlgraph.Neighbors(pl.driver.Dialect(), step)
+		fromV = sqlgraph.Neighbors(a.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryDentist queries the dentist edge of a Appointment.
+func (c *AppointmentClient) QueryDentist(a *Appointment) *DentistQuery {
+	query := &DentistQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := a.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(appointment.Table, appointment.FieldID, id),
+			sqlgraph.To(dentist.Table, dentist.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, appointment.DentistTable, appointment.DentistColumn),
+		)
+		fromV = sqlgraph.Neighbors(a.driver.Dialect(), step)
 		return fromV, nil
 	}
 	return query
 }
 
 // Hooks returns the client hooks.
-func (c *PlaylistClient) Hooks() []Hook {
-	return c.hooks.Playlist
+func (c *AppointmentClient) Hooks() []Hook {
+	return c.hooks.Appointment
 }
 
-// Playlist_VideoClient is a client for the Playlist_Video schema.
-type Playlist_VideoClient struct {
+// DegreeClient is a client for the Degree schema.
+type DegreeClient struct {
 	config
 }
 
-// NewPlaylist_VideoClient returns a client for the Playlist_Video from the given config.
-func NewPlaylist_VideoClient(c config) *Playlist_VideoClient {
-	return &Playlist_VideoClient{config: c}
+// NewDegreeClient returns a client for the Degree from the given config.
+func NewDegreeClient(c config) *DegreeClient {
+	return &DegreeClient{config: c}
 }
 
 // Use adds a list of mutation hooks to the hooks stack.
-// A call to `Use(f, g, h)` equals to `playlist_video.Hooks(f(g(h())))`.
-func (c *Playlist_VideoClient) Use(hooks ...Hook) {
-	c.hooks.Playlist_Video = append(c.hooks.Playlist_Video, hooks...)
+// A call to `Use(f, g, h)` equals to `degree.Hooks(f(g(h())))`.
+func (c *DegreeClient) Use(hooks ...Hook) {
+	c.hooks.Degree = append(c.hooks.Degree, hooks...)
 }
 
-// Create returns a create builder for Playlist_Video.
-func (c *Playlist_VideoClient) Create() *PlaylistVideoCreate {
-	mutation := newPlaylistVideoMutation(c.config, OpCreate)
-	return &PlaylistVideoCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+// Create returns a create builder for Degree.
+func (c *DegreeClient) Create() *DegreeCreate {
+	mutation := newDegreeMutation(c.config, OpCreate)
+	return &DegreeCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
-// BulkCreate returns a builder for creating a bulk of Playlist_Video entities.
-func (c *Playlist_VideoClient) CreateBulk(builders ...*PlaylistVideoCreate) *PlaylistVideoCreateBulk {
-	return &PlaylistVideoCreateBulk{config: c.config, builders: builders}
-}
-
-// Update returns an update builder for Playlist_Video.
-func (c *Playlist_VideoClient) Update() *PlaylistVideoUpdate {
-	mutation := newPlaylistVideoMutation(c.config, OpUpdate)
-	return &PlaylistVideoUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+// Update returns an update builder for Degree.
+func (c *DegreeClient) Update() *DegreeUpdate {
+	mutation := newDegreeMutation(c.config, OpUpdate)
+	return &DegreeUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
 // UpdateOne returns an update builder for the given entity.
-func (c *Playlist_VideoClient) UpdateOne(pv *Playlist_Video) *PlaylistVideoUpdateOne {
-	mutation := newPlaylistVideoMutation(c.config, OpUpdateOne, withPlaylist_Video(pv))
-	return &PlaylistVideoUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+func (c *DegreeClient) UpdateOne(d *Degree) *DegreeUpdateOne {
+	mutation := newDegreeMutation(c.config, OpUpdateOne, withDegree(d))
+	return &DegreeUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
 // UpdateOneID returns an update builder for the given id.
-func (c *Playlist_VideoClient) UpdateOneID(id int) *PlaylistVideoUpdateOne {
-	mutation := newPlaylistVideoMutation(c.config, OpUpdateOne, withPlaylist_VideoID(id))
-	return &PlaylistVideoUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+func (c *DegreeClient) UpdateOneID(id int) *DegreeUpdateOne {
+	mutation := newDegreeMutation(c.config, OpUpdateOne, withDegreeID(id))
+	return &DegreeUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
-// Delete returns a delete builder for Playlist_Video.
-func (c *Playlist_VideoClient) Delete() *PlaylistVideoDelete {
-	mutation := newPlaylistVideoMutation(c.config, OpDelete)
-	return &PlaylistVideoDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+// Delete returns a delete builder for Degree.
+func (c *DegreeClient) Delete() *DegreeDelete {
+	mutation := newDegreeMutation(c.config, OpDelete)
+	return &DegreeDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
 // DeleteOne returns a delete builder for the given entity.
-func (c *Playlist_VideoClient) DeleteOne(pv *Playlist_Video) *PlaylistVideoDeleteOne {
-	return c.DeleteOneID(pv.ID)
+func (c *DegreeClient) DeleteOne(d *Degree) *DegreeDeleteOne {
+	return c.DeleteOneID(d.ID)
 }
 
 // DeleteOneID returns a delete builder for the given id.
-func (c *Playlist_VideoClient) DeleteOneID(id int) *PlaylistVideoDeleteOne {
-	builder := c.Delete().Where(playlist_video.ID(id))
+func (c *DegreeClient) DeleteOneID(id int) *DegreeDeleteOne {
+	builder := c.Delete().Where(degree.ID(id))
 	builder.mutation.id = &id
 	builder.mutation.op = OpDeleteOne
-	return &PlaylistVideoDeleteOne{builder}
+	return &DegreeDeleteOne{builder}
 }
 
-// Query returns a query builder for Playlist_Video.
-func (c *Playlist_VideoClient) Query() *PlaylistVideoQuery {
-	return &PlaylistVideoQuery{config: c.config}
+// Create returns a query builder for Degree.
+func (c *DegreeClient) Query() *DegreeQuery {
+	return &DegreeQuery{config: c.config}
 }
 
-// Get returns a Playlist_Video entity by its id.
-func (c *Playlist_VideoClient) Get(ctx context.Context, id int) (*Playlist_Video, error) {
-	return c.Query().Where(playlist_video.ID(id)).Only(ctx)
+// Get returns a Degree entity by its id.
+func (c *DegreeClient) Get(ctx context.Context, id int) (*Degree, error) {
+	return c.Query().Where(degree.ID(id)).Only(ctx)
 }
 
 // GetX is like Get, but panics if an error occurs.
-func (c *Playlist_VideoClient) GetX(ctx context.Context, id int) *Playlist_Video {
-	pv, err := c.Get(ctx, id)
+func (c *DegreeClient) GetX(ctx context.Context, id int) *Degree {
+	d, err := c.Get(ctx, id)
 	if err != nil {
 		panic(err)
 	}
-	return pv
+	return d
 }
 
-// QueryPlaylist queries the playlist edge of a Playlist_Video.
-func (c *Playlist_VideoClient) QueryPlaylist(pv *Playlist_Video) *PlaylistQuery {
-	query := &PlaylistQuery{config: c.config}
+// QueryDentists queries the dentists edge of a Degree.
+func (c *DegreeClient) QueryDentists(d *Degree) *DentistQuery {
+	query := &DentistQuery{config: c.config}
 	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
-		id := pv.ID
+		id := d.ID
 		step := sqlgraph.NewStep(
-			sqlgraph.From(playlist_video.Table, playlist_video.FieldID, id),
-			sqlgraph.To(playlist.Table, playlist.FieldID),
-			sqlgraph.Edge(sqlgraph.M2O, true, playlist_video.PlaylistTable, playlist_video.PlaylistColumn),
+			sqlgraph.From(degree.Table, degree.FieldID, id),
+			sqlgraph.To(dentist.Table, dentist.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, degree.DentistsTable, degree.DentistsColumn),
 		)
-		fromV = sqlgraph.Neighbors(pv.driver.Dialect(), step)
-		return fromV, nil
-	}
-	return query
-}
-
-// QueryVideo queries the video edge of a Playlist_Video.
-func (c *Playlist_VideoClient) QueryVideo(pv *Playlist_Video) *VideoQuery {
-	query := &VideoQuery{config: c.config}
-	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
-		id := pv.ID
-		step := sqlgraph.NewStep(
-			sqlgraph.From(playlist_video.Table, playlist_video.FieldID, id),
-			sqlgraph.To(video.Table, video.FieldID),
-			sqlgraph.Edge(sqlgraph.M2O, true, playlist_video.VideoTable, playlist_video.VideoColumn),
-		)
-		fromV = sqlgraph.Neighbors(pv.driver.Dialect(), step)
-		return fromV, nil
-	}
-	return query
-}
-
-// QueryResolution queries the resolution edge of a Playlist_Video.
-func (c *Playlist_VideoClient) QueryResolution(pv *Playlist_Video) *ResolutionQuery {
-	query := &ResolutionQuery{config: c.config}
-	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
-		id := pv.ID
-		step := sqlgraph.NewStep(
-			sqlgraph.From(playlist_video.Table, playlist_video.FieldID, id),
-			sqlgraph.To(resolution.Table, resolution.FieldID),
-			sqlgraph.Edge(sqlgraph.M2O, true, playlist_video.ResolutionTable, playlist_video.ResolutionColumn),
-		)
-		fromV = sqlgraph.Neighbors(pv.driver.Dialect(), step)
+		fromV = sqlgraph.Neighbors(d.driver.Dialect(), step)
 		return fromV, nil
 	}
 	return query
 }
 
 // Hooks returns the client hooks.
-func (c *Playlist_VideoClient) Hooks() []Hook {
-	return c.hooks.Playlist_Video
+func (c *DegreeClient) Hooks() []Hook {
+	return c.hooks.Degree
 }
 
-// ResolutionClient is a client for the Resolution schema.
-type ResolutionClient struct {
+// DentalExpenseClient is a client for the DentalExpense schema.
+type DentalExpenseClient struct {
 	config
 }
 
-// NewResolutionClient returns a client for the Resolution from the given config.
-func NewResolutionClient(c config) *ResolutionClient {
-	return &ResolutionClient{config: c}
+// NewDentalExpenseClient returns a client for the DentalExpense from the given config.
+func NewDentalExpenseClient(c config) *DentalExpenseClient {
+	return &DentalExpenseClient{config: c}
 }
 
 // Use adds a list of mutation hooks to the hooks stack.
-// A call to `Use(f, g, h)` equals to `resolution.Hooks(f(g(h())))`.
-func (c *ResolutionClient) Use(hooks ...Hook) {
-	c.hooks.Resolution = append(c.hooks.Resolution, hooks...)
+// A call to `Use(f, g, h)` equals to `dentalexpense.Hooks(f(g(h())))`.
+func (c *DentalExpenseClient) Use(hooks ...Hook) {
+	c.hooks.DentalExpense = append(c.hooks.DentalExpense, hooks...)
 }
 
-// Create returns a create builder for Resolution.
-func (c *ResolutionClient) Create() *ResolutionCreate {
-	mutation := newResolutionMutation(c.config, OpCreate)
-	return &ResolutionCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+// Create returns a create builder for DentalExpense.
+func (c *DentalExpenseClient) Create() *DentalExpenseCreate {
+	mutation := newDentalExpenseMutation(c.config, OpCreate)
+	return &DentalExpenseCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
-// BulkCreate returns a builder for creating a bulk of Resolution entities.
-func (c *ResolutionClient) CreateBulk(builders ...*ResolutionCreate) *ResolutionCreateBulk {
-	return &ResolutionCreateBulk{config: c.config, builders: builders}
-}
-
-// Update returns an update builder for Resolution.
-func (c *ResolutionClient) Update() *ResolutionUpdate {
-	mutation := newResolutionMutation(c.config, OpUpdate)
-	return &ResolutionUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+// Update returns an update builder for DentalExpense.
+func (c *DentalExpenseClient) Update() *DentalExpenseUpdate {
+	mutation := newDentalExpenseMutation(c.config, OpUpdate)
+	return &DentalExpenseUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
 // UpdateOne returns an update builder for the given entity.
-func (c *ResolutionClient) UpdateOne(r *Resolution) *ResolutionUpdateOne {
-	mutation := newResolutionMutation(c.config, OpUpdateOne, withResolution(r))
-	return &ResolutionUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+func (c *DentalExpenseClient) UpdateOne(de *DentalExpense) *DentalExpenseUpdateOne {
+	mutation := newDentalExpenseMutation(c.config, OpUpdateOne, withDentalExpense(de))
+	return &DentalExpenseUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
 // UpdateOneID returns an update builder for the given id.
-func (c *ResolutionClient) UpdateOneID(id int) *ResolutionUpdateOne {
-	mutation := newResolutionMutation(c.config, OpUpdateOne, withResolutionID(id))
-	return &ResolutionUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+func (c *DentalExpenseClient) UpdateOneID(id int) *DentalExpenseUpdateOne {
+	mutation := newDentalExpenseMutation(c.config, OpUpdateOne, withDentalExpenseID(id))
+	return &DentalExpenseUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
-// Delete returns a delete builder for Resolution.
-func (c *ResolutionClient) Delete() *ResolutionDelete {
-	mutation := newResolutionMutation(c.config, OpDelete)
-	return &ResolutionDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+// Delete returns a delete builder for DentalExpense.
+func (c *DentalExpenseClient) Delete() *DentalExpenseDelete {
+	mutation := newDentalExpenseMutation(c.config, OpDelete)
+	return &DentalExpenseDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
 // DeleteOne returns a delete builder for the given entity.
-func (c *ResolutionClient) DeleteOne(r *Resolution) *ResolutionDeleteOne {
+func (c *DentalExpenseClient) DeleteOne(de *DentalExpense) *DentalExpenseDeleteOne {
+	return c.DeleteOneID(de.ID)
+}
+
+// DeleteOneID returns a delete builder for the given id.
+func (c *DentalExpenseClient) DeleteOneID(id int) *DentalExpenseDeleteOne {
+	builder := c.Delete().Where(dentalexpense.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &DentalExpenseDeleteOne{builder}
+}
+
+// Create returns a query builder for DentalExpense.
+func (c *DentalExpenseClient) Query() *DentalExpenseQuery {
+	return &DentalExpenseQuery{config: c.config}
+}
+
+// Get returns a DentalExpense entity by its id.
+func (c *DentalExpenseClient) Get(ctx context.Context, id int) (*DentalExpense, error) {
+	return c.Query().Where(dentalexpense.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *DentalExpenseClient) GetX(ctx context.Context, id int) *DentalExpense {
+	de, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return de
+}
+
+// QueryNurse queries the nurse edge of a DentalExpense.
+func (c *DentalExpenseClient) QueryNurse(de *DentalExpense) *NurseQuery {
+	query := &NurseQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := de.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(dentalexpense.Table, dentalexpense.FieldID, id),
+			sqlgraph.To(nurse.Table, nurse.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, dentalexpense.NurseTable, dentalexpense.NurseColumn),
+		)
+		fromV = sqlgraph.Neighbors(de.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryMedicalfile queries the medicalfile edge of a DentalExpense.
+func (c *DentalExpenseClient) QueryMedicalfile(de *DentalExpense) *MedicalfileQuery {
+	query := &MedicalfileQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := de.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(dentalexpense.Table, dentalexpense.FieldID, id),
+			sqlgraph.To(medicalfile.Table, medicalfile.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, dentalexpense.MedicalfileTable, dentalexpense.MedicalfileColumn),
+		)
+		fromV = sqlgraph.Neighbors(de.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryPricetype queries the pricetype edge of a DentalExpense.
+func (c *DentalExpenseClient) QueryPricetype(de *DentalExpense) *PriceTypeQuery {
+	query := &PriceTypeQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := de.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(dentalexpense.Table, dentalexpense.FieldID, id),
+			sqlgraph.To(pricetype.Table, pricetype.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, dentalexpense.PricetypeTable, dentalexpense.PricetypeColumn),
+		)
+		fromV = sqlgraph.Neighbors(de.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// Hooks returns the client hooks.
+func (c *DentalExpenseClient) Hooks() []Hook {
+	return c.hooks.DentalExpense
+}
+
+// DentistClient is a client for the Dentist schema.
+type DentistClient struct {
+	config
+}
+
+// NewDentistClient returns a client for the Dentist from the given config.
+func NewDentistClient(c config) *DentistClient {
+	return &DentistClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `dentist.Hooks(f(g(h())))`.
+func (c *DentistClient) Use(hooks ...Hook) {
+	c.hooks.Dentist = append(c.hooks.Dentist, hooks...)
+}
+
+// Create returns a create builder for Dentist.
+func (c *DentistClient) Create() *DentistCreate {
+	mutation := newDentistMutation(c.config, OpCreate)
+	return &DentistCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Update returns an update builder for Dentist.
+func (c *DentistClient) Update() *DentistUpdate {
+	mutation := newDentistMutation(c.config, OpUpdate)
+	return &DentistUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *DentistClient) UpdateOne(d *Dentist) *DentistUpdateOne {
+	mutation := newDentistMutation(c.config, OpUpdateOne, withDentist(d))
+	return &DentistUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *DentistClient) UpdateOneID(id int) *DentistUpdateOne {
+	mutation := newDentistMutation(c.config, OpUpdateOne, withDentistID(id))
+	return &DentistUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for Dentist.
+func (c *DentistClient) Delete() *DentistDelete {
+	mutation := newDentistMutation(c.config, OpDelete)
+	return &DentistDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a delete builder for the given entity.
+func (c *DentistClient) DeleteOne(d *Dentist) *DentistDeleteOne {
+	return c.DeleteOneID(d.ID)
+}
+
+// DeleteOneID returns a delete builder for the given id.
+func (c *DentistClient) DeleteOneID(id int) *DentistDeleteOne {
+	builder := c.Delete().Where(dentist.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &DentistDeleteOne{builder}
+}
+
+// Create returns a query builder for Dentist.
+func (c *DentistClient) Query() *DentistQuery {
+	return &DentistQuery{config: c.config}
+}
+
+// Get returns a Dentist entity by its id.
+func (c *DentistClient) Get(ctx context.Context, id int) (*Dentist, error) {
+	return c.Query().Where(dentist.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *DentistClient) GetX(ctx context.Context, id int) *Dentist {
+	d, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return d
+}
+
+// QueryNurse queries the nurse edge of a Dentist.
+func (c *DentistClient) QueryNurse(d *Dentist) *NurseQuery {
+	query := &NurseQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := d.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(dentist.Table, dentist.FieldID, id),
+			sqlgraph.To(nurse.Table, nurse.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, dentist.NurseTable, dentist.NurseColumn),
+		)
+		fromV = sqlgraph.Neighbors(d.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryDegree queries the degree edge of a Dentist.
+func (c *DentistClient) QueryDegree(d *Dentist) *DegreeQuery {
+	query := &DegreeQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := d.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(dentist.Table, dentist.FieldID, id),
+			sqlgraph.To(degree.Table, degree.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, dentist.DegreeTable, dentist.DegreeColumn),
+		)
+		fromV = sqlgraph.Neighbors(d.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryExpert queries the expert edge of a Dentist.
+func (c *DentistClient) QueryExpert(d *Dentist) *ExpertQuery {
+	query := &ExpertQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := d.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(dentist.Table, dentist.FieldID, id),
+			sqlgraph.To(expert.Table, expert.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, dentist.ExpertTable, dentist.ExpertColumn),
+		)
+		fromV = sqlgraph.Neighbors(d.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryGender queries the gender edge of a Dentist.
+func (c *DentistClient) QueryGender(d *Dentist) *GenderQuery {
+	query := &GenderQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := d.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(dentist.Table, dentist.FieldID, id),
+			sqlgraph.To(gender.Table, gender.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, dentist.GenderTable, dentist.GenderColumn),
+		)
+		fromV = sqlgraph.Neighbors(d.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryMedicalfiles queries the medicalfiles edge of a Dentist.
+func (c *DentistClient) QueryMedicalfiles(d *Dentist) *MedicalfileQuery {
+	query := &MedicalfileQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := d.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(dentist.Table, dentist.FieldID, id),
+			sqlgraph.To(medicalfile.Table, medicalfile.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, dentist.MedicalfilesTable, dentist.MedicalfilesColumn),
+		)
+		fromV = sqlgraph.Neighbors(d.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryQueue queries the queue edge of a Dentist.
+func (c *DentistClient) QueryQueue(d *Dentist) *QueueQuery {
+	query := &QueueQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := d.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(dentist.Table, dentist.FieldID, id),
+			sqlgraph.To(queue.Table, queue.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, dentist.QueueTable, dentist.QueueColumn),
+		)
+		fromV = sqlgraph.Neighbors(d.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryAppointment queries the appointment edge of a Dentist.
+func (c *DentistClient) QueryAppointment(d *Dentist) *AppointmentQuery {
+	query := &AppointmentQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := d.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(dentist.Table, dentist.FieldID, id),
+			sqlgraph.To(appointment.Table, appointment.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, dentist.AppointmentTable, dentist.AppointmentColumn),
+		)
+		fromV = sqlgraph.Neighbors(d.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// Hooks returns the client hooks.
+func (c *DentistClient) Hooks() []Hook {
+	return c.hooks.Dentist
+}
+
+// DiseaseClient is a client for the Disease schema.
+type DiseaseClient struct {
+	config
+}
+
+// NewDiseaseClient returns a client for the Disease from the given config.
+func NewDiseaseClient(c config) *DiseaseClient {
+	return &DiseaseClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `disease.Hooks(f(g(h())))`.
+func (c *DiseaseClient) Use(hooks ...Hook) {
+	c.hooks.Disease = append(c.hooks.Disease, hooks...)
+}
+
+// Create returns a create builder for Disease.
+func (c *DiseaseClient) Create() *DiseaseCreate {
+	mutation := newDiseaseMutation(c.config, OpCreate)
+	return &DiseaseCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Update returns an update builder for Disease.
+func (c *DiseaseClient) Update() *DiseaseUpdate {
+	mutation := newDiseaseMutation(c.config, OpUpdate)
+	return &DiseaseUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *DiseaseClient) UpdateOne(d *Disease) *DiseaseUpdateOne {
+	mutation := newDiseaseMutation(c.config, OpUpdateOne, withDisease(d))
+	return &DiseaseUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *DiseaseClient) UpdateOneID(id int) *DiseaseUpdateOne {
+	mutation := newDiseaseMutation(c.config, OpUpdateOne, withDiseaseID(id))
+	return &DiseaseUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for Disease.
+func (c *DiseaseClient) Delete() *DiseaseDelete {
+	mutation := newDiseaseMutation(c.config, OpDelete)
+	return &DiseaseDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a delete builder for the given entity.
+func (c *DiseaseClient) DeleteOne(d *Disease) *DiseaseDeleteOne {
+	return c.DeleteOneID(d.ID)
+}
+
+// DeleteOneID returns a delete builder for the given id.
+func (c *DiseaseClient) DeleteOneID(id int) *DiseaseDeleteOne {
+	builder := c.Delete().Where(disease.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &DiseaseDeleteOne{builder}
+}
+
+// Create returns a query builder for Disease.
+func (c *DiseaseClient) Query() *DiseaseQuery {
+	return &DiseaseQuery{config: c.config}
+}
+
+// Get returns a Disease entity by its id.
+func (c *DiseaseClient) Get(ctx context.Context, id int) (*Disease, error) {
+	return c.Query().Where(disease.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *DiseaseClient) GetX(ctx context.Context, id int) *Disease {
+	d, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return d
+}
+
+// QueryPatients queries the patients edge of a Disease.
+func (c *DiseaseClient) QueryPatients(d *Disease) *PatientQuery {
+	query := &PatientQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := d.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(disease.Table, disease.FieldID, id),
+			sqlgraph.To(patient.Table, patient.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, disease.PatientsTable, disease.PatientsColumn),
+		)
+		fromV = sqlgraph.Neighbors(d.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// Hooks returns the client hooks.
+func (c *DiseaseClient) Hooks() []Hook {
+	return c.hooks.Disease
+}
+
+// ExpertClient is a client for the Expert schema.
+type ExpertClient struct {
+	config
+}
+
+// NewExpertClient returns a client for the Expert from the given config.
+func NewExpertClient(c config) *ExpertClient {
+	return &ExpertClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `expert.Hooks(f(g(h())))`.
+func (c *ExpertClient) Use(hooks ...Hook) {
+	c.hooks.Expert = append(c.hooks.Expert, hooks...)
+}
+
+// Create returns a create builder for Expert.
+func (c *ExpertClient) Create() *ExpertCreate {
+	mutation := newExpertMutation(c.config, OpCreate)
+	return &ExpertCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Update returns an update builder for Expert.
+func (c *ExpertClient) Update() *ExpertUpdate {
+	mutation := newExpertMutation(c.config, OpUpdate)
+	return &ExpertUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *ExpertClient) UpdateOne(e *Expert) *ExpertUpdateOne {
+	mutation := newExpertMutation(c.config, OpUpdateOne, withExpert(e))
+	return &ExpertUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *ExpertClient) UpdateOneID(id int) *ExpertUpdateOne {
+	mutation := newExpertMutation(c.config, OpUpdateOne, withExpertID(id))
+	return &ExpertUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for Expert.
+func (c *ExpertClient) Delete() *ExpertDelete {
+	mutation := newExpertMutation(c.config, OpDelete)
+	return &ExpertDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a delete builder for the given entity.
+func (c *ExpertClient) DeleteOne(e *Expert) *ExpertDeleteOne {
+	return c.DeleteOneID(e.ID)
+}
+
+// DeleteOneID returns a delete builder for the given id.
+func (c *ExpertClient) DeleteOneID(id int) *ExpertDeleteOne {
+	builder := c.Delete().Where(expert.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &ExpertDeleteOne{builder}
+}
+
+// Create returns a query builder for Expert.
+func (c *ExpertClient) Query() *ExpertQuery {
+	return &ExpertQuery{config: c.config}
+}
+
+// Get returns a Expert entity by its id.
+func (c *ExpertClient) Get(ctx context.Context, id int) (*Expert, error) {
+	return c.Query().Where(expert.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *ExpertClient) GetX(ctx context.Context, id int) *Expert {
+	e, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return e
+}
+
+// QueryDentists queries the dentists edge of a Expert.
+func (c *ExpertClient) QueryDentists(e *Expert) *DentistQuery {
+	query := &DentistQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := e.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(expert.Table, expert.FieldID, id),
+			sqlgraph.To(dentist.Table, dentist.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, expert.DentistsTable, expert.DentistsColumn),
+		)
+		fromV = sqlgraph.Neighbors(e.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// Hooks returns the client hooks.
+func (c *ExpertClient) Hooks() []Hook {
+	return c.hooks.Expert
+}
+
+// GenderClient is a client for the Gender schema.
+type GenderClient struct {
+	config
+}
+
+// NewGenderClient returns a client for the Gender from the given config.
+func NewGenderClient(c config) *GenderClient {
+	return &GenderClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `gender.Hooks(f(g(h())))`.
+func (c *GenderClient) Use(hooks ...Hook) {
+	c.hooks.Gender = append(c.hooks.Gender, hooks...)
+}
+
+// Create returns a create builder for Gender.
+func (c *GenderClient) Create() *GenderCreate {
+	mutation := newGenderMutation(c.config, OpCreate)
+	return &GenderCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Update returns an update builder for Gender.
+func (c *GenderClient) Update() *GenderUpdate {
+	mutation := newGenderMutation(c.config, OpUpdate)
+	return &GenderUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *GenderClient) UpdateOne(ge *Gender) *GenderUpdateOne {
+	mutation := newGenderMutation(c.config, OpUpdateOne, withGender(ge))
+	return &GenderUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *GenderClient) UpdateOneID(id int) *GenderUpdateOne {
+	mutation := newGenderMutation(c.config, OpUpdateOne, withGenderID(id))
+	return &GenderUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for Gender.
+func (c *GenderClient) Delete() *GenderDelete {
+	mutation := newGenderMutation(c.config, OpDelete)
+	return &GenderDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a delete builder for the given entity.
+func (c *GenderClient) DeleteOne(ge *Gender) *GenderDeleteOne {
+	return c.DeleteOneID(ge.ID)
+}
+
+// DeleteOneID returns a delete builder for the given id.
+func (c *GenderClient) DeleteOneID(id int) *GenderDeleteOne {
+	builder := c.Delete().Where(gender.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &GenderDeleteOne{builder}
+}
+
+// Create returns a query builder for Gender.
+func (c *GenderClient) Query() *GenderQuery {
+	return &GenderQuery{config: c.config}
+}
+
+// Get returns a Gender entity by its id.
+func (c *GenderClient) Get(ctx context.Context, id int) (*Gender, error) {
+	return c.Query().Where(gender.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *GenderClient) GetX(ctx context.Context, id int) *Gender {
+	ge, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return ge
+}
+
+// QueryPatients queries the patients edge of a Gender.
+func (c *GenderClient) QueryPatients(ge *Gender) *PatientQuery {
+	query := &PatientQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := ge.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(gender.Table, gender.FieldID, id),
+			sqlgraph.To(patient.Table, patient.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, gender.PatientsTable, gender.PatientsColumn),
+		)
+		fromV = sqlgraph.Neighbors(ge.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryDentists queries the dentists edge of a Gender.
+func (c *GenderClient) QueryDentists(ge *Gender) *DentistQuery {
+	query := &DentistQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := ge.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(gender.Table, gender.FieldID, id),
+			sqlgraph.To(dentist.Table, dentist.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, gender.DentistsTable, gender.DentistsColumn),
+		)
+		fromV = sqlgraph.Neighbors(ge.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// Hooks returns the client hooks.
+func (c *GenderClient) Hooks() []Hook {
+	return c.hooks.Gender
+}
+
+// MedicalCareClient is a client for the MedicalCare schema.
+type MedicalCareClient struct {
+	config
+}
+
+// NewMedicalCareClient returns a client for the MedicalCare from the given config.
+func NewMedicalCareClient(c config) *MedicalCareClient {
+	return &MedicalCareClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `medicalcare.Hooks(f(g(h())))`.
+func (c *MedicalCareClient) Use(hooks ...Hook) {
+	c.hooks.MedicalCare = append(c.hooks.MedicalCare, hooks...)
+}
+
+// Create returns a create builder for MedicalCare.
+func (c *MedicalCareClient) Create() *MedicalCareCreate {
+	mutation := newMedicalCareMutation(c.config, OpCreate)
+	return &MedicalCareCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Update returns an update builder for MedicalCare.
+func (c *MedicalCareClient) Update() *MedicalCareUpdate {
+	mutation := newMedicalCareMutation(c.config, OpUpdate)
+	return &MedicalCareUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *MedicalCareClient) UpdateOne(mc *MedicalCare) *MedicalCareUpdateOne {
+	mutation := newMedicalCareMutation(c.config, OpUpdateOne, withMedicalCare(mc))
+	return &MedicalCareUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *MedicalCareClient) UpdateOneID(id int) *MedicalCareUpdateOne {
+	mutation := newMedicalCareMutation(c.config, OpUpdateOne, withMedicalCareID(id))
+	return &MedicalCareUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for MedicalCare.
+func (c *MedicalCareClient) Delete() *MedicalCareDelete {
+	mutation := newMedicalCareMutation(c.config, OpDelete)
+	return &MedicalCareDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a delete builder for the given entity.
+func (c *MedicalCareClient) DeleteOne(mc *MedicalCare) *MedicalCareDeleteOne {
+	return c.DeleteOneID(mc.ID)
+}
+
+// DeleteOneID returns a delete builder for the given id.
+func (c *MedicalCareClient) DeleteOneID(id int) *MedicalCareDeleteOne {
+	builder := c.Delete().Where(medicalcare.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &MedicalCareDeleteOne{builder}
+}
+
+// Create returns a query builder for MedicalCare.
+func (c *MedicalCareClient) Query() *MedicalCareQuery {
+	return &MedicalCareQuery{config: c.config}
+}
+
+// Get returns a MedicalCare entity by its id.
+func (c *MedicalCareClient) Get(ctx context.Context, id int) (*MedicalCare, error) {
+	return c.Query().Where(medicalcare.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *MedicalCareClient) GetX(ctx context.Context, id int) *MedicalCare {
+	mc, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return mc
+}
+
+// QueryPatients queries the patients edge of a MedicalCare.
+func (c *MedicalCareClient) QueryPatients(mc *MedicalCare) *PatientQuery {
+	query := &PatientQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := mc.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(medicalcare.Table, medicalcare.FieldID, id),
+			sqlgraph.To(patient.Table, patient.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, medicalcare.PatientsTable, medicalcare.PatientsColumn),
+		)
+		fromV = sqlgraph.Neighbors(mc.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryMedicalfiles queries the medicalfiles edge of a MedicalCare.
+func (c *MedicalCareClient) QueryMedicalfiles(mc *MedicalCare) *MedicalfileQuery {
+	query := &MedicalfileQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := mc.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(medicalcare.Table, medicalcare.FieldID, id),
+			sqlgraph.To(medicalfile.Table, medicalfile.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, medicalcare.MedicalfilesTable, medicalcare.MedicalfilesColumn),
+		)
+		fromV = sqlgraph.Neighbors(mc.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// Hooks returns the client hooks.
+func (c *MedicalCareClient) Hooks() []Hook {
+	return c.hooks.MedicalCare
+}
+
+// MedicalfileClient is a client for the Medicalfile schema.
+type MedicalfileClient struct {
+	config
+}
+
+// NewMedicalfileClient returns a client for the Medicalfile from the given config.
+func NewMedicalfileClient(c config) *MedicalfileClient {
+	return &MedicalfileClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `medicalfile.Hooks(f(g(h())))`.
+func (c *MedicalfileClient) Use(hooks ...Hook) {
+	c.hooks.Medicalfile = append(c.hooks.Medicalfile, hooks...)
+}
+
+// Create returns a create builder for Medicalfile.
+func (c *MedicalfileClient) Create() *MedicalfileCreate {
+	mutation := newMedicalfileMutation(c.config, OpCreate)
+	return &MedicalfileCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Update returns an update builder for Medicalfile.
+func (c *MedicalfileClient) Update() *MedicalfileUpdate {
+	mutation := newMedicalfileMutation(c.config, OpUpdate)
+	return &MedicalfileUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *MedicalfileClient) UpdateOne(m *Medicalfile) *MedicalfileUpdateOne {
+	mutation := newMedicalfileMutation(c.config, OpUpdateOne, withMedicalfile(m))
+	return &MedicalfileUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *MedicalfileClient) UpdateOneID(id int) *MedicalfileUpdateOne {
+	mutation := newMedicalfileMutation(c.config, OpUpdateOne, withMedicalfileID(id))
+	return &MedicalfileUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for Medicalfile.
+func (c *MedicalfileClient) Delete() *MedicalfileDelete {
+	mutation := newMedicalfileMutation(c.config, OpDelete)
+	return &MedicalfileDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a delete builder for the given entity.
+func (c *MedicalfileClient) DeleteOne(m *Medicalfile) *MedicalfileDeleteOne {
+	return c.DeleteOneID(m.ID)
+}
+
+// DeleteOneID returns a delete builder for the given id.
+func (c *MedicalfileClient) DeleteOneID(id int) *MedicalfileDeleteOne {
+	builder := c.Delete().Where(medicalfile.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &MedicalfileDeleteOne{builder}
+}
+
+// Create returns a query builder for Medicalfile.
+func (c *MedicalfileClient) Query() *MedicalfileQuery {
+	return &MedicalfileQuery{config: c.config}
+}
+
+// Get returns a Medicalfile entity by its id.
+func (c *MedicalfileClient) Get(ctx context.Context, id int) (*Medicalfile, error) {
+	return c.Query().Where(medicalfile.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *MedicalfileClient) GetX(ctx context.Context, id int) *Medicalfile {
+	m, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return m
+}
+
+// QueryDentist queries the dentist edge of a Medicalfile.
+func (c *MedicalfileClient) QueryDentist(m *Medicalfile) *DentistQuery {
+	query := &DentistQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := m.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(medicalfile.Table, medicalfile.FieldID, id),
+			sqlgraph.To(dentist.Table, dentist.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, medicalfile.DentistTable, medicalfile.DentistColumn),
+		)
+		fromV = sqlgraph.Neighbors(m.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryPatient queries the patient edge of a Medicalfile.
+func (c *MedicalfileClient) QueryPatient(m *Medicalfile) *PatientQuery {
+	query := &PatientQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := m.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(medicalfile.Table, medicalfile.FieldID, id),
+			sqlgraph.To(patient.Table, patient.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, medicalfile.PatientTable, medicalfile.PatientColumn),
+		)
+		fromV = sqlgraph.Neighbors(m.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryNurse queries the nurse edge of a Medicalfile.
+func (c *MedicalfileClient) QueryNurse(m *Medicalfile) *NurseQuery {
+	query := &NurseQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := m.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(medicalfile.Table, medicalfile.FieldID, id),
+			sqlgraph.To(nurse.Table, nurse.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, medicalfile.NurseTable, medicalfile.NurseColumn),
+		)
+		fromV = sqlgraph.Neighbors(m.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryMedicalcare queries the medicalcare edge of a Medicalfile.
+func (c *MedicalfileClient) QueryMedicalcare(m *Medicalfile) *MedicalCareQuery {
+	query := &MedicalCareQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := m.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(medicalfile.Table, medicalfile.FieldID, id),
+			sqlgraph.To(medicalcare.Table, medicalcare.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, medicalfile.MedicalcareTable, medicalfile.MedicalcareColumn),
+		)
+		fromV = sqlgraph.Neighbors(m.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryDentalexpenses queries the dentalexpenses edge of a Medicalfile.
+func (c *MedicalfileClient) QueryDentalexpenses(m *Medicalfile) *DentalExpenseQuery {
+	query := &DentalExpenseQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := m.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(medicalfile.Table, medicalfile.FieldID, id),
+			sqlgraph.To(dentalexpense.Table, dentalexpense.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, medicalfile.DentalexpensesTable, medicalfile.DentalexpensesColumn),
+		)
+		fromV = sqlgraph.Neighbors(m.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// Hooks returns the client hooks.
+func (c *MedicalfileClient) Hooks() []Hook {
+	return c.hooks.Medicalfile
+}
+
+// NurseClient is a client for the Nurse schema.
+type NurseClient struct {
+	config
+}
+
+// NewNurseClient returns a client for the Nurse from the given config.
+func NewNurseClient(c config) *NurseClient {
+	return &NurseClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `nurse.Hooks(f(g(h())))`.
+func (c *NurseClient) Use(hooks ...Hook) {
+	c.hooks.Nurse = append(c.hooks.Nurse, hooks...)
+}
+
+// Create returns a create builder for Nurse.
+func (c *NurseClient) Create() *NurseCreate {
+	mutation := newNurseMutation(c.config, OpCreate)
+	return &NurseCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Update returns an update builder for Nurse.
+func (c *NurseClient) Update() *NurseUpdate {
+	mutation := newNurseMutation(c.config, OpUpdate)
+	return &NurseUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *NurseClient) UpdateOne(n *Nurse) *NurseUpdateOne {
+	mutation := newNurseMutation(c.config, OpUpdateOne, withNurse(n))
+	return &NurseUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *NurseClient) UpdateOneID(id int) *NurseUpdateOne {
+	mutation := newNurseMutation(c.config, OpUpdateOne, withNurseID(id))
+	return &NurseUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for Nurse.
+func (c *NurseClient) Delete() *NurseDelete {
+	mutation := newNurseMutation(c.config, OpDelete)
+	return &NurseDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a delete builder for the given entity.
+func (c *NurseClient) DeleteOne(n *Nurse) *NurseDeleteOne {
+	return c.DeleteOneID(n.ID)
+}
+
+// DeleteOneID returns a delete builder for the given id.
+func (c *NurseClient) DeleteOneID(id int) *NurseDeleteOne {
+	builder := c.Delete().Where(nurse.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &NurseDeleteOne{builder}
+}
+
+// Create returns a query builder for Nurse.
+func (c *NurseClient) Query() *NurseQuery {
+	return &NurseQuery{config: c.config}
+}
+
+// Get returns a Nurse entity by its id.
+func (c *NurseClient) Get(ctx context.Context, id int) (*Nurse, error) {
+	return c.Query().Where(nurse.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *NurseClient) GetX(ctx context.Context, id int) *Nurse {
+	n, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return n
+}
+
+// QueryQueue queries the queue edge of a Nurse.
+func (c *NurseClient) QueryQueue(n *Nurse) *QueueQuery {
+	query := &QueueQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := n.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(nurse.Table, nurse.FieldID, id),
+			sqlgraph.To(queue.Table, queue.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, nurse.QueueTable, nurse.QueueColumn),
+		)
+		fromV = sqlgraph.Neighbors(n.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryMedicalfiles queries the medicalfiles edge of a Nurse.
+func (c *NurseClient) QueryMedicalfiles(n *Nurse) *MedicalfileQuery {
+	query := &MedicalfileQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := n.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(nurse.Table, nurse.FieldID, id),
+			sqlgraph.To(medicalfile.Table, medicalfile.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, nurse.MedicalfilesTable, nurse.MedicalfilesColumn),
+		)
+		fromV = sqlgraph.Neighbors(n.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryDentalexpenses queries the dentalexpenses edge of a Nurse.
+func (c *NurseClient) QueryDentalexpenses(n *Nurse) *DentalExpenseQuery {
+	query := &DentalExpenseQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := n.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(nurse.Table, nurse.FieldID, id),
+			sqlgraph.To(dentalexpense.Table, dentalexpense.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, nurse.DentalexpensesTable, nurse.DentalexpensesColumn),
+		)
+		fromV = sqlgraph.Neighbors(n.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryPatients queries the patients edge of a Nurse.
+func (c *NurseClient) QueryPatients(n *Nurse) *PatientQuery {
+	query := &PatientQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := n.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(nurse.Table, nurse.FieldID, id),
+			sqlgraph.To(patient.Table, patient.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, nurse.PatientsTable, nurse.PatientsColumn),
+		)
+		fromV = sqlgraph.Neighbors(n.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryDentists queries the dentists edge of a Nurse.
+func (c *NurseClient) QueryDentists(n *Nurse) *DentistQuery {
+	query := &DentistQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := n.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(nurse.Table, nurse.FieldID, id),
+			sqlgraph.To(dentist.Table, dentist.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, nurse.DentistsTable, nurse.DentistsColumn),
+		)
+		fromV = sqlgraph.Neighbors(n.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// Hooks returns the client hooks.
+func (c *NurseClient) Hooks() []Hook {
+	return c.hooks.Nurse
+}
+
+// PatientClient is a client for the Patient schema.
+type PatientClient struct {
+	config
+}
+
+// NewPatientClient returns a client for the Patient from the given config.
+func NewPatientClient(c config) *PatientClient {
+	return &PatientClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `patient.Hooks(f(g(h())))`.
+func (c *PatientClient) Use(hooks ...Hook) {
+	c.hooks.Patient = append(c.hooks.Patient, hooks...)
+}
+
+// Create returns a create builder for Patient.
+func (c *PatientClient) Create() *PatientCreate {
+	mutation := newPatientMutation(c.config, OpCreate)
+	return &PatientCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Update returns an update builder for Patient.
+func (c *PatientClient) Update() *PatientUpdate {
+	mutation := newPatientMutation(c.config, OpUpdate)
+	return &PatientUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *PatientClient) UpdateOne(pa *Patient) *PatientUpdateOne {
+	mutation := newPatientMutation(c.config, OpUpdateOne, withPatient(pa))
+	return &PatientUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *PatientClient) UpdateOneID(id int) *PatientUpdateOne {
+	mutation := newPatientMutation(c.config, OpUpdateOne, withPatientID(id))
+	return &PatientUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for Patient.
+func (c *PatientClient) Delete() *PatientDelete {
+	mutation := newPatientMutation(c.config, OpDelete)
+	return &PatientDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a delete builder for the given entity.
+func (c *PatientClient) DeleteOne(pa *Patient) *PatientDeleteOne {
+	return c.DeleteOneID(pa.ID)
+}
+
+// DeleteOneID returns a delete builder for the given id.
+func (c *PatientClient) DeleteOneID(id int) *PatientDeleteOne {
+	builder := c.Delete().Where(patient.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &PatientDeleteOne{builder}
+}
+
+// Create returns a query builder for Patient.
+func (c *PatientClient) Query() *PatientQuery {
+	return &PatientQuery{config: c.config}
+}
+
+// Get returns a Patient entity by its id.
+func (c *PatientClient) Get(ctx context.Context, id int) (*Patient, error) {
+	return c.Query().Where(patient.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *PatientClient) GetX(ctx context.Context, id int) *Patient {
+	pa, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return pa
+}
+
+// QueryGender queries the gender edge of a Patient.
+func (c *PatientClient) QueryGender(pa *Patient) *GenderQuery {
+	query := &GenderQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := pa.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(patient.Table, patient.FieldID, id),
+			sqlgraph.To(gender.Table, gender.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, patient.GenderTable, patient.GenderColumn),
+		)
+		fromV = sqlgraph.Neighbors(pa.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryMedicalcare queries the medicalcare edge of a Patient.
+func (c *PatientClient) QueryMedicalcare(pa *Patient) *MedicalCareQuery {
+	query := &MedicalCareQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := pa.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(patient.Table, patient.FieldID, id),
+			sqlgraph.To(medicalcare.Table, medicalcare.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, patient.MedicalcareTable, patient.MedicalcareColumn),
+		)
+		fromV = sqlgraph.Neighbors(pa.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryNurse queries the nurse edge of a Patient.
+func (c *PatientClient) QueryNurse(pa *Patient) *NurseQuery {
+	query := &NurseQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := pa.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(patient.Table, patient.FieldID, id),
+			sqlgraph.To(nurse.Table, nurse.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, patient.NurseTable, patient.NurseColumn),
+		)
+		fromV = sqlgraph.Neighbors(pa.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryDisease queries the disease edge of a Patient.
+func (c *PatientClient) QueryDisease(pa *Patient) *DiseaseQuery {
+	query := &DiseaseQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := pa.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(patient.Table, patient.FieldID, id),
+			sqlgraph.To(disease.Table, disease.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, patient.DiseaseTable, patient.DiseaseColumn),
+		)
+		fromV = sqlgraph.Neighbors(pa.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryMedicalfiles queries the medicalfiles edge of a Patient.
+func (c *PatientClient) QueryMedicalfiles(pa *Patient) *MedicalfileQuery {
+	query := &MedicalfileQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := pa.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(patient.Table, patient.FieldID, id),
+			sqlgraph.To(medicalfile.Table, medicalfile.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, patient.MedicalfilesTable, patient.MedicalfilesColumn),
+		)
+		fromV = sqlgraph.Neighbors(pa.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryQueue queries the queue edge of a Patient.
+func (c *PatientClient) QueryQueue(pa *Patient) *QueueQuery {
+	query := &QueueQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := pa.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(patient.Table, patient.FieldID, id),
+			sqlgraph.To(queue.Table, queue.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, patient.QueueTable, patient.QueueColumn),
+		)
+		fromV = sqlgraph.Neighbors(pa.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryAppointment queries the appointment edge of a Patient.
+func (c *PatientClient) QueryAppointment(pa *Patient) *AppointmentQuery {
+	query := &AppointmentQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := pa.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(patient.Table, patient.FieldID, id),
+			sqlgraph.To(appointment.Table, appointment.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, patient.AppointmentTable, patient.AppointmentColumn),
+		)
+		fromV = sqlgraph.Neighbors(pa.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// Hooks returns the client hooks.
+func (c *PatientClient) Hooks() []Hook {
+	return c.hooks.Patient
+}
+
+// PriceTypeClient is a client for the PriceType schema.
+type PriceTypeClient struct {
+	config
+}
+
+// NewPriceTypeClient returns a client for the PriceType from the given config.
+func NewPriceTypeClient(c config) *PriceTypeClient {
+	return &PriceTypeClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `pricetype.Hooks(f(g(h())))`.
+func (c *PriceTypeClient) Use(hooks ...Hook) {
+	c.hooks.PriceType = append(c.hooks.PriceType, hooks...)
+}
+
+// Create returns a create builder for PriceType.
+func (c *PriceTypeClient) Create() *PriceTypeCreate {
+	mutation := newPriceTypeMutation(c.config, OpCreate)
+	return &PriceTypeCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Update returns an update builder for PriceType.
+func (c *PriceTypeClient) Update() *PriceTypeUpdate {
+	mutation := newPriceTypeMutation(c.config, OpUpdate)
+	return &PriceTypeUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *PriceTypeClient) UpdateOne(pt *PriceType) *PriceTypeUpdateOne {
+	mutation := newPriceTypeMutation(c.config, OpUpdateOne, withPriceType(pt))
+	return &PriceTypeUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *PriceTypeClient) UpdateOneID(id int) *PriceTypeUpdateOne {
+	mutation := newPriceTypeMutation(c.config, OpUpdateOne, withPriceTypeID(id))
+	return &PriceTypeUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for PriceType.
+func (c *PriceTypeClient) Delete() *PriceTypeDelete {
+	mutation := newPriceTypeMutation(c.config, OpDelete)
+	return &PriceTypeDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a delete builder for the given entity.
+func (c *PriceTypeClient) DeleteOne(pt *PriceType) *PriceTypeDeleteOne {
+	return c.DeleteOneID(pt.ID)
+}
+
+// DeleteOneID returns a delete builder for the given id.
+func (c *PriceTypeClient) DeleteOneID(id int) *PriceTypeDeleteOne {
+	builder := c.Delete().Where(pricetype.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &PriceTypeDeleteOne{builder}
+}
+
+// Create returns a query builder for PriceType.
+func (c *PriceTypeClient) Query() *PriceTypeQuery {
+	return &PriceTypeQuery{config: c.config}
+}
+
+// Get returns a PriceType entity by its id.
+func (c *PriceTypeClient) Get(ctx context.Context, id int) (*PriceType, error) {
+	return c.Query().Where(pricetype.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *PriceTypeClient) GetX(ctx context.Context, id int) *PriceType {
+	pt, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return pt
+}
+
+// QueryDentalexpenses queries the dentalexpenses edge of a PriceType.
+func (c *PriceTypeClient) QueryDentalexpenses(pt *PriceType) *DentalExpenseQuery {
+	query := &DentalExpenseQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := pt.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(pricetype.Table, pricetype.FieldID, id),
+			sqlgraph.To(dentalexpense.Table, dentalexpense.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, pricetype.DentalexpensesTable, pricetype.DentalexpensesColumn),
+		)
+		fromV = sqlgraph.Neighbors(pt.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// Hooks returns the client hooks.
+func (c *PriceTypeClient) Hooks() []Hook {
+	return c.hooks.PriceType
+}
+
+// QueueClient is a client for the Queue schema.
+type QueueClient struct {
+	config
+}
+
+// NewQueueClient returns a client for the Queue from the given config.
+func NewQueueClient(c config) *QueueClient {
+	return &QueueClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `queue.Hooks(f(g(h())))`.
+func (c *QueueClient) Use(hooks ...Hook) {
+	c.hooks.Queue = append(c.hooks.Queue, hooks...)
+}
+
+// Create returns a create builder for Queue.
+func (c *QueueClient) Create() *QueueCreate {
+	mutation := newQueueMutation(c.config, OpCreate)
+	return &QueueCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Update returns an update builder for Queue.
+func (c *QueueClient) Update() *QueueUpdate {
+	mutation := newQueueMutation(c.config, OpUpdate)
+	return &QueueUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *QueueClient) UpdateOne(q *Queue) *QueueUpdateOne {
+	mutation := newQueueMutation(c.config, OpUpdateOne, withQueue(q))
+	return &QueueUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *QueueClient) UpdateOneID(id int) *QueueUpdateOne {
+	mutation := newQueueMutation(c.config, OpUpdateOne, withQueueID(id))
+	return &QueueUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for Queue.
+func (c *QueueClient) Delete() *QueueDelete {
+	mutation := newQueueMutation(c.config, OpDelete)
+	return &QueueDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a delete builder for the given entity.
+func (c *QueueClient) DeleteOne(q *Queue) *QueueDeleteOne {
+	return c.DeleteOneID(q.ID)
+}
+
+// DeleteOneID returns a delete builder for the given id.
+func (c *QueueClient) DeleteOneID(id int) *QueueDeleteOne {
+	builder := c.Delete().Where(queue.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &QueueDeleteOne{builder}
+}
+
+// Create returns a query builder for Queue.
+func (c *QueueClient) Query() *QueueQuery {
+	return &QueueQuery{config: c.config}
+}
+
+// Get returns a Queue entity by its id.
+func (c *QueueClient) Get(ctx context.Context, id int) (*Queue, error) {
+	return c.Query().Where(queue.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *QueueClient) GetX(ctx context.Context, id int) *Queue {
+	q, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return q
+}
+
+// QueryDentist queries the dentist edge of a Queue.
+func (c *QueueClient) QueryDentist(q *Queue) *DentistQuery {
+	query := &DentistQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := q.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(queue.Table, queue.FieldID, id),
+			sqlgraph.To(dentist.Table, dentist.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, queue.DentistTable, queue.DentistColumn),
+		)
+		fromV = sqlgraph.Neighbors(q.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryNurse queries the nurse edge of a Queue.
+func (c *QueueClient) QueryNurse(q *Queue) *NurseQuery {
+	query := &NurseQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := q.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(queue.Table, queue.FieldID, id),
+			sqlgraph.To(nurse.Table, nurse.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, queue.NurseTable, queue.NurseColumn),
+		)
+		fromV = sqlgraph.Neighbors(q.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryPatient queries the patient edge of a Queue.
+func (c *QueueClient) QueryPatient(q *Queue) *PatientQuery {
+	query := &PatientQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := q.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(queue.Table, queue.FieldID, id),
+			sqlgraph.To(patient.Table, patient.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, queue.PatientTable, queue.PatientColumn),
+		)
+		fromV = sqlgraph.Neighbors(q.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// Hooks returns the client hooks.
+func (c *QueueClient) Hooks() []Hook {
+	return c.hooks.Queue
+}
+
+// RoomClient is a client for the Room schema.
+type RoomClient struct {
+	config
+}
+
+// NewRoomClient returns a client for the Room from the given config.
+func NewRoomClient(c config) *RoomClient {
+	return &RoomClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `room.Hooks(f(g(h())))`.
+func (c *RoomClient) Use(hooks ...Hook) {
+	c.hooks.Room = append(c.hooks.Room, hooks...)
+}
+
+// Create returns a create builder for Room.
+func (c *RoomClient) Create() *RoomCreate {
+	mutation := newRoomMutation(c.config, OpCreate)
+	return &RoomCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Update returns an update builder for Room.
+func (c *RoomClient) Update() *RoomUpdate {
+	mutation := newRoomMutation(c.config, OpUpdate)
+	return &RoomUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *RoomClient) UpdateOne(r *Room) *RoomUpdateOne {
+	mutation := newRoomMutation(c.config, OpUpdateOne, withRoom(r))
+	return &RoomUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *RoomClient) UpdateOneID(id int) *RoomUpdateOne {
+	mutation := newRoomMutation(c.config, OpUpdateOne, withRoomID(id))
+	return &RoomUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for Room.
+func (c *RoomClient) Delete() *RoomDelete {
+	mutation := newRoomMutation(c.config, OpDelete)
+	return &RoomDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a delete builder for the given entity.
+func (c *RoomClient) DeleteOne(r *Room) *RoomDeleteOne {
 	return c.DeleteOneID(r.ID)
 }
 
 // DeleteOneID returns a delete builder for the given id.
-func (c *ResolutionClient) DeleteOneID(id int) *ResolutionDeleteOne {
-	builder := c.Delete().Where(resolution.ID(id))
+func (c *RoomClient) DeleteOneID(id int) *RoomDeleteOne {
+	builder := c.Delete().Where(room.ID(id))
 	builder.mutation.id = &id
 	builder.mutation.op = OpDeleteOne
-	return &ResolutionDeleteOne{builder}
+	return &RoomDeleteOne{builder}
 }
 
-// Query returns a query builder for Resolution.
-func (c *ResolutionClient) Query() *ResolutionQuery {
-	return &ResolutionQuery{config: c.config}
+// Create returns a query builder for Room.
+func (c *RoomClient) Query() *RoomQuery {
+	return &RoomQuery{config: c.config}
 }
 
-// Get returns a Resolution entity by its id.
-func (c *ResolutionClient) Get(ctx context.Context, id int) (*Resolution, error) {
-	return c.Query().Where(resolution.ID(id)).Only(ctx)
+// Get returns a Room entity by its id.
+func (c *RoomClient) Get(ctx context.Context, id int) (*Room, error) {
+	return c.Query().Where(room.ID(id)).Only(ctx)
 }
 
 // GetX is like Get, but panics if an error occurs.
-func (c *ResolutionClient) GetX(ctx context.Context, id int) *Resolution {
+func (c *RoomClient) GetX(ctx context.Context, id int) *Room {
 	r, err := c.Get(ctx, id)
 	if err != nil {
 		panic(err)
@@ -484,15 +2021,15 @@ func (c *ResolutionClient) GetX(ctx context.Context, id int) *Resolution {
 	return r
 }
 
-// QueryPlaylistVideos queries the playlist_videos edge of a Resolution.
-func (c *ResolutionClient) QueryPlaylistVideos(r *Resolution) *PlaylistVideoQuery {
-	query := &PlaylistVideoQuery{config: c.config}
+// QueryAppointment queries the appointment edge of a Room.
+func (c *RoomClient) QueryAppointment(r *Room) *AppointmentQuery {
+	query := &AppointmentQuery{config: c.config}
 	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
 		id := r.ID
 		step := sqlgraph.NewStep(
-			sqlgraph.From(resolution.Table, resolution.FieldID, id),
-			sqlgraph.To(playlist_video.Table, playlist_video.FieldID),
-			sqlgraph.Edge(sqlgraph.O2M, false, resolution.PlaylistVideosTable, resolution.PlaylistVideosColumn),
+			sqlgraph.From(room.Table, room.FieldID, id),
+			sqlgraph.To(appointment.Table, appointment.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, room.AppointmentTable, room.AppointmentColumn),
 		)
 		fromV = sqlgraph.Neighbors(r.driver.Dialect(), step)
 		return fromV, nil
@@ -501,246 +2038,6 @@ func (c *ResolutionClient) QueryPlaylistVideos(r *Resolution) *PlaylistVideoQuer
 }
 
 // Hooks returns the client hooks.
-func (c *ResolutionClient) Hooks() []Hook {
-	return c.hooks.Resolution
-}
-
-// UserClient is a client for the User schema.
-type UserClient struct {
-	config
-}
-
-// NewUserClient returns a client for the User from the given config.
-func NewUserClient(c config) *UserClient {
-	return &UserClient{config: c}
-}
-
-// Use adds a list of mutation hooks to the hooks stack.
-// A call to `Use(f, g, h)` equals to `user.Hooks(f(g(h())))`.
-func (c *UserClient) Use(hooks ...Hook) {
-	c.hooks.User = append(c.hooks.User, hooks...)
-}
-
-// Create returns a create builder for User.
-func (c *UserClient) Create() *UserCreate {
-	mutation := newUserMutation(c.config, OpCreate)
-	return &UserCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// BulkCreate returns a builder for creating a bulk of User entities.
-func (c *UserClient) CreateBulk(builders ...*UserCreate) *UserCreateBulk {
-	return &UserCreateBulk{config: c.config, builders: builders}
-}
-
-// Update returns an update builder for User.
-func (c *UserClient) Update() *UserUpdate {
-	mutation := newUserMutation(c.config, OpUpdate)
-	return &UserUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// UpdateOne returns an update builder for the given entity.
-func (c *UserClient) UpdateOne(u *User) *UserUpdateOne {
-	mutation := newUserMutation(c.config, OpUpdateOne, withUser(u))
-	return &UserUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// UpdateOneID returns an update builder for the given id.
-func (c *UserClient) UpdateOneID(id int) *UserUpdateOne {
-	mutation := newUserMutation(c.config, OpUpdateOne, withUserID(id))
-	return &UserUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// Delete returns a delete builder for User.
-func (c *UserClient) Delete() *UserDelete {
-	mutation := newUserMutation(c.config, OpDelete)
-	return &UserDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// DeleteOne returns a delete builder for the given entity.
-func (c *UserClient) DeleteOne(u *User) *UserDeleteOne {
-	return c.DeleteOneID(u.ID)
-}
-
-// DeleteOneID returns a delete builder for the given id.
-func (c *UserClient) DeleteOneID(id int) *UserDeleteOne {
-	builder := c.Delete().Where(user.ID(id))
-	builder.mutation.id = &id
-	builder.mutation.op = OpDeleteOne
-	return &UserDeleteOne{builder}
-}
-
-// Query returns a query builder for User.
-func (c *UserClient) Query() *UserQuery {
-	return &UserQuery{config: c.config}
-}
-
-// Get returns a User entity by its id.
-func (c *UserClient) Get(ctx context.Context, id int) (*User, error) {
-	return c.Query().Where(user.ID(id)).Only(ctx)
-}
-
-// GetX is like Get, but panics if an error occurs.
-func (c *UserClient) GetX(ctx context.Context, id int) *User {
-	u, err := c.Get(ctx, id)
-	if err != nil {
-		panic(err)
-	}
-	return u
-}
-
-// QueryPlaylists queries the playlists edge of a User.
-func (c *UserClient) QueryPlaylists(u *User) *PlaylistQuery {
-	query := &PlaylistQuery{config: c.config}
-	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
-		id := u.ID
-		step := sqlgraph.NewStep(
-			sqlgraph.From(user.Table, user.FieldID, id),
-			sqlgraph.To(playlist.Table, playlist.FieldID),
-			sqlgraph.Edge(sqlgraph.O2M, false, user.PlaylistsTable, user.PlaylistsColumn),
-		)
-		fromV = sqlgraph.Neighbors(u.driver.Dialect(), step)
-		return fromV, nil
-	}
-	return query
-}
-
-// QueryVideos queries the videos edge of a User.
-func (c *UserClient) QueryVideos(u *User) *VideoQuery {
-	query := &VideoQuery{config: c.config}
-	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
-		id := u.ID
-		step := sqlgraph.NewStep(
-			sqlgraph.From(user.Table, user.FieldID, id),
-			sqlgraph.To(video.Table, video.FieldID),
-			sqlgraph.Edge(sqlgraph.O2M, false, user.VideosTable, user.VideosColumn),
-		)
-		fromV = sqlgraph.Neighbors(u.driver.Dialect(), step)
-		return fromV, nil
-	}
-	return query
-}
-
-// Hooks returns the client hooks.
-func (c *UserClient) Hooks() []Hook {
-	return c.hooks.User
-}
-
-// VideoClient is a client for the Video schema.
-type VideoClient struct {
-	config
-}
-
-// NewVideoClient returns a client for the Video from the given config.
-func NewVideoClient(c config) *VideoClient {
-	return &VideoClient{config: c}
-}
-
-// Use adds a list of mutation hooks to the hooks stack.
-// A call to `Use(f, g, h)` equals to `video.Hooks(f(g(h())))`.
-func (c *VideoClient) Use(hooks ...Hook) {
-	c.hooks.Video = append(c.hooks.Video, hooks...)
-}
-
-// Create returns a create builder for Video.
-func (c *VideoClient) Create() *VideoCreate {
-	mutation := newVideoMutation(c.config, OpCreate)
-	return &VideoCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// BulkCreate returns a builder for creating a bulk of Video entities.
-func (c *VideoClient) CreateBulk(builders ...*VideoCreate) *VideoCreateBulk {
-	return &VideoCreateBulk{config: c.config, builders: builders}
-}
-
-// Update returns an update builder for Video.
-func (c *VideoClient) Update() *VideoUpdate {
-	mutation := newVideoMutation(c.config, OpUpdate)
-	return &VideoUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// UpdateOne returns an update builder for the given entity.
-func (c *VideoClient) UpdateOne(v *Video) *VideoUpdateOne {
-	mutation := newVideoMutation(c.config, OpUpdateOne, withVideo(v))
-	return &VideoUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// UpdateOneID returns an update builder for the given id.
-func (c *VideoClient) UpdateOneID(id int) *VideoUpdateOne {
-	mutation := newVideoMutation(c.config, OpUpdateOne, withVideoID(id))
-	return &VideoUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// Delete returns a delete builder for Video.
-func (c *VideoClient) Delete() *VideoDelete {
-	mutation := newVideoMutation(c.config, OpDelete)
-	return &VideoDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// DeleteOne returns a delete builder for the given entity.
-func (c *VideoClient) DeleteOne(v *Video) *VideoDeleteOne {
-	return c.DeleteOneID(v.ID)
-}
-
-// DeleteOneID returns a delete builder for the given id.
-func (c *VideoClient) DeleteOneID(id int) *VideoDeleteOne {
-	builder := c.Delete().Where(video.ID(id))
-	builder.mutation.id = &id
-	builder.mutation.op = OpDeleteOne
-	return &VideoDeleteOne{builder}
-}
-
-// Query returns a query builder for Video.
-func (c *VideoClient) Query() *VideoQuery {
-	return &VideoQuery{config: c.config}
-}
-
-// Get returns a Video entity by its id.
-func (c *VideoClient) Get(ctx context.Context, id int) (*Video, error) {
-	return c.Query().Where(video.ID(id)).Only(ctx)
-}
-
-// GetX is like Get, but panics if an error occurs.
-func (c *VideoClient) GetX(ctx context.Context, id int) *Video {
-	v, err := c.Get(ctx, id)
-	if err != nil {
-		panic(err)
-	}
-	return v
-}
-
-// QueryOwner queries the owner edge of a Video.
-func (c *VideoClient) QueryOwner(v *Video) *UserQuery {
-	query := &UserQuery{config: c.config}
-	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
-		id := v.ID
-		step := sqlgraph.NewStep(
-			sqlgraph.From(video.Table, video.FieldID, id),
-			sqlgraph.To(user.Table, user.FieldID),
-			sqlgraph.Edge(sqlgraph.M2O, true, video.OwnerTable, video.OwnerColumn),
-		)
-		fromV = sqlgraph.Neighbors(v.driver.Dialect(), step)
-		return fromV, nil
-	}
-	return query
-}
-
-// QueryPlaylistVideos queries the playlist_videos edge of a Video.
-func (c *VideoClient) QueryPlaylistVideos(v *Video) *PlaylistVideoQuery {
-	query := &PlaylistVideoQuery{config: c.config}
-	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
-		id := v.ID
-		step := sqlgraph.NewStep(
-			sqlgraph.From(video.Table, video.FieldID, id),
-			sqlgraph.To(playlist_video.Table, playlist_video.FieldID),
-			sqlgraph.Edge(sqlgraph.O2M, false, video.PlaylistVideosTable, video.PlaylistVideosColumn),
-		)
-		fromV = sqlgraph.Neighbors(v.driver.Dialect(), step)
-		return fromV, nil
-	}
-	return query
-}
-
-// Hooks returns the client hooks.
-func (c *VideoClient) Hooks() []Hook {
-	return c.hooks.Video
+func (c *RoomClient) Hooks() []Hook {
+	return c.hooks.Room
 }

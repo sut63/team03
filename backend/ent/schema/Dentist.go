@@ -29,10 +29,10 @@ func (Dentist) Fields() []ent.Field {
 // Edges of the Dentist.
 func (Dentist) Edges() []ent.Edge {
    return []ent.Edge{
-	edge.From("nurse", Nurse.Type).Ref("dentist").Unique(),
-	edge.From("degree", Degree.Type).Ref("dentist").Unique(),
-	edge.From("expert", Expert.Type).Ref("dentist").Unique(),
-	edge.From("gender", Gender.Type).Ref("dentist").Unique(),
+	edge.From("nurse", Nurse.Type).Ref("dentists").Unique(),
+	edge.From("degree", Degree.Type).Ref("dentists").Unique(),
+	edge.From("expert", Expert.Type).Ref("dentists").Unique(),
+	edge.From("gender", Gender.Type).Ref("dentists").Unique(),
 
 	edge.To("medicalfiles", Medicalfile.Type).StorageKey(edge.Column("dentist_id")),
 	edge.To("queue", Queue.Type).StorageKey(edge.Column("dentist_id")),

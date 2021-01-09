@@ -21,6 +21,6 @@ func (Expert) Fields() []ent.Field {
 // Edges of the Expert.
 func (Expert) Edges() []ent.Edge {
 	return []ent.Edge{
-		edge.To("dentist", Dentist.Type).StorageKey(edge.Column("expert_id")),
+		edge.To("dentists", Dentist.Type).StorageKey(edge.Column("expert_id")),
 	}
 }
