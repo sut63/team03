@@ -29,6 +29,7 @@ func (Nurse) Edges() []ent.Edge {
 		edge.To("queue", Queue.Type).StorageKey(edge.Column("nurse_id")),
 		edge.To("medicalfiles", Medicalfile.Type).StorageKey(edge.Column("nurse_id")),
 		edge.To("dentalexpenses", Dentalexpense.Type).StorageKey(edge.Column("nurse_id")),
+		edge.To("patients", Patient.Type).StorageKey(edge.Column("nurse_id")),
 		
 	}
 }
