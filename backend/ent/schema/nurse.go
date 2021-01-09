@@ -18,8 +18,6 @@ func (Nurse) Fields() []ent.Field {
 		field.Int("nurse_age"),
 		field.String("nurse_email").Unique(),
 		field.String("nurse_password"),
-		
-		
 	}
 }
 
@@ -27,5 +25,6 @@ func (Nurse) Fields() []ent.Field {
 func (Nurse) Edges() []ent.Edge {
 	return []ent.Edge{
 		edge.To("queue", Queue.Type).StorageKey(edge.Column("nurse_id")),
+		edge.To("patients", Patient.Type).StorageKey(edge.Column("nurse_id")),
 	}
 }
