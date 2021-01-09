@@ -30,6 +30,7 @@ func (Patient) Edges() []ent.Edge {
 		edge.From("medicalcare", MedicalCare.Type).Ref("patients").Unique(),
 		edge.From("nurse", Nurse.Type).Ref("patients").Unique(), 
 		edge.From("disease", Disease.Type).Ref("patients").Unique(),
+		edge.To("medicalfiles", Medicalfile.Type).StorageKey(edge.Column("patient_id")),
 	}
 
 }

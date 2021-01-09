@@ -33,5 +33,6 @@ func (Dentist) Edges() []ent.Edge {
 	edge.From("degree", Degree.Type).Ref("dentist").Unique(),
 	edge.From("expert", Expert.Type).Ref("dentist").Unique(),
 	edge.From("gender", Gender.Type).Ref("dentist").Unique(),
+	edge.To("medicalfiles", Medicalfile.Type).StorageKey(edge.Column("dentist_id")),
    }
 } 
