@@ -6,10 +6,10 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/B5916177/app/ent"
-	"github.com/B5916177/app/ent/dentist"
-	"github.com/B5916177/app/ent/nurse"
-	"github.com/B5916177/app/ent/patient"
+	"github.com/team03/app/ent"
+	"github.com/team03/app/ent/dentist"
+	"github.com/team03/app/ent/nurse"
+	"github.com/team03/app/ent/patient"
 	"github.com/gin-gonic/gin"
 )
 
