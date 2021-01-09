@@ -35,7 +35,7 @@ func (Dentist) Edges() []ent.Edge {
 	edge.From("gender", Gender.Type).Ref("dentist").Unique(),
 
 	edge.To("medicalfiles", Medicalfile.Type).StorageKey(edge.Column("dentist_id")),
-
+	edge.To("queue", Queue.Type).StorageKey(edge.Column("dentist_id")),
 	edge.To("appointment", Appointment.Type).StorageKey(edge.Column("dentist_id")),
 	
    }
