@@ -14,14 +14,14 @@ type Dentist struct {
 // Fields of the Dentist.
 func (Dentist) Fields() []ent.Field {
    return []ent.Field{
-		field.String("dentist_name").NotEmpty(),
-		field.Int("dentist_age").Positive(),
-		field.String("dentist_cardid").NotEmpty(),
-		field.Time("dentist_birthday"),
-		field.String("dentist_experience").NotEmpty(),
-		field.String("dentist_tel").NotEmpty(),
-		field.String("dentist_email").NotEmpty(),
-		field.String("dentist_password").NotEmpty(),
+	field.String("name").NotEmpty(),
+	field.Int("age").Positive(),
+	field.String("cardid").NotEmpty(),
+	field.Time("birthday"),
+	field.String("experience").NotEmpty(),
+	field.String("tel").NotEmpty(),
+	field.String("email").NotEmpty(),
+	field.String("password").NotEmpty(),
 
    }
 }
