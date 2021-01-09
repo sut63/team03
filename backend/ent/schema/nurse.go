@@ -2,9 +2,9 @@ package schema
 
 import (
 	"github.com/facebookincubator/ent"
-	"github.com/facebookincubator/ent/schema/edge"
 	"github.com/facebookincubator/ent/schema/field"
-)
+	"github.com/facebookincubator/ent/schema/edge"
+ )
 
 // Nurse holds the schema definition for the Nurse entity.
 type Nurse struct {
@@ -31,6 +31,6 @@ func (Nurse) Edges() []ent.Edge {
 		edge.To("dentalexpenses", Dentalexpense.Type).StorageKey(edge.Column("nurse_id")),
 		edge.To("patients", Patient.Type).StorageKey(edge.Column("nurse_id")),
 		edge.To("dentists", Dentist.Type).StorageKey(edge.Column("nurse_id")),
-		edge.To("queue", Queue.Type).StorageKey(edge.Column("nurse_id")),
+		
 	}
 }
