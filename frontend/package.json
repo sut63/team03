@@ -7,6 +7,7 @@
   },
   "scripts": {
     "start": "yarn workspace app start",
+    "bundle": "yarn workspace app bundle",
     "build": "lerna run build",
     "tsc": "tsc",
     "clean": "backstage-cli clean && lerna run clean",
@@ -25,7 +26,7 @@
     ]
   },
   "devDependencies": {
-    "@backstage/cli": "^0.1.1-alpha.18",
+    "@backstage/cli": "^0.1.1-alpha.16",
     "@spotify/prettier-config": "^7.0.0",
     "lerna": "^3.20.2",
     "prettier": "^1.19.1"
@@ -42,8 +43,5 @@
     "*.{json,md}": [
       "prettier --write"
     ]
-  },
-  "dependencies": {
-    "sweetalert2": "^10.5.0"
   }
 }
