@@ -36,7 +36,7 @@ func (ctl *DiseaseController) DiseaseCreate(c *gin.Context) {
 		return
 	}
 
-	d, err := ctl.client.Disease.
+	ds, err := ctl.client.Disease.
 		Create().
 		SetName(obj.Name).
 		Save(context.Background())
@@ -47,7 +47,7 @@ func (ctl *DiseaseController) DiseaseCreate(c *gin.Context) {
 		return
 	}
 
-	c.JSON(200, d)
+	c.JSON(200, ds)
 }
 
 // GetDisease handles GET requests to retrieve a disease entity
@@ -81,7 +81,7 @@ func (ctl *DiseaseController) GetDisease(c *gin.Context) {
 		return
 	}
 
-	c.JSON(200, d)
+	c.JSON(200, ds)
 }
 
 // ListDisease handles request to get a list of disease entities
@@ -129,12 +129,12 @@ func (ctl *DiseaseController) ListDisease(c *gin.Context) {
 
 // NewDiseaseController creates and registers handles for the disease controller
 func NewDiseaseController(router gin.IRouter, client *ent.Client) *DiseaseController {
-	dc := &DiseaseController{
+	dsc := &DiseaseController{
 		client: client,
 		router: router,
 	}
-	dc.register()
-	return dc
+	dsc.register()
+	return dsc
 }
 
 // InitDiseaseController registers routes to the main engine

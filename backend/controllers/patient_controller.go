@@ -67,7 +67,7 @@ func (ctl *PatientController) PatientCreate(c *gin.Context) {
 		return
 	}
 
-	d, err := ctl.client.Disease.
+	ds, err := ctl.client.Disease.
 		Query().
 		Where(disease.IDEQ(int(obj.Disease))).
 		Only(context.Background())
@@ -112,7 +112,7 @@ func (ctl *PatientController) PatientCreate(c *gin.Context) {
 		SetTel(obj.Tel).
 		SetBirthday(time).
 		SetAge(obj.Age).
-		SetDisease(d).
+		SetDisease(ds).
 		SetMedicalcare(mc).
 		SetNurse(n).
 		Save(context.Background())

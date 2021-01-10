@@ -59,6 +59,21 @@ type Disease struct {
 	Name string
 }
 
+type Degrees struct {
+	Degree []Degree
+}
+
+type Degree struct {
+	Name string
+}
+
+type Experts struct {
+	Expert []Expert
+}
+
+type Expert struct {
+	Name string
+}
 
 // @title SUT SA Example API
 // @version 1.0
@@ -124,7 +139,8 @@ func main() {
 	controllers.NewPriceTypeController(v1, client)
 	controllers.NewAppointmentController(v1, client)
 	controllers.NewRoomController(v1, client)
-
+	controllers.NewDegreeController(v1, client)
+	controllers.NewExpertController(v1, client)
 	// Set PriceType Data
 	pricetypes := PriceTypes{
 		PriceType: []PriceType{
@@ -205,12 +221,47 @@ func main() {
 			Disease{"โรคความดันโลหิตสูง"},
 		},
 	}
-	for _, d := range diseases.Disease {
+	for _, ds := range diseases.Disease {
 		client.Disease.
 			Create().
-			SetName(d.Name).
+			SetName(ds.Name).
 			Save(context.Background())
 	}
+
+	// Set Degree Data
+	degrees := Degree{
+		Degree: []Degree{
+			Degree{"ปริญญาตรี"},
+			Degree{"ปริญญาโท"},
+			Degree{"ปริญญาเอก"},
+		},
+	}
+	for _, dg := range degrees.Degree {
+		client.Degree.
+			Create().
+			SetName(dg.Name).
+			Save(context.Background())
+	}
+
+	
+	// Set Expert Data
+	experts := Expert{
+		Expert: []Expert{
+			Expert{"ทันตกรรมจัดฟัน"},
+			Expert{"ทันตกรรมจัดกระดูก"},
+			Expert{"ทันตกรรมประดิษฐ์"},
+			Expert{"ทันตกรรมหัตถการ"},
+			Expert{"ทันตกรรมทั่วไป"},
+			Expert{"ทันตกรรมสำหรับเด็ก"},
+		},
+	}
+	for _, e := range experts.Expert {
+		client.Expert.
+			Create().
+			SetName(e.Name).
+			Save(context.Background())
+	}
+
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	router.Run()
 }
