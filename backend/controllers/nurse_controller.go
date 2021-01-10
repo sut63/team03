@@ -2,7 +2,7 @@ package controllers
 
 import (
 	"context"
-	"fmt"
+	
 	"strconv"
 
 	"github.com/team03/app/ent"
@@ -150,7 +150,7 @@ func NewNurseController(router gin.IRouter, client *ent.Client) *NurseController
 		router: router,
 	}
 
-	ec.register()
+	nc.register()
 
 	return nc
 

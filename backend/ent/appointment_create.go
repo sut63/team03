@@ -10,10 +10,10 @@ import (
 
 	"github.com/facebookincubator/ent/dialect/sql/sqlgraph"
 	"github.com/facebookincubator/ent/schema/field"
-	"github.com/tanapon395/playlist-video/ent/appointment"
-	"github.com/tanapon395/playlist-video/ent/dentist"
-	"github.com/tanapon395/playlist-video/ent/patient"
-	"github.com/tanapon395/playlist-video/ent/room"
+	"github.com/team03/app/ent/appointment"
+	"github.com/team03/app/ent/dentist"
+	"github.com/team03/app/ent/patient"
+	"github.com/team03/app/ent/room"
 )
 
 // AppointmentCreate is the builder for creating a Appointment entity.

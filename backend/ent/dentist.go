@@ -8,11 +8,11 @@ import (
 	"time"
 
 	"github.com/facebookincubator/ent/dialect/sql"
-	"github.com/tanapon395/playlist-video/ent/degree"
-	"github.com/tanapon395/playlist-video/ent/dentist"
-	"github.com/tanapon395/playlist-video/ent/expert"
-	"github.com/tanapon395/playlist-video/ent/gender"
-	"github.com/tanapon395/playlist-video/ent/nurse"
+	"github.com/team03/app/ent/degree"
+	"github.com/team03/app/ent/dentist"
+	"github.com/team03/app/ent/expert"
+	"github.com/team03/app/ent/gender"
+	"github.com/team03/app/ent/nurse"
 )
 
 // Dentist is the model entity for the Dentist schema.

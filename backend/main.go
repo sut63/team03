@@ -15,7 +15,7 @@ import (
 )
 
 type PriceTypes struct {
-	PriceType []PriceTypes
+	PriceType []PriceType
 }
 type PriceType struct {
 	Name string
@@ -25,7 +25,10 @@ type Nurses struct {
 	Nurse []Nurse
 }
 type Nurse struct {
-	Name string
+	nursename string
+	nurseage int
+	nurseemail string
+	nursepassword string
 }
 
 type Rooms struct {
@@ -141,6 +144,9 @@ func main() {
 	controllers.NewRoomController(v1, client)
 	controllers.NewDegreeController(v1, client)
 	controllers.NewExpertController(v1, client)
+	controllers.NewQueueController(v1, client)
+	controllers.NewDiseaseController(v1, client)
+	controllers.NewGenderController(v1, client)
 	// Set PriceType Data
 	pricetypes := PriceTypes{
 		PriceType: []PriceType{
@@ -184,10 +190,10 @@ func main() {
 			Medicalcare{"สิทธิบัตรทอง"},
 		},
 	}
-	for _, m := range medicalcares.Medicalcare {
+	for _, mc := range medicalcares.Medicalcare {
 		client.MedicalCare.
 			Create().
-			SetName(m.Name).
+			SetName(mc.Name).
 			Save(context.Background())
 	}
 
@@ -259,6 +265,23 @@ func main() {
 		client.Expert.
 			Create().
 			SetName(e.Name).
+			Save(context.Background())
+	}
+
+	// Set Nurse Data
+	nurses := Nurse{
+		Nurse: []Nurse{
+			Nurse{"tony stark",25,"tony@outlook.com","1234"},
+			Nurse{"abc",30,"a11@gmail.com","11"},
+		},
+	}
+	for _, n := range nurses.Nurse {
+		client.Nurse.
+			Create().
+			Setnursename(n.nursename).
+			Setnurseage(n.nurseage).
+			Setnurseemail(n.nurseemail).
+			Setnursepassword(n.nursepassword).
 			Save(context.Background())
 	}
 

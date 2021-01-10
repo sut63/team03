@@ -9,8 +9,8 @@ import (
 
 	"github.com/facebookincubator/ent/dialect/sql/sqlgraph"
 	"github.com/facebookincubator/ent/schema/field"
-	"github.com/tanapon395/playlist-video/ent/disease"
-	"github.com/tanapon395/playlist-video/ent/patient"
+	"github.com/team03/app/ent/disease"
+	"github.com/team03/app/ent/patient"
 )
 
 // DiseaseCreate is the builder for creating a Disease entity.

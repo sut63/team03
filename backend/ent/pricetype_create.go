@@ -9,8 +9,8 @@ import (
 
 	"github.com/facebookincubator/ent/dialect/sql/sqlgraph"
 	"github.com/facebookincubator/ent/schema/field"
-	"github.com/tanapon395/playlist-video/ent/dentalexpense"
-	"github.com/tanapon395/playlist-video/ent/pricetype"
+	"github.com/team03/app/ent/dentalexpense"
+	"github.com/team03/app/ent/pricetype"
 )
 
 // PriceTypeCreate is the builder for creating a PriceType entity.

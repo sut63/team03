@@ -33,14 +33,14 @@ var doc = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/playlist-videos": {
+        "/appointments": {
             "get": {
-                "description": "list playlist-video entities",
+                "description": "list appointment entities",
                 "produces": [
                     "application/json"
                 ],
-                "summary": "List playlist-video entities",
-                "operationId": "list-playlist-video",
+                "summary": "List appointment entities",
+                "operationId": "list-appointment",
                 "parameters": [
                     {
                         "type": "integer",
@@ -61,7 +61,7 @@ var doc = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/ent.Playlist_Video"
+                                "$ref": "#/definitions/ent.Appointment"
                             }
                         }
                     },
@@ -80,23 +80,23 @@ var doc = `{
                 }
             },
             "post": {
-                "description": "Create playlist-video",
+                "description": "Create Appointment",
                 "consumes": [
                     "application/json"
                 ],
                 "produces": [
                     "application/json"
                 ],
-                "summary": "Create playlist-video",
-                "operationId": "create-playlist-video",
+                "summary": "Create Appointment",
+                "operationId": "create-Appointment",
                 "parameters": [
                     {
-                        "description": "Playlist_Video entity",
-                        "name": "playlist-video",
+                        "description": "Appointment entity",
+                        "name": "Appointment",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/ent.Playlist_Video"
+                            "$ref": "#/definitions/ent.Appointment"
                         }
                     }
                 ],
@@ -104,7 +104,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/ent.Playlist_Video"
+                            "$ref": "#/definitions/ent.Appointment"
                         }
                     },
                     "400": {
@@ -122,107 +122,18 @@ var doc = `{
                 }
             }
         },
-        "/playlists": {
+        "/appointments/{id}": {
             "get": {
-                "description": "list playlist entities",
+                "description": "get Appointment by ID",
                 "produces": [
                     "application/json"
                 ],
-                "summary": "List playlist entities",
-                "operationId": "list-playlist",
+                "summary": "Get a Appointment entity by ID",
+                "operationId": "get-Appointment",
                 "parameters": [
                     {
                         "type": "integer",
-                        "description": "Limit",
-                        "name": "limit",
-                        "in": "query"
-                    },
-                    {
-                        "type": "integer",
-                        "description": "Offset",
-                        "name": "offset",
-                        "in": "query"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/ent.Playlist"
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/gin.H"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/gin.H"
-                        }
-                    }
-                }
-            },
-            "post": {
-                "description": "Create playlist",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "summary": "Create playlist",
-                "operationId": "create-playlist",
-                "parameters": [
-                    {
-                        "description": "Playlist entity",
-                        "name": "playlist",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/ent.Playlist"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/ent.Playlist"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/gin.H"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/gin.H"
-                        }
-                    }
-                }
-            }
-        },
-        "/playlists/{id}": {
-            "get": {
-                "description": "get playlist by ID",
-                "produces": [
-                    "application/json"
-                ],
-                "summary": "Get a playlist entity by ID",
-                "operationId": "get-playlist",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "Playlist ID",
+                        "description": "Appointment ID",
                         "name": "id",
                         "in": "path",
                         "required": true
@@ -232,7 +143,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/ent.Playlist"
+                            "$ref": "#/definitions/ent.Appointment"
                         }
                     },
                     "400": {
@@ -256,14 +167,14 @@ var doc = `{
                 }
             }
         },
-        "/resolutions": {
+        "/degrees": {
             "get": {
-                "description": "list resolution entities",
+                "description": "list degree entities",
                 "produces": [
                     "application/json"
                 ],
-                "summary": "List resolution entities",
-                "operationId": "list-resolution",
+                "summary": "List degree entities",
+                "operationId": "list-degree",
                 "parameters": [
                     {
                         "type": "integer",
@@ -284,7 +195,7 @@ var doc = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/ent.Resolution"
+                                "$ref": "#/definitions/ent.Degree"
                             }
                         }
                     },
@@ -303,23 +214,23 @@ var doc = `{
                 }
             },
             "post": {
-                "description": "Create resolution",
+                "description": "Create degree",
                 "consumes": [
                     "application/json"
                 ],
                 "produces": [
                     "application/json"
                 ],
-                "summary": "Create resolution",
-                "operationId": "create-resolution",
+                "summary": "Create degree",
+                "operationId": "create-degree",
                 "parameters": [
                     {
-                        "description": "Resolution entity",
-                        "name": "resolution",
+                        "description": " Degree entity",
+                        "name": "degree",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/ent.Resolution"
+                            "$ref": "#/definitions/ent.Degree"
                         }
                     }
                 ],
@@ -327,7 +238,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/ent.Resolution"
+                            "$ref": "#/definitions/ent.Degree"
                         }
                     },
                     "400": {
@@ -345,18 +256,18 @@ var doc = `{
                 }
             }
         },
-        "/resolutions/{id}": {
+        "/degrees/{id}": {
             "get": {
-                "description": "get resolution by ID",
+                "description": "get degree by ID",
                 "produces": [
                     "application/json"
                 ],
-                "summary": "Get a resolution entity by ID",
-                "operationId": "get-resolution",
+                "summary": "Get a Degree entity by ID",
+                "operationId": "get-degree",
                 "parameters": [
                     {
                         "type": "integer",
-                        "description": "Resolution ID",
+                        "description": "Degree ID",
                         "name": "id",
                         "in": "path",
                         "required": true
@@ -366,7 +277,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/ent.Resolution"
+                            "$ref": "#/definitions/ent.Degree"
                         }
                     },
                     "400": {
@@ -390,14 +301,14 @@ var doc = `{
                 }
             }
         },
-        "/users": {
+        "/dentalexpenses": {
             "get": {
-                "description": "list user entities",
+                "description": "list dentalexpense entities",
                 "produces": [
                     "application/json"
                 ],
-                "summary": "List user entities",
-                "operationId": "list-user",
+                "summary": "List dentalexpense entities",
+                "operationId": "list-dentalexpense",
                 "parameters": [
                     {
                         "type": "integer",
@@ -418,7 +329,7 @@ var doc = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/ent.User"
+                                "$ref": "#/definitions/ent.DentalExpense"
                             }
                         }
                     },
@@ -437,23 +348,23 @@ var doc = `{
                 }
             },
             "post": {
-                "description": "Create user",
+                "description": "Create dentalexpense",
                 "consumes": [
                     "application/json"
                 ],
                 "produces": [
                     "application/json"
                 ],
-                "summary": "Create user",
-                "operationId": "create-user",
+                "summary": "Create dentalexpense",
+                "operationId": "create-dentalexpense",
                 "parameters": [
                     {
-                        "description": "User entity",
-                        "name": "user",
+                        "description": "DentalExpense entity",
+                        "name": "dentalexpense",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/ent.User"
+                            "$ref": "#/definitions/ent.DentalExpense"
                         }
                     }
                 ],
@@ -461,7 +372,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/ent.User"
+                            "$ref": "#/definitions/ent.DentalExpense"
                         }
                     },
                     "400": {
@@ -479,18 +390,18 @@ var doc = `{
                 }
             }
         },
-        "/users/{id}": {
+        "/dentalexpenses/{id}": {
             "get": {
-                "description": "get user by ID",
+                "description": "get dentalexpense by ID",
                 "produces": [
                     "application/json"
                 ],
-                "summary": "Get a user entity by ID",
-                "operationId": "get-user",
+                "summary": "Get a dentalexpense entity by ID",
+                "operationId": "get-dentalexpense",
                 "parameters": [
                     {
                         "type": "integer",
-                        "description": "User ID",
+                        "description": "DentalExpense ID",
                         "name": "id",
                         "in": "path",
                         "required": true
@@ -500,7 +411,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/ent.User"
+                            "$ref": "#/definitions/ent.DentalExpense"
                         }
                     },
                     "400": {
@@ -522,40 +433,38 @@ var doc = `{
                         }
                     }
                 }
-            },
-            "put": {
-                "description": "update user by ID",
-                "consumes": [
-                    "application/json"
-                ],
+            }
+        },
+        "/dentists": {
+            "get": {
+                "description": "list dentist entities",
                 "produces": [
                     "application/json"
                 ],
-                "summary": "Update a user entity by ID",
-                "operationId": "update-user",
+                "summary": "List dentist entities",
+                "operationId": "list-dentist",
                 "parameters": [
                     {
                         "type": "integer",
-                        "description": "User ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
+                        "description": "Limit",
+                        "name": "limit",
+                        "in": "query"
                     },
                     {
-                        "description": "User entity",
-                        "name": "user",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/ent.User"
-                        }
+                        "type": "integer",
+                        "description": "Offset",
+                        "name": "offset",
+                        "in": "query"
                     }
                 ],
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/ent.User"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ent.Dentist"
+                            }
                         }
                     },
                     "400": {
@@ -572,17 +481,1183 @@ var doc = `{
                     }
                 }
             },
+            "post": {
+                "description": "Create dentist",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Create dentist",
+                "operationId": "create-dentist",
+                "parameters": [
+                    {
+                        "description": "Dentist entity",
+                        "name": "dentist",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controllers.Dentist"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/controllers.Dentist"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    }
+                }
+            }
+        },
+        "/dentists/{id}": {
+            "get": {
+                "description": "get dentist by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get a dentist entity by ID",
+                "operationId": "get-dentist",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Dentist ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ent.Dentist"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    }
+                }
+            }
+        },
+        "/diseases": {
+            "get": {
+                "description": "list disease entities",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "List disease entities",
+                "operationId": "list-disease",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Limit",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Offset",
+                        "name": "offset",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ent.Disease"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    }
+                }
+            }
+        },
+        "/diseases/{id}": {
+            "get": {
+                "description": "get disease by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get a disease entity by ID",
+                "operationId": "get-disease",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Disease ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ent.Disease"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    }
+                }
+            }
+        },
+        "/experts": {
+            "get": {
+                "description": "list expert entities",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "List expert entities",
+                "operationId": "list-expert",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Limit",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Offset",
+                        "name": "offset",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ent.Expert"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create expert",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Create expert",
+                "operationId": "create-expert",
+                "parameters": [
+                    {
+                        "description": " Expert entity",
+                        "name": "expert",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ent.Expert"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ent.Expert"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    }
+                }
+            }
+        },
+        "/experts/{id}": {
+            "get": {
+                "description": "get expert by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get a expert entity by ID",
+                "operationId": "get-expert",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Expert ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ent.Expert"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    }
+                }
+            }
+        },
+        "/genders": {
+            "get": {
+                "description": "list gender entities",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "List gender entities",
+                "operationId": "list-gender",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Limit",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Offset",
+                        "name": "offset",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ent.Gender"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create gender",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Create gender",
+                "operationId": "create-gender",
+                "parameters": [
+                    {
+                        "description": "Gender entity",
+                        "name": "gender",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ent.Gender"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ent.Gender"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    }
+                }
+            }
+        },
+        "/genders/{id}": {
+            "get": {
+                "description": "get gender by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get a gender entity by ID",
+                "operationId": "get-gender",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Gender ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ent.Gender"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    }
+                }
+            }
+        },
+        "/medicalcares": {
+            "get": {
+                "description": "list medicalcare entities",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "List medicalcare entities",
+                "operationId": "list-medicalcare",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Limit",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Offset",
+                        "name": "offset",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ent.MedicalCare"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    }
+                }
+            }
+        },
+        "/medicalcares/{id}": {
+            "get": {
+                "description": "get medicalcare by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get a medicalcare entity by ID",
+                "operationId": "get-medicalcare",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "MedicalCare ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ent.MedicalCare"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    }
+                }
+            }
+        },
+        "/medicalfiles": {
+            "get": {
+                "description": "list Medicalfile entities",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "List Medicalfile entities",
+                "operationId": "list-Medicalfile",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Limit",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Offset",
+                        "name": "offset",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ent.Medicalfile"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create medicalfile",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Create medicalfile",
+                "operationId": "create-medicalfile",
+                "parameters": [
+                    {
+                        "description": "Medicalfile entity",
+                        "name": "Medicalfile",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ent.Medicalfile"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ent.Medicalfile"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    }
+                }
+            }
+        },
+        "/medicalfiles/{id}": {
+            "get": {
+                "description": "get Medicalfile by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get a Medicalfile entity by ID",
+                "operationId": "get-Medicalfile",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Medicalfile ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ent.Medicalfile"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    }
+                }
+            }
+        },
+        "/nurses": {
+            "get": {
+                "description": "list nurse entities",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "List nurse entities",
+                "operationId": "list-nurse",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Limit",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Offset",
+                        "name": "offset",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ent.Nurse"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create nurse",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Create nurse",
+                "operationId": "create-nurse",
+                "parameters": [
+                    {
+                        "description": "Nurse entity",
+                        "name": "nurse",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ent.Nurse"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ent.Nurse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    }
+                }
+            }
+        },
+        "/nurses/{id}": {
+            "get": {
+                "description": "get nurse by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get a nurse entity by ID",
+                "operationId": "get-nurse",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Nurse ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ent.Nurse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    }
+                }
+            }
+        },
+        "/patients": {
+            "get": {
+                "description": "list patient entities",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "List patient entities",
+                "operationId": "list-patient",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Limit",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Offset",
+                        "name": "offset",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ent.Patient"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create patient",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Create patient",
+                "operationId": "create-patient",
+                "parameters": [
+                    {
+                        "description": "Patient entity",
+                        "name": "patient",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ent.Patient"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ent.Patient"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    }
+                }
+            }
+        },
+        "/patients/{id}": {
+            "get": {
+                "description": "get patient by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get a patient entity by ID",
+                "operationId": "get-patient",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Patient ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ent.Patient"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    }
+                }
+            }
+        },
+        "/pricetypes": {
+            "get": {
+                "description": "list pricetype entities",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "List pricetype entities",
+                "operationId": "list-pricetype",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Limit",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Offset",
+                        "name": "offset",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ent.PriceType"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create pricetype",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Create pricetype",
+                "operationId": "create-pricetype",
+                "parameters": [
+                    {
+                        "description": "PriceType entity",
+                        "name": "pricetype",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ent.PriceType"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ent.PriceType"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    }
+                }
+            }
+        },
+        "/pricetypes/{id}": {
+            "get": {
+                "description": "get pricetype by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get a pricetype entity by ID",
+                "operationId": "get-pricetype",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "PriceType ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ent.PriceType"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    }
+                }
+            }
+        },
+        "/queues": {
+            "get": {
+                "description": "list queue entities",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "List queue entities",
+                "operationId": "list-queue",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Limit",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Offset",
+                        "name": "offset",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ent.Queue"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create queue",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Create queue",
+                "operationId": "create-queue",
+                "parameters": [
+                    {
+                        "description": "Queue entity",
+                        "name": "queue",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controllers.Queue"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/controllers.Queue"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    }
+                }
+            }
+        },
+        "/queues/{id}": {
             "delete": {
-                "description": "get user by ID",
+                "description": "get queue by ID",
                 "produces": [
                     "application/json"
                 ],
-                "summary": "Delete a user entity by ID",
-                "operationId": "delete-user",
+                "summary": "Delete a queue entity by ID",
+                "operationId": "delete-queue",
                 "parameters": [
                     {
                         "type": "integer",
-                        "description": "User ID",
+                        "description": "Queue ID",
                         "name": "id",
                         "in": "path",
                         "required": true
@@ -616,14 +1691,14 @@ var doc = `{
                 }
             }
         },
-        "/videos": {
+        "/rooms": {
             "get": {
-                "description": "list video entities",
+                "description": "list Room entities",
                 "produces": [
                     "application/json"
                 ],
-                "summary": "List video entities",
-                "operationId": "list-video",
+                "summary": "List Room entities",
+                "operationId": "list-Room",
                 "parameters": [
                     {
                         "type": "integer",
@@ -644,7 +1719,7 @@ var doc = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/ent.Video"
+                                "$ref": "#/definitions/ent.Room"
                             }
                         }
                     },
@@ -663,23 +1738,23 @@ var doc = `{
                 }
             },
             "post": {
-                "description": "Create video",
+                "description": "Create Room",
                 "consumes": [
                     "application/json"
                 ],
                 "produces": [
                     "application/json"
                 ],
-                "summary": "Create video",
-                "operationId": "create-video",
+                "summary": "Create Room",
+                "operationId": "create-Room",
                 "parameters": [
                     {
-                        "description": "Video entity",
-                        "name": "video",
+                        "description": "Room entity",
+                        "name": "Room",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/ent.Video"
+                            "$ref": "#/definitions/ent.Room"
                         }
                     }
                 ],
@@ -687,7 +1762,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/ent.Video"
+                            "$ref": "#/definitions/ent.Room"
                         }
                     },
                     "400": {
@@ -705,18 +1780,18 @@ var doc = `{
                 }
             }
         },
-        "/videos/{id}": {
+        "/rooms/{id}": {
             "get": {
-                "description": "get video by ID",
+                "description": "get Room by ID",
                 "produces": [
                     "application/json"
                 ],
-                "summary": "Get a video entity by ID",
-                "operationId": "get-video",
+                "summary": "Get a Room entity by ID",
+                "operationId": "get-Room",
                 "parameters": [
                     {
                         "type": "integer",
-                        "description": "Video ID",
+                        "description": "Room ID",
                         "name": "id",
                         "in": "path",
                         "required": true
@@ -726,99 +1801,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/ent.Video"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/gin.H"
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {
-                            "$ref": "#/definitions/gin.H"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/gin.H"
-                        }
-                    }
-                }
-            },
-            "put": {
-                "description": "update video by ID",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "summary": "Update a video entity by ID",
-                "operationId": "update-video",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "Video ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "description": "Video entity",
-                        "name": "video",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/ent.Video"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/ent.Video"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/gin.H"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/gin.H"
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "description": "get video by ID",
-                "produces": [
-                    "application/json"
-                ],
-                "summary": "Delete a video entity by ID",
-                "operationId": "delete-video",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "Video ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/gin.H"
+                            "$ref": "#/definitions/ent.Room"
                         }
                     },
                     "400": {
@@ -844,42 +1827,119 @@ var doc = `{
         }
     },
     "definitions": {
-        "ent.Playlist": {
+        "controllers.Dentist": {
+            "type": "object",
+            "properties": {
+                "birthday": {
+                    "type": "string"
+                },
+                "degree": {
+                    "type": "integer"
+                },
+                "expert": {
+                    "type": "integer"
+                },
+                "gender": {
+                    "type": "integer"
+                },
+                "nurse": {
+                    "type": "integer"
+                }
+            }
+        },
+        "controllers.Queue": {
+            "type": "object",
+            "properties": {
+                "dental": {
+                    "type": "string"
+                },
+                "dentist": {
+                    "type": "integer"
+                },
+                "nurse": {
+                    "type": "integer"
+                },
+                "patient": {
+                    "type": "integer"
+                },
+                "queueTime": {
+                    "type": "string"
+                }
+            }
+        },
+        "ent.Appointment": {
+            "type": "object",
+            "properties": {
+                "datetime": {
+                    "description": "Datetime holds the value of the \"datetime\" field.",
+                    "type": "string"
+                },
+                "detail": {
+                    "description": "Detail holds the value of the \"detail\" field.",
+                    "type": "string"
+                },
+                "edges": {
+                    "description": "Edges holds the relations/edges for other nodes in the graph.\nThe values are being populated by the AppointmentQuery when eager-loading is set.",
+                    "type": "object",
+                    "$ref": "#/definitions/ent.AppointmentEdges"
+                },
+                "id": {
+                    "description": "ID of the ent.",
+                    "type": "integer"
+                }
+            }
+        },
+        "ent.AppointmentEdges": {
+            "type": "object",
+            "properties": {
+                "dentist": {
+                    "description": "Dentist holds the value of the dentist edge.",
+                    "type": "object",
+                    "$ref": "#/definitions/ent.Dentist"
+                },
+                "patient": {
+                    "description": "Patient holds the value of the patient edge.",
+                    "type": "object",
+                    "$ref": "#/definitions/ent.Patient"
+                },
+                "room": {
+                    "description": "Room holds the value of the room edge.",
+                    "type": "object",
+                    "$ref": "#/definitions/ent.Room"
+                }
+            }
+        },
+        "ent.Degree": {
             "type": "object",
             "properties": {
                 "edges": {
-                    "description": "Edges holds the relations/edges for other nodes in the graph.\nThe values are being populated by the PlaylistQuery when eager-loading is set.",
+                    "description": "Edges holds the relations/edges for other nodes in the graph.\nThe values are being populated by the DegreeQuery when eager-loading is set.",
                     "type": "object",
-                    "$ref": "#/definitions/ent.PlaylistEdges"
+                    "$ref": "#/definitions/ent.DegreeEdges"
                 },
                 "id": {
                     "description": "ID of the ent.",
                     "type": "integer"
                 },
-                "title": {
-                    "description": "Title holds the value of the \"title\" field.",
+                "name": {
+                    "description": "Name holds the value of the \"name\" field.",
                     "type": "string"
                 }
             }
         },
-        "ent.PlaylistEdges": {
+        "ent.DegreeEdges": {
             "type": "object",
             "properties": {
-                "owner": {
-                    "description": "Owner holds the value of the owner edge.",
-                    "type": "object",
-                    "$ref": "#/definitions/ent.User"
-                },
-                "playlistVideos": {
-                    "description": "PlaylistVideos holds the value of the playlist_videos edge.",
+                "dentists": {
+                    "description": "Dentists holds the value of the dentists edge.",
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/ent.Playlist_Video"
+                        "$ref": "#/definitions/ent.Dentist"
                     }
                 }
             }
         },
-        "ent.Playlist_Video": {
+        "ent.DentalExpense": {
             "type": "object",
             "properties": {
                 "added_time": {
@@ -887,9 +1947,9 @@ var doc = `{
                     "type": "string"
                 },
                 "edges": {
-                    "description": "Edges holds the relations/edges for other nodes in the graph.\nThe values are being populated by the Playlist_VideoQuery when eager-loading is set.",
+                    "description": "Edges holds the relations/edges for other nodes in the graph.\nThe values are being populated by the DentalExpenseQuery when eager-loading is set.",
                     "type": "object",
-                    "$ref": "#/definitions/ent.Playlist_VideoEdges"
+                    "$ref": "#/definitions/ent.DentalExpenseEdges"
                 },
                 "id": {
                     "description": "ID of the ent.",
@@ -897,68 +1957,54 @@ var doc = `{
                 }
             }
         },
-        "ent.Playlist_VideoEdges": {
+        "ent.DentalExpenseEdges": {
             "type": "object",
             "properties": {
-                "playlist": {
-                    "description": "Playlist holds the value of the playlist edge.",
+                "medicalfile": {
+                    "description": "Medicalfile holds the value of the medicalfile edge.",
                     "type": "object",
-                    "$ref": "#/definitions/ent.Playlist"
+                    "$ref": "#/definitions/ent.Medicalfile"
                 },
-                "resolution": {
-                    "description": "Resolution holds the value of the resolution edge.",
+                "nurse": {
+                    "description": "Nurse holds the value of the nurse edge.",
                     "type": "object",
-                    "$ref": "#/definitions/ent.Resolution"
+                    "$ref": "#/definitions/ent.Nurse"
                 },
-                "video": {
-                    "description": "Video holds the value of the video edge.",
+                "pricetype": {
+                    "description": "Pricetype holds the value of the pricetype edge.",
                     "type": "object",
-                    "$ref": "#/definitions/ent.Video"
+                    "$ref": "#/definitions/ent.PriceType"
                 }
             }
         },
-        "ent.Resolution": {
+        "ent.Dentist": {
             "type": "object",
             "properties": {
-                "edges": {
-                    "description": "Edges holds the relations/edges for other nodes in the graph.\nThe values are being populated by the ResolutionQuery when eager-loading is set.",
-                    "type": "object",
-                    "$ref": "#/definitions/ent.ResolutionEdges"
-                },
-                "id": {
-                    "description": "ID of the ent.",
+                "age": {
+                    "description": "Age holds the value of the \"age\" field.",
                     "type": "integer"
                 },
-                "value": {
-                    "description": "Value holds the value of the \"value\" field.",
-                    "type": "integer"
-                }
-            }
-        },
-        "ent.ResolutionEdges": {
-            "type": "object",
-            "properties": {
-                "playlistVideos": {
-                    "description": "PlaylistVideos holds the value of the playlist_videos edge.",
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/ent.Playlist_Video"
-                    }
-                }
-            }
-        },
-        "ent.User": {
-            "type": "object",
-            "properties": {
+                "birthday": {
+                    "description": "Birthday holds the value of the \"birthday\" field.",
+                    "type": "string"
+                },
+                "cardid": {
+                    "description": "Cardid holds the value of the \"cardid\" field.",
+                    "type": "string"
+                },
                 "edges": {
-                    "description": "Edges holds the relations/edges for other nodes in the graph.\nThe values are being populated by the UserQuery when eager-loading is set.",
+                    "description": "Edges holds the relations/edges for other nodes in the graph.\nThe values are being populated by the DentistQuery when eager-loading is set.",
                     "type": "object",
-                    "$ref": "#/definitions/ent.UserEdges"
+                    "$ref": "#/definitions/ent.DentistEdges"
                 },
                 "email": {
                     "description": "Email holds the value of the \"email\" field.",
                     "type": "string"
                 },
+                "experience": {
+                    "description": "Experience holds the value of the \"experience\" field.",
+                    "type": "string"
+                },
                 "id": {
                     "description": "ID of the ent.",
                     "type": "integer"
@@ -966,35 +2012,340 @@ var doc = `{
                 "name": {
                     "description": "Name holds the value of the \"name\" field.",
                     "type": "string"
+                },
+                "password": {
+                    "description": "Password holds the value of the \"password\" field.",
+                    "type": "string"
+                },
+                "tel": {
+                    "description": "Tel holds the value of the \"tel\" field.",
+                    "type": "string"
                 }
             }
         },
-        "ent.UserEdges": {
+        "ent.DentistEdges": {
             "type": "object",
             "properties": {
-                "playlists": {
-                    "description": "Playlists holds the value of the playlists edge.",
+                "appointment": {
+                    "description": "Appointment holds the value of the appointment edge.",
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/ent.Playlist"
+                        "$ref": "#/definitions/ent.Appointment"
                     }
                 },
-                "videos": {
-                    "description": "Videos holds the value of the videos edge.",
+                "degree": {
+                    "description": "Degree holds the value of the degree edge.",
+                    "type": "object",
+                    "$ref": "#/definitions/ent.Degree"
+                },
+                "expert": {
+                    "description": "Expert holds the value of the expert edge.",
+                    "type": "object",
+                    "$ref": "#/definitions/ent.Expert"
+                },
+                "gender": {
+                    "description": "Gender holds the value of the gender edge.",
+                    "type": "object",
+                    "$ref": "#/definitions/ent.Gender"
+                },
+                "medicalfiles": {
+                    "description": "Medicalfiles holds the value of the medicalfiles edge.",
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/ent.Video"
+                        "$ref": "#/definitions/ent.Medicalfile"
+                    }
+                },
+                "nurse": {
+                    "description": "Nurse holds the value of the nurse edge.",
+                    "type": "object",
+                    "$ref": "#/definitions/ent.Nurse"
+                },
+                "queue": {
+                    "description": "Queue holds the value of the queue edge.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ent.Queue"
                     }
                 }
             }
         },
-        "ent.Video": {
+        "ent.Disease": {
             "type": "object",
             "properties": {
                 "edges": {
-                    "description": "Edges holds the relations/edges for other nodes in the graph.\nThe values are being populated by the VideoQuery when eager-loading is set.",
+                    "description": "Edges holds the relations/edges for other nodes in the graph.\nThe values are being populated by the DiseaseQuery when eager-loading is set.",
                     "type": "object",
-                    "$ref": "#/definitions/ent.VideoEdges"
+                    "$ref": "#/definitions/ent.DiseaseEdges"
+                },
+                "id": {
+                    "description": "ID of the ent.",
+                    "type": "integer"
+                },
+                "name": {
+                    "description": "Name holds the value of the \"name\" field.",
+                    "type": "string"
+                }
+            }
+        },
+        "ent.DiseaseEdges": {
+            "type": "object",
+            "properties": {
+                "patients": {
+                    "description": "Patients holds the value of the patients edge.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ent.Patient"
+                    }
+                }
+            }
+        },
+        "ent.Expert": {
+            "type": "object",
+            "properties": {
+                "edges": {
+                    "description": "Edges holds the relations/edges for other nodes in the graph.\nThe values are being populated by the ExpertQuery when eager-loading is set.",
+                    "type": "object",
+                    "$ref": "#/definitions/ent.ExpertEdges"
+                },
+                "id": {
+                    "description": "ID of the ent.",
+                    "type": "integer"
+                },
+                "name": {
+                    "description": "Name holds the value of the \"name\" field.",
+                    "type": "string"
+                }
+            }
+        },
+        "ent.ExpertEdges": {
+            "type": "object",
+            "properties": {
+                "dentists": {
+                    "description": "Dentists holds the value of the dentists edge.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ent.Dentist"
+                    }
+                }
+            }
+        },
+        "ent.Gender": {
+            "type": "object",
+            "properties": {
+                "edges": {
+                    "description": "Edges holds the relations/edges for other nodes in the graph.\nThe values are being populated by the GenderQuery when eager-loading is set.",
+                    "type": "object",
+                    "$ref": "#/definitions/ent.GenderEdges"
+                },
+                "id": {
+                    "description": "ID of the ent.",
+                    "type": "integer"
+                },
+                "name": {
+                    "description": "Name holds the value of the \"name\" field.",
+                    "type": "string"
+                }
+            }
+        },
+        "ent.GenderEdges": {
+            "type": "object",
+            "properties": {
+                "dentists": {
+                    "description": "Dentists holds the value of the dentists edge.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ent.Dentist"
+                    }
+                },
+                "patients": {
+                    "description": "Patients holds the value of the patients edge.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ent.Patient"
+                    }
+                }
+            }
+        },
+        "ent.MedicalCare": {
+            "type": "object",
+            "properties": {
+                "edges": {
+                    "description": "Edges holds the relations/edges for other nodes in the graph.\nThe values are being populated by the MedicalCareQuery when eager-loading is set.",
+                    "type": "object",
+                    "$ref": "#/definitions/ent.MedicalCareEdges"
+                },
+                "id": {
+                    "description": "ID of the ent.",
+                    "type": "integer"
+                },
+                "name": {
+                    "description": "Name holds the value of the \"name\" field.",
+                    "type": "string"
+                }
+            }
+        },
+        "ent.MedicalCareEdges": {
+            "type": "object",
+            "properties": {
+                "medicalfiles": {
+                    "description": "Medicalfiles holds the value of the medicalfiles edge.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ent.Medicalfile"
+                    }
+                },
+                "patients": {
+                    "description": "Patients holds the value of the patients edge.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ent.Patient"
+                    }
+                }
+            }
+        },
+        "ent.Medicalfile": {
+            "type": "object",
+            "properties": {
+                "added_time": {
+                    "description": "AddedTime holds the value of the \"added_time\" field.",
+                    "type": "string"
+                },
+                "detail": {
+                    "description": "Detail holds the value of the \"detail\" field.",
+                    "type": "string"
+                },
+                "edges": {
+                    "description": "Edges holds the relations/edges for other nodes in the graph.\nThe values are being populated by the MedicalfileQuery when eager-loading is set.",
+                    "type": "object",
+                    "$ref": "#/definitions/ent.MedicalfileEdges"
+                },
+                "id": {
+                    "description": "ID of the ent.",
+                    "type": "integer"
+                }
+            }
+        },
+        "ent.MedicalfileEdges": {
+            "type": "object",
+            "properties": {
+                "dentalexpenses": {
+                    "description": "Dentalexpenses holds the value of the dentalexpenses edge.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ent.DentalExpense"
+                    }
+                },
+                "dentist": {
+                    "description": "Dentist holds the value of the dentist edge.",
+                    "type": "object",
+                    "$ref": "#/definitions/ent.Dentist"
+                },
+                "medicalcare": {
+                    "description": "Medicalcare holds the value of the medicalcare edge.",
+                    "type": "object",
+                    "$ref": "#/definitions/ent.MedicalCare"
+                },
+                "nurse": {
+                    "description": "Nurse holds the value of the nurse edge.",
+                    "type": "object",
+                    "$ref": "#/definitions/ent.Nurse"
+                },
+                "patient": {
+                    "description": "Patient holds the value of the patient edge.",
+                    "type": "object",
+                    "$ref": "#/definitions/ent.Patient"
+                }
+            }
+        },
+        "ent.Nurse": {
+            "type": "object",
+            "properties": {
+                "edges": {
+                    "description": "Edges holds the relations/edges for other nodes in the graph.\nThe values are being populated by the NurseQuery when eager-loading is set.",
+                    "type": "object",
+                    "$ref": "#/definitions/ent.NurseEdges"
+                },
+                "id": {
+                    "description": "ID of the ent.",
+                    "type": "integer"
+                },
+                "nurse_age": {
+                    "description": "NurseAge holds the value of the \"nurse_age\" field.",
+                    "type": "integer"
+                },
+                "nurse_email": {
+                    "description": "NurseEmail holds the value of the \"nurse_email\" field.",
+                    "type": "string"
+                },
+                "nurse_name": {
+                    "description": "NurseName holds the value of the \"nurse_name\" field.",
+                    "type": "string"
+                },
+                "nurse_password": {
+                    "description": "NursePassword holds the value of the \"nurse_password\" field.",
+                    "type": "string"
+                }
+            }
+        },
+        "ent.NurseEdges": {
+            "type": "object",
+            "properties": {
+                "dentalexpenses": {
+                    "description": "Dentalexpenses holds the value of the dentalexpenses edge.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ent.DentalExpense"
+                    }
+                },
+                "dentists": {
+                    "description": "Dentists holds the value of the dentists edge.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ent.Dentist"
+                    }
+                },
+                "medicalfiles": {
+                    "description": "Medicalfiles holds the value of the medicalfiles edge.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ent.Medicalfile"
+                    }
+                },
+                "patients": {
+                    "description": "Patients holds the value of the patients edge.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ent.Patient"
+                    }
+                },
+                "queue": {
+                    "description": "Queue holds the value of the queue edge.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ent.Queue"
+                    }
+                }
+            }
+        },
+        "ent.Patient": {
+            "type": "object",
+            "properties": {
+                "age": {
+                    "description": "Age holds the value of the \"age\" field.",
+                    "type": "integer"
+                },
+                "birthday": {
+                    "description": "Birthday holds the value of the \"birthday\" field.",
+                    "type": "string"
+                },
+                "cardID": {
+                    "description": "CardID holds the value of the \"cardID\" field.",
+                    "type": "string"
+                },
+                "edges": {
+                    "description": "Edges holds the relations/edges for other nodes in the graph.\nThe values are being populated by the PatientQuery when eager-loading is set.",
+                    "type": "object",
+                    "$ref": "#/definitions/ent.PatientEdges"
                 },
                 "id": {
                     "description": "ID of the ent.",
@@ -1004,25 +2355,160 @@ var doc = `{
                     "description": "Name holds the value of the \"name\" field.",
                     "type": "string"
                 },
-                "url": {
-                    "description": "URL holds the value of the \"url\" field.",
+                "patient_ID": {
+                    "description": "PatientID holds the value of the \"patient_ID\" field.",
+                    "type": "string"
+                },
+                "tel": {
+                    "description": "Tel holds the value of the \"tel\" field.",
                     "type": "string"
                 }
             }
         },
-        "ent.VideoEdges": {
+        "ent.PatientEdges": {
             "type": "object",
             "properties": {
-                "owner": {
-                    "description": "Owner holds the value of the owner edge.",
-                    "type": "object",
-                    "$ref": "#/definitions/ent.User"
-                },
-                "playlistVideos": {
-                    "description": "PlaylistVideos holds the value of the playlist_videos edge.",
+                "appointment": {
+                    "description": "Appointment holds the value of the appointment edge.",
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/ent.Playlist_Video"
+                        "$ref": "#/definitions/ent.Appointment"
+                    }
+                },
+                "disease": {
+                    "description": "Disease holds the value of the disease edge.",
+                    "type": "object",
+                    "$ref": "#/definitions/ent.Disease"
+                },
+                "gender": {
+                    "description": "Gender holds the value of the gender edge.",
+                    "type": "object",
+                    "$ref": "#/definitions/ent.Gender"
+                },
+                "medicalcare": {
+                    "description": "Medicalcare holds the value of the medicalcare edge.",
+                    "type": "object",
+                    "$ref": "#/definitions/ent.MedicalCare"
+                },
+                "medicalfiles": {
+                    "description": "Medicalfiles holds the value of the medicalfiles edge.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ent.Medicalfile"
+                    }
+                },
+                "nurse": {
+                    "description": "Nurse holds the value of the nurse edge.",
+                    "type": "object",
+                    "$ref": "#/definitions/ent.Nurse"
+                },
+                "queue": {
+                    "description": "Queue holds the value of the queue edge.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ent.Queue"
+                    }
+                }
+            }
+        },
+        "ent.PriceType": {
+            "type": "object",
+            "properties": {
+                "edges": {
+                    "description": "Edges holds the relations/edges for other nodes in the graph.\nThe values are being populated by the PriceTypeQuery when eager-loading is set.",
+                    "type": "object",
+                    "$ref": "#/definitions/ent.PriceTypeEdges"
+                },
+                "id": {
+                    "description": "ID of the ent.",
+                    "type": "integer"
+                },
+                "name": {
+                    "description": "Name holds the value of the \"name\" field.",
+                    "type": "string"
+                }
+            }
+        },
+        "ent.PriceTypeEdges": {
+            "type": "object",
+            "properties": {
+                "dentalexpenses": {
+                    "description": "Dentalexpenses holds the value of the dentalexpenses edge.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ent.DentalExpense"
+                    }
+                }
+            }
+        },
+        "ent.Queue": {
+            "type": "object",
+            "properties": {
+                "dental": {
+                    "description": "Dental holds the value of the \"dental\" field.",
+                    "type": "string"
+                },
+                "edges": {
+                    "description": "Edges holds the relations/edges for other nodes in the graph.\nThe values are being populated by the QueueQuery when eager-loading is set.",
+                    "type": "object",
+                    "$ref": "#/definitions/ent.QueueEdges"
+                },
+                "id": {
+                    "description": "ID of the ent.",
+                    "type": "integer"
+                },
+                "queue_time": {
+                    "description": "QueueTime holds the value of the \"queue_time\" field.",
+                    "type": "string"
+                }
+            }
+        },
+        "ent.QueueEdges": {
+            "type": "object",
+            "properties": {
+                "dentist": {
+                    "description": "Dentist holds the value of the dentist edge.",
+                    "type": "object",
+                    "$ref": "#/definitions/ent.Dentist"
+                },
+                "nurse": {
+                    "description": "Nurse holds the value of the nurse edge.",
+                    "type": "object",
+                    "$ref": "#/definitions/ent.Nurse"
+                },
+                "patient": {
+                    "description": "Patient holds the value of the patient edge.",
+                    "type": "object",
+                    "$ref": "#/definitions/ent.Patient"
+                }
+            }
+        },
+        "ent.Room": {
+            "type": "object",
+            "properties": {
+                "edges": {
+                    "description": "Edges holds the relations/edges for other nodes in the graph.\nThe values are being populated by the RoomQuery when eager-loading is set.",
+                    "type": "object",
+                    "$ref": "#/definitions/ent.RoomEdges"
+                },
+                "id": {
+                    "description": "ID of the ent.",
+                    "type": "integer"
+                },
+                "name": {
+                    "description": "Name holds the value of the \"name\" field.",
+                    "type": "string"
+                }
+            }
+        },
+        "ent.RoomEdges": {
+            "type": "object",
+            "properties": {
+                "appointment": {
+                    "description": "Appointment holds the value of the appointment edge.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ent.Appointment"
                     }
                 }
             }
@@ -1053,6 +2539,7 @@ var doc = `{
         "OAuth2Application": {
             "type": "oauth2",
             "flow": "application",
+            "authorizationUrl": "",
             "tokenUrl": "https://example.com/oauth/token",
             "scopes": {
                 "admin": " Grants read and write access to administrative information",
@@ -1071,6 +2558,7 @@ var doc = `{
         "OAuth2Password": {
             "type": "oauth2",
             "flow": "password",
+            "authorizationUrl": "",
             "tokenUrl": "https://example.com/oauth/token",
             "scopes": {
                 "admin": " Grants read and write access to administrative information",
@@ -1096,7 +2584,7 @@ var SwaggerInfo = swaggerInfo{
 	Host:        "localhost:8080",
 	BasePath:    "/api/v1",
 	Schemes:     []string{},
-	Title:       "SUT SA Example API Playlist Vidoe",
+	Title:       "SUT SA Example API",
 	Description: "This is a sample server for SUT SE 2563",
 }
 

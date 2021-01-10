@@ -169,7 +169,7 @@ func (ctl *QueueController) ListQueue(c *gin.Context) {
 		Query().
 		WithPatient().
 		WithDentist().
-		WithEmployee().
+		WithNurse().
 		Limit(limit).
 		Offset(offset).
 		All(context.Background())

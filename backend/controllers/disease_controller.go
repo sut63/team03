@@ -70,7 +70,7 @@ func (ctl *DiseaseController) GetDisease(c *gin.Context) {
 		return
 	}
 
-	d, err := ctl.client.Disease.
+	ds, err := ctl.client.Disease.
 		Query().
 		Where(disease.IDEQ(int(id))).
 		Only(context.Background())

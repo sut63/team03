@@ -9,8 +9,8 @@ import (
 	"github.com/facebookincubator/ent/dialect/sql"
 	"github.com/facebookincubator/ent/dialect/sql/sqlgraph"
 	"github.com/facebookincubator/ent/schema/field"
-	"github.com/tanapon395/playlist-video/ent/medicalcare"
-	"github.com/tanapon395/playlist-video/ent/predicate"
+	"github.com/team03/app/ent/medicalcare"
+	"github.com/team03/app/ent/predicate"
 )
 
 // MedicalCareDelete is the builder for deleting a MedicalCare entity.

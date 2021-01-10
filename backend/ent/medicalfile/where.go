@@ -7,7 +7,7 @@ import (
 
 	"github.com/facebookincubator/ent/dialect/sql"
 	"github.com/facebookincubator/ent/dialect/sql/sqlgraph"
-	"github.com/tanapon395/playlist-video/ent/predicate"
+	"github.com/team03/app/ent/predicate"
 )
 
 // ID filters vertices based on their identifier.

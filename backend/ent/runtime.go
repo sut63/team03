@@ -3,18 +3,18 @@
 package ent
 
 import (
-	"github.com/tanapon395/playlist-video/ent/appointment"
-	"github.com/tanapon395/playlist-video/ent/degree"
-	"github.com/tanapon395/playlist-video/ent/dentist"
-	"github.com/tanapon395/playlist-video/ent/disease"
-	"github.com/tanapon395/playlist-video/ent/expert"
-	"github.com/tanapon395/playlist-video/ent/gender"
-	"github.com/tanapon395/playlist-video/ent/medicalcare"
-	"github.com/tanapon395/playlist-video/ent/medicalfile"
-	"github.com/tanapon395/playlist-video/ent/nurse"
-	"github.com/tanapon395/playlist-video/ent/patient"
-	"github.com/tanapon395/playlist-video/ent/room"
-	"github.com/tanapon395/playlist-video/ent/schema"
+	"github.com/team03/app/ent/appointment"
+	"github.com/team03/app/ent/degree"
+	"github.com/team03/app/ent/dentist"
+	"github.com/team03/app/ent/disease"
+	"github.com/team03/app/ent/expert"
+	"github.com/team03/app/ent/gender"
+	"github.com/team03/app/ent/medicalcare"
+	"github.com/team03/app/ent/medicalfile"
+	"github.com/team03/app/ent/nurse"
+	"github.com/team03/app/ent/patient"
+	"github.com/team03/app/ent/room"
+	"github.com/team03/app/ent/schema"
 )
 
 // The init function reads all schema descriptors with runtime

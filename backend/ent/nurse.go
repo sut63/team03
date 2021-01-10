@@ -7,7 +7,7 @@ import (
 	"strings"
 
 	"github.com/facebookincubator/ent/dialect/sql"
-	"github.com/tanapon395/playlist-video/ent/nurse"
+	"github.com/team03/app/ent/nurse"
 )
 
 // Nurse is the model entity for the Nurse schema.

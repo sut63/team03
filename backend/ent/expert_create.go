@@ -9,8 +9,8 @@ import (
 
 	"github.com/facebookincubator/ent/dialect/sql/sqlgraph"
 	"github.com/facebookincubator/ent/schema/field"
-	"github.com/tanapon395/playlist-video/ent/dentist"
-	"github.com/tanapon395/playlist-video/ent/expert"
+	"github.com/team03/app/ent/dentist"
+	"github.com/team03/app/ent/expert"
 )
 
 // ExpertCreate is the builder for creating a Expert entity.
