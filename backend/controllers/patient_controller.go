@@ -5,13 +5,13 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/TP/app/ent/disease"
-	"github.com/TP/app/ent/gender"
-	"github.com/TP/app/ent/medicalcare"
-	"github.com/TP/app/ent/patient"
-	"github.com/TP/app/ent/nurse"
+	"github.com/team03/app/ent/disease"
+	"github.com/team03/app/ent/gender"
+	"github.com/team03/app/ent/medicalcare"
+	"github.com/team03/app/ent/patient"
+	"github.com/team03/app/ent/nurse"
 	//  "fmt"
-	"github.com/TP/app/ent"
+	"github.com/team03/app/ent"
 	"github.com/gin-gonic/gin"
 )
 
