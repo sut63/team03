@@ -15,8 +15,8 @@ type Expert struct {
 	config `json:"-"`
 	// ID of the ent.
 	ID int `json:"id,omitempty"`
-	// ExpertName holds the value of the "expert_name" field.
-	ExpertName string `json:"expert_name,omitempty"`
+	// Name holds the value of the "name" field.
+	Name string `json:"name,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the ExpertQuery when eager-loading is set.
 	Edges ExpertEdges `json:"edges"`
@@ -44,7 +44,7 @@ func (e ExpertEdges) DentistsOrErr() ([]*Dentist, error) {
 func (*Expert) scanValues() []interface{} {
 	return []interface{}{
 		&sql.NullInt64{},  // id
-		&sql.NullString{}, // expert_name
+		&sql.NullString{}, // name
 	}
 }
 
@@ -61,9 +61,9 @@ func (e *Expert) assignValues(values ...interface{}) error {
 	e.ID = int(value.Int64)
 	values = values[1:]
 	if value, ok := values[0].(*sql.NullString); !ok {
-		return fmt.Errorf("unexpected type %T for field expert_name", values[0])
+		return fmt.Errorf("unexpected type %T for field name", values[0])
 	} else if value.Valid {
-		e.ExpertName = value.String
+		e.Name = value.String
 	}
 	return nil
 }
@@ -96,8 +96,8 @@ func (e *Expert) String() string {
 	var builder strings.Builder
 	builder.WriteString("Expert(")
 	builder.WriteString(fmt.Sprintf("id=%v", e.ID))
-	builder.WriteString(", expert_name=")
-	builder.WriteString(e.ExpertName)
+	builder.WriteString(", name=")
+	builder.WriteString(e.Name)
 	builder.WriteByte(')')
 	return builder.String()
 }

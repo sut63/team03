@@ -28,9 +28,9 @@ func (du *DegreeUpdate) Where(ps ...predicate.Degree) *DegreeUpdate {
 	return du
 }
 
-// SetDegreeName sets the degree_name field.
-func (du *DegreeUpdate) SetDegreeName(s string) *DegreeUpdate {
-	du.mutation.SetDegreeName(s)
+// SetName sets the name field.
+func (du *DegreeUpdate) SetName(s string) *DegreeUpdate {
+	du.mutation.SetName(s)
 	return du
 }
 
@@ -71,9 +71,9 @@ func (du *DegreeUpdate) RemoveDentists(d ...*Dentist) *DegreeUpdate {
 
 // Save executes the query and returns the number of rows/vertices matched by this operation.
 func (du *DegreeUpdate) Save(ctx context.Context) (int, error) {
-	if v, ok := du.mutation.DegreeName(); ok {
-		if err := degree.DegreeNameValidator(v); err != nil {
-			return 0, &ValidationError{Name: "degree_name", err: fmt.Errorf("ent: validator failed for field \"degree_name\": %w", err)}
+	if v, ok := du.mutation.Name(); ok {
+		if err := degree.NameValidator(v); err != nil {
+			return 0, &ValidationError{Name: "name", err: fmt.Errorf("ent: validator failed for field \"name\": %w", err)}
 		}
 	}
 
@@ -144,11 +144,11 @@ func (du *DegreeUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			}
 		}
 	}
-	if value, ok := du.mutation.DegreeName(); ok {
+	if value, ok := du.mutation.Name(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: degree.FieldDegreeName,
+			Column: degree.FieldName,
 		})
 	}
 	if nodes := du.mutation.RemovedDentistsIDs(); len(nodes) > 0 {
@@ -207,9 +207,9 @@ type DegreeUpdateOne struct {
 	mutation *DegreeMutation
 }
 
-// SetDegreeName sets the degree_name field.
-func (duo *DegreeUpdateOne) SetDegreeName(s string) *DegreeUpdateOne {
-	duo.mutation.SetDegreeName(s)
+// SetName sets the name field.
+func (duo *DegreeUpdateOne) SetName(s string) *DegreeUpdateOne {
+	duo.mutation.SetName(s)
 	return duo
 }
 
@@ -250,9 +250,9 @@ func (duo *DegreeUpdateOne) RemoveDentists(d ...*Dentist) *DegreeUpdateOne {
 
 // Save executes the query and returns the updated entity.
 func (duo *DegreeUpdateOne) Save(ctx context.Context) (*Degree, error) {
-	if v, ok := duo.mutation.DegreeName(); ok {
-		if err := degree.DegreeNameValidator(v); err != nil {
-			return nil, &ValidationError{Name: "degree_name", err: fmt.Errorf("ent: validator failed for field \"degree_name\": %w", err)}
+	if v, ok := duo.mutation.Name(); ok {
+		if err := degree.NameValidator(v); err != nil {
+			return nil, &ValidationError{Name: "name", err: fmt.Errorf("ent: validator failed for field \"name\": %w", err)}
 		}
 	}
 
@@ -321,11 +321,11 @@ func (duo *DegreeUpdateOne) sqlSave(ctx context.Context) (d *Degree, err error) 
 		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing Degree.ID for update")}
 	}
 	_spec.Node.ID.Value = id
-	if value, ok := duo.mutation.DegreeName(); ok {
+	if value, ok := duo.mutation.Name(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: degree.FieldDegreeName,
+			Column: degree.FieldName,
 		})
 	}
 	if nodes := duo.mutation.RemovedDentistsIDs(); len(nodes) > 0 {

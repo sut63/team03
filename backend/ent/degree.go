@@ -15,8 +15,8 @@ type Degree struct {
 	config `json:"-"`
 	// ID of the ent.
 	ID int `json:"id,omitempty"`
-	// DegreeName holds the value of the "degree_name" field.
-	DegreeName string `json:"degree_name,omitempty"`
+	// Name holds the value of the "name" field.
+	Name string `json:"name,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the DegreeQuery when eager-loading is set.
 	Edges DegreeEdges `json:"edges"`
@@ -44,7 +44,7 @@ func (e DegreeEdges) DentistsOrErr() ([]*Dentist, error) {
 func (*Degree) scanValues() []interface{} {
 	return []interface{}{
 		&sql.NullInt64{},  // id
-		&sql.NullString{}, // degree_name
+		&sql.NullString{}, // name
 	}
 }
 
@@ -61,9 +61,9 @@ func (d *Degree) assignValues(values ...interface{}) error {
 	d.ID = int(value.Int64)
 	values = values[1:]
 	if value, ok := values[0].(*sql.NullString); !ok {
-		return fmt.Errorf("unexpected type %T for field degree_name", values[0])
+		return fmt.Errorf("unexpected type %T for field name", values[0])
 	} else if value.Valid {
-		d.DegreeName = value.String
+		d.Name = value.String
 	}
 	return nil
 }
@@ -96,8 +96,8 @@ func (d *Degree) String() string {
 	var builder strings.Builder
 	builder.WriteString("Degree(")
 	builder.WriteString(fmt.Sprintf("id=%v", d.ID))
-	builder.WriteString(", degree_name=")
-	builder.WriteString(d.DegreeName)
+	builder.WriteString(", name=")
+	builder.WriteString(d.Name)
 	builder.WriteByte(')')
 	return builder.String()
 }

@@ -20,9 +20,9 @@ type ExpertCreate struct {
 	hooks    []Hook
 }
 
-// SetExpertName sets the expert_name field.
-func (ec *ExpertCreate) SetExpertName(s string) *ExpertCreate {
-	ec.mutation.SetExpertName(s)
+// SetName sets the name field.
+func (ec *ExpertCreate) SetName(s string) *ExpertCreate {
+	ec.mutation.SetName(s)
 	return ec
 }
 
@@ -48,12 +48,12 @@ func (ec *ExpertCreate) Mutation() *ExpertMutation {
 
 // Save creates the Expert in the database.
 func (ec *ExpertCreate) Save(ctx context.Context) (*Expert, error) {
-	if _, ok := ec.mutation.ExpertName(); !ok {
-		return nil, &ValidationError{Name: "expert_name", err: errors.New("ent: missing required field \"expert_name\"")}
+	if _, ok := ec.mutation.Name(); !ok {
+		return nil, &ValidationError{Name: "name", err: errors.New("ent: missing required field \"name\"")}
 	}
-	if v, ok := ec.mutation.ExpertName(); ok {
-		if err := expert.ExpertNameValidator(v); err != nil {
-			return nil, &ValidationError{Name: "expert_name", err: fmt.Errorf("ent: validator failed for field \"expert_name\": %w", err)}
+	if v, ok := ec.mutation.Name(); ok {
+		if err := expert.NameValidator(v); err != nil {
+			return nil, &ValidationError{Name: "name", err: fmt.Errorf("ent: validator failed for field \"name\": %w", err)}
 		}
 	}
 	var (
@@ -116,13 +116,13 @@ func (ec *ExpertCreate) createSpec() (*Expert, *sqlgraph.CreateSpec) {
 			},
 		}
 	)
-	if value, ok := ec.mutation.ExpertName(); ok {
+	if value, ok := ec.mutation.Name(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: expert.FieldExpertName,
+			Column: expert.FieldName,
 		})
-		e.ExpertName = value
+		e.Name = value
 	}
 	if nodes := ec.mutation.DentistsIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{

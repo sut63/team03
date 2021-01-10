@@ -593,7 +593,7 @@ type DegreeMutation struct {
 	op              Op
 	typ             string
 	id              *int
-	degree_name     *string
+	name            *string
 	clearedFields   map[string]struct{}
 	dentists        map[int]struct{}
 	removeddentists map[int]struct{}
@@ -680,41 +680,41 @@ func (m *DegreeMutation) ID() (id int, exists bool) {
 	return *m.id, true
 }
 
-// SetDegreeName sets the degree_name field.
-func (m *DegreeMutation) SetDegreeName(s string) {
-	m.degree_name = &s
+// SetName sets the name field.
+func (m *DegreeMutation) SetName(s string) {
+	m.name = &s
 }
 
-// DegreeName returns the degree_name value in the mutation.
-func (m *DegreeMutation) DegreeName() (r string, exists bool) {
-	v := m.degree_name
+// Name returns the name value in the mutation.
+func (m *DegreeMutation) Name() (r string, exists bool) {
+	v := m.name
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// OldDegreeName returns the old degree_name value of the Degree.
+// OldName returns the old name value of the Degree.
 // If the Degree object wasn't provided to the builder, the object is fetched
 // from the database.
 // An error is returned if the mutation operation is not UpdateOne, or database query fails.
-func (m *DegreeMutation) OldDegreeName(ctx context.Context) (v string, err error) {
+func (m *DegreeMutation) OldName(ctx context.Context) (v string, err error) {
 	if !m.op.Is(OpUpdateOne) {
-		return v, fmt.Errorf("OldDegreeName is allowed only on UpdateOne operations")
+		return v, fmt.Errorf("OldName is allowed only on UpdateOne operations")
 	}
 	if m.id == nil || m.oldValue == nil {
-		return v, fmt.Errorf("OldDegreeName requires an ID field in the mutation")
+		return v, fmt.Errorf("OldName requires an ID field in the mutation")
 	}
 	oldValue, err := m.oldValue(ctx)
 	if err != nil {
-		return v, fmt.Errorf("querying old value for OldDegreeName: %w", err)
+		return v, fmt.Errorf("querying old value for OldName: %w", err)
 	}
-	return oldValue.DegreeName, nil
+	return oldValue.Name, nil
 }
 
-// ResetDegreeName reset all changes of the "degree_name" field.
-func (m *DegreeMutation) ResetDegreeName() {
-	m.degree_name = nil
+// ResetName reset all changes of the "name" field.
+func (m *DegreeMutation) ResetName() {
+	m.name = nil
 }
 
 // AddDentistIDs adds the dentists edge to Dentist by ids.
@@ -774,8 +774,8 @@ func (m *DegreeMutation) Type() string {
 // fields that were in/decremented, call AddedFields().
 func (m *DegreeMutation) Fields() []string {
 	fields := make([]string, 0, 1)
-	if m.degree_name != nil {
-		fields = append(fields, degree.FieldDegreeName)
+	if m.name != nil {
+		fields = append(fields, degree.FieldName)
 	}
 	return fields
 }
@@ -785,8 +785,8 @@ func (m *DegreeMutation) Fields() []string {
 // not set, or was not define in the schema.
 func (m *DegreeMutation) Field(name string) (ent.Value, bool) {
 	switch name {
-	case degree.FieldDegreeName:
-		return m.DegreeName()
+	case degree.FieldName:
+		return m.Name()
 	}
 	return nil, false
 }
@@ -796,8 +796,8 @@ func (m *DegreeMutation) Field(name string) (ent.Value, bool) {
 // or the query to the database was failed.
 func (m *DegreeMutation) OldField(ctx context.Context, name string) (ent.Value, error) {
 	switch name {
-	case degree.FieldDegreeName:
-		return m.OldDegreeName(ctx)
+	case degree.FieldName:
+		return m.OldName(ctx)
 	}
 	return nil, fmt.Errorf("unknown Degree field %s", name)
 }
@@ -807,12 +807,12 @@ func (m *DegreeMutation) OldField(ctx context.Context, name string) (ent.Value, 
 // type mismatch the field type.
 func (m *DegreeMutation) SetField(name string, value ent.Value) error {
 	switch name {
-	case degree.FieldDegreeName:
+	case degree.FieldName:
 		v, ok := value.(string)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
-		m.SetDegreeName(v)
+		m.SetName(v)
 		return nil
 	}
 	return fmt.Errorf("unknown Degree field %s", name)
@@ -864,8 +864,8 @@ func (m *DegreeMutation) ClearField(name string) error {
 // defined in the schema.
 func (m *DegreeMutation) ResetField(name string) error {
 	switch name {
-	case degree.FieldDegreeName:
-		m.ResetDegreeName()
+	case degree.FieldName:
+		m.ResetName()
 		return nil
 	}
 	return fmt.Errorf("unknown Degree field %s", name)
@@ -2964,7 +2964,7 @@ type ExpertMutation struct {
 	op              Op
 	typ             string
 	id              *int
-	expert_name     *string
+	name            *string
 	clearedFields   map[string]struct{}
 	dentists        map[int]struct{}
 	removeddentists map[int]struct{}
@@ -3051,41 +3051,41 @@ func (m *ExpertMutation) ID() (id int, exists bool) {
 	return *m.id, true
 }
 
-// SetExpertName sets the expert_name field.
-func (m *ExpertMutation) SetExpertName(s string) {
-	m.expert_name = &s
+// SetName sets the name field.
+func (m *ExpertMutation) SetName(s string) {
+	m.name = &s
 }
 
-// ExpertName returns the expert_name value in the mutation.
-func (m *ExpertMutation) ExpertName() (r string, exists bool) {
-	v := m.expert_name
+// Name returns the name value in the mutation.
+func (m *ExpertMutation) Name() (r string, exists bool) {
+	v := m.name
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// OldExpertName returns the old expert_name value of the Expert.
+// OldName returns the old name value of the Expert.
 // If the Expert object wasn't provided to the builder, the object is fetched
 // from the database.
 // An error is returned if the mutation operation is not UpdateOne, or database query fails.
-func (m *ExpertMutation) OldExpertName(ctx context.Context) (v string, err error) {
+func (m *ExpertMutation) OldName(ctx context.Context) (v string, err error) {
 	if !m.op.Is(OpUpdateOne) {
-		return v, fmt.Errorf("OldExpertName is allowed only on UpdateOne operations")
+		return v, fmt.Errorf("OldName is allowed only on UpdateOne operations")
 	}
 	if m.id == nil || m.oldValue == nil {
-		return v, fmt.Errorf("OldExpertName requires an ID field in the mutation")
+		return v, fmt.Errorf("OldName requires an ID field in the mutation")
 	}
 	oldValue, err := m.oldValue(ctx)
 	if err != nil {
-		return v, fmt.Errorf("querying old value for OldExpertName: %w", err)
+		return v, fmt.Errorf("querying old value for OldName: %w", err)
 	}
-	return oldValue.ExpertName, nil
+	return oldValue.Name, nil
 }
 
-// ResetExpertName reset all changes of the "expert_name" field.
-func (m *ExpertMutation) ResetExpertName() {
-	m.expert_name = nil
+// ResetName reset all changes of the "name" field.
+func (m *ExpertMutation) ResetName() {
+	m.name = nil
 }
 
 // AddDentistIDs adds the dentists edge to Dentist by ids.
@@ -3145,8 +3145,8 @@ func (m *ExpertMutation) Type() string {
 // fields that were in/decremented, call AddedFields().
 func (m *ExpertMutation) Fields() []string {
 	fields := make([]string, 0, 1)
-	if m.expert_name != nil {
-		fields = append(fields, expert.FieldExpertName)
+	if m.name != nil {
+		fields = append(fields, expert.FieldName)
 	}
 	return fields
 }
@@ -3156,8 +3156,8 @@ func (m *ExpertMutation) Fields() []string {
 // not set, or was not define in the schema.
 func (m *ExpertMutation) Field(name string) (ent.Value, bool) {
 	switch name {
-	case expert.FieldExpertName:
-		return m.ExpertName()
+	case expert.FieldName:
+		return m.Name()
 	}
 	return nil, false
 }
@@ -3167,8 +3167,8 @@ func (m *ExpertMutation) Field(name string) (ent.Value, bool) {
 // or the query to the database was failed.
 func (m *ExpertMutation) OldField(ctx context.Context, name string) (ent.Value, error) {
 	switch name {
-	case expert.FieldExpertName:
-		return m.OldExpertName(ctx)
+	case expert.FieldName:
+		return m.OldName(ctx)
 	}
 	return nil, fmt.Errorf("unknown Expert field %s", name)
 }
@@ -3178,12 +3178,12 @@ func (m *ExpertMutation) OldField(ctx context.Context, name string) (ent.Value, 
 // type mismatch the field type.
 func (m *ExpertMutation) SetField(name string, value ent.Value) error {
 	switch name {
-	case expert.FieldExpertName:
+	case expert.FieldName:
 		v, ok := value.(string)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
-		m.SetExpertName(v)
+		m.SetName(v)
 		return nil
 	}
 	return fmt.Errorf("unknown Expert field %s", name)
@@ -3235,8 +3235,8 @@ func (m *ExpertMutation) ClearField(name string) error {
 // defined in the schema.
 func (m *ExpertMutation) ResetField(name string) error {
 	switch name {
-	case expert.FieldExpertName:
-		m.ResetExpertName()
+	case expert.FieldName:
+		m.ResetName()
 		return nil
 	}
 	return fmt.Errorf("unknown Expert field %s", name)
