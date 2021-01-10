@@ -35,6 +35,31 @@ type Room struct {
 	Name string
 }
 
+type Medicalcares struct {
+	Medicalcare []Medicalcare
+}
+
+type Medicalcare struct {
+	Name string
+}
+
+type Genders struct {
+	Gender []Gender
+}
+
+type Gender struct {
+	Name string
+}
+
+type Diseases struct {
+	Disease []Disease
+}
+
+type Disease struct {
+	Name string
+}
+
+
 // @title SUT SA Example API
 // @version 1.0
 // @description This is a sample server for SUT SE 2563
@@ -134,6 +159,58 @@ func main() {
 			Save(context.Background())
 	}
 
+	// Set MedicalCare Data
+	medicalcares := Medicalcares{
+		Medicalcare: []Medicalcare{
+			Medicalcare{"ไม่ระบุ"},
+			Medicalcare{"สิทธิข้าราชการ"},
+			Medicalcare{"สิทธิประกันสังคม"},
+			Medicalcare{"สิทธิบัตรทอง"},
+		},
+	}
+	for _, m := range medicalcares.Medicalcare {
+		client.MedicalCare.
+			Create().
+			SetName(m.Name).
+			Save(context.Background())
+	}
+
+	// Set Gender Data
+	genders := Genders{
+		Gender: []Gender{
+			Gender{"ชาย"},
+			Gender{"หญิง"},
+		},
+	}
+	for _, g := range genders.Gender {
+		client.Gender.
+			Create().
+			SetName(g.Name).
+			Save(context.Background())
+	}
+
+	// Set Disease Data
+	diseases := Diseases{
+		Disease: []Disease{
+			Disease{"ไม่ระบุ"},
+			Disease{"โรคหัวใจ"},
+			Disease{"โรคลมบ้าหมูหรือลมชัก"},
+			Disease{"โรคไต"},
+			Disease{"โรคหอบหืด"},
+			Disease{"โรคภูมิแพ้"},
+			Disease{"โรคไมเกรน"},
+			Disease{"โรคไทรอยด์"},
+			Disease{"โรคโลหิตจาง"},
+			Disease{"โรคความดันโลหิตต่ำ"},
+			Disease{"โรคความดันโลหิตสูง"},
+		},
+	}
+	for _, d := range diseases.Disease {
+		client.Disease.
+			Create().
+			SetName(d.Name).
+			Save(context.Background())
+	}
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	router.Run()
 }
