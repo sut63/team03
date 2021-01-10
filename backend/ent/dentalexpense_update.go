@@ -10,11 +10,11 @@ import (
 	"github.com/facebookincubator/ent/dialect/sql"
 	"github.com/facebookincubator/ent/dialect/sql/sqlgraph"
 	"github.com/facebookincubator/ent/schema/field"
-	"github.com/tanapon395/playlist-video/ent/dentalexpense"
-	"github.com/tanapon395/playlist-video/ent/medicalfile"
-	"github.com/tanapon395/playlist-video/ent/nurse"
-	"github.com/tanapon395/playlist-video/ent/predicate"
-	"github.com/tanapon395/playlist-video/ent/pricetype"
+	"github.com/team03/app/ent/dentalexpense"
+	"github.com/team03/app/ent/medicalfile"
+	"github.com/team03/app/ent/nurse"
+	"github.com/team03/app/ent/predicate"
+	"github.com/team03/app/ent/pricetype"
 )
 
 // DentalExpenseUpdate is the builder for updating DentalExpense entities.

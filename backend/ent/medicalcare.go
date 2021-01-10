@@ -7,7 +7,7 @@ import (
 	"strings"
 
 	"github.com/facebookincubator/ent/dialect/sql"
-	"github.com/tanapon395/playlist-video/ent/medicalcare"
+	"github.com/team03/app/ent/medicalcare"
 )
 
 // MedicalCare is the model entity for the MedicalCare schema.

@@ -7,7 +7,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/team03/app/ent"
-	"github.com/team03app/ent/gender"
+	"github.com/team03/app/ent/gender"
 )
 
 // GenderController defines the struct for the gender controller

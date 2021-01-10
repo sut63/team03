@@ -1,123 +1,194 @@
 basePath: /api/v1
 definitions:
-  ent.Playlist:
+  controllers.Dentist:
     properties:
+      birthday:
+        type: string
+      degree:
+        type: integer
+      expert:
+        type: integer
+      gender:
+        type: integer
+      nurse:
+        type: integer
+    type: object
+  controllers.Queue:
+    properties:
+      dental:
+        type: string
+      dentist:
+        type: integer
+      nurse:
+        type: integer
+      patient:
+        type: integer
+      queueTime:
+        type: string
+    type: object
+  ent.Appointment:
+    properties:
+      datetime:
+        description: Datetime holds the value of the "datetime" field.
+        type: string
+      detail:
+        description: Detail holds the value of the "detail" field.
+        type: string
       edges:
-        $ref: '#/definitions/ent.PlaylistEdges'
+        $ref: '#/definitions/ent.AppointmentEdges'
         description: |-
           Edges holds the relations/edges for other nodes in the graph.
-          The values are being populated by the PlaylistQuery when eager-loading is set.
+          The values are being populated by the AppointmentQuery when eager-loading is set.
         type: object
       id:
         description: ID of the ent.
         type: integer
-      title:
-        description: Title holds the value of the "title" field.
+    type: object
+  ent.AppointmentEdges:
+    properties:
+      dentist:
+        $ref: '#/definitions/ent.Dentist'
+        description: Dentist holds the value of the dentist edge.
+        type: object
+      patient:
+        $ref: '#/definitions/ent.Patient'
+        description: Patient holds the value of the patient edge.
+        type: object
+      room:
+        $ref: '#/definitions/ent.Room'
+        description: Room holds the value of the room edge.
+        type: object
+    type: object
+  ent.Degree:
+    properties:
+      edges:
+        $ref: '#/definitions/ent.DegreeEdges'
+        description: |-
+          Edges holds the relations/edges for other nodes in the graph.
+          The values are being populated by the DegreeQuery when eager-loading is set.
+        type: object
+      id:
+        description: ID of the ent.
+        type: integer
+      name:
+        description: Name holds the value of the "name" field.
         type: string
     type: object
-  ent.Playlist_Video:
+  ent.DegreeEdges:
+    properties:
+      dentists:
+        description: Dentists holds the value of the dentists edge.
+        items:
+          $ref: '#/definitions/ent.Dentist'
+        type: array
+    type: object
+  ent.DentalExpense:
     properties:
       added_time:
         description: AddedTime holds the value of the "added_time" field.
         type: string
       edges:
-        $ref: '#/definitions/ent.Playlist_VideoEdges'
+        $ref: '#/definitions/ent.DentalExpenseEdges'
         description: |-
           Edges holds the relations/edges for other nodes in the graph.
-          The values are being populated by the Playlist_VideoQuery when eager-loading is set.
+          The values are being populated by the DentalExpenseQuery when eager-loading is set.
         type: object
       id:
         description: ID of the ent.
         type: integer
     type: object
-  ent.Playlist_VideoEdges:
+  ent.DentalExpenseEdges:
     properties:
-      playlist:
-        $ref: '#/definitions/ent.Playlist'
-        description: Playlist holds the value of the playlist edge.
+      medicalfile:
+        $ref: '#/definitions/ent.Medicalfile'
+        description: Medicalfile holds the value of the medicalfile edge.
         type: object
-      resolution:
-        $ref: '#/definitions/ent.Resolution'
-        description: Resolution holds the value of the resolution edge.
+      nurse:
+        $ref: '#/definitions/ent.Nurse'
+        description: Nurse holds the value of the nurse edge.
         type: object
-      video:
-        $ref: '#/definitions/ent.Video'
-        description: Video holds the value of the video edge.
+      pricetype:
+        $ref: '#/definitions/ent.PriceType'
+        description: Pricetype holds the value of the pricetype edge.
         type: object
     type: object
-  ent.PlaylistEdges:
+  ent.Dentist:
     properties:
-      owner:
-        $ref: '#/definitions/ent.User'
-        description: Owner holds the value of the owner edge.
-        type: object
-      playlistVideos:
-        description: PlaylistVideos holds the value of the playlist_videos edge.
-        items:
-          $ref: '#/definitions/ent.Playlist_Video'
-        type: array
-    type: object
-  ent.Resolution:
-    properties:
+      age:
+        description: Age holds the value of the "age" field.
+        type: integer
+      birthday:
+        description: Birthday holds the value of the "birthday" field.
+        type: string
+      cardid:
+        description: Cardid holds the value of the "cardid" field.
+        type: string
       edges:
-        $ref: '#/definitions/ent.ResolutionEdges'
+        $ref: '#/definitions/ent.DentistEdges'
         description: |-
           Edges holds the relations/edges for other nodes in the graph.
-          The values are being populated by the ResolutionQuery when eager-loading is set.
-        type: object
-      id:
-        description: ID of the ent.
-        type: integer
-      value:
-        description: Value holds the value of the "value" field.
-        type: integer
-    type: object
-  ent.ResolutionEdges:
-    properties:
-      playlistVideos:
-        description: PlaylistVideos holds the value of the playlist_videos edge.
-        items:
-          $ref: '#/definitions/ent.Playlist_Video'
-        type: array
-    type: object
-  ent.User:
-    properties:
-      edges:
-        $ref: '#/definitions/ent.UserEdges'
-        description: |-
-          Edges holds the relations/edges for other nodes in the graph.
-          The values are being populated by the UserQuery when eager-loading is set.
+          The values are being populated by the DentistQuery when eager-loading is set.
         type: object
       email:
         description: Email holds the value of the "email" field.
         type: string
+      experience:
+        description: Experience holds the value of the "experience" field.
+        type: string
       id:
         description: ID of the ent.
         type: integer
       name:
         description: Name holds the value of the "name" field.
         type: string
+      password:
+        description: Password holds the value of the "password" field.
+        type: string
+      tel:
+        description: Tel holds the value of the "tel" field.
+        type: string
     type: object
-  ent.UserEdges:
+  ent.DentistEdges:
     properties:
-      playlists:
-        description: Playlists holds the value of the playlists edge.
+      appointment:
+        description: Appointment holds the value of the appointment edge.
         items:
-          $ref: '#/definitions/ent.Playlist'
+          $ref: '#/definitions/ent.Appointment'
         type: array
-      videos:
-        description: Videos holds the value of the videos edge.
+      degree:
+        $ref: '#/definitions/ent.Degree'
+        description: Degree holds the value of the degree edge.
+        type: object
+      expert:
+        $ref: '#/definitions/ent.Expert'
+        description: Expert holds the value of the expert edge.
+        type: object
+      gender:
+        $ref: '#/definitions/ent.Gender'
+        description: Gender holds the value of the gender edge.
+        type: object
+      medicalfiles:
+        description: Medicalfiles holds the value of the medicalfiles edge.
         items:
-          $ref: '#/definitions/ent.Video'
+          $ref: '#/definitions/ent.Medicalfile'
+        type: array
+      nurse:
+        $ref: '#/definitions/ent.Nurse'
+        description: Nurse holds the value of the nurse edge.
+        type: object
+      queue:
+        description: Queue holds the value of the queue edge.
+        items:
+          $ref: '#/definitions/ent.Queue'
         type: array
     type: object
-  ent.Video:
+  ent.Disease:
     properties:
       edges:
-        $ref: '#/definitions/ent.VideoEdges'
+        $ref: '#/definitions/ent.DiseaseEdges'
         description: |-
           Edges holds the relations/edges for other nodes in the graph.
-          The values are being populated by the VideoQuery when eager-loading is set.
+          The values are being populated by the DiseaseQuery when eager-loading is set.
         type: object
       id:
         description: ID of the ent.
@@ -125,20 +196,329 @@ definitions:
       name:
         description: Name holds the value of the "name" field.
         type: string
-      url:
-        description: URL holds the value of the "url" field.
+    type: object
+  ent.DiseaseEdges:
+    properties:
+      patients:
+        description: Patients holds the value of the patients edge.
+        items:
+          $ref: '#/definitions/ent.Patient'
+        type: array
+    type: object
+  ent.Expert:
+    properties:
+      edges:
+        $ref: '#/definitions/ent.ExpertEdges'
+        description: |-
+          Edges holds the relations/edges for other nodes in the graph.
+          The values are being populated by the ExpertQuery when eager-loading is set.
+        type: object
+      id:
+        description: ID of the ent.
+        type: integer
+      name:
+        description: Name holds the value of the "name" field.
         type: string
     type: object
-  ent.VideoEdges:
+  ent.ExpertEdges:
     properties:
-      owner:
-        $ref: '#/definitions/ent.User'
-        description: Owner holds the value of the owner edge.
-        type: object
-      playlistVideos:
-        description: PlaylistVideos holds the value of the playlist_videos edge.
+      dentists:
+        description: Dentists holds the value of the dentists edge.
         items:
-          $ref: '#/definitions/ent.Playlist_Video'
+          $ref: '#/definitions/ent.Dentist'
+        type: array
+    type: object
+  ent.Gender:
+    properties:
+      edges:
+        $ref: '#/definitions/ent.GenderEdges'
+        description: |-
+          Edges holds the relations/edges for other nodes in the graph.
+          The values are being populated by the GenderQuery when eager-loading is set.
+        type: object
+      id:
+        description: ID of the ent.
+        type: integer
+      name:
+        description: Name holds the value of the "name" field.
+        type: string
+    type: object
+  ent.GenderEdges:
+    properties:
+      dentists:
+        description: Dentists holds the value of the dentists edge.
+        items:
+          $ref: '#/definitions/ent.Dentist'
+        type: array
+      patients:
+        description: Patients holds the value of the patients edge.
+        items:
+          $ref: '#/definitions/ent.Patient'
+        type: array
+    type: object
+  ent.MedicalCare:
+    properties:
+      edges:
+        $ref: '#/definitions/ent.MedicalCareEdges'
+        description: |-
+          Edges holds the relations/edges for other nodes in the graph.
+          The values are being populated by the MedicalCareQuery when eager-loading is set.
+        type: object
+      id:
+        description: ID of the ent.
+        type: integer
+      name:
+        description: Name holds the value of the "name" field.
+        type: string
+    type: object
+  ent.MedicalCareEdges:
+    properties:
+      medicalfiles:
+        description: Medicalfiles holds the value of the medicalfiles edge.
+        items:
+          $ref: '#/definitions/ent.Medicalfile'
+        type: array
+      patients:
+        description: Patients holds the value of the patients edge.
+        items:
+          $ref: '#/definitions/ent.Patient'
+        type: array
+    type: object
+  ent.Medicalfile:
+    properties:
+      added_time:
+        description: AddedTime holds the value of the "added_time" field.
+        type: string
+      detail:
+        description: Detail holds the value of the "detail" field.
+        type: string
+      edges:
+        $ref: '#/definitions/ent.MedicalfileEdges'
+        description: |-
+          Edges holds the relations/edges for other nodes in the graph.
+          The values are being populated by the MedicalfileQuery when eager-loading is set.
+        type: object
+      id:
+        description: ID of the ent.
+        type: integer
+    type: object
+  ent.MedicalfileEdges:
+    properties:
+      dentalexpenses:
+        description: Dentalexpenses holds the value of the dentalexpenses edge.
+        items:
+          $ref: '#/definitions/ent.DentalExpense'
+        type: array
+      dentist:
+        $ref: '#/definitions/ent.Dentist'
+        description: Dentist holds the value of the dentist edge.
+        type: object
+      medicalcare:
+        $ref: '#/definitions/ent.MedicalCare'
+        description: Medicalcare holds the value of the medicalcare edge.
+        type: object
+      nurse:
+        $ref: '#/definitions/ent.Nurse'
+        description: Nurse holds the value of the nurse edge.
+        type: object
+      patient:
+        $ref: '#/definitions/ent.Patient'
+        description: Patient holds the value of the patient edge.
+        type: object
+    type: object
+  ent.Nurse:
+    properties:
+      edges:
+        $ref: '#/definitions/ent.NurseEdges'
+        description: |-
+          Edges holds the relations/edges for other nodes in the graph.
+          The values are being populated by the NurseQuery when eager-loading is set.
+        type: object
+      id:
+        description: ID of the ent.
+        type: integer
+      nurse_age:
+        description: NurseAge holds the value of the "nurse_age" field.
+        type: integer
+      nurse_email:
+        description: NurseEmail holds the value of the "nurse_email" field.
+        type: string
+      nurse_name:
+        description: NurseName holds the value of the "nurse_name" field.
+        type: string
+      nurse_password:
+        description: NursePassword holds the value of the "nurse_password" field.
+        type: string
+    type: object
+  ent.NurseEdges:
+    properties:
+      dentalexpenses:
+        description: Dentalexpenses holds the value of the dentalexpenses edge.
+        items:
+          $ref: '#/definitions/ent.DentalExpense'
+        type: array
+      dentists:
+        description: Dentists holds the value of the dentists edge.
+        items:
+          $ref: '#/definitions/ent.Dentist'
+        type: array
+      medicalfiles:
+        description: Medicalfiles holds the value of the medicalfiles edge.
+        items:
+          $ref: '#/definitions/ent.Medicalfile'
+        type: array
+      patients:
+        description: Patients holds the value of the patients edge.
+        items:
+          $ref: '#/definitions/ent.Patient'
+        type: array
+      queue:
+        description: Queue holds the value of the queue edge.
+        items:
+          $ref: '#/definitions/ent.Queue'
+        type: array
+    type: object
+  ent.Patient:
+    properties:
+      age:
+        description: Age holds the value of the "age" field.
+        type: integer
+      birthday:
+        description: Birthday holds the value of the "birthday" field.
+        type: string
+      cardID:
+        description: CardID holds the value of the "cardID" field.
+        type: string
+      edges:
+        $ref: '#/definitions/ent.PatientEdges'
+        description: |-
+          Edges holds the relations/edges for other nodes in the graph.
+          The values are being populated by the PatientQuery when eager-loading is set.
+        type: object
+      id:
+        description: ID of the ent.
+        type: integer
+      name:
+        description: Name holds the value of the "name" field.
+        type: string
+      patient_ID:
+        description: PatientID holds the value of the "patient_ID" field.
+        type: string
+      tel:
+        description: Tel holds the value of the "tel" field.
+        type: string
+    type: object
+  ent.PatientEdges:
+    properties:
+      appointment:
+        description: Appointment holds the value of the appointment edge.
+        items:
+          $ref: '#/definitions/ent.Appointment'
+        type: array
+      disease:
+        $ref: '#/definitions/ent.Disease'
+        description: Disease holds the value of the disease edge.
+        type: object
+      gender:
+        $ref: '#/definitions/ent.Gender'
+        description: Gender holds the value of the gender edge.
+        type: object
+      medicalcare:
+        $ref: '#/definitions/ent.MedicalCare'
+        description: Medicalcare holds the value of the medicalcare edge.
+        type: object
+      medicalfiles:
+        description: Medicalfiles holds the value of the medicalfiles edge.
+        items:
+          $ref: '#/definitions/ent.Medicalfile'
+        type: array
+      nurse:
+        $ref: '#/definitions/ent.Nurse'
+        description: Nurse holds the value of the nurse edge.
+        type: object
+      queue:
+        description: Queue holds the value of the queue edge.
+        items:
+          $ref: '#/definitions/ent.Queue'
+        type: array
+    type: object
+  ent.PriceType:
+    properties:
+      edges:
+        $ref: '#/definitions/ent.PriceTypeEdges'
+        description: |-
+          Edges holds the relations/edges for other nodes in the graph.
+          The values are being populated by the PriceTypeQuery when eager-loading is set.
+        type: object
+      id:
+        description: ID of the ent.
+        type: integer
+      name:
+        description: Name holds the value of the "name" field.
+        type: string
+    type: object
+  ent.PriceTypeEdges:
+    properties:
+      dentalexpenses:
+        description: Dentalexpenses holds the value of the dentalexpenses edge.
+        items:
+          $ref: '#/definitions/ent.DentalExpense'
+        type: array
+    type: object
+  ent.Queue:
+    properties:
+      dental:
+        description: Dental holds the value of the "dental" field.
+        type: string
+      edges:
+        $ref: '#/definitions/ent.QueueEdges'
+        description: |-
+          Edges holds the relations/edges for other nodes in the graph.
+          The values are being populated by the QueueQuery when eager-loading is set.
+        type: object
+      id:
+        description: ID of the ent.
+        type: integer
+      queue_time:
+        description: QueueTime holds the value of the "queue_time" field.
+        type: string
+    type: object
+  ent.QueueEdges:
+    properties:
+      dentist:
+        $ref: '#/definitions/ent.Dentist'
+        description: Dentist holds the value of the dentist edge.
+        type: object
+      nurse:
+        $ref: '#/definitions/ent.Nurse'
+        description: Nurse holds the value of the nurse edge.
+        type: object
+      patient:
+        $ref: '#/definitions/ent.Patient'
+        description: Patient holds the value of the patient edge.
+        type: object
+    type: object
+  ent.Room:
+    properties:
+      edges:
+        $ref: '#/definitions/ent.RoomEdges'
+        description: |-
+          Edges holds the relations/edges for other nodes in the graph.
+          The values are being populated by the RoomQuery when eager-loading is set.
+        type: object
+      id:
+        description: ID of the ent.
+        type: integer
+      name:
+        description: Name holds the value of the "name" field.
+        type: string
+    type: object
+  ent.RoomEdges:
+    properties:
+      appointment:
+        description: Appointment holds the value of the appointment edge.
+        items:
+          $ref: '#/definitions/ent.Appointment'
         type: array
     type: object
   gin.H:
@@ -155,13 +535,13 @@ info:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   termsOfService: http://swagger.io/terms/
-  title: SUT SA Example API Playlist Vidoe
+  title: SUT SA Example API
   version: "1.0"
 paths:
-  /playlist-videos:
+  /appointments:
     get:
-      description: list playlist-video entities
-      operationId: list-playlist-video
+      description: list appointment entities
+      operationId: list-appointment
       parameters:
       - description: Limit
         in: query
@@ -178,7 +558,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/ent.Playlist_Video'
+              $ref: '#/definitions/ent.Appointment'
             type: array
         "400":
           description: Bad Request
@@ -188,26 +568,26 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/gin.H'
-      summary: List playlist-video entities
+      summary: List appointment entities
     post:
       consumes:
       - application/json
-      description: Create playlist-video
-      operationId: create-playlist-video
+      description: Create Appointment
+      operationId: create-Appointment
       parameters:
-      - description: Playlist_Video entity
+      - description: Appointment entity
         in: body
-        name: playlist-video
+        name: Appointment
         required: true
         schema:
-          $ref: '#/definitions/ent.Playlist_Video'
+          $ref: '#/definitions/ent.Appointment'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/ent.Playlist_Video'
+            $ref: '#/definitions/ent.Appointment'
         "400":
           description: Bad Request
           schema:
@@ -216,72 +596,13 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/gin.H'
-      summary: Create playlist-video
-  /playlists:
+      summary: Create Appointment
+  /appointments/{id}:
     get:
-      description: list playlist entities
-      operationId: list-playlist
+      description: get Appointment by ID
+      operationId: get-Appointment
       parameters:
-      - description: Limit
-        in: query
-        name: limit
-        type: integer
-      - description: Offset
-        in: query
-        name: offset
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            items:
-              $ref: '#/definitions/ent.Playlist'
-            type: array
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/gin.H'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/gin.H'
-      summary: List playlist entities
-    post:
-      consumes:
-      - application/json
-      description: Create playlist
-      operationId: create-playlist
-      parameters:
-      - description: Playlist entity
-        in: body
-        name: playlist
-        required: true
-        schema:
-          $ref: '#/definitions/ent.Playlist'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/ent.Playlist'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/gin.H'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/gin.H'
-      summary: Create playlist
-  /playlists/{id}:
-    get:
-      description: get playlist by ID
-      operationId: get-playlist
-      parameters:
-      - description: Playlist ID
+      - description: Appointment ID
         in: path
         name: id
         required: true
@@ -292,7 +613,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/ent.Playlist'
+            $ref: '#/definitions/ent.Appointment'
         "400":
           description: Bad Request
           schema:
@@ -305,11 +626,11 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/gin.H'
-      summary: Get a playlist entity by ID
-  /resolutions:
+      summary: Get a Appointment entity by ID
+  /degrees:
     get:
-      description: list resolution entities
-      operationId: list-resolution
+      description: list degree entities
+      operationId: list-degree
       parameters:
       - description: Limit
         in: query
@@ -326,7 +647,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/ent.Resolution'
+              $ref: '#/definitions/ent.Degree'
             type: array
         "400":
           description: Bad Request
@@ -336,26 +657,26 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/gin.H'
-      summary: List resolution entities
+      summary: List degree entities
     post:
       consumes:
       - application/json
-      description: Create resolution
-      operationId: create-resolution
+      description: Create degree
+      operationId: create-degree
       parameters:
-      - description: Resolution entity
+      - description: ' Degree entity'
         in: body
-        name: resolution
+        name: degree
         required: true
         schema:
-          $ref: '#/definitions/ent.Resolution'
+          $ref: '#/definitions/ent.Degree'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/ent.Resolution'
+            $ref: '#/definitions/ent.Degree'
         "400":
           description: Bad Request
           schema:
@@ -364,13 +685,13 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/gin.H'
-      summary: Create resolution
-  /resolutions/{id}:
+      summary: Create degree
+  /degrees/{id}:
     get:
-      description: get resolution by ID
-      operationId: get-resolution
+      description: get degree by ID
+      operationId: get-degree
       parameters:
-      - description: Resolution ID
+      - description: Degree ID
         in: path
         name: id
         required: true
@@ -381,7 +702,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/ent.Resolution'
+            $ref: '#/definitions/ent.Degree'
         "400":
           description: Bad Request
           schema:
@@ -394,11 +715,11 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/gin.H'
-      summary: Get a resolution entity by ID
-  /users:
+      summary: Get a Degree entity by ID
+  /dentalexpenses:
     get:
-      description: list user entities
-      operationId: list-user
+      description: list dentalexpense entities
+      operationId: list-dentalexpense
       parameters:
       - description: Limit
         in: query
@@ -415,7 +736,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/ent.User'
+              $ref: '#/definitions/ent.DentalExpense'
             type: array
         "400":
           description: Bad Request
@@ -425,26 +746,26 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/gin.H'
-      summary: List user entities
+      summary: List dentalexpense entities
     post:
       consumes:
       - application/json
-      description: Create user
-      operationId: create-user
+      description: Create dentalexpense
+      operationId: create-dentalexpense
       parameters:
-      - description: User entity
+      - description: DentalExpense entity
         in: body
-        name: user
+        name: dentalexpense
         required: true
         schema:
-          $ref: '#/definitions/ent.User'
+          $ref: '#/definitions/ent.DentalExpense'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/ent.User'
+            $ref: '#/definitions/ent.DentalExpense'
         "400":
           description: Bad Request
           schema:
@@ -453,13 +774,847 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/gin.H'
-      summary: Create user
-  /users/{id}:
+      summary: Create dentalexpense
+  /dentalexpenses/{id}:
+    get:
+      description: get dentalexpense by ID
+      operationId: get-dentalexpense
+      parameters:
+      - description: DentalExpense ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.DentalExpense'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Get a dentalexpense entity by ID
+  /dentists:
+    get:
+      description: list dentist entities
+      operationId: list-dentist
+      parameters:
+      - description: Limit
+        in: query
+        name: limit
+        type: integer
+      - description: Offset
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/ent.Dentist'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: List dentist entities
+    post:
+      consumes:
+      - application/json
+      description: Create dentist
+      operationId: create-dentist
+      parameters:
+      - description: Dentist entity
+        in: body
+        name: dentist
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.Dentist'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controllers.Dentist'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Create dentist
+  /dentists/{id}:
+    get:
+      description: get dentist by ID
+      operationId: get-dentist
+      parameters:
+      - description: Dentist ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.Dentist'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Get a dentist entity by ID
+  /diseases:
+    get:
+      description: list disease entities
+      operationId: list-disease
+      parameters:
+      - description: Limit
+        in: query
+        name: limit
+        type: integer
+      - description: Offset
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/ent.Disease'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: List disease entities
+  /diseases/{id}:
+    get:
+      description: get disease by ID
+      operationId: get-disease
+      parameters:
+      - description: Disease ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.Disease'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Get a disease entity by ID
+  /experts:
+    get:
+      description: list expert entities
+      operationId: list-expert
+      parameters:
+      - description: Limit
+        in: query
+        name: limit
+        type: integer
+      - description: Offset
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/ent.Expert'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: List expert entities
+    post:
+      consumes:
+      - application/json
+      description: Create expert
+      operationId: create-expert
+      parameters:
+      - description: ' Expert entity'
+        in: body
+        name: expert
+        required: true
+        schema:
+          $ref: '#/definitions/ent.Expert'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.Expert'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Create expert
+  /experts/{id}:
+    get:
+      description: get expert by ID
+      operationId: get-expert
+      parameters:
+      - description: Expert ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.Expert'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Get a expert entity by ID
+  /genders:
+    get:
+      description: list gender entities
+      operationId: list-gender
+      parameters:
+      - description: Limit
+        in: query
+        name: limit
+        type: integer
+      - description: Offset
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/ent.Gender'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: List gender entities
+    post:
+      consumes:
+      - application/json
+      description: Create gender
+      operationId: create-gender
+      parameters:
+      - description: Gender entity
+        in: body
+        name: gender
+        required: true
+        schema:
+          $ref: '#/definitions/ent.Gender'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.Gender'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Create gender
+  /genders/{id}:
+    get:
+      description: get gender by ID
+      operationId: get-gender
+      parameters:
+      - description: Gender ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.Gender'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Get a gender entity by ID
+  /medicalcares:
+    get:
+      description: list medicalcare entities
+      operationId: list-medicalcare
+      parameters:
+      - description: Limit
+        in: query
+        name: limit
+        type: integer
+      - description: Offset
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/ent.MedicalCare'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: List medicalcare entities
+  /medicalcares/{id}:
+    get:
+      description: get medicalcare by ID
+      operationId: get-medicalcare
+      parameters:
+      - description: MedicalCare ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.MedicalCare'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Get a medicalcare entity by ID
+  /medicalfiles:
+    get:
+      description: list Medicalfile entities
+      operationId: list-Medicalfile
+      parameters:
+      - description: Limit
+        in: query
+        name: limit
+        type: integer
+      - description: Offset
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/ent.Medicalfile'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: List Medicalfile entities
+    post:
+      consumes:
+      - application/json
+      description: Create medicalfile
+      operationId: create-medicalfile
+      parameters:
+      - description: Medicalfile entity
+        in: body
+        name: Medicalfile
+        required: true
+        schema:
+          $ref: '#/definitions/ent.Medicalfile'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.Medicalfile'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Create medicalfile
+  /medicalfiles/{id}:
+    get:
+      description: get Medicalfile by ID
+      operationId: get-Medicalfile
+      parameters:
+      - description: Medicalfile ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.Medicalfile'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Get a Medicalfile entity by ID
+  /nurses:
+    get:
+      description: list nurse entities
+      operationId: list-nurse
+      parameters:
+      - description: Limit
+        in: query
+        name: limit
+        type: integer
+      - description: Offset
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/ent.Nurse'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: List nurse entities
+    post:
+      consumes:
+      - application/json
+      description: Create nurse
+      operationId: create-nurse
+      parameters:
+      - description: Nurse entity
+        in: body
+        name: nurse
+        required: true
+        schema:
+          $ref: '#/definitions/ent.Nurse'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.Nurse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Create nurse
+  /nurses/{id}:
+    get:
+      description: get nurse by ID
+      operationId: get-nurse
+      parameters:
+      - description: Nurse ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.Nurse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Get a nurse entity by ID
+  /patients:
+    get:
+      description: list patient entities
+      operationId: list-patient
+      parameters:
+      - description: Limit
+        in: query
+        name: limit
+        type: integer
+      - description: Offset
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/ent.Patient'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: List patient entities
+    post:
+      consumes:
+      - application/json
+      description: Create patient
+      operationId: create-patient
+      parameters:
+      - description: Patient entity
+        in: body
+        name: patient
+        required: true
+        schema:
+          $ref: '#/definitions/ent.Patient'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.Patient'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Create patient
+  /patients/{id}:
+    get:
+      description: get patient by ID
+      operationId: get-patient
+      parameters:
+      - description: Patient ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.Patient'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Get a patient entity by ID
+  /pricetypes:
+    get:
+      description: list pricetype entities
+      operationId: list-pricetype
+      parameters:
+      - description: Limit
+        in: query
+        name: limit
+        type: integer
+      - description: Offset
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/ent.PriceType'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: List pricetype entities
+    post:
+      consumes:
+      - application/json
+      description: Create pricetype
+      operationId: create-pricetype
+      parameters:
+      - description: PriceType entity
+        in: body
+        name: pricetype
+        required: true
+        schema:
+          $ref: '#/definitions/ent.PriceType'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.PriceType'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Create pricetype
+  /pricetypes/{id}:
+    get:
+      description: get pricetype by ID
+      operationId: get-pricetype
+      parameters:
+      - description: PriceType ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.PriceType'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Get a pricetype entity by ID
+  /queues:
+    get:
+      description: list queue entities
+      operationId: list-queue
+      parameters:
+      - description: Limit
+        in: query
+        name: limit
+        type: integer
+      - description: Offset
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/ent.Queue'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: List queue entities
+    post:
+      consumes:
+      - application/json
+      description: Create queue
+      operationId: create-queue
+      parameters:
+      - description: Queue entity
+        in: body
+        name: queue
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.Queue'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controllers.Queue'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Create queue
+  /queues/{id}:
     delete:
-      description: get user by ID
-      operationId: delete-user
+      description: get queue by ID
+      operationId: delete-queue
       parameters:
-      - description: User ID
+      - description: Queue ID
         in: path
         name: id
         required: true
@@ -483,73 +1638,11 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/gin.H'
-      summary: Delete a user entity by ID
+      summary: Delete a queue entity by ID
+  /rooms:
     get:
-      description: get user by ID
-      operationId: get-user
-      parameters:
-      - description: User ID
-        in: path
-        name: id
-        required: true
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/ent.User'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/gin.H'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/gin.H'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/gin.H'
-      summary: Get a user entity by ID
-    put:
-      consumes:
-      - application/json
-      description: update user by ID
-      operationId: update-user
-      parameters:
-      - description: User ID
-        in: path
-        name: id
-        required: true
-        type: integer
-      - description: User entity
-        in: body
-        name: user
-        required: true
-        schema:
-          $ref: '#/definitions/ent.User'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/ent.User'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/gin.H'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/gin.H'
-      summary: Update a user entity by ID
-  /videos:
-    get:
-      description: list video entities
-      operationId: list-video
+      description: list Room entities
+      operationId: list-Room
       parameters:
       - description: Limit
         in: query
@@ -566,7 +1659,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/ent.Video'
+              $ref: '#/definitions/ent.Room'
             type: array
         "400":
           description: Bad Request
@@ -576,26 +1669,26 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/gin.H'
-      summary: List video entities
+      summary: List Room entities
     post:
       consumes:
       - application/json
-      description: Create video
-      operationId: create-video
+      description: Create Room
+      operationId: create-Room
       parameters:
-      - description: Video entity
+      - description: Room entity
         in: body
-        name: video
+        name: Room
         required: true
         schema:
-          $ref: '#/definitions/ent.Video'
+          $ref: '#/definitions/ent.Room'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/ent.Video'
+            $ref: '#/definitions/ent.Room'
         "400":
           description: Bad Request
           schema:
@@ -604,42 +1697,13 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/gin.H'
-      summary: Create video
-  /videos/{id}:
-    delete:
-      description: get video by ID
-      operationId: delete-video
-      parameters:
-      - description: Video ID
-        in: path
-        name: id
-        required: true
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/gin.H'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/gin.H'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/gin.H'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/gin.H'
-      summary: Delete a video entity by ID
+      summary: Create Room
+  /rooms/{id}:
     get:
-      description: get video by ID
-      operationId: get-video
+      description: get Room by ID
+      operationId: get-Room
       parameters:
-      - description: Video ID
+      - description: Room ID
         in: path
         name: id
         required: true
@@ -650,7 +1714,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/ent.Video'
+            $ref: '#/definitions/ent.Room'
         "400":
           description: Bad Request
           schema:
@@ -663,40 +1727,7 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/gin.H'
-      summary: Get a video entity by ID
-    put:
-      consumes:
-      - application/json
-      description: update video by ID
-      operationId: update-video
-      parameters:
-      - description: Video ID
-        in: path
-        name: id
-        required: true
-        type: integer
-      - description: Video entity
-        in: body
-        name: video
-        required: true
-        schema:
-          $ref: '#/definitions/ent.Video'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/ent.Video'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/gin.H'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/gin.H'
-      summary: Update a video entity by ID
+      summary: Get a Room entity by ID
 securityDefinitions:
   ApiKeyAuth:
     in: header
@@ -712,6 +1743,7 @@ securityDefinitions:
     tokenUrl: https://example.com/oauth/token
     type: oauth2
   OAuth2Application:
+    authorizationUrl: ""
     flow: application
     scopes:
       admin: ' Grants read and write access to administrative information'
@@ -726,6 +1758,7 @@ securityDefinitions:
       write: ' Grants write access'
     type: oauth2
   OAuth2Password:
+    authorizationUrl: ""
     flow: password
     scopes:
       admin: ' Grants read and write access to administrative information'

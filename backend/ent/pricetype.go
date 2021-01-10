@@ -7,7 +7,7 @@ import (
 	"strings"
 
 	"github.com/facebookincubator/ent/dialect/sql"
-	"github.com/tanapon395/playlist-video/ent/pricetype"
+	"github.com/team03/app/ent/pricetype"
 )
 
 // PriceType is the model entity for the PriceType schema.

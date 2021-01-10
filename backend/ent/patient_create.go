@@ -10,14 +10,14 @@ import (
 
 	"github.com/facebookincubator/ent/dialect/sql/sqlgraph"
 	"github.com/facebookincubator/ent/schema/field"
-	"github.com/tanapon395/playlist-video/ent/appointment"
-	"github.com/tanapon395/playlist-video/ent/disease"
-	"github.com/tanapon395/playlist-video/ent/gender"
-	"github.com/tanapon395/playlist-video/ent/medicalcare"
-	"github.com/tanapon395/playlist-video/ent/medicalfile"
-	"github.com/tanapon395/playlist-video/ent/nurse"
-	"github.com/tanapon395/playlist-video/ent/patient"
-	"github.com/tanapon395/playlist-video/ent/queue"
+	"github.com/team03/app/ent/appointment"
+	"github.com/team03/app/ent/disease"
+	"github.com/team03/app/ent/gender"
+	"github.com/team03/app/ent/medicalcare"
+	"github.com/team03/app/ent/medicalfile"
+	"github.com/team03/app/ent/nurse"
+	"github.com/team03/app/ent/patient"
+	"github.com/team03/app/ent/queue"
 )
 
 // PatientCreate is the builder for creating a Patient entity.

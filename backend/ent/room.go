@@ -7,7 +7,7 @@ import (
 	"strings"
 
 	"github.com/facebookincubator/ent/dialect/sql"
-	"github.com/tanapon395/playlist-video/ent/room"
+	"github.com/team03/app/ent/room"
 )
 
 // Room is the model entity for the Room schema.

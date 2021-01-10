@@ -9,8 +9,8 @@ import (
 	"github.com/facebookincubator/ent/dialect/sql"
 	"github.com/facebookincubator/ent/dialect/sql/sqlgraph"
 	"github.com/facebookincubator/ent/schema/field"
-	"github.com/tanapon395/playlist-video/ent/predicate"
-	"github.com/tanapon395/playlist-video/ent/pricetype"
+	"github.com/team03/app/ent/predicate"
+	"github.com/team03/app/ent/pricetype"
 )
 
 // PriceTypeDelete is the builder for deleting a PriceType entity.

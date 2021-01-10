@@ -10,10 +10,10 @@ import (
 
 	"github.com/facebookincubator/ent/dialect/sql/sqlgraph"
 	"github.com/facebookincubator/ent/schema/field"
-	"github.com/tanapon395/playlist-video/ent/dentist"
-	"github.com/tanapon395/playlist-video/ent/nurse"
-	"github.com/tanapon395/playlist-video/ent/patient"
-	"github.com/tanapon395/playlist-video/ent/queue"
+	"github.com/team03/app/ent/dentist"
+	"github.com/team03/app/ent/nurse"
+	"github.com/team03/app/ent/patient"
+	"github.com/team03/app/ent/queue"
 )
 
 // QueueCreate is the builder for creating a Queue entity.

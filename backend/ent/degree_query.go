@@ -12,9 +12,9 @@ import (
 	"github.com/facebookincubator/ent/dialect/sql"
 	"github.com/facebookincubator/ent/dialect/sql/sqlgraph"
 	"github.com/facebookincubator/ent/schema/field"
-	"github.com/tanapon395/playlist-video/ent/degree"
-	"github.com/tanapon395/playlist-video/ent/dentist"
-	"github.com/tanapon395/playlist-video/ent/predicate"
+	"github.com/team03/app/ent/degree"
+	"github.com/team03/app/ent/dentist"
+	"github.com/team03/app/ent/predicate"
 )
 
 // DegreeQuery is the builder for querying Degree entities.

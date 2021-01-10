@@ -7,7 +7,7 @@ import (
 	"strings"
 
 	"github.com/facebookincubator/ent/dialect/sql"
-	"github.com/tanapon395/playlist-video/ent/degree"
+	"github.com/team03/app/ent/degree"
 )
 
 // Degree is the model entity for the Degree schema.

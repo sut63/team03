@@ -9,9 +9,9 @@ import (
 
 	"github.com/facebookincubator/ent/dialect/sql/sqlgraph"
 	"github.com/facebookincubator/ent/schema/field"
-	"github.com/tanapon395/playlist-video/ent/medicalcare"
-	"github.com/tanapon395/playlist-video/ent/medicalfile"
-	"github.com/tanapon395/playlist-video/ent/patient"
+	"github.com/team03/app/ent/medicalcare"
+	"github.com/team03/app/ent/medicalfile"
+	"github.com/team03/app/ent/patient"
 )
 
 // MedicalCareCreate is the builder for creating a MedicalCare entity.

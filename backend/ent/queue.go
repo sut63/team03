@@ -8,10 +8,10 @@ import (
 	"time"
 
 	"github.com/facebookincubator/ent/dialect/sql"
-	"github.com/tanapon395/playlist-video/ent/dentist"
-	"github.com/tanapon395/playlist-video/ent/nurse"
-	"github.com/tanapon395/playlist-video/ent/patient"
-	"github.com/tanapon395/playlist-video/ent/queue"
+	"github.com/team03/app/ent/dentist"
+	"github.com/team03/app/ent/nurse"
+	"github.com/team03/app/ent/patient"
+	"github.com/team03/app/ent/queue"
 )
 
 // Queue is the model entity for the Queue schema.

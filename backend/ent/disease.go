@@ -7,7 +7,7 @@ import (
 	"strings"
 
 	"github.com/facebookincubator/ent/dialect/sql"
-	"github.com/tanapon395/playlist-video/ent/disease"
+	"github.com/team03/app/ent/disease"
 )
 
 // Disease is the model entity for the Disease schema.

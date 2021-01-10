@@ -2,7 +2,7 @@ package controllers
 
 import (
 	"context"
-	"fmt"
+	
 	"strconv"
 	"time"
 
@@ -11,6 +11,7 @@ import (
 	"github.com/team03/app/ent/nurse"
 	"github.com/team03/app/ent/degree"
 	"github.com/team03/app/ent/expert"
+	"github.com/team03/app/ent/gender"
 	"github.com/gin-gonic/gin"
 )
 //DentistController defines the struct for the Dentist controller
@@ -24,7 +25,7 @@ type Dentist struct {
 	Degree		  int
 	Expert		  int
 	Gender		  int
-	DentistBirthday	string
+	Birthday	string
 }
 
 // CreateDentist handles POST requests for adding dentist entities
@@ -97,7 +98,7 @@ func (ctl *DentistController) CreateDentist(c *gin.Context) {
 	}
 
 
-	times, err := time.Parse(time.RFC3339, obj.DentistBirthday)
+	times, err := time.Parse(time.RFC3339, obj.Birthday)
 
 	d, err := ctl.client.Dentist.
 		Create().
@@ -105,7 +106,7 @@ func (ctl *DentistController) CreateDentist(c *gin.Context) {
 		SetDegree(dg).
 		SetExpert(e).
 		SetGender(g).
-		SetDentistBirthday(times).
+		SetBirthday(times).
 		Save(context.Background())
 	if err != nil {
 		c.JSON(400, gin.H{

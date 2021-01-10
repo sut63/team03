@@ -8,11 +8,11 @@ import (
 	"time"
 
 	"github.com/facebookincubator/ent/dialect/sql"
-	"github.com/tanapon395/playlist-video/ent/disease"
-	"github.com/tanapon395/playlist-video/ent/gender"
-	"github.com/tanapon395/playlist-video/ent/medicalcare"
-	"github.com/tanapon395/playlist-video/ent/nurse"
-	"github.com/tanapon395/playlist-video/ent/patient"
+	"github.com/team03/app/ent/disease"
+	"github.com/team03/app/ent/gender"
+	"github.com/team03/app/ent/medicalcare"
+	"github.com/team03/app/ent/nurse"
+	"github.com/team03/app/ent/patient"
 )
 
 // Patient is the model entity for the Patient schema.

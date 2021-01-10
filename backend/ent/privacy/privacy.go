@@ -7,7 +7,7 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/tanapon395/playlist-video/ent"
+	"github.com/team03/app/ent"
 )
 
 var (

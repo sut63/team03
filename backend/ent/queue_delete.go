@@ -9,8 +9,8 @@ import (
 	"github.com/facebookincubator/ent/dialect/sql"
 	"github.com/facebookincubator/ent/dialect/sql/sqlgraph"
 	"github.com/facebookincubator/ent/schema/field"
-	"github.com/tanapon395/playlist-video/ent/predicate"
-	"github.com/tanapon395/playlist-video/ent/queue"
+	"github.com/team03/app/ent/predicate"
+	"github.com/team03/app/ent/queue"
 )
 
 // QueueDelete is the builder for deleting a Queue entity.

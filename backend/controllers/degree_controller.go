@@ -135,7 +135,7 @@ func NewDegreeController(router gin.IRouter, client *ent.Client) *DegreeControll
 		client: client,
 		router: router,
 	}
-	ec.register()
+	dgc.register()
 	return dgc
 }
 

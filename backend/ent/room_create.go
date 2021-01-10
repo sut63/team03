@@ -9,8 +9,8 @@ import (
 
 	"github.com/facebookincubator/ent/dialect/sql/sqlgraph"
 	"github.com/facebookincubator/ent/schema/field"
-	"github.com/tanapon395/playlist-video/ent/appointment"
-	"github.com/tanapon395/playlist-video/ent/room"
+	"github.com/team03/app/ent/appointment"
+	"github.com/team03/app/ent/room"
 )
 
 // RoomCreate is the builder for creating a Room entity.

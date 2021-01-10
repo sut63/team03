@@ -6,7 +6,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/tanapon395/playlist-video/ent"
+	"github.com/team03/app/ent"
 )
 
 // The AppointmentFunc type is an adapter to allow the use of ordinary
