@@ -235,7 +235,7 @@ func main() {
 	}
 
 	// Set Degree Data
-	degrees := Degree{
+	degrees := Degrees{
 		Degree: []Degree{
 			Degree{"ปริญญาตรี"},
 			Degree{"ปริญญาโท"},
@@ -251,7 +251,7 @@ func main() {
 
 	
 	// Set Expert Data
-	experts := Expert{
+	experts := Experts{
 		Expert: []Expert{
 			Expert{"ทันตกรรมจัดฟัน"},
 			Expert{"ทันตกรรมจัดกระดูก"},
@@ -269,7 +269,7 @@ func main() {
 	}
 
 	// Set Nurse Data
-	nurses := Nurse{
+	nurses := Nurses{
 		Nurse: []Nurse{
 			Nurse{"tony stark",25,"tony@outlook.com","1234"},
 			Nurse{"abc",30,"a11@gmail.com","11"},
@@ -278,10 +278,10 @@ func main() {
 	for _, n := range nurses.Nurse {
 		client.Nurse.
 			Create().
-			Setnursename(n.nursename).
-			Setnurseage(n.nurseage).
-			Setnurseemail(n.nurseemail).
-			Setnursepassword(n.nursepassword).
+			SetNurseName(n.nursename).
+			SetNurseAge(n.nurseage).
+			SetNurseEmail(n.nurseemail).
+			SetNursePassword(n.nursepassword).
 			Save(context.Background())
 	}
 
