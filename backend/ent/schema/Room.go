@@ -21,6 +21,7 @@ func (Room) Fields() []ent.Field {
 // Edges of the Room.
 func (Room) Edges() []ent.Edge {
 	return []ent.Edge{
+
 		edge.To("appointment", Appointment.Type).StorageKey(edge.Column("room_id")),
 	}
 }
