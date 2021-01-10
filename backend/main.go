@@ -14,32 +14,24 @@ import (
 	"github.com/team03/app/ent"
 )
 
-type Medicalfiles struct {
-	Medicalfile []Medicalfile
-}
-
-type Medicalfile struct {
-	Name string
-}
 type PriceTypes struct {
 	PriceType []PriceTypes
 }
-
 type PriceType struct {
 	Name string
 }
-type DentalExpenses struct {
-	Medicalfile []Medicalfile
-}
 
-type DentalExpense struct {
-	Name string
-}
 type Nurses struct {
 	Nurse []Nurse
 }
-
 type Nurse struct {
+	Name string
+}
+
+type Rooms struct {
+	Room []Room
+}
+type Room struct {
 	Name string
 }
 
@@ -105,6 +97,8 @@ func main() {
 	controllers.NewMedicalCareController(v1, client)
 	controllers.NewDentalExpenseController(v1, client)
 	controllers.NewPriceTypeController(v1, client)
+	controllers.NewAppointmentController(v1, client)
+	controllers.NewRoomController(v1, client)
 
 	// Set PriceType Data
 	pricetypes := PriceTypes{
@@ -120,6 +114,23 @@ func main() {
 		client.PriceType.
 			Create().
 			SetName(pt.Name).
+			Save(context.Background())
+	}
+
+	// Set Room Data
+	rooms := Rooms{
+		Room: []Room{
+			Room{"ห้องหัตถการ 1"},
+			Room{"ห้องหัตถการ 2"},
+			Room{"ห้องตรวจ R1"},
+		},
+	}
+
+	for _, r := range rooms.Room {
+
+		client.Room.
+			Create().
+			SetName(r.Name).
 			Save(context.Background())
 	}
 
