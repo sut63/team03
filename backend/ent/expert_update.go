@@ -28,9 +28,9 @@ func (eu *ExpertUpdate) Where(ps ...predicate.Expert) *ExpertUpdate {
 	return eu
 }
 
-// SetExpertName sets the expert_name field.
-func (eu *ExpertUpdate) SetExpertName(s string) *ExpertUpdate {
-	eu.mutation.SetExpertName(s)
+// SetName sets the name field.
+func (eu *ExpertUpdate) SetName(s string) *ExpertUpdate {
+	eu.mutation.SetName(s)
 	return eu
 }
 
@@ -71,9 +71,9 @@ func (eu *ExpertUpdate) RemoveDentists(d ...*Dentist) *ExpertUpdate {
 
 // Save executes the query and returns the number of rows/vertices matched by this operation.
 func (eu *ExpertUpdate) Save(ctx context.Context) (int, error) {
-	if v, ok := eu.mutation.ExpertName(); ok {
-		if err := expert.ExpertNameValidator(v); err != nil {
-			return 0, &ValidationError{Name: "expert_name", err: fmt.Errorf("ent: validator failed for field \"expert_name\": %w", err)}
+	if v, ok := eu.mutation.Name(); ok {
+		if err := expert.NameValidator(v); err != nil {
+			return 0, &ValidationError{Name: "name", err: fmt.Errorf("ent: validator failed for field \"name\": %w", err)}
 		}
 	}
 
@@ -144,11 +144,11 @@ func (eu *ExpertUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			}
 		}
 	}
-	if value, ok := eu.mutation.ExpertName(); ok {
+	if value, ok := eu.mutation.Name(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: expert.FieldExpertName,
+			Column: expert.FieldName,
 		})
 	}
 	if nodes := eu.mutation.RemovedDentistsIDs(); len(nodes) > 0 {
@@ -207,9 +207,9 @@ type ExpertUpdateOne struct {
 	mutation *ExpertMutation
 }
 
-// SetExpertName sets the expert_name field.
-func (euo *ExpertUpdateOne) SetExpertName(s string) *ExpertUpdateOne {
-	euo.mutation.SetExpertName(s)
+// SetName sets the name field.
+func (euo *ExpertUpdateOne) SetName(s string) *ExpertUpdateOne {
+	euo.mutation.SetName(s)
 	return euo
 }
 
@@ -250,9 +250,9 @@ func (euo *ExpertUpdateOne) RemoveDentists(d ...*Dentist) *ExpertUpdateOne {
 
 // Save executes the query and returns the updated entity.
 func (euo *ExpertUpdateOne) Save(ctx context.Context) (*Expert, error) {
-	if v, ok := euo.mutation.ExpertName(); ok {
-		if err := expert.ExpertNameValidator(v); err != nil {
-			return nil, &ValidationError{Name: "expert_name", err: fmt.Errorf("ent: validator failed for field \"expert_name\": %w", err)}
+	if v, ok := euo.mutation.Name(); ok {
+		if err := expert.NameValidator(v); err != nil {
+			return nil, &ValidationError{Name: "name", err: fmt.Errorf("ent: validator failed for field \"name\": %w", err)}
 		}
 	}
 
@@ -321,11 +321,11 @@ func (euo *ExpertUpdateOne) sqlSave(ctx context.Context) (e *Expert, err error) 
 		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing Expert.ID for update")}
 	}
 	_spec.Node.ID.Value = id
-	if value, ok := euo.mutation.ExpertName(); ok {
+	if value, ok := euo.mutation.Name(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: expert.FieldExpertName,
+			Column: expert.FieldName,
 		})
 	}
 	if nodes := euo.mutation.RemovedDentistsIDs(); len(nodes) > 0 {

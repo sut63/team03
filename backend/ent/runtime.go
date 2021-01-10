@@ -29,10 +29,10 @@ func init() {
 	appointment.DetailValidator = appointmentDescDetail.Validators[0].(func(string) error)
 	degreeFields := schema.Degree{}.Fields()
 	_ = degreeFields
-	// degreeDescDegreeName is the schema descriptor for degree_name field.
-	degreeDescDegreeName := degreeFields[0].Descriptor()
-	// degree.DegreeNameValidator is a validator for the "degree_name" field. It is called by the builders before save.
-	degree.DegreeNameValidator = degreeDescDegreeName.Validators[0].(func(string) error)
+	// degreeDescName is the schema descriptor for name field.
+	degreeDescName := degreeFields[0].Descriptor()
+	// degree.NameValidator is a validator for the "name" field. It is called by the builders before save.
+	degree.NameValidator = degreeDescName.Validators[0].(func(string) error)
 	dentistFields := schema.Dentist{}.Fields()
 	_ = dentistFields
 	// dentistDescName is the schema descriptor for name field.
@@ -71,10 +71,10 @@ func init() {
 	disease.NameValidator = diseaseDescName.Validators[0].(func(string) error)
 	expertFields := schema.Expert{}.Fields()
 	_ = expertFields
-	// expertDescExpertName is the schema descriptor for expert_name field.
-	expertDescExpertName := expertFields[0].Descriptor()
-	// expert.ExpertNameValidator is a validator for the "expert_name" field. It is called by the builders before save.
-	expert.ExpertNameValidator = expertDescExpertName.Validators[0].(func(string) error)
+	// expertDescName is the schema descriptor for name field.
+	expertDescName := expertFields[0].Descriptor()
+	// expert.NameValidator is a validator for the "name" field. It is called by the builders before save.
+	expert.NameValidator = expertDescName.Validators[0].(func(string) error)
 	genderFields := schema.Gender{}.Fields()
 	_ = genderFields
 	// genderDescName is the schema descriptor for name field.

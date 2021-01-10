@@ -91,29 +91,29 @@ func IDLTE(id int) predicate.Degree {
 	})
 }
 
-// DegreeName applies equality check predicate on the "degree_name" field. It's identical to DegreeNameEQ.
-func DegreeName(v string) predicate.Degree {
+// Name applies equality check predicate on the "name" field. It's identical to NameEQ.
+func Name(v string) predicate.Degree {
 	return predicate.Degree(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldDegreeName), v))
+		s.Where(sql.EQ(s.C(FieldName), v))
 	})
 }
 
-// DegreeNameEQ applies the EQ predicate on the "degree_name" field.
-func DegreeNameEQ(v string) predicate.Degree {
+// NameEQ applies the EQ predicate on the "name" field.
+func NameEQ(v string) predicate.Degree {
 	return predicate.Degree(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldDegreeName), v))
+		s.Where(sql.EQ(s.C(FieldName), v))
 	})
 }
 
-// DegreeNameNEQ applies the NEQ predicate on the "degree_name" field.
-func DegreeNameNEQ(v string) predicate.Degree {
+// NameNEQ applies the NEQ predicate on the "name" field.
+func NameNEQ(v string) predicate.Degree {
 	return predicate.Degree(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldDegreeName), v))
+		s.Where(sql.NEQ(s.C(FieldName), v))
 	})
 }
 
-// DegreeNameIn applies the In predicate on the "degree_name" field.
-func DegreeNameIn(vs ...string) predicate.Degree {
+// NameIn applies the In predicate on the "name" field.
+func NameIn(vs ...string) predicate.Degree {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -125,12 +125,12 @@ func DegreeNameIn(vs ...string) predicate.Degree {
 			s.Where(sql.False())
 			return
 		}
-		s.Where(sql.In(s.C(FieldDegreeName), v...))
+		s.Where(sql.In(s.C(FieldName), v...))
 	})
 }
 
-// DegreeNameNotIn applies the NotIn predicate on the "degree_name" field.
-func DegreeNameNotIn(vs ...string) predicate.Degree {
+// NameNotIn applies the NotIn predicate on the "name" field.
+func NameNotIn(vs ...string) predicate.Degree {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -142,70 +142,70 @@ func DegreeNameNotIn(vs ...string) predicate.Degree {
 			s.Where(sql.False())
 			return
 		}
-		s.Where(sql.NotIn(s.C(FieldDegreeName), v...))
+		s.Where(sql.NotIn(s.C(FieldName), v...))
 	})
 }
 
-// DegreeNameGT applies the GT predicate on the "degree_name" field.
-func DegreeNameGT(v string) predicate.Degree {
+// NameGT applies the GT predicate on the "name" field.
+func NameGT(v string) predicate.Degree {
 	return predicate.Degree(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldDegreeName), v))
+		s.Where(sql.GT(s.C(FieldName), v))
 	})
 }
 
-// DegreeNameGTE applies the GTE predicate on the "degree_name" field.
-func DegreeNameGTE(v string) predicate.Degree {
+// NameGTE applies the GTE predicate on the "name" field.
+func NameGTE(v string) predicate.Degree {
 	return predicate.Degree(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldDegreeName), v))
+		s.Where(sql.GTE(s.C(FieldName), v))
 	})
 }
 
-// DegreeNameLT applies the LT predicate on the "degree_name" field.
-func DegreeNameLT(v string) predicate.Degree {
+// NameLT applies the LT predicate on the "name" field.
+func NameLT(v string) predicate.Degree {
 	return predicate.Degree(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldDegreeName), v))
+		s.Where(sql.LT(s.C(FieldName), v))
 	})
 }
 
-// DegreeNameLTE applies the LTE predicate on the "degree_name" field.
-func DegreeNameLTE(v string) predicate.Degree {
+// NameLTE applies the LTE predicate on the "name" field.
+func NameLTE(v string) predicate.Degree {
 	return predicate.Degree(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldDegreeName), v))
+		s.Where(sql.LTE(s.C(FieldName), v))
 	})
 }
 
-// DegreeNameContains applies the Contains predicate on the "degree_name" field.
-func DegreeNameContains(v string) predicate.Degree {
+// NameContains applies the Contains predicate on the "name" field.
+func NameContains(v string) predicate.Degree {
 	return predicate.Degree(func(s *sql.Selector) {
-		s.Where(sql.Contains(s.C(FieldDegreeName), v))
+		s.Where(sql.Contains(s.C(FieldName), v))
 	})
 }
 
-// DegreeNameHasPrefix applies the HasPrefix predicate on the "degree_name" field.
-func DegreeNameHasPrefix(v string) predicate.Degree {
+// NameHasPrefix applies the HasPrefix predicate on the "name" field.
+func NameHasPrefix(v string) predicate.Degree {
 	return predicate.Degree(func(s *sql.Selector) {
-		s.Where(sql.HasPrefix(s.C(FieldDegreeName), v))
+		s.Where(sql.HasPrefix(s.C(FieldName), v))
 	})
 }
 
-// DegreeNameHasSuffix applies the HasSuffix predicate on the "degree_name" field.
-func DegreeNameHasSuffix(v string) predicate.Degree {
+// NameHasSuffix applies the HasSuffix predicate on the "name" field.
+func NameHasSuffix(v string) predicate.Degree {
 	return predicate.Degree(func(s *sql.Selector) {
-		s.Where(sql.HasSuffix(s.C(FieldDegreeName), v))
+		s.Where(sql.HasSuffix(s.C(FieldName), v))
 	})
 }
 
-// DegreeNameEqualFold applies the EqualFold predicate on the "degree_name" field.
-func DegreeNameEqualFold(v string) predicate.Degree {
+// NameEqualFold applies the EqualFold predicate on the "name" field.
+func NameEqualFold(v string) predicate.Degree {
 	return predicate.Degree(func(s *sql.Selector) {
-		s.Where(sql.EqualFold(s.C(FieldDegreeName), v))
+		s.Where(sql.EqualFold(s.C(FieldName), v))
 	})
 }
 
-// DegreeNameContainsFold applies the ContainsFold predicate on the "degree_name" field.
-func DegreeNameContainsFold(v string) predicate.Degree {
+// NameContainsFold applies the ContainsFold predicate on the "name" field.
+func NameContainsFold(v string) predicate.Degree {
 	return predicate.Degree(func(s *sql.Selector) {
-		s.Where(sql.ContainsFold(s.C(FieldDegreeName), v))
+		s.Where(sql.ContainsFold(s.C(FieldName), v))
 	})
 }
 

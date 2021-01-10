@@ -7,8 +7,8 @@ const (
 	Label = "degree"
 	// FieldID holds the string denoting the id field in the database.
 	FieldID = "id"
-	// FieldDegreeName holds the string denoting the degree_name field in the database.
-	FieldDegreeName = "degree_name"
+	// FieldName holds the string denoting the name field in the database.
+	FieldName = "name"
 
 	// EdgeDentists holds the string denoting the dentists edge name in mutations.
 	EdgeDentists = "dentists"
@@ -27,10 +27,10 @@ const (
 // Columns holds all SQL columns for degree fields.
 var Columns = []string{
 	FieldID,
-	FieldDegreeName,
+	FieldName,
 }
 
 var (
-	// DegreeNameValidator is a validator for the "degree_name" field. It is called by the builders before save.
-	DegreeNameValidator func(string) error
+	// NameValidator is a validator for the "name" field. It is called by the builders before save.
+	NameValidator func(string) error
 )

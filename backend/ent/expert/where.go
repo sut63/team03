@@ -91,29 +91,29 @@ func IDLTE(id int) predicate.Expert {
 	})
 }
 
-// ExpertName applies equality check predicate on the "expert_name" field. It's identical to ExpertNameEQ.
-func ExpertName(v string) predicate.Expert {
+// Name applies equality check predicate on the "name" field. It's identical to NameEQ.
+func Name(v string) predicate.Expert {
 	return predicate.Expert(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldExpertName), v))
+		s.Where(sql.EQ(s.C(FieldName), v))
 	})
 }
 
-// ExpertNameEQ applies the EQ predicate on the "expert_name" field.
-func ExpertNameEQ(v string) predicate.Expert {
+// NameEQ applies the EQ predicate on the "name" field.
+func NameEQ(v string) predicate.Expert {
 	return predicate.Expert(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldExpertName), v))
+		s.Where(sql.EQ(s.C(FieldName), v))
 	})
 }
 
-// ExpertNameNEQ applies the NEQ predicate on the "expert_name" field.
-func ExpertNameNEQ(v string) predicate.Expert {
+// NameNEQ applies the NEQ predicate on the "name" field.
+func NameNEQ(v string) predicate.Expert {
 	return predicate.Expert(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldExpertName), v))
+		s.Where(sql.NEQ(s.C(FieldName), v))
 	})
 }
 
-// ExpertNameIn applies the In predicate on the "expert_name" field.
-func ExpertNameIn(vs ...string) predicate.Expert {
+// NameIn applies the In predicate on the "name" field.
+func NameIn(vs ...string) predicate.Expert {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -125,12 +125,12 @@ func ExpertNameIn(vs ...string) predicate.Expert {
 			s.Where(sql.False())
 			return
 		}
-		s.Where(sql.In(s.C(FieldExpertName), v...))
+		s.Where(sql.In(s.C(FieldName), v...))
 	})
 }
 
-// ExpertNameNotIn applies the NotIn predicate on the "expert_name" field.
-func ExpertNameNotIn(vs ...string) predicate.Expert {
+// NameNotIn applies the NotIn predicate on the "name" field.
+func NameNotIn(vs ...string) predicate.Expert {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -142,70 +142,70 @@ func ExpertNameNotIn(vs ...string) predicate.Expert {
 			s.Where(sql.False())
 			return
 		}
-		s.Where(sql.NotIn(s.C(FieldExpertName), v...))
+		s.Where(sql.NotIn(s.C(FieldName), v...))
 	})
 }
 
-// ExpertNameGT applies the GT predicate on the "expert_name" field.
-func ExpertNameGT(v string) predicate.Expert {
+// NameGT applies the GT predicate on the "name" field.
+func NameGT(v string) predicate.Expert {
 	return predicate.Expert(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldExpertName), v))
+		s.Where(sql.GT(s.C(FieldName), v))
 	})
 }
 
-// ExpertNameGTE applies the GTE predicate on the "expert_name" field.
-func ExpertNameGTE(v string) predicate.Expert {
+// NameGTE applies the GTE predicate on the "name" field.
+func NameGTE(v string) predicate.Expert {
 	return predicate.Expert(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldExpertName), v))
+		s.Where(sql.GTE(s.C(FieldName), v))
 	})
 }
 
-// ExpertNameLT applies the LT predicate on the "expert_name" field.
-func ExpertNameLT(v string) predicate.Expert {
+// NameLT applies the LT predicate on the "name" field.
+func NameLT(v string) predicate.Expert {
 	return predicate.Expert(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldExpertName), v))
+		s.Where(sql.LT(s.C(FieldName), v))
 	})
 }
 
-// ExpertNameLTE applies the LTE predicate on the "expert_name" field.
-func ExpertNameLTE(v string) predicate.Expert {
+// NameLTE applies the LTE predicate on the "name" field.
+func NameLTE(v string) predicate.Expert {
 	return predicate.Expert(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldExpertName), v))
+		s.Where(sql.LTE(s.C(FieldName), v))
 	})
 }
 
-// ExpertNameContains applies the Contains predicate on the "expert_name" field.
-func ExpertNameContains(v string) predicate.Expert {
+// NameContains applies the Contains predicate on the "name" field.
+func NameContains(v string) predicate.Expert {
 	return predicate.Expert(func(s *sql.Selector) {
-		s.Where(sql.Contains(s.C(FieldExpertName), v))
+		s.Where(sql.Contains(s.C(FieldName), v))
 	})
 }
 
-// ExpertNameHasPrefix applies the HasPrefix predicate on the "expert_name" field.
-func ExpertNameHasPrefix(v string) predicate.Expert {
+// NameHasPrefix applies the HasPrefix predicate on the "name" field.
+func NameHasPrefix(v string) predicate.Expert {
 	return predicate.Expert(func(s *sql.Selector) {
-		s.Where(sql.HasPrefix(s.C(FieldExpertName), v))
+		s.Where(sql.HasPrefix(s.C(FieldName), v))
 	})
 }
 
-// ExpertNameHasSuffix applies the HasSuffix predicate on the "expert_name" field.
-func ExpertNameHasSuffix(v string) predicate.Expert {
+// NameHasSuffix applies the HasSuffix predicate on the "name" field.
+func NameHasSuffix(v string) predicate.Expert {
 	return predicate.Expert(func(s *sql.Selector) {
-		s.Where(sql.HasSuffix(s.C(FieldExpertName), v))
+		s.Where(sql.HasSuffix(s.C(FieldName), v))
 	})
 }
 
-// ExpertNameEqualFold applies the EqualFold predicate on the "expert_name" field.
-func ExpertNameEqualFold(v string) predicate.Expert {
+// NameEqualFold applies the EqualFold predicate on the "name" field.
+func NameEqualFold(v string) predicate.Expert {
 	return predicate.Expert(func(s *sql.Selector) {
-		s.Where(sql.EqualFold(s.C(FieldExpertName), v))
+		s.Where(sql.EqualFold(s.C(FieldName), v))
 	})
 }
 
-// ExpertNameContainsFold applies the ContainsFold predicate on the "expert_name" field.
-func ExpertNameContainsFold(v string) predicate.Expert {
+// NameContainsFold applies the ContainsFold predicate on the "name" field.
+func NameContainsFold(v string) predicate.Expert {
 	return predicate.Expert(func(s *sql.Selector) {
-		s.Where(sql.ContainsFold(s.C(FieldExpertName), v))
+		s.Where(sql.ContainsFold(s.C(FieldName), v))
 	})
 }
 

@@ -7,8 +7,8 @@ const (
 	Label = "expert"
 	// FieldID holds the string denoting the id field in the database.
 	FieldID = "id"
-	// FieldExpertName holds the string denoting the expert_name field in the database.
-	FieldExpertName = "expert_name"
+	// FieldName holds the string denoting the name field in the database.
+	FieldName = "name"
 
 	// EdgeDentists holds the string denoting the dentists edge name in mutations.
 	EdgeDentists = "dentists"
@@ -27,10 +27,10 @@ const (
 // Columns holds all SQL columns for expert fields.
 var Columns = []string{
 	FieldID,
-	FieldExpertName,
+	FieldName,
 }
 
 var (
-	// ExpertNameValidator is a validator for the "expert_name" field. It is called by the builders before save.
-	ExpertNameValidator func(string) error
+	// NameValidator is a validator for the "name" field. It is called by the builders before save.
+	NameValidator func(string) error
 )

@@ -270,12 +270,12 @@ func (dq *DegreeQuery) WithDentists(opts ...func(*DentistQuery)) *DegreeQuery {
 // Example:
 //
 //	var v []struct {
-//		DegreeName string `json:"degree_name,omitempty"`
+//		Name string `json:"name,omitempty"`
 //		Count int `json:"count,omitempty"`
 //	}
 //
 //	client.Degree.Query().
-//		GroupBy(degree.FieldDegreeName).
+//		GroupBy(degree.FieldName).
 //		Aggregate(ent.Count()).
 //		Scan(ctx, &v)
 //
@@ -296,11 +296,11 @@ func (dq *DegreeQuery) GroupBy(field string, fields ...string) *DegreeGroupBy {
 // Example:
 //
 //	var v []struct {
-//		DegreeName string `json:"degree_name,omitempty"`
+//		Name string `json:"name,omitempty"`
 //	}
 //
 //	client.Degree.Query().
-//		Select(degree.FieldDegreeName).
+//		Select(degree.FieldName).
 //		Scan(ctx, &v)
 //
 func (dq *DegreeQuery) Select(field string, fields ...string) *DegreeSelect {

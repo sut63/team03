@@ -49,7 +49,7 @@ var (
 	// DegreesColumns holds the columns for the "degrees" table.
 	DegreesColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt, Increment: true},
-		{Name: "degree_name", Type: field.TypeString},
+		{Name: "name", Type: field.TypeString},
 	}
 	// DegreesTable holds the schema information for the "degrees" table.
 	DegreesTable = &schema.Table{
@@ -162,7 +162,7 @@ var (
 	// ExpertsColumns holds the columns for the "experts" table.
 	ExpertsColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt, Increment: true},
-		{Name: "expert_name", Type: field.TypeString},
+		{Name: "name", Type: field.TypeString},
 	}
 	// ExpertsTable holds the schema information for the "experts" table.
 	ExpertsTable = &schema.Table{

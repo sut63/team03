@@ -14,7 +14,7 @@ type Degree struct {
 // Fields of the Degree.
 func (Degree) Fields() []ent.Field {
    return []ent.Field{
-		field.String("degree_name").NotEmpty(),
+		field.String("name").NotEmpty(),
 
 
    }

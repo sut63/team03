@@ -20,9 +20,9 @@ type DegreeCreate struct {
 	hooks    []Hook
 }
 
-// SetDegreeName sets the degree_name field.
-func (dc *DegreeCreate) SetDegreeName(s string) *DegreeCreate {
-	dc.mutation.SetDegreeName(s)
+// SetName sets the name field.
+func (dc *DegreeCreate) SetName(s string) *DegreeCreate {
+	dc.mutation.SetName(s)
 	return dc
 }
 
@@ -48,12 +48,12 @@ func (dc *DegreeCreate) Mutation() *DegreeMutation {
 
 // Save creates the Degree in the database.
 func (dc *DegreeCreate) Save(ctx context.Context) (*Degree, error) {
-	if _, ok := dc.mutation.DegreeName(); !ok {
-		return nil, &ValidationError{Name: "degree_name", err: errors.New("ent: missing required field \"degree_name\"")}
+	if _, ok := dc.mutation.Name(); !ok {
+		return nil, &ValidationError{Name: "name", err: errors.New("ent: missing required field \"name\"")}
 	}
-	if v, ok := dc.mutation.DegreeName(); ok {
-		if err := degree.DegreeNameValidator(v); err != nil {
-			return nil, &ValidationError{Name: "degree_name", err: fmt.Errorf("ent: validator failed for field \"degree_name\": %w", err)}
+	if v, ok := dc.mutation.Name(); ok {
+		if err := degree.NameValidator(v); err != nil {
+			return nil, &ValidationError{Name: "name", err: fmt.Errorf("ent: validator failed for field \"name\": %w", err)}
 		}
 	}
 	var (
@@ -116,13 +116,13 @@ func (dc *DegreeCreate) createSpec() (*Degree, *sqlgraph.CreateSpec) {
 			},
 		}
 	)
-	if value, ok := dc.mutation.DegreeName(); ok {
+	if value, ok := dc.mutation.Name(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: degree.FieldDegreeName,
+			Column: degree.FieldName,
 		})
-		d.DegreeName = value
+		d.Name = value
 	}
 	if nodes := dc.mutation.DentistsIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{

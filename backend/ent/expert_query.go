@@ -270,12 +270,12 @@ func (eq *ExpertQuery) WithDentists(opts ...func(*DentistQuery)) *ExpertQuery {
 // Example:
 //
 //	var v []struct {
-//		ExpertName string `json:"expert_name,omitempty"`
+//		Name string `json:"name,omitempty"`
 //		Count int `json:"count,omitempty"`
 //	}
 //
 //	client.Expert.Query().
-//		GroupBy(expert.FieldExpertName).
+//		GroupBy(expert.FieldName).
 //		Aggregate(ent.Count()).
 //		Scan(ctx, &v)
 //
@@ -296,11 +296,11 @@ func (eq *ExpertQuery) GroupBy(field string, fields ...string) *ExpertGroupBy {
 // Example:
 //
 //	var v []struct {
-//		ExpertName string `json:"expert_name,omitempty"`
+//		Name string `json:"name,omitempty"`
 //	}
 //
 //	client.Expert.Query().
-//		Select(expert.FieldExpertName).
+//		Select(expert.FieldName).
 //		Scan(ctx, &v)
 //
 func (eq *ExpertQuery) Select(field string, fields ...string) *ExpertSelect {
