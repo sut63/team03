@@ -14,7 +14,7 @@ type Expert struct {
 // Fields of the Expert.
 func (Expert) Fields() []ent.Field {
 	return []ent.Field{
-		field.String("expert_name").NotEmpty(),
+		field.String("name").NotEmpty(),
 	}
 }
 
