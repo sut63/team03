@@ -9,7 +9,6 @@ import (
 
 	"github.com/facebookincubator/ent/dialect/sql"
 	"github.com/team03/app/ent/dentist"
-	"github.com/team03/app/ent/medicalcare"
 	"github.com/team03/app/ent/medicalfile"
 	"github.com/team03/app/ent/nurse"
 	"github.com/team03/app/ent/patient"
@@ -26,11 +25,10 @@ type Medicalfile struct {
 	AddedTime time.Time `json:"added_time,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the MedicalfileQuery when eager-loading is set.
-	Edges          MedicalfileEdges `json:"edges"`
-	dentist_id     *int
-	medicalcare_id *int
-	nurse_id       *int
-	patient_id     *int
+	Edges      MedicalfileEdges `json:"edges"`
+	dentist_id *int
+	nurse_id   *int
+	patient_id *int
 }
 
 // MedicalfileEdges holds the relations/edges for other nodes in the graph.
@@ -41,13 +39,11 @@ type MedicalfileEdges struct {
 	Patient *Patient
 	// Nurse holds the value of the nurse edge.
 	Nurse *Nurse
-	// Medicalcare holds the value of the medicalcare edge.
-	Medicalcare *MedicalCare
 	// Dentalexpenses holds the value of the dentalexpenses edge.
 	Dentalexpenses []*DentalExpense
 	// loadedTypes holds the information for reporting if a
 	// type was loaded (or requested) in eager-loading or not.
-	loadedTypes [5]bool
+	loadedTypes [4]bool
 }
 
 // DentistOrErr returns the Dentist value or an error if the edge
@@ -92,24 +88,10 @@ func (e MedicalfileEdges) NurseOrErr() (*Nurse, error) {
 	return nil, &NotLoadedError{edge: "nurse"}
 }
 
-// MedicalcareOrErr returns the Medicalcare value or an error if the edge
-// was not loaded in eager-loading, or loaded but was not found.
-func (e MedicalfileEdges) MedicalcareOrErr() (*MedicalCare, error) {
-	if e.loadedTypes[3] {
-		if e.Medicalcare == nil {
-			// The edge medicalcare was loaded in eager-loading,
-			// but was not found.
-			return nil, &NotFoundError{label: medicalcare.Label}
-		}
-		return e.Medicalcare, nil
-	}
-	return nil, &NotLoadedError{edge: "medicalcare"}
-}
-
 // DentalexpensesOrErr returns the Dentalexpenses value or an error if the edge
 // was not loaded in eager-loading.
 func (e MedicalfileEdges) DentalexpensesOrErr() ([]*DentalExpense, error) {
-	if e.loadedTypes[4] {
+	if e.loadedTypes[3] {
 		return e.Dentalexpenses, nil
 	}
 	return nil, &NotLoadedError{edge: "dentalexpenses"}
@@ -128,7 +110,6 @@ func (*Medicalfile) scanValues() []interface{} {
 func (*Medicalfile) fkValues() []interface{} {
 	return []interface{}{
 		&sql.NullInt64{}, // dentist_id
-		&sql.NullInt64{}, // medicalcare_id
 		&sql.NullInt64{}, // nurse_id
 		&sql.NullInt64{}, // patient_id
 	}
@@ -165,18 +146,12 @@ func (m *Medicalfile) assignValues(values ...interface{}) error {
 			*m.dentist_id = int(value.Int64)
 		}
 		if value, ok := values[1].(*sql.NullInt64); !ok {
-			return fmt.Errorf("unexpected type %T for edge-field medicalcare_id", value)
-		} else if value.Valid {
-			m.medicalcare_id = new(int)
-			*m.medicalcare_id = int(value.Int64)
-		}
-		if value, ok := values[2].(*sql.NullInt64); !ok {
 			return fmt.Errorf("unexpected type %T for edge-field nurse_id", value)
 		} else if value.Valid {
 			m.nurse_id = new(int)
 			*m.nurse_id = int(value.Int64)
 		}
-		if value, ok := values[3].(*sql.NullInt64); !ok {
+		if value, ok := values[2].(*sql.NullInt64); !ok {
 			return fmt.Errorf("unexpected type %T for edge-field patient_id", value)
 		} else if value.Valid {
 			m.patient_id = new(int)
@@ -199,11 +174,6 @@ func (m *Medicalfile) QueryPatient() *PatientQuery {
 // QueryNurse queries the nurse edge of the Medicalfile.
 func (m *Medicalfile) QueryNurse() *NurseQuery {
 	return (&MedicalfileClient{config: m.config}).QueryNurse(m)
-}
-
-// QueryMedicalcare queries the medicalcare edge of the Medicalfile.
-func (m *Medicalfile) QueryMedicalcare() *MedicalCareQuery {
-	return (&MedicalfileClient{config: m.config}).QueryMedicalcare(m)
 }
 
 // QueryDentalexpenses queries the dentalexpenses edge of the Medicalfile.

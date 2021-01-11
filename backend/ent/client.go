@@ -1171,22 +1171,6 @@ func (c *MedicalCareClient) QueryPatients(mc *MedicalCare) *PatientQuery {
 	return query
 }
 
-// QueryMedicalfiles queries the medicalfiles edge of a MedicalCare.
-func (c *MedicalCareClient) QueryMedicalfiles(mc *MedicalCare) *MedicalfileQuery {
-	query := &MedicalfileQuery{config: c.config}
-	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
-		id := mc.ID
-		step := sqlgraph.NewStep(
-			sqlgraph.From(medicalcare.Table, medicalcare.FieldID, id),
-			sqlgraph.To(medicalfile.Table, medicalfile.FieldID),
-			sqlgraph.Edge(sqlgraph.O2M, false, medicalcare.MedicalfilesTable, medicalcare.MedicalfilesColumn),
-		)
-		fromV = sqlgraph.Neighbors(mc.driver.Dialect(), step)
-		return fromV, nil
-	}
-	return query
-}
-
 // Hooks returns the client hooks.
 func (c *MedicalCareClient) Hooks() []Hook {
 	return c.hooks.MedicalCare
@@ -1311,22 +1295,6 @@ func (c *MedicalfileClient) QueryNurse(m *Medicalfile) *NurseQuery {
 			sqlgraph.From(medicalfile.Table, medicalfile.FieldID, id),
 			sqlgraph.To(nurse.Table, nurse.FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, medicalfile.NurseTable, medicalfile.NurseColumn),
-		)
-		fromV = sqlgraph.Neighbors(m.driver.Dialect(), step)
-		return fromV, nil
-	}
-	return query
-}
-
-// QueryMedicalcare queries the medicalcare edge of a Medicalfile.
-func (c *MedicalfileClient) QueryMedicalcare(m *Medicalfile) *MedicalCareQuery {
-	query := &MedicalCareQuery{config: c.config}
-	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
-		id := m.ID
-		step := sqlgraph.NewStep(
-			sqlgraph.From(medicalfile.Table, medicalfile.FieldID, id),
-			sqlgraph.To(medicalcare.Table, medicalcare.FieldID),
-			sqlgraph.Edge(sqlgraph.M2O, true, medicalfile.MedicalcareTable, medicalfile.MedicalcareColumn),
 		)
 		fromV = sqlgraph.Neighbors(m.driver.Dialect(), step)
 		return fromV, nil

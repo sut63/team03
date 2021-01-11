@@ -12,8 +12,6 @@ const (
 
 	// EdgePatients holds the string denoting the patients edge name in mutations.
 	EdgePatients = "patients"
-	// EdgeMedicalfiles holds the string denoting the medicalfiles edge name in mutations.
-	EdgeMedicalfiles = "medicalfiles"
 
 	// Table holds the table name of the medicalcare in the database.
 	Table = "medical_cares"
@@ -24,13 +22,6 @@ const (
 	PatientsInverseTable = "patients"
 	// PatientsColumn is the table column denoting the patients relation/edge.
 	PatientsColumn = "medicalcare_id"
-	// MedicalfilesTable is the table the holds the medicalfiles relation/edge.
-	MedicalfilesTable = "medicalfiles"
-	// MedicalfilesInverseTable is the table name for the Medicalfile entity.
-	// It exists in this package in order to avoid circular dependency with the "medicalfile" package.
-	MedicalfilesInverseTable = "medicalfiles"
-	// MedicalfilesColumn is the table column denoting the medicalfiles relation/edge.
-	MedicalfilesColumn = "medicalcare_id"
 )
 
 // Columns holds all SQL columns for medicalcare fields.

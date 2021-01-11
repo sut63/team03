@@ -10,7 +10,6 @@ import (
 	"github.com/facebookincubator/ent/dialect/sql/sqlgraph"
 	"github.com/facebookincubator/ent/schema/field"
 	"github.com/team03/app/ent/medicalcare"
-	"github.com/team03/app/ent/medicalfile"
 	"github.com/team03/app/ent/patient"
 	"github.com/team03/app/ent/predicate"
 )
@@ -50,21 +49,6 @@ func (mcu *MedicalCareUpdate) AddPatients(p ...*Patient) *MedicalCareUpdate {
 	return mcu.AddPatientIDs(ids...)
 }
 
-// AddMedicalfileIDs adds the medicalfiles edge to Medicalfile by ids.
-func (mcu *MedicalCareUpdate) AddMedicalfileIDs(ids ...int) *MedicalCareUpdate {
-	mcu.mutation.AddMedicalfileIDs(ids...)
-	return mcu
-}
-
-// AddMedicalfiles adds the medicalfiles edges to Medicalfile.
-func (mcu *MedicalCareUpdate) AddMedicalfiles(m ...*Medicalfile) *MedicalCareUpdate {
-	ids := make([]int, len(m))
-	for i := range m {
-		ids[i] = m[i].ID
-	}
-	return mcu.AddMedicalfileIDs(ids...)
-}
-
 // Mutation returns the MedicalCareMutation object of the builder.
 func (mcu *MedicalCareUpdate) Mutation() *MedicalCareMutation {
 	return mcu.mutation
@@ -83,21 +67,6 @@ func (mcu *MedicalCareUpdate) RemovePatients(p ...*Patient) *MedicalCareUpdate {
 		ids[i] = p[i].ID
 	}
 	return mcu.RemovePatientIDs(ids...)
-}
-
-// RemoveMedicalfileIDs removes the medicalfiles edge to Medicalfile by ids.
-func (mcu *MedicalCareUpdate) RemoveMedicalfileIDs(ids ...int) *MedicalCareUpdate {
-	mcu.mutation.RemoveMedicalfileIDs(ids...)
-	return mcu
-}
-
-// RemoveMedicalfiles removes medicalfiles edges to Medicalfile.
-func (mcu *MedicalCareUpdate) RemoveMedicalfiles(m ...*Medicalfile) *MedicalCareUpdate {
-	ids := make([]int, len(m))
-	for i := range m {
-		ids[i] = m[i].ID
-	}
-	return mcu.RemoveMedicalfileIDs(ids...)
 }
 
 // Save executes the query and returns the number of rows/vertices matched by this operation.
@@ -220,44 +189,6 @@ func (mcu *MedicalCareUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if nodes := mcu.mutation.RemovedMedicalfilesIDs(); len(nodes) > 0 {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.O2M,
-			Inverse: false,
-			Table:   medicalcare.MedicalfilesTable,
-			Columns: []string{medicalcare.MedicalfilesColumn},
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeInt,
-					Column: medicalfile.FieldID,
-				},
-			},
-		}
-		for _, k := range nodes {
-			edge.Target.Nodes = append(edge.Target.Nodes, k)
-		}
-		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
-	}
-	if nodes := mcu.mutation.MedicalfilesIDs(); len(nodes) > 0 {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.O2M,
-			Inverse: false,
-			Table:   medicalcare.MedicalfilesTable,
-			Columns: []string{medicalcare.MedicalfilesColumn},
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeInt,
-					Column: medicalfile.FieldID,
-				},
-			},
-		}
-		for _, k := range nodes {
-			edge.Target.Nodes = append(edge.Target.Nodes, k)
-		}
-		_spec.Edges.Add = append(_spec.Edges.Add, edge)
-	}
 	if n, err = sqlgraph.UpdateNodes(ctx, mcu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{medicalcare.Label}
@@ -297,21 +228,6 @@ func (mcuo *MedicalCareUpdateOne) AddPatients(p ...*Patient) *MedicalCareUpdateO
 	return mcuo.AddPatientIDs(ids...)
 }
 
-// AddMedicalfileIDs adds the medicalfiles edge to Medicalfile by ids.
-func (mcuo *MedicalCareUpdateOne) AddMedicalfileIDs(ids ...int) *MedicalCareUpdateOne {
-	mcuo.mutation.AddMedicalfileIDs(ids...)
-	return mcuo
-}
-
-// AddMedicalfiles adds the medicalfiles edges to Medicalfile.
-func (mcuo *MedicalCareUpdateOne) AddMedicalfiles(m ...*Medicalfile) *MedicalCareUpdateOne {
-	ids := make([]int, len(m))
-	for i := range m {
-		ids[i] = m[i].ID
-	}
-	return mcuo.AddMedicalfileIDs(ids...)
-}
-
 // Mutation returns the MedicalCareMutation object of the builder.
 func (mcuo *MedicalCareUpdateOne) Mutation() *MedicalCareMutation {
 	return mcuo.mutation
@@ -330,21 +246,6 @@ func (mcuo *MedicalCareUpdateOne) RemovePatients(p ...*Patient) *MedicalCareUpda
 		ids[i] = p[i].ID
 	}
 	return mcuo.RemovePatientIDs(ids...)
-}
-
-// RemoveMedicalfileIDs removes the medicalfiles edge to Medicalfile by ids.
-func (mcuo *MedicalCareUpdateOne) RemoveMedicalfileIDs(ids ...int) *MedicalCareUpdateOne {
-	mcuo.mutation.RemoveMedicalfileIDs(ids...)
-	return mcuo
-}
-
-// RemoveMedicalfiles removes medicalfiles edges to Medicalfile.
-func (mcuo *MedicalCareUpdateOne) RemoveMedicalfiles(m ...*Medicalfile) *MedicalCareUpdateOne {
-	ids := make([]int, len(m))
-	for i := range m {
-		ids[i] = m[i].ID
-	}
-	return mcuo.RemoveMedicalfileIDs(ids...)
 }
 
 // Save executes the query and returns the updated entity.
@@ -457,44 +358,6 @@ func (mcuo *MedicalCareUpdateOne) sqlSave(ctx context.Context) (mc *MedicalCare,
 				IDSpec: &sqlgraph.FieldSpec{
 					Type:   field.TypeInt,
 					Column: patient.FieldID,
-				},
-			},
-		}
-		for _, k := range nodes {
-			edge.Target.Nodes = append(edge.Target.Nodes, k)
-		}
-		_spec.Edges.Add = append(_spec.Edges.Add, edge)
-	}
-	if nodes := mcuo.mutation.RemovedMedicalfilesIDs(); len(nodes) > 0 {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.O2M,
-			Inverse: false,
-			Table:   medicalcare.MedicalfilesTable,
-			Columns: []string{medicalcare.MedicalfilesColumn},
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeInt,
-					Column: medicalfile.FieldID,
-				},
-			},
-		}
-		for _, k := range nodes {
-			edge.Target.Nodes = append(edge.Target.Nodes, k)
-		}
-		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
-	}
-	if nodes := mcuo.mutation.MedicalfilesIDs(); len(nodes) > 0 {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.O2M,
-			Inverse: false,
-			Table:   medicalcare.MedicalfilesTable,
-			Columns: []string{medicalcare.MedicalfilesColumn},
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeInt,
-					Column: medicalfile.FieldID,
 				},
 			},
 		}

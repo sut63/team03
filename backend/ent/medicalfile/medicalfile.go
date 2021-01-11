@@ -18,8 +18,6 @@ const (
 	EdgePatient = "patient"
 	// EdgeNurse holds the string denoting the nurse edge name in mutations.
 	EdgeNurse = "nurse"
-	// EdgeMedicalcare holds the string denoting the medicalcare edge name in mutations.
-	EdgeMedicalcare = "medicalcare"
 	// EdgeDentalexpenses holds the string denoting the dentalexpenses edge name in mutations.
 	EdgeDentalexpenses = "dentalexpenses"
 
@@ -46,13 +44,6 @@ const (
 	NurseInverseTable = "nurses"
 	// NurseColumn is the table column denoting the nurse relation/edge.
 	NurseColumn = "nurse_id"
-	// MedicalcareTable is the table the holds the medicalcare relation/edge.
-	MedicalcareTable = "medicalfiles"
-	// MedicalcareInverseTable is the table name for the MedicalCare entity.
-	// It exists in this package in order to avoid circular dependency with the "medicalcare" package.
-	MedicalcareInverseTable = "medical_cares"
-	// MedicalcareColumn is the table column denoting the medicalcare relation/edge.
-	MedicalcareColumn = "medicalcare_id"
 	// DentalexpensesTable is the table the holds the dentalexpenses relation/edge.
 	DentalexpensesTable = "dental_expenses"
 	// DentalexpensesInverseTable is the table name for the DentalExpense entity.
@@ -72,7 +63,6 @@ var Columns = []string{
 // ForeignKeys holds the SQL foreign-keys that are owned by the Medicalfile type.
 var ForeignKeys = []string{
 	"dentist_id",
-	"medicalcare_id",
 	"nurse_id",
 	"patient_id",
 }

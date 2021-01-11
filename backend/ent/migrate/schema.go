@@ -201,7 +201,6 @@ var (
 		{Name: "detail", Type: field.TypeString},
 		{Name: "added_time", Type: field.TypeTime},
 		{Name: "dentist_id", Type: field.TypeInt, Nullable: true},
-		{Name: "medicalcare_id", Type: field.TypeInt, Nullable: true},
 		{Name: "nurse_id", Type: field.TypeInt, Nullable: true},
 		{Name: "patient_id", Type: field.TypeInt, Nullable: true},
 	}
@@ -219,22 +218,15 @@ var (
 				OnDelete:   schema.SetNull,
 			},
 			{
-				Symbol:  "medicalfiles_medical_cares_medicalfiles",
-				Columns: []*schema.Column{MedicalfilesColumns[4]},
-
-				RefColumns: []*schema.Column{MedicalCaresColumns[0]},
-				OnDelete:   schema.SetNull,
-			},
-			{
 				Symbol:  "medicalfiles_nurses_medicalfiles",
-				Columns: []*schema.Column{MedicalfilesColumns[5]},
+				Columns: []*schema.Column{MedicalfilesColumns[4]},
 
 				RefColumns: []*schema.Column{NursesColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
 			{
 				Symbol:  "medicalfiles_patients_medicalfiles",
-				Columns: []*schema.Column{MedicalfilesColumns[6]},
+				Columns: []*schema.Column{MedicalfilesColumns[5]},
 
 				RefColumns: []*schema.Column{PatientsColumns[0]},
 				OnDelete:   schema.SetNull,
@@ -399,9 +391,8 @@ func init() {
 	DentistsTable.ForeignKeys[2].RefTable = GendersTable
 	DentistsTable.ForeignKeys[3].RefTable = NursesTable
 	MedicalfilesTable.ForeignKeys[0].RefTable = DentistsTable
-	MedicalfilesTable.ForeignKeys[1].RefTable = MedicalCaresTable
-	MedicalfilesTable.ForeignKeys[2].RefTable = NursesTable
-	MedicalfilesTable.ForeignKeys[3].RefTable = PatientsTable
+	MedicalfilesTable.ForeignKeys[1].RefTable = NursesTable
+	MedicalfilesTable.ForeignKeys[2].RefTable = PatientsTable
 	PatientsTable.ForeignKeys[0].RefTable = DiseasesTable
 	PatientsTable.ForeignKeys[1].RefTable = GendersTable
 	PatientsTable.ForeignKeys[2].RefTable = MedicalCaresTable

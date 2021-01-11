@@ -14,7 +14,6 @@ import (
 	"github.com/facebookincubator/ent/schema/field"
 	"github.com/team03/app/ent/dentalexpense"
 	"github.com/team03/app/ent/dentist"
-	"github.com/team03/app/ent/medicalcare"
 	"github.com/team03/app/ent/medicalfile"
 	"github.com/team03/app/ent/nurse"
 	"github.com/team03/app/ent/patient"
@@ -33,7 +32,6 @@ type MedicalfileQuery struct {
 	withDentist        *DentistQuery
 	withPatient        *PatientQuery
 	withNurse          *NurseQuery
-	withMedicalcare    *MedicalCareQuery
 	withDentalexpenses *DentalExpenseQuery
 	withFKs            bool
 	// intermediate query (i.e. traversal path).
@@ -112,24 +110,6 @@ func (mq *MedicalfileQuery) QueryNurse() *NurseQuery {
 			sqlgraph.From(medicalfile.Table, medicalfile.FieldID, mq.sqlQuery()),
 			sqlgraph.To(nurse.Table, nurse.FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, medicalfile.NurseTable, medicalfile.NurseColumn),
-		)
-		fromU = sqlgraph.SetNeighbors(mq.driver.Dialect(), step)
-		return fromU, nil
-	}
-	return query
-}
-
-// QueryMedicalcare chains the current query on the medicalcare edge.
-func (mq *MedicalfileQuery) QueryMedicalcare() *MedicalCareQuery {
-	query := &MedicalCareQuery{config: mq.config}
-	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
-		if err := mq.prepareQuery(ctx); err != nil {
-			return nil, err
-		}
-		step := sqlgraph.NewStep(
-			sqlgraph.From(medicalfile.Table, medicalfile.FieldID, mq.sqlQuery()),
-			sqlgraph.To(medicalcare.Table, medicalcare.FieldID),
-			sqlgraph.Edge(sqlgraph.M2O, true, medicalfile.MedicalcareTable, medicalfile.MedicalcareColumn),
 		)
 		fromU = sqlgraph.SetNeighbors(mq.driver.Dialect(), step)
 		return fromU, nil
@@ -367,17 +347,6 @@ func (mq *MedicalfileQuery) WithNurse(opts ...func(*NurseQuery)) *MedicalfileQue
 	return mq
 }
 
-//  WithMedicalcare tells the query-builder to eager-loads the nodes that are connected to
-// the "medicalcare" edge. The optional arguments used to configure the query builder of the edge.
-func (mq *MedicalfileQuery) WithMedicalcare(opts ...func(*MedicalCareQuery)) *MedicalfileQuery {
-	query := &MedicalCareQuery{config: mq.config}
-	for _, opt := range opts {
-		opt(query)
-	}
-	mq.withMedicalcare = query
-	return mq
-}
-
 //  WithDentalexpenses tells the query-builder to eager-loads the nodes that are connected to
 // the "dentalexpenses" edge. The optional arguments used to configure the query builder of the edge.
 func (mq *MedicalfileQuery) WithDentalexpenses(opts ...func(*DentalExpenseQuery)) *MedicalfileQuery {
@@ -456,15 +425,14 @@ func (mq *MedicalfileQuery) sqlAll(ctx context.Context) ([]*Medicalfile, error) 
 		nodes       = []*Medicalfile{}
 		withFKs     = mq.withFKs
 		_spec       = mq.querySpec()
-		loadedTypes = [5]bool{
+		loadedTypes = [4]bool{
 			mq.withDentist != nil,
 			mq.withPatient != nil,
 			mq.withNurse != nil,
-			mq.withMedicalcare != nil,
 			mq.withDentalexpenses != nil,
 		}
 	)
-	if mq.withDentist != nil || mq.withPatient != nil || mq.withNurse != nil || mq.withMedicalcare != nil {
+	if mq.withDentist != nil || mq.withPatient != nil || mq.withNurse != nil {
 		withFKs = true
 	}
 	if withFKs {
@@ -565,31 +533,6 @@ func (mq *MedicalfileQuery) sqlAll(ctx context.Context) ([]*Medicalfile, error) 
 			}
 			for i := range nodes {
 				nodes[i].Edges.Nurse = n
-			}
-		}
-	}
-
-	if query := mq.withMedicalcare; query != nil {
-		ids := make([]int, 0, len(nodes))
-		nodeids := make(map[int][]*Medicalfile)
-		for i := range nodes {
-			if fk := nodes[i].medicalcare_id; fk != nil {
-				ids = append(ids, *fk)
-				nodeids[*fk] = append(nodeids[*fk], nodes[i])
-			}
-		}
-		query.Where(medicalcare.IDIn(ids...))
-		neighbors, err := query.All(ctx)
-		if err != nil {
-			return nil, err
-		}
-		for _, n := range neighbors {
-			nodes, ok := nodeids[n.ID]
-			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "medicalcare_id" returned %v`, n.ID)
-			}
-			for i := range nodes {
-				nodes[i].Edges.Medicalcare = n
 			}
 		}
 	}
