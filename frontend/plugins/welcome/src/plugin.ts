@@ -6,6 +6,7 @@ import Menu from './components/Menu';
 import Patient from './components/SavePatient';
 import Appointment from './components/SaveAppoint';
 import Dentist from './components/SaveDentist';
+import Queue from './components/SaveQueue';
 
 export const plugin = createPlugin({
   id: 'welcome',
@@ -17,5 +18,6 @@ export const plugin = createPlugin({
     router.registerRoute('/SavePatient', Patient);
     router.registerRoute('/SaveAppoint', Appointment);
     router.registerRoute('/SaveDentist', Dentist);
+    router.registerRoute('/SaveQueue', Queue);
   }
 });
