@@ -13,7 +13,6 @@ import (
 	"github.com/facebookincubator/ent/dialect/sql/sqlgraph"
 	"github.com/facebookincubator/ent/schema/field"
 	"github.com/team03/app/ent/medicalcare"
-	"github.com/team03/app/ent/medicalfile"
 	"github.com/team03/app/ent/patient"
 	"github.com/team03/app/ent/predicate"
 )
@@ -27,8 +26,7 @@ type MedicalCareQuery struct {
 	unique     []string
 	predicates []predicate.MedicalCare
 	// eager-loading edges.
-	withPatients     *PatientQuery
-	withMedicalfiles *MedicalfileQuery
+	withPatients *PatientQuery
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -69,24 +67,6 @@ func (mcq *MedicalCareQuery) QueryPatients() *PatientQuery {
 			sqlgraph.From(medicalcare.Table, medicalcare.FieldID, mcq.sqlQuery()),
 			sqlgraph.To(patient.Table, patient.FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, medicalcare.PatientsTable, medicalcare.PatientsColumn),
-		)
-		fromU = sqlgraph.SetNeighbors(mcq.driver.Dialect(), step)
-		return fromU, nil
-	}
-	return query
-}
-
-// QueryMedicalfiles chains the current query on the medicalfiles edge.
-func (mcq *MedicalCareQuery) QueryMedicalfiles() *MedicalfileQuery {
-	query := &MedicalfileQuery{config: mcq.config}
-	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
-		if err := mcq.prepareQuery(ctx); err != nil {
-			return nil, err
-		}
-		step := sqlgraph.NewStep(
-			sqlgraph.From(medicalcare.Table, medicalcare.FieldID, mcq.sqlQuery()),
-			sqlgraph.To(medicalfile.Table, medicalfile.FieldID),
-			sqlgraph.Edge(sqlgraph.O2M, false, medicalcare.MedicalfilesTable, medicalcare.MedicalfilesColumn),
 		)
 		fromU = sqlgraph.SetNeighbors(mcq.driver.Dialect(), step)
 		return fromU, nil
@@ -284,17 +264,6 @@ func (mcq *MedicalCareQuery) WithPatients(opts ...func(*PatientQuery)) *MedicalC
 	return mcq
 }
 
-//  WithMedicalfiles tells the query-builder to eager-loads the nodes that are connected to
-// the "medicalfiles" edge. The optional arguments used to configure the query builder of the edge.
-func (mcq *MedicalCareQuery) WithMedicalfiles(opts ...func(*MedicalfileQuery)) *MedicalCareQuery {
-	query := &MedicalfileQuery{config: mcq.config}
-	for _, opt := range opts {
-		opt(query)
-	}
-	mcq.withMedicalfiles = query
-	return mcq
-}
-
 // GroupBy used to group vertices by one or more fields/columns.
 // It is often used with aggregate functions, like: count, max, mean, min, sum.
 //
@@ -361,9 +330,8 @@ func (mcq *MedicalCareQuery) sqlAll(ctx context.Context) ([]*MedicalCare, error)
 	var (
 		nodes       = []*MedicalCare{}
 		_spec       = mcq.querySpec()
-		loadedTypes = [2]bool{
+		loadedTypes = [1]bool{
 			mcq.withPatients != nil,
-			mcq.withMedicalfiles != nil,
 		}
 	)
 	_spec.ScanValues = func() []interface{} {
@@ -412,34 +380,6 @@ func (mcq *MedicalCareQuery) sqlAll(ctx context.Context) ([]*MedicalCare, error)
 				return nil, fmt.Errorf(`unexpected foreign-key "medicalcare_id" returned %v for node %v`, *fk, n.ID)
 			}
 			node.Edges.Patients = append(node.Edges.Patients, n)
-		}
-	}
-
-	if query := mcq.withMedicalfiles; query != nil {
-		fks := make([]driver.Value, 0, len(nodes))
-		nodeids := make(map[int]*MedicalCare)
-		for i := range nodes {
-			fks = append(fks, nodes[i].ID)
-			nodeids[nodes[i].ID] = nodes[i]
-		}
-		query.withFKs = true
-		query.Where(predicate.Medicalfile(func(s *sql.Selector) {
-			s.Where(sql.InValues(medicalcare.MedicalfilesColumn, fks...))
-		}))
-		neighbors, err := query.All(ctx)
-		if err != nil {
-			return nil, err
-		}
-		for _, n := range neighbors {
-			fk := n.medicalcare_id
-			if fk == nil {
-				return nil, fmt.Errorf(`foreign-key "medicalcare_id" is nil for node %v`, n.ID)
-			}
-			node, ok := nodeids[*fk]
-			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "medicalcare_id" returned %v for node %v`, *fk, n.ID)
-			}
-			node.Edges.Medicalfiles = append(node.Edges.Medicalfiles, n)
 		}
 	}
 

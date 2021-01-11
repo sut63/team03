@@ -273,11 +273,6 @@ definitions:
     type: object
   ent.MedicalCareEdges:
     properties:
-      medicalfiles:
-        description: Medicalfiles holds the value of the medicalfiles edge.
-        items:
-          $ref: '#/definitions/ent.Medicalfile'
-        type: array
       patients:
         description: Patients holds the value of the patients edge.
         items:
@@ -312,10 +307,6 @@ definitions:
       dentist:
         $ref: '#/definitions/ent.Dentist'
         description: Dentist holds the value of the dentist edge.
-        type: object
-      medicalcare:
-        $ref: '#/definitions/ent.MedicalCare'
-        description: Medicalcare holds the value of the medicalcare edge.
         type: object
       nurse:
         $ref: '#/definitions/ent.Nurse'

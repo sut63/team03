@@ -12,7 +12,6 @@ import (
 	"github.com/facebookincubator/ent/schema/field"
 	"github.com/team03/app/ent/dentalexpense"
 	"github.com/team03/app/ent/dentist"
-	"github.com/team03/app/ent/medicalcare"
 	"github.com/team03/app/ent/medicalfile"
 	"github.com/team03/app/ent/nurse"
 	"github.com/team03/app/ent/patient"
@@ -92,25 +91,6 @@ func (mc *MedicalfileCreate) SetNillableNurseID(id *int) *MedicalfileCreate {
 // SetNurse sets the nurse edge to Nurse.
 func (mc *MedicalfileCreate) SetNurse(n *Nurse) *MedicalfileCreate {
 	return mc.SetNurseID(n.ID)
-}
-
-// SetMedicalcareID sets the medicalcare edge to MedicalCare by id.
-func (mc *MedicalfileCreate) SetMedicalcareID(id int) *MedicalfileCreate {
-	mc.mutation.SetMedicalcareID(id)
-	return mc
-}
-
-// SetNillableMedicalcareID sets the medicalcare edge to MedicalCare by id if the given value is not nil.
-func (mc *MedicalfileCreate) SetNillableMedicalcareID(id *int) *MedicalfileCreate {
-	if id != nil {
-		mc = mc.SetMedicalcareID(*id)
-	}
-	return mc
-}
-
-// SetMedicalcare sets the medicalcare edge to MedicalCare.
-func (mc *MedicalfileCreate) SetMedicalcare(m *MedicalCare) *MedicalfileCreate {
-	return mc.SetMedicalcareID(m.ID)
 }
 
 // AddDentalexpenseIDs adds the dentalexpenses edge to DentalExpense by ids.
@@ -271,25 +251,6 @@ func (mc *MedicalfileCreate) createSpec() (*Medicalfile, *sqlgraph.CreateSpec) {
 				IDSpec: &sqlgraph.FieldSpec{
 					Type:   field.TypeInt,
 					Column: nurse.FieldID,
-				},
-			},
-		}
-		for _, k := range nodes {
-			edge.Target.Nodes = append(edge.Target.Nodes, k)
-		}
-		_spec.Edges = append(_spec.Edges, edge)
-	}
-	if nodes := mc.mutation.MedicalcareIDs(); len(nodes) > 0 {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2O,
-			Inverse: true,
-			Table:   medicalfile.MedicalcareTable,
-			Columns: []string{medicalfile.MedicalcareColumn},
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeInt,
-					Column: medicalcare.FieldID,
 				},
 			},
 		}

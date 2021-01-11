@@ -22,10 +22,6 @@ import {
     EntDentistFromJSON,
     EntDentistFromJSONTyped,
     EntDentistToJSON,
-    EntMedicalCare,
-    EntMedicalCareFromJSON,
-    EntMedicalCareFromJSONTyped,
-    EntMedicalCareToJSON,
     EntNurse,
     EntNurseFromJSON,
     EntNurseFromJSONTyped,
@@ -56,12 +52,6 @@ export interface EntMedicalfileEdges {
     dentist?: EntDentist;
     /**
      * 
-     * @type {EntMedicalCare}
-     * @memberof EntMedicalfileEdges
-     */
-    medicalcare?: EntMedicalCare;
-    /**
-     * 
      * @type {EntNurse}
      * @memberof EntMedicalfileEdges
      */
@@ -86,7 +76,6 @@ export function EntMedicalfileEdgesFromJSONTyped(json: any, ignoreDiscriminator:
         
         'dentalexpenses': !exists(json, 'dentalexpenses') ? undefined : ((json['dentalexpenses'] as Array<any>).map(EntDentalExpenseFromJSON)),
         'dentist': !exists(json, 'dentist') ? undefined : EntDentistFromJSON(json['dentist']),
-        'medicalcare': !exists(json, 'medicalcare') ? undefined : EntMedicalCareFromJSON(json['medicalcare']),
         'nurse': !exists(json, 'nurse') ? undefined : EntNurseFromJSON(json['nurse']),
         'patient': !exists(json, 'patient') ? undefined : EntPatientFromJSON(json['patient']),
     };
@@ -103,7 +92,6 @@ export function EntMedicalfileEdgesToJSON(value?: EntMedicalfileEdges | null): a
         
         'dentalexpenses': value.dentalexpenses === undefined ? undefined : ((value.dentalexpenses as Array<any>).map(EntDentalExpenseToJSON)),
         'dentist': EntDentistToJSON(value.dentist),
-        'medicalcare': EntMedicalCareToJSON(value.medicalcare),
         'nurse': EntNurseToJSON(value.nurse),
         'patient': EntPatientToJSON(value.patient),
     };

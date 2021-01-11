@@ -26,11 +26,9 @@ type MedicalCare struct {
 type MedicalCareEdges struct {
 	// Patients holds the value of the patients edge.
 	Patients []*Patient
-	// Medicalfiles holds the value of the medicalfiles edge.
-	Medicalfiles []*Medicalfile
 	// loadedTypes holds the information for reporting if a
 	// type was loaded (or requested) in eager-loading or not.
-	loadedTypes [2]bool
+	loadedTypes [1]bool
 }
 
 // PatientsOrErr returns the Patients value or an error if the edge
@@ -40,15 +38,6 @@ func (e MedicalCareEdges) PatientsOrErr() ([]*Patient, error) {
 		return e.Patients, nil
 	}
 	return nil, &NotLoadedError{edge: "patients"}
-}
-
-// MedicalfilesOrErr returns the Medicalfiles value or an error if the edge
-// was not loaded in eager-loading.
-func (e MedicalCareEdges) MedicalfilesOrErr() ([]*Medicalfile, error) {
-	if e.loadedTypes[1] {
-		return e.Medicalfiles, nil
-	}
-	return nil, &NotLoadedError{edge: "medicalfiles"}
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -82,11 +71,6 @@ func (mc *MedicalCare) assignValues(values ...interface{}) error {
 // QueryPatients queries the patients edge of the MedicalCare.
 func (mc *MedicalCare) QueryPatients() *PatientQuery {
 	return (&MedicalCareClient{config: mc.config}).QueryPatients(mc)
-}
-
-// QueryMedicalfiles queries the medicalfiles edge of the MedicalCare.
-func (mc *MedicalCare) QueryMedicalfiles() *MedicalfileQuery {
-	return (&MedicalCareClient{config: mc.config}).QueryMedicalfiles(mc)
 }
 
 // Update returns a builder for updating this MedicalCare.

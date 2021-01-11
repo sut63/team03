@@ -10,7 +10,6 @@ import (
 	"github.com/facebookincubator/ent/dialect/sql/sqlgraph"
 	"github.com/facebookincubator/ent/schema/field"
 	"github.com/team03/app/ent/medicalcare"
-	"github.com/team03/app/ent/medicalfile"
 	"github.com/team03/app/ent/patient"
 )
 
@@ -40,21 +39,6 @@ func (mcc *MedicalCareCreate) AddPatients(p ...*Patient) *MedicalCareCreate {
 		ids[i] = p[i].ID
 	}
 	return mcc.AddPatientIDs(ids...)
-}
-
-// AddMedicalfileIDs adds the medicalfiles edge to Medicalfile by ids.
-func (mcc *MedicalCareCreate) AddMedicalfileIDs(ids ...int) *MedicalCareCreate {
-	mcc.mutation.AddMedicalfileIDs(ids...)
-	return mcc
-}
-
-// AddMedicalfiles adds the medicalfiles edges to Medicalfile.
-func (mcc *MedicalCareCreate) AddMedicalfiles(m ...*Medicalfile) *MedicalCareCreate {
-	ids := make([]int, len(m))
-	for i := range m {
-		ids[i] = m[i].ID
-	}
-	return mcc.AddMedicalfileIDs(ids...)
 }
 
 // Mutation returns the MedicalCareMutation object of the builder.
@@ -151,25 +135,6 @@ func (mcc *MedicalCareCreate) createSpec() (*MedicalCare, *sqlgraph.CreateSpec) 
 				IDSpec: &sqlgraph.FieldSpec{
 					Type:   field.TypeInt,
 					Column: patient.FieldID,
-				},
-			},
-		}
-		for _, k := range nodes {
-			edge.Target.Nodes = append(edge.Target.Nodes, k)
-		}
-		_spec.Edges = append(_spec.Edges, edge)
-	}
-	if nodes := mcc.mutation.MedicalfilesIDs(); len(nodes) > 0 {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.O2M,
-			Inverse: false,
-			Table:   medicalcare.MedicalfilesTable,
-			Columns: []string{medicalcare.MedicalfilesColumn},
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeInt,
-					Column: medicalfile.FieldID,
 				},
 			},
 		}

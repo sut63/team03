@@ -14,10 +14,6 @@
 
 import { exists, mapValues } from '../runtime';
 import {
-    EntMedicalfile,
-    EntMedicalfileFromJSON,
-    EntMedicalfileFromJSONTyped,
-    EntMedicalfileToJSON,
     EntPatient,
     EntPatientFromJSON,
     EntPatientFromJSONTyped,
@@ -30,12 +26,6 @@ import {
  * @interface EntMedicalCareEdges
  */
 export interface EntMedicalCareEdges {
-    /**
-     * Medicalfiles holds the value of the medicalfiles edge.
-     * @type {Array<EntMedicalfile>}
-     * @memberof EntMedicalCareEdges
-     */
-    medicalfiles?: Array<EntMedicalfile>;
     /**
      * Patients holds the value of the patients edge.
      * @type {Array<EntPatient>}
@@ -54,7 +44,6 @@ export function EntMedicalCareEdgesFromJSONTyped(json: any, ignoreDiscriminator:
     }
     return {
         
-        'medicalfiles': !exists(json, 'medicalfiles') ? undefined : ((json['medicalfiles'] as Array<any>).map(EntMedicalfileFromJSON)),
         'patients': !exists(json, 'patients') ? undefined : ((json['patients'] as Array<any>).map(EntPatientFromJSON)),
     };
 }
@@ -68,7 +57,6 @@ export function EntMedicalCareEdgesToJSON(value?: EntMedicalCareEdges | null): a
     }
     return {
         
-        'medicalfiles': value.medicalfiles === undefined ? undefined : ((value.medicalfiles as Array<any>).map(EntMedicalfileToJSON)),
         'patients': value.patients === undefined ? undefined : ((value.patients as Array<any>).map(EntPatientToJSON)),
     };
 }

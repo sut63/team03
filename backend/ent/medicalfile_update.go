@@ -12,7 +12,6 @@ import (
 	"github.com/facebookincubator/ent/schema/field"
 	"github.com/team03/app/ent/dentalexpense"
 	"github.com/team03/app/ent/dentist"
-	"github.com/team03/app/ent/medicalcare"
 	"github.com/team03/app/ent/medicalfile"
 	"github.com/team03/app/ent/nurse"
 	"github.com/team03/app/ent/patient"
@@ -102,25 +101,6 @@ func (mu *MedicalfileUpdate) SetNurse(n *Nurse) *MedicalfileUpdate {
 	return mu.SetNurseID(n.ID)
 }
 
-// SetMedicalcareID sets the medicalcare edge to MedicalCare by id.
-func (mu *MedicalfileUpdate) SetMedicalcareID(id int) *MedicalfileUpdate {
-	mu.mutation.SetMedicalcareID(id)
-	return mu
-}
-
-// SetNillableMedicalcareID sets the medicalcare edge to MedicalCare by id if the given value is not nil.
-func (mu *MedicalfileUpdate) SetNillableMedicalcareID(id *int) *MedicalfileUpdate {
-	if id != nil {
-		mu = mu.SetMedicalcareID(*id)
-	}
-	return mu
-}
-
-// SetMedicalcare sets the medicalcare edge to MedicalCare.
-func (mu *MedicalfileUpdate) SetMedicalcare(m *MedicalCare) *MedicalfileUpdate {
-	return mu.SetMedicalcareID(m.ID)
-}
-
 // AddDentalexpenseIDs adds the dentalexpenses edge to DentalExpense by ids.
 func (mu *MedicalfileUpdate) AddDentalexpenseIDs(ids ...int) *MedicalfileUpdate {
 	mu.mutation.AddDentalexpenseIDs(ids...)
@@ -156,12 +136,6 @@ func (mu *MedicalfileUpdate) ClearPatient() *MedicalfileUpdate {
 // ClearNurse clears the nurse edge to Nurse.
 func (mu *MedicalfileUpdate) ClearNurse() *MedicalfileUpdate {
 	mu.mutation.ClearNurse()
-	return mu
-}
-
-// ClearMedicalcare clears the medicalcare edge to MedicalCare.
-func (mu *MedicalfileUpdate) ClearMedicalcare() *MedicalfileUpdate {
-	mu.mutation.ClearMedicalcare()
 	return mu
 }
 
@@ -374,41 +348,6 @@ func (mu *MedicalfileUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if mu.mutation.MedicalcareCleared() {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2O,
-			Inverse: true,
-			Table:   medicalfile.MedicalcareTable,
-			Columns: []string{medicalfile.MedicalcareColumn},
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeInt,
-					Column: medicalcare.FieldID,
-				},
-			},
-		}
-		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
-	}
-	if nodes := mu.mutation.MedicalcareIDs(); len(nodes) > 0 {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2O,
-			Inverse: true,
-			Table:   medicalfile.MedicalcareTable,
-			Columns: []string{medicalfile.MedicalcareColumn},
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeInt,
-					Column: medicalcare.FieldID,
-				},
-			},
-		}
-		for _, k := range nodes {
-			edge.Target.Nodes = append(edge.Target.Nodes, k)
-		}
-		_spec.Edges.Add = append(_spec.Edges.Add, edge)
-	}
 	if nodes := mu.mutation.RemovedDentalexpensesIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
@@ -534,25 +473,6 @@ func (muo *MedicalfileUpdateOne) SetNurse(n *Nurse) *MedicalfileUpdateOne {
 	return muo.SetNurseID(n.ID)
 }
 
-// SetMedicalcareID sets the medicalcare edge to MedicalCare by id.
-func (muo *MedicalfileUpdateOne) SetMedicalcareID(id int) *MedicalfileUpdateOne {
-	muo.mutation.SetMedicalcareID(id)
-	return muo
-}
-
-// SetNillableMedicalcareID sets the medicalcare edge to MedicalCare by id if the given value is not nil.
-func (muo *MedicalfileUpdateOne) SetNillableMedicalcareID(id *int) *MedicalfileUpdateOne {
-	if id != nil {
-		muo = muo.SetMedicalcareID(*id)
-	}
-	return muo
-}
-
-// SetMedicalcare sets the medicalcare edge to MedicalCare.
-func (muo *MedicalfileUpdateOne) SetMedicalcare(m *MedicalCare) *MedicalfileUpdateOne {
-	return muo.SetMedicalcareID(m.ID)
-}
-
 // AddDentalexpenseIDs adds the dentalexpenses edge to DentalExpense by ids.
 func (muo *MedicalfileUpdateOne) AddDentalexpenseIDs(ids ...int) *MedicalfileUpdateOne {
 	muo.mutation.AddDentalexpenseIDs(ids...)
@@ -588,12 +508,6 @@ func (muo *MedicalfileUpdateOne) ClearPatient() *MedicalfileUpdateOne {
 // ClearNurse clears the nurse edge to Nurse.
 func (muo *MedicalfileUpdateOne) ClearNurse() *MedicalfileUpdateOne {
 	muo.mutation.ClearNurse()
-	return muo
-}
-
-// ClearMedicalcare clears the medicalcare edge to MedicalCare.
-func (muo *MedicalfileUpdateOne) ClearMedicalcare() *MedicalfileUpdateOne {
-	muo.mutation.ClearMedicalcare()
 	return muo
 }
 
@@ -796,41 +710,6 @@ func (muo *MedicalfileUpdateOne) sqlSave(ctx context.Context) (m *Medicalfile, e
 				IDSpec: &sqlgraph.FieldSpec{
 					Type:   field.TypeInt,
 					Column: nurse.FieldID,
-				},
-			},
-		}
-		for _, k := range nodes {
-			edge.Target.Nodes = append(edge.Target.Nodes, k)
-		}
-		_spec.Edges.Add = append(_spec.Edges.Add, edge)
-	}
-	if muo.mutation.MedicalcareCleared() {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2O,
-			Inverse: true,
-			Table:   medicalfile.MedicalcareTable,
-			Columns: []string{medicalfile.MedicalcareColumn},
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeInt,
-					Column: medicalcare.FieldID,
-				},
-			},
-		}
-		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
-	}
-	if nodes := muo.mutation.MedicalcareIDs(); len(nodes) > 0 {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2O,
-			Inverse: true,
-			Table:   medicalfile.MedicalcareTable,
-			Columns: []string{medicalfile.MedicalcareColumn},
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeInt,
-					Column: medicalcare.FieldID,
 				},
 			},
 		}

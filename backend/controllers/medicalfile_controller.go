@@ -11,7 +11,6 @@ import (
 	"github.com/team03/app/ent/nurse"
 	"github.com/team03/app/ent/medicalfile"
 	"github.com/team03/app/ent/patient"
-	"github.com/team03/app/ent/medicalcare"
 )
 
 // MedicalfileController defines the struct for the medicalfile controller
@@ -24,7 +23,6 @@ type Medicalfile struct {
 	Dentist  	int
 	Nurse	 	int
 	Patient  	int
-	MedicalCare int
 	Detial   	string
 	AddedTime  	string
 	
@@ -86,18 +84,6 @@ func (ctl *MedicalfileController) MedicalfileCreate(c *gin.Context) {
 		return
 	}
 
-	mc, err := ctl.client.MedicalCare.
-		Query().
-		Where(medicalcare.IDEQ(int(obj.MedicalCare))).
-		Only(context.Background())
-
-	if err != nil {
-		c.JSON(400, gin.H{
-			"error": "MedicalCare not found",
-		})
-		return
-	}
-	
 
 	time, err := time.Parse(time.RFC3339, obj.AddedTime)
 
@@ -106,7 +92,6 @@ func (ctl *MedicalfileController) MedicalfileCreate(c *gin.Context) {
 		SetPatient(p).
 		SetDentist(d).
 		SetNurse(n).
-		SetMedicalcare(mc).
 		SetDetail(obj.Detial).
 		SetAddedTime(time).
 		Save(context.Background())
@@ -189,7 +174,6 @@ func (ctl *MedicalfileController) ListMedicalfile(c *gin.Context) { //การ�
 		WithDentist().
 		WithNurse().
 		WithPatient().
-		WithMedicalcare().
 		Limit(limit).
 		Offset(offset).
 		All(context.Background())

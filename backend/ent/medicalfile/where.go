@@ -378,34 +378,6 @@ func HasNurseWith(preds ...predicate.Nurse) predicate.Medicalfile {
 	})
 }
 
-// HasMedicalcare applies the HasEdge predicate on the "medicalcare" edge.
-func HasMedicalcare() predicate.Medicalfile {
-	return predicate.Medicalfile(func(s *sql.Selector) {
-		step := sqlgraph.NewStep(
-			sqlgraph.From(Table, FieldID),
-			sqlgraph.To(MedicalcareTable, FieldID),
-			sqlgraph.Edge(sqlgraph.M2O, true, MedicalcareTable, MedicalcareColumn),
-		)
-		sqlgraph.HasNeighbors(s, step)
-	})
-}
-
-// HasMedicalcareWith applies the HasEdge predicate on the "medicalcare" edge with a given conditions (other predicates).
-func HasMedicalcareWith(preds ...predicate.MedicalCare) predicate.Medicalfile {
-	return predicate.Medicalfile(func(s *sql.Selector) {
-		step := sqlgraph.NewStep(
-			sqlgraph.From(Table, FieldID),
-			sqlgraph.To(MedicalcareInverseTable, FieldID),
-			sqlgraph.Edge(sqlgraph.M2O, true, MedicalcareTable, MedicalcareColumn),
-		)
-		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
-			for _, p := range preds {
-				p(s)
-			}
-		})
-	})
-}
-
 // HasDentalexpenses applies the HasEdge predicate on the "dentalexpenses" edge.
 func HasDentalexpenses() predicate.Medicalfile {
 	return predicate.Medicalfile(func(s *sql.Selector) {

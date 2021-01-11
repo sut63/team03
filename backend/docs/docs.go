@@ -2187,13 +2187,6 @@ var doc = `{
         "ent.MedicalCareEdges": {
             "type": "object",
             "properties": {
-                "medicalfiles": {
-                    "description": "Medicalfiles holds the value of the medicalfiles edge.",
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/ent.Medicalfile"
-                    }
-                },
                 "patients": {
                     "description": "Patients holds the value of the patients edge.",
                     "type": "array",
@@ -2239,11 +2232,6 @@ var doc = `{
                     "description": "Dentist holds the value of the dentist edge.",
                     "type": "object",
                     "$ref": "#/definitions/ent.Dentist"
-                },
-                "medicalcare": {
-                    "description": "Medicalcare holds the value of the medicalcare edge.",
-                    "type": "object",
-                    "$ref": "#/definitions/ent.MedicalCare"
                 },
                 "nurse": {
                     "description": "Nurse holds the value of the nurse edge.",

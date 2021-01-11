@@ -3762,17 +3762,15 @@ func (m *GenderMutation) ResetEdge(name string) error {
 // nodes in the graph.
 type MedicalCareMutation struct {
 	config
-	op                  Op
-	typ                 string
-	id                  *int
-	name                *string
-	clearedFields       map[string]struct{}
-	patients            map[int]struct{}
-	removedpatients     map[int]struct{}
-	medicalfiles        map[int]struct{}
-	removedmedicalfiles map[int]struct{}
-	done                bool
-	oldValue            func(context.Context) (*MedicalCare, error)
+	op              Op
+	typ             string
+	id              *int
+	name            *string
+	clearedFields   map[string]struct{}
+	patients        map[int]struct{}
+	removedpatients map[int]struct{}
+	done            bool
+	oldValue        func(context.Context) (*MedicalCare, error)
 }
 
 var _ ent.Mutation = (*MedicalCareMutation)(nil)
@@ -3933,48 +3931,6 @@ func (m *MedicalCareMutation) ResetPatients() {
 	m.removedpatients = nil
 }
 
-// AddMedicalfileIDs adds the medicalfiles edge to Medicalfile by ids.
-func (m *MedicalCareMutation) AddMedicalfileIDs(ids ...int) {
-	if m.medicalfiles == nil {
-		m.medicalfiles = make(map[int]struct{})
-	}
-	for i := range ids {
-		m.medicalfiles[ids[i]] = struct{}{}
-	}
-}
-
-// RemoveMedicalfileIDs removes the medicalfiles edge to Medicalfile by ids.
-func (m *MedicalCareMutation) RemoveMedicalfileIDs(ids ...int) {
-	if m.removedmedicalfiles == nil {
-		m.removedmedicalfiles = make(map[int]struct{})
-	}
-	for i := range ids {
-		m.removedmedicalfiles[ids[i]] = struct{}{}
-	}
-}
-
-// RemovedMedicalfiles returns the removed ids of medicalfiles.
-func (m *MedicalCareMutation) RemovedMedicalfilesIDs() (ids []int) {
-	for id := range m.removedmedicalfiles {
-		ids = append(ids, id)
-	}
-	return
-}
-
-// MedicalfilesIDs returns the medicalfiles ids in the mutation.
-func (m *MedicalCareMutation) MedicalfilesIDs() (ids []int) {
-	for id := range m.medicalfiles {
-		ids = append(ids, id)
-	}
-	return
-}
-
-// ResetMedicalfiles reset all changes of the "medicalfiles" edge.
-func (m *MedicalCareMutation) ResetMedicalfiles() {
-	m.medicalfiles = nil
-	m.removedmedicalfiles = nil
-}
-
 // Op returns the operation name.
 func (m *MedicalCareMutation) Op() Op {
 	return m.op
@@ -4090,12 +4046,9 @@ func (m *MedicalCareMutation) ResetField(name string) error {
 // AddedEdges returns all edge names that were set/added in this
 // mutation.
 func (m *MedicalCareMutation) AddedEdges() []string {
-	edges := make([]string, 0, 2)
+	edges := make([]string, 0, 1)
 	if m.patients != nil {
 		edges = append(edges, medicalcare.EdgePatients)
-	}
-	if m.medicalfiles != nil {
-		edges = append(edges, medicalcare.EdgeMedicalfiles)
 	}
 	return edges
 }
@@ -4110,12 +4063,6 @@ func (m *MedicalCareMutation) AddedIDs(name string) []ent.Value {
 			ids = append(ids, id)
 		}
 		return ids
-	case medicalcare.EdgeMedicalfiles:
-		ids := make([]ent.Value, 0, len(m.medicalfiles))
-		for id := range m.medicalfiles {
-			ids = append(ids, id)
-		}
-		return ids
 	}
 	return nil
 }
@@ -4123,12 +4070,9 @@ func (m *MedicalCareMutation) AddedIDs(name string) []ent.Value {
 // RemovedEdges returns all edge names that were removed in this
 // mutation.
 func (m *MedicalCareMutation) RemovedEdges() []string {
-	edges := make([]string, 0, 2)
+	edges := make([]string, 0, 1)
 	if m.removedpatients != nil {
 		edges = append(edges, medicalcare.EdgePatients)
-	}
-	if m.removedmedicalfiles != nil {
-		edges = append(edges, medicalcare.EdgeMedicalfiles)
 	}
 	return edges
 }
@@ -4143,12 +4087,6 @@ func (m *MedicalCareMutation) RemovedIDs(name string) []ent.Value {
 			ids = append(ids, id)
 		}
 		return ids
-	case medicalcare.EdgeMedicalfiles:
-		ids := make([]ent.Value, 0, len(m.removedmedicalfiles))
-		for id := range m.removedmedicalfiles {
-			ids = append(ids, id)
-		}
-		return ids
 	}
 	return nil
 }
@@ -4156,7 +4094,7 @@ func (m *MedicalCareMutation) RemovedIDs(name string) []ent.Value {
 // ClearedEdges returns all edge names that were cleared in this
 // mutation.
 func (m *MedicalCareMutation) ClearedEdges() []string {
-	edges := make([]string, 0, 2)
+	edges := make([]string, 0, 1)
 	return edges
 }
 
@@ -4184,9 +4122,6 @@ func (m *MedicalCareMutation) ResetEdge(name string) error {
 	case medicalcare.EdgePatients:
 		m.ResetPatients()
 		return nil
-	case medicalcare.EdgeMedicalfiles:
-		m.ResetMedicalfiles()
-		return nil
 	}
 	return fmt.Errorf("unknown MedicalCare edge %s", name)
 }
@@ -4207,8 +4142,6 @@ type MedicalfileMutation struct {
 	clearedpatient        bool
 	nurse                 *int
 	clearednurse          bool
-	medicalcare           *int
-	clearedmedicalcare    bool
 	dentalexpenses        map[int]struct{}
 	removeddentalexpenses map[int]struct{}
 	done                  bool
@@ -4485,45 +4418,6 @@ func (m *MedicalfileMutation) ResetNurse() {
 	m.clearednurse = false
 }
 
-// SetMedicalcareID sets the medicalcare edge to MedicalCare by id.
-func (m *MedicalfileMutation) SetMedicalcareID(id int) {
-	m.medicalcare = &id
-}
-
-// ClearMedicalcare clears the medicalcare edge to MedicalCare.
-func (m *MedicalfileMutation) ClearMedicalcare() {
-	m.clearedmedicalcare = true
-}
-
-// MedicalcareCleared returns if the edge medicalcare was cleared.
-func (m *MedicalfileMutation) MedicalcareCleared() bool {
-	return m.clearedmedicalcare
-}
-
-// MedicalcareID returns the medicalcare id in the mutation.
-func (m *MedicalfileMutation) MedicalcareID() (id int, exists bool) {
-	if m.medicalcare != nil {
-		return *m.medicalcare, true
-	}
-	return
-}
-
-// MedicalcareIDs returns the medicalcare ids in the mutation.
-// Note that ids always returns len(ids) <= 1 for unique edges, and you should use
-// MedicalcareID instead. It exists only for internal usage by the builders.
-func (m *MedicalfileMutation) MedicalcareIDs() (ids []int) {
-	if id := m.medicalcare; id != nil {
-		ids = append(ids, *id)
-	}
-	return
-}
-
-// ResetMedicalcare reset all changes of the "medicalcare" edge.
-func (m *MedicalfileMutation) ResetMedicalcare() {
-	m.medicalcare = nil
-	m.clearedmedicalcare = false
-}
-
 // AddDentalexpenseIDs adds the dentalexpenses edge to DentalExpense by ids.
 func (m *MedicalfileMutation) AddDentalexpenseIDs(ids ...int) {
 	if m.dentalexpenses == nil {
@@ -4698,7 +4592,7 @@ func (m *MedicalfileMutation) ResetField(name string) error {
 // AddedEdges returns all edge names that were set/added in this
 // mutation.
 func (m *MedicalfileMutation) AddedEdges() []string {
-	edges := make([]string, 0, 5)
+	edges := make([]string, 0, 4)
 	if m.dentist != nil {
 		edges = append(edges, medicalfile.EdgeDentist)
 	}
@@ -4707,9 +4601,6 @@ func (m *MedicalfileMutation) AddedEdges() []string {
 	}
 	if m.nurse != nil {
 		edges = append(edges, medicalfile.EdgeNurse)
-	}
-	if m.medicalcare != nil {
-		edges = append(edges, medicalfile.EdgeMedicalcare)
 	}
 	if m.dentalexpenses != nil {
 		edges = append(edges, medicalfile.EdgeDentalexpenses)
@@ -4733,10 +4624,6 @@ func (m *MedicalfileMutation) AddedIDs(name string) []ent.Value {
 		if id := m.nurse; id != nil {
 			return []ent.Value{*id}
 		}
-	case medicalfile.EdgeMedicalcare:
-		if id := m.medicalcare; id != nil {
-			return []ent.Value{*id}
-		}
 	case medicalfile.EdgeDentalexpenses:
 		ids := make([]ent.Value, 0, len(m.dentalexpenses))
 		for id := range m.dentalexpenses {
@@ -4750,7 +4637,7 @@ func (m *MedicalfileMutation) AddedIDs(name string) []ent.Value {
 // RemovedEdges returns all edge names that were removed in this
 // mutation.
 func (m *MedicalfileMutation) RemovedEdges() []string {
-	edges := make([]string, 0, 5)
+	edges := make([]string, 0, 4)
 	if m.removeddentalexpenses != nil {
 		edges = append(edges, medicalfile.EdgeDentalexpenses)
 	}
@@ -4774,7 +4661,7 @@ func (m *MedicalfileMutation) RemovedIDs(name string) []ent.Value {
 // ClearedEdges returns all edge names that were cleared in this
 // mutation.
 func (m *MedicalfileMutation) ClearedEdges() []string {
-	edges := make([]string, 0, 5)
+	edges := make([]string, 0, 4)
 	if m.cleareddentist {
 		edges = append(edges, medicalfile.EdgeDentist)
 	}
@@ -4783,9 +4670,6 @@ func (m *MedicalfileMutation) ClearedEdges() []string {
 	}
 	if m.clearednurse {
 		edges = append(edges, medicalfile.EdgeNurse)
-	}
-	if m.clearedmedicalcare {
-		edges = append(edges, medicalfile.EdgeMedicalcare)
 	}
 	return edges
 }
@@ -4800,8 +4684,6 @@ func (m *MedicalfileMutation) EdgeCleared(name string) bool {
 		return m.clearedpatient
 	case medicalfile.EdgeNurse:
 		return m.clearednurse
-	case medicalfile.EdgeMedicalcare:
-		return m.clearedmedicalcare
 	}
 	return false
 }
@@ -4818,9 +4700,6 @@ func (m *MedicalfileMutation) ClearEdge(name string) error {
 		return nil
 	case medicalfile.EdgeNurse:
 		m.ClearNurse()
-		return nil
-	case medicalfile.EdgeMedicalcare:
-		m.ClearMedicalcare()
 		return nil
 	}
 	return fmt.Errorf("unknown Medicalfile unique edge %s", name)
@@ -4839,9 +4718,6 @@ func (m *MedicalfileMutation) ResetEdge(name string) error {
 		return nil
 	case medicalfile.EdgeNurse:
 		m.ResetNurse()
-		return nil
-	case medicalfile.EdgeMedicalcare:
-		m.ResetMedicalcare()
 		return nil
 	case medicalfile.EdgeDentalexpenses:
 		m.ResetDentalexpenses()
