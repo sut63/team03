@@ -294,7 +294,7 @@ const SaveMed: FC<{}> = () => {
                   {medicalcares.map(item => {
                     return (
                       <MenuItem key={item.id} value={item.id}>
-                        {item.medicalcareName}
+                        {item.name}
                       </MenuItem>
                     );
                   })}
@@ -336,7 +336,7 @@ const SaveMed: FC<{}> = () => {
                   {nurses.map(item => {
                     return (
                       <MenuItem key={item.id} value={item.id}>
-                        {item.name}
+                        {item.nurseName}
                       </MenuItem>
                     );
                   })}
