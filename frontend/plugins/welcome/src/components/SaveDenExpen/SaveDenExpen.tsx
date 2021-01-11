@@ -60,7 +60,7 @@ const useStyles = makeStyles(theme => ({
 
 }));
 
-interface saveDen {
+interface saveDenExpen {
   PriceType: Number;
   Nurse: Number;
   Medicalfile: Number;
@@ -68,11 +68,11 @@ interface saveDen {
   
 }
 
-const saveDen: FC<{}> = () => {
+const saveDenExpen: FC<{}> = () => {
   const classes = useStyles();
   const http = new DefaultApi();
 
-  const [dentalexpense, setDentalexpenses] = React.useState<Partial<saveDen>>({});
+  const [dentalexpense, setDentalexpenses] = React.useState<Partial<saveDenExpen>>({});
   const [pricetypes, setPriceTypes] = React.useState<EntPriceType[]>([]); //การประกาศตัวแปร โดยที่เราจะดึงมาใช้ แล้ว Ent ได้มาจากการเจน API
   const [nurses, setNurses] = React.useState<EntNurse[]>([]);
   const [medicalfiles, setMedicalfiles] = React.useState<EntMedicalfile[]>([]);
@@ -240,7 +240,7 @@ const saveDen: FC<{}> = () => {
               <FormControl variant="outlined" className={classes.formControl}>
                 <InputLabel>เลือกข้อมูลการรักษาผู้ป่วย</InputLabel>
                 <Select
-                  name="MedicalCare"
+                  name="Medicalfile"
                   value={dentalexpense.Medicalfile || ''} 
                   onChange={handleChange}
                 >
@@ -327,4 +327,4 @@ const saveDen: FC<{}> = () => {
   );
 };
 
-export default  SaveDen;
+export default  saveDenExpen;
