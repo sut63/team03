@@ -19,7 +19,7 @@ import {
 } from '@material-ui/core';
 import { DefaultApi } from '../../api/apis'; // Api Gennerate From Command
 import { EntGender } from '../../api/models/EntGender'; // import interface Gender
-import { EntMedicalcare } from '../../api/models/EntMedicalcare'; // import interface MedicalCare
+import { EntMedicalCare } from '../../api/models/EntMedicalCare'; // import interface MedicalCare
 import { EntNurse } from '../../api/models/EntNurse'; // import interface Nurse
 import { EntDisease } from '../../api/models/EntDisease'; // import interface Disease
 
@@ -72,7 +72,7 @@ const SavePatient: FC<{}> = () => {
 
   const [patient, setPatient] = React.useState<Partial<savePatient>>({});
   const [genders, setGenders] = React.useState<EntGender[]>([]);
-  const [medicalcares, setMedicalcares] = React.useState<EntMedicalcare[]>([]);
+  const [medicalcares, setMedicalcares] = React.useState<EntMedicalCare[]>([]);
   const [nurses, setNurses] = React.useState<EntNurse[]>([]);
   const [diseases, setDiseases] = React.useState<EntDisease[]>([]);
 
@@ -248,7 +248,7 @@ const SavePatient: FC<{}> = () => {
                   {genders.map(item => {
                     return (
                       <MenuItem key={item.id} value={item.id}>
-                        {item.Name}
+                        {item.name}
                       </MenuItem>
                     );
                   })}
@@ -333,7 +333,7 @@ const SavePatient: FC<{}> = () => {
                   {diseases.map(item => {
                     return (
                       <MenuItem key={item.id} value={item.id}>
-                        {item.Name}
+                        {item.name}
                       </MenuItem>
                     );
                   })}
@@ -357,7 +357,7 @@ const SavePatient: FC<{}> = () => {
                   {medicalcares.map(item => {
                     return (
                       <MenuItem key={item.id} value={item.id}>
-                        {item.Name}
+                        {item.name}
                       </MenuItem>
                     );
                   })}
@@ -381,7 +381,7 @@ const SavePatient: FC<{}> = () => {
                   {nurses.map(item => {
                     return (
                       <MenuItem key={item.id} value={item.id}>
-                        {item.Name}
+                        {item.nurseName}
                       </MenuItem>
                     );
                   })}
