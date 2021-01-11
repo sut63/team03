@@ -4,6 +4,7 @@ import MedicalfileCreate from './components/SaveMed';
 import DentalExpense from './components/SaveDenExpen';
 import Menu from './components/Menu';
 import Patient from './components/SavePatient';
+import Appointment from './components/SaveAppoint';
 
 export const plugin = createPlugin({
   id: 'welcome',
@@ -13,6 +14,7 @@ export const plugin = createPlugin({
     router.registerRoute('/SaveMed', MedicalfileCreate);
     router.registerRoute('/SaveDenExpen', DentalExpense);
     router.registerRoute('/SavePatient', Patient);
+    router.registerRoute('/SaveAppoint', Appointment);
     
   }
 });
