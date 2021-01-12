@@ -1,5 +1,5 @@
 
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect} from 'react';
 import TextField from '@material-ui/core/TextField';
 
 import Button from '@material-ui/core/Button';
@@ -7,33 +7,26 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-
 import Swal from 'sweetalert2'; // alert
 import SaveIcon from '@material-ui/icons/Save'; // icon save
 import { Link as RouterLink } from 'react-router-dom';
-
-import {
-  Container,
-} from '@material-ui/core';
+//import { Container,} from '@material-ui/core';
 import 'date-fns';
-
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-
-
 import { DefaultApi } from '../../api/apis'; // Api Gennerate From Command
 import { EntDegree } from '../../api/models/EntDegree'; // import interface Degree
-import { EntDentist } from '../../api/models/EntDentist'; // import interface Dentist
+//import { EntDentist } from '../../api/models/EntDentist'; // import interface Dentist
 import { EntExpert } from '../../api/models/EntExpert'; // import interface Expert
 import { EntGender } from '../../api/models/EntGender'; // import interface Gender
-import { EntNurse } from '../../api/models/EntNurse'; // import interface Nurse
+//import { EntNurse } from '../../api/models/EntNurse'; // import interface Nurse
 //import { Container } from '@material-ui/core';
 import { 
  Content,
  Header,
  Page,
  pageTheme,
- ContentHeader,
+ //ContentHeader,
  Link,
  
 } from '@backstage/core';
@@ -63,34 +56,30 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface saveDentist {
- name: String;
- age: Number ;
- gender: Number  ;
- cardid: String;
- birthday: String ;
- experience: String ;
- tel:String;
- email:String;
- password:String;
- expert:Number;
- degree:Number;
- nurse:Number;
-  // create_by: number;
+ name: string;
+ age: number ;
+ gender: number  ;
+ cardid: string;
+ birthday: string ;
+ experience: string ;
+ tel:string;
+ email:string;
+ password:string;
+ expert:number;
+ degree:number;
+
 }
 
 const SaveDentist: FC<{}> = () => { 
 
     const classes = useStyles();
     const http = new DefaultApi();
-    const [dentist, setDentist] = React.useState<
-    Partial<saveDentist>
-    >({});
+    const [dentist, setDentist] = React.useState<Partial<saveDentist>>({});
     const [degrees, setDegrees] = React.useState<EntDegree[]>([]);
   const [genders, setGenders] = React.useState<EntGender[]>([]);
   const [experts, setExperts] = React.useState<EntExpert[]>([]);
-  const [nurses, setNurses] = React.useState<EntNurse[]>([]);
-  // alert setting
 
+  // alert setting
   const Toast = Swal.mixin({
     toast: true,
     position: 'top-end',
@@ -114,23 +103,19 @@ const SaveDentist: FC<{}> = () => {
     const res = await http.listExpert({ limit: 10, offset: 0 });
     setExperts(res);
   };
-  const getNurses = async () => {
-    const res = await http.listNurse({ limit: 10, offset: 0 });
-    setNurses(res);
-  };
+ // Lifecycle Hooks
   useEffect(() => {
     getDegrees();
     getGenders();
     getExperts();
-    getNurses();
+  
   }, []);
 
 
   // set data to object dentist
   const handleChange = (
-    event: React.ChangeEvent<{ name?: string; value: unknown }>,
-  ) => {
-    const name = event.target.name as keyof typeof SaveDentist;
+    event: React.ChangeEvent<{ name?: string; value: unknown }>,) => {
+    const name = event.target.name as keyof typeof dentist;
     const { value } = event.target;
     setDentist({ ...dentist, [name]: value });
     
@@ -139,7 +124,7 @@ const SaveDentist: FC<{}> = () => {
 
   const handleNumberChange = (
     event: React.ChangeEvent<{ name?: string; value: unknown }>,) => {
-    const name = event.target.name as keyof typeof SaveDentist;
+    const name = event.target.name as keyof typeof dentist;
     const { value } = event.target;
     setDentist({ ...dentist, [name]: + value });
     console.log(dentist);
@@ -203,17 +188,24 @@ return(
               value={dentist.name || ''}
               onChange={handleChange}
               />
-            <br></br>
-                <TextField
+         <br></br>
+     </FormControl>
+     <Grid item xs={12}>
+            <FormControl
+                  fullWidth
+                  className={classes.formControl}
+                  variant="outlined">
+                  <TextField
                     label="อายุ"
-                    name="Age"
+                    name="age"
                     type="Number"
                     variant="outlined"
                     size="medium"
                     value={dentist.age|| ''}
                     onChange={handleNumberChange}
                   />
-     </FormControl>
+                </FormControl>
+            </Grid>
      <br></br>
      <br></br>
      <Grid item xs={12}>
