@@ -2,18 +2,19 @@ package controllers
 
 import (
 	"context"
-	
+
 	"strconv"
 	"time"
 
+	"github.com/gin-gonic/gin"
 	"github.com/team03/app/ent"
-	"github.com/team03/app/ent/dentist"
-	"github.com/team03/app/ent/nurse"
 	"github.com/team03/app/ent/degree"
+	"github.com/team03/app/ent/dentist"
 	"github.com/team03/app/ent/expert"
 	"github.com/team03/app/ent/gender"
-	"github.com/gin-gonic/gin"
+	//"github.com/team03/app/ent/nurse"
 )
+
 //DentistController defines the struct for the Dentist controller
 type DentistController struct {
 	client *ent.Client
@@ -21,11 +22,17 @@ type DentistController struct {
 }
 
 type Dentist struct {
-	Nurse         int
-	Degree		  int
-	Expert		  int
-	Gender		  int
-	Birthday	string
+	Name       string
+	Age        int
+	Cardid     string
+	Experience string
+	Tel        string
+	Email      string
+	Password   string
+	Degree   int
+	Expert   int
+	Gender   int
+	Birthday string
 }
 
 // CreateDentist handles POST requests for adding dentist entities
@@ -34,8 +41,8 @@ type Dentist struct {
 // @ID create-dentist
 // @Accept   json
 // @Produce  json
-// @Param dentist body Dentist true "Dentist entity"
-// @Success 200 {object} Dentist
+// @Param dentist body ent.Dentist true "Dentist entity"
+// @Success 200 {object} ent.Dentist
 // @Failure 400 {object} gin.H
 // @Failure 500 {object} gin.H
 // @Router /dentists [post]
@@ -47,10 +54,20 @@ func (ctl *DentistController) CreateDentist(c *gin.Context) {
 		})
 		return
 	}
-
 	dg, err := ctl.client.Degree.
 		Query().
 		Where(degree.IDEQ(int(obj.Degree))).
+		Only(context.Background())
+	if err != nil {
+		c.JSON(400, gin.H{
+			"error": "degree not found",
+		})
+		return
+	}
+
+	e, err := ctl.client.Expert.
+		Query().
+		Where(expert.IDEQ(int(obj.Expert))).
 		Only(context.Background())
 
 	if err != nil {
@@ -60,52 +77,32 @@ func (ctl *DentistController) CreateDentist(c *gin.Context) {
 		return
 	}
 
-	e, err := ctl.client.Expert.
-	Query().
-	Where(expert.IDEQ(int(obj.Expert))).
-	Only(context.Background())
-
-	if err != nil {
-	c.JSON(400, gin.H{
-		"error": "degree not found",
-	})
-	return
-	}
-
 	g, err := ctl.client.Gender.
-	Query().
-	Where(gender.IDEQ(int(obj.Gender))).
-	Only(context.Background())
-
-	if err != nil {
-	c.JSON(400, gin.H{
-		"error": "gender not found",
-	})
-	return
-	}
-
-
-	n, err := ctl.client.Nurse.
 		Query().
-		Where(nurse.IDEQ(int(obj.Nurse))).
+		Where(gender.IDEQ(int(obj.Gender))).
 		Only(context.Background())
 
 	if err != nil {
 		c.JSON(400, gin.H{
-			"error": "nurse not found",
+			"error": "gender not found",
 		})
 		return
 	}
-
 
 	times, err := time.Parse(time.RFC3339, obj.Birthday)
 
 	d, err := ctl.client.Dentist.
 		Create().
-		SetNurse(n).
 		SetDegree(dg).
 		SetExpert(e).
 		SetGender(g).
+		SetCardid(obj.Cardid).
+		SetName(obj.Name).
+		SetExperience(obj.Experience).
+		SetTel(obj.Tel).
+		SetAge(obj.Age).
+		SetEmail(obj.Email).
+		SetPassword(obj.Password).
 		SetBirthday(times).
 		Save(context.Background())
 	if err != nil {
@@ -115,13 +112,11 @@ func (ctl *DentistController) CreateDentist(c *gin.Context) {
 		return
 	}
 
-
 	c.JSON(200, gin.H{
 		"status": true,
 		"data":   d,
 	})
 }
-
 
 // GetDentist handles GET requests to retrieve a dentist entity
 // @Summary Get a dentist entity by ID
@@ -142,7 +137,7 @@ func (ctl *DentistController) GetDentist(c *gin.Context) {
 		})
 		return
 	}
-  
+
 	d, err := ctl.client.Dentist.
 		Query().
 		Where(dentist.IDEQ(int(id))).
@@ -153,10 +148,9 @@ func (ctl *DentistController) GetDentist(c *gin.Context) {
 		})
 		return
 	}
-  
+
 	c.JSON(200, d)
- }
- 
+}
 
 // ListDentist handles request to get a list of dentist entities
 // @Summary List dentist entities
@@ -178,7 +172,6 @@ func (ctl *DentistController) ListDentist(c *gin.Context) {
 			limit = int(limit64)
 		}
 	}
-
 	offsetQuery := c.Query("offset")
 	offset := 0
 	if offsetQuery != "" {
@@ -190,7 +183,6 @@ func (ctl *DentistController) ListDentist(c *gin.Context) {
 
 	dentists, err := ctl.client.Dentist.
 		Query().
-		WithNurse().
 		WithDegree().
 		WithExpert().
 		WithGender().
@@ -204,7 +196,6 @@ func (ctl *DentistController) ListDentist(c *gin.Context) {
 		})
 		return
 	}
-
 	c.JSON(200, dentists)
 }
 
@@ -224,9 +215,10 @@ func NewDentistController(router gin.IRouter, client *ent.Client) *DentistContro
 // InitDentistController registers routes to the main engine
 func (ctl *DentistController) register() {
 	dentists := ctl.router.Group("/dentists")
-
-	dentists.POST("", ctl.CreateDentist)
 	dentists.GET("", ctl.ListDentist)
-	//queues.DELETE(":id", ctl.DeleteQueue)
-  //test
+	// CRUD
+	dentists.POST("", ctl.CreateDentist)
+	dentists.GET(":id", ctl.GetDentist) 
+
+
 }
