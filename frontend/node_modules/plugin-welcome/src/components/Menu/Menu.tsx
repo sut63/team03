@@ -13,6 +13,8 @@ import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid, { GridSpacing } from '@material-ui/core/Grid';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
+import { Link as RouterLink } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,8 +33,9 @@ const useStyles = makeStyles((theme) => ({
 })
 );
 
-const Homepage: FC<{}> = () => {
+const Menu: FC<{}> = () => {
   const classes = useStyles();
+
   return (
     <Page theme={pageTheme.service}>
       <Header
@@ -42,44 +45,24 @@ const Homepage: FC<{}> = () => {
            </Button>
       </Header>
       <Content>
+        
+        <center>
         <ContentHeader title="Menu"> </ContentHeader>
+        <ButtonGroup variant="contained" color="primary" aria-label="contained primary button group">
+        <Link component={RouterLink} to="/SavePatient">
+        <Button>บันทึกประวัติผู้ป่วย</Button></Link>
+        <Link component={RouterLink} to="/SaveDentist">
+        <Button>บันทึกข้อมูลแพทย์</Button></Link>
+        <Link component={RouterLink} to="/SaveMed">
+        <Button>บันทึกประวัติทันตกรรม</Button></Link>
+        <Link component={RouterLink} to="/SaveDenExpen">
+        <Button>บันทึกใบเสร็จค่ารักษา</Button></Link>
+        <Link component={RouterLink} to="/SaveQueue">
+        <Button>บันทึกการจองคิว</Button></Link>
+        </ButtonGroup>
+        </center>
+
         <Breadcrumbs aria-label="breadcrumb" >
-            <Link 
-            color="textPrimary" 
-            href="/SaveMed" >
-                บันทึกประวัติทันตกรรม
-            </Link>
-           
-            <Link 
-            color="textPrimary" 
-            href="/SaveAppoint" >
-                บันทึกใบนัดหมาย
-            </Link>
-
-            <Link 
-            color="textPrimary" 
-            href="/SaveDenExpen" >
-                บันทึกใบเสร็จค่ารักษา
-            </Link>
-
-            <Link 
-            color="textPrimary" 
-            href="/SavePatient" >
-                บันทึกประวัติผู้ป่วย
-            </Link>
-
-            <Link 
-            color="textPrimary" 
-            href="/SaveDentist" >
-                บันทึกข้อมูลแพทย์
-            </Link>
-
-            <Link 
-            color="textPrimary" 
-            href="/SaveQueue" >
-                บันทึกการจองคิว
-            </Link>
-
         </Breadcrumbs>
         <br></br>
         <Grid container className={classes.root} spacing={2}>
@@ -99,4 +82,5 @@ const Homepage: FC<{}> = () => {
     </Page>
   );
 };
-export default Homepage;
+
+export default Menu;
