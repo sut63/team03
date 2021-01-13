@@ -1,18 +1,5 @@
 basePath: /api/v1
 definitions:
-  controllers.Dentist:
-    properties:
-      birthday:
-        type: string
-      degree:
-        type: integer
-      expert:
-        type: integer
-      gender:
-        type: integer
-      nurse:
-        type: integer
-    type: object
   controllers.Queue:
     properties:
       dental:
@@ -838,14 +825,14 @@ paths:
         name: dentist
         required: true
         schema:
-          $ref: '#/definitions/controllers.Dentist'
+          $ref: '#/definitions/ent.Dentist'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/controllers.Dentist'
+            $ref: '#/definitions/ent.Dentist'
         "400":
           description: Bad Request
           schema:

@@ -498,7 +498,7 @@ var doc = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/controllers.Dentist"
+                            "$ref": "#/definitions/ent.Dentist"
                         }
                     }
                 ],
@@ -506,7 +506,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/controllers.Dentist"
+                            "$ref": "#/definitions/ent.Dentist"
                         }
                     },
                     "400": {
@@ -1827,26 +1827,6 @@ var doc = `{
         }
     },
     "definitions": {
-        "controllers.Dentist": {
-            "type": "object",
-            "properties": {
-                "birthday": {
-                    "type": "string"
-                },
-                "degree": {
-                    "type": "integer"
-                },
-                "expert": {
-                    "type": "integer"
-                },
-                "gender": {
-                    "type": "integer"
-                },
-                "nurse": {
-                    "type": "integer"
-                }
-            }
-        },
         "controllers.Queue": {
             "type": "object",
             "properties": {

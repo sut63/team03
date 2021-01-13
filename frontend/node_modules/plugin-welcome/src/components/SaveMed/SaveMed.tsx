@@ -27,7 +27,7 @@ import { DefaultApi } from '../../api/apis'; // Api Gennerate From Command
 import { EntDentist } from '../../api/models/EntDentist'; // import interface Dentist
 import { EntNurse } from '../../api/models/EntNurse'; // import interface Nurse
 import { EntPatient } from '../../api/models/EntPatient'; // import interface Patient
-import { EntMedicalCare } from '../../api/models/EntMedicalCare'; // import interface MedicalCare
+
 
 // css style
 const useStyles = makeStyles(theme => ({
@@ -65,7 +65,6 @@ interface saveMed {
   Dentist: Number;
   Patient: Number;
   Nurse: Number;
-  MedicalCare: Number;
   Added: String;
   Detial: String;
 }
@@ -78,7 +77,6 @@ const SaveMed: FC<{}> = () => {
   const [dentists, setDentists] = React.useState<EntDentist[]>([]); //การประกาศตัวแปร โดยที่เราจะดึงมาใช้ แล้ว Ent ได้มาจากการเจน API
   const [patients, setPatients] = React.useState<EntPatient[]>([]);
   const [nurses, setNurses] = React.useState<EntNurse[]>([]);
-  const [medicalcares, setMedicalCares] = React.useState<EntMedicalCare[]>([]);
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
@@ -125,17 +123,11 @@ const SaveMed: FC<{}> = () => {
     setNurses(res);
   };
 
-  const getMedicalCare = async () => {
-    const res = await http.listMedicalcare({ limit: 4, offset: 0 });
-    setMedicalCares(res);
-  };
-
   // Lifecycle Hooks
   useEffect(() => {
     getPatient();
     getDentist();
     getNurse();
-    getMedicalCare();
   }, []);
 
   // clear input form
@@ -287,14 +279,14 @@ const SaveMed: FC<{}> = () => {
               <FormControl variant="outlined" className={classes.formControl}>
                 <InputLabel>เลือกสิทธิในการรักษา</InputLabel>
                 <Select
-                  name="MedicalCare"
-                  value={medicalfile.MedicalCare || ''} 
+                  name="Patient"
+                  value={medicalfile.Patient || ''} 
                   onChange={handleChange}
                 >
-                  {medicalcares.map(item => {
+                  {patients.map(item => {
                     return (
                       <MenuItem key={item.id} value={item.id}>
-                        {item.name}
+                        {item.edges?.medicalcare}
                       </MenuItem>
                     );
                   })}
