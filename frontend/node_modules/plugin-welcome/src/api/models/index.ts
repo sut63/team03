@@ -1,4 +1,3 @@
-export * from './ControllersDentist';
 export * from './ControllersQueue';
 export * from './EntAppointment';
 export * from './EntAppointmentEdges';

@@ -76,8 +76,8 @@ const SignIn: FC<{}> = () => {
         icon: 'success',
         title: 'เข้าสู่ระบบสำเร็จ',
       });
-      //redirec Page ... http://localhost:3000/MenuMed
-      window.location.href = "http://localhost:3000/MenuMed";
+      //redirec Page ... http://localhost:3000/Menu
+      window.location.href = "http://localhost:3000/Menu";
       console.log("LOGIN TO Medical File System");
     } else {
       Toast.fire({

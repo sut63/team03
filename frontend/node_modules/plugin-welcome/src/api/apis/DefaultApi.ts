@@ -15,9 +15,6 @@
 
 import * as runtime from '../runtime';
 import {
-    ControllersDentist,
-    ControllersDentistFromJSON,
-    ControllersDentistToJSON,
     ControllersQueue,
     ControllersQueueFromJSON,
     ControllersQueueToJSON,
@@ -78,7 +75,7 @@ export interface CreateDentalexpenseRequest {
 }
 
 export interface CreateDentistRequest {
-    dentist: ControllersDentist;
+    dentist: EntDentist;
 }
 
 export interface CreateExpertRequest {
@@ -353,7 +350,7 @@ export class DefaultApi extends runtime.BaseAPI {
      * Create dentist
      * Create dentist
      */
-    async createDentistRaw(requestParameters: CreateDentistRequest): Promise<runtime.ApiResponse<ControllersDentist>> {
+    async createDentistRaw(requestParameters: CreateDentistRequest): Promise<runtime.ApiResponse<EntDentist>> {
         if (requestParameters.dentist === null || requestParameters.dentist === undefined) {
             throw new runtime.RequiredError('dentist','Required parameter requestParameters.dentist was null or undefined when calling createDentist.');
         }
@@ -369,17 +366,17 @@ export class DefaultApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: ControllersDentistToJSON(requestParameters.dentist),
+            body: EntDentistToJSON(requestParameters.dentist),
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => ControllersDentistFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => EntDentistFromJSON(jsonValue));
     }
 
     /**
      * Create dentist
      * Create dentist
      */
-    async createDentist(requestParameters: CreateDentistRequest): Promise<ControllersDentist> {
+    async createDentist(requestParameters: CreateDentistRequest): Promise<EntDentist> {
         const response = await this.createDentistRaw(requestParameters);
         return await response.value();
     }

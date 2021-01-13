@@ -60,7 +60,7 @@ interface savePatient {
   Tel: String;
   Birthday: String;
   Age: number;
-  Medicalcare: number;
+  MedicalCare: number;
   Nurse: number;
   Disease: number;
 
@@ -223,10 +223,10 @@ const SavePatient: FC<{}> = () => {
                   variant="outlined">
                   <TextField
                     label="เลขบัตรประจำตัวประชาชน"
-                    name="Name"
+                    name="CardID"
                     variant="outlined"
                     size="medium"
-                    value={patient.Name || ''}
+                    value={patient.CardID || ''}
                     onChange={handleChange}
                   />
                 </FormControl>
@@ -350,8 +350,8 @@ const SavePatient: FC<{}> = () => {
                 <InputLabel>สิทธิในการรักษา</InputLabel>
                 <Select
                   label="สิทธิในการรักษา"
-                  name="Medicalcare"
-                  value={patient.Medicalcare || ''} // (undefined || '') = ''
+                  name="MedicalCare"
+                  value={patient.MedicalCare || ''} // (undefined || '') = ''
                   onChange={handleChange}
                 >
                   {medicalcares.map(item => {
