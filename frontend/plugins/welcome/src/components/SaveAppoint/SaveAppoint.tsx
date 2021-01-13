@@ -54,7 +54,7 @@ interface appointment {
     dentist: number;
     datetime: String;
     appointDetail: String;
-    room: String;
+    room: number;
 
 }
 
@@ -170,7 +170,6 @@ function save() {
                   {patients.map(item => {
                     return (
                       <MenuItem key={item.id} value={item.id}>
-                        {item.id}
                         {item.name}
                       </MenuItem>
                     );
@@ -210,7 +209,7 @@ function save() {
                   name="datetime"
                   type="datetime-local"
                   value={appointment.datetime || ''} 
-                  className={classes.textField}
+                  className={classes.formControl}
                   InputLabelProps={{
                     shrink: true,
                   }}
@@ -219,6 +218,28 @@ function save() {
               </form>
             </Grid>
 
+            <Grid item xs={3}>
+              <div className={classes.paper}>ทันตแพทย์</div>
+            </Grid>
+            <Grid item xs={9}>
+              <FormControl variant="outlined" className={classes.formControl}>
+                <InputLabel>เลือกทันตแพทย์</InputLabel>
+                <Select
+                  name="dentist"
+                  label="เลือกทันตแพทย์"
+                  value={appointment.dentist || ''}
+                  onChange={handleChange}
+                >
+                  {dentists.map(item => {
+                    return (
+                      <MenuItem key={item.id} value={item.id}>
+                        {item.name}
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+              </FormControl>
+            </Grid>
 
             <Grid item xs={3}>
               <div className={classes.paper}>ห้องตรวจ</div>
@@ -227,9 +248,9 @@ function save() {
               <FormControl variant="outlined" className={classes.formControl}>
                 <InputLabel>เลือกห้องตรวจ</InputLabel>
                 <Select
-                  name="employee"
+                  name="room"
                   label="เลือกห้องตรวจ"
-                  value={appointment.room}
+                  value={appointment.room || ''}
                   onChange={handleChange}
                 >
                   {rooms.map(item => {
