@@ -25,7 +25,7 @@ type Appointment struct {
 	Dentist       int
 	AppointDetail string
 	Datetime      string
-	AppointRoom   int
+	Room   int
 }
 
 // AppointmentCreate handles POST requests for adding  Appointment entities
@@ -74,7 +74,7 @@ func (ctl *AppointmentController) AppointmentCreate(c *gin.Context) {
 
 	r, err := ctl.client.Room.
 		Query().
-		Where(room.IDEQ(int(obj.AppointRoom))).
+		Where(room.IDEQ(int(obj.Room))).
 		Only(context.Background())
 
 	if err != nil {
