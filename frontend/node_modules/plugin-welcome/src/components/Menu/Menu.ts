@@ -52,8 +52,32 @@ const Homepage: FC<{}> = () => {
            
             <Link 
             color="textPrimary" 
+            href="/SaveAppoint" >
+                บันทึกใบนัดหมาย
+            </Link>
+
+            <Link 
+            color="textPrimary" 
+            href="/SaveDenExpen" >
+                บันทึกใบเสร็จค่ารักษา
+            </Link>
+
+            <Link 
+            color="textPrimary" 
             href="/SavePatient" >
                 บันทึกประวัติผู้ป่วย
+            </Link>
+
+            <Link 
+            color="textPrimary" 
+            href="/SaveDentist" >
+                บันทึกข้อมูลแพทย์
+            </Link>
+
+            <Link 
+            color="textPrimary" 
+            href="/SaveQueue" >
+                บันทึกการจองคิว
             </Link>
 
         </Breadcrumbs>
