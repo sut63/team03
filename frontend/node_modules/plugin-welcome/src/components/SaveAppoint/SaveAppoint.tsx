@@ -53,7 +53,7 @@ interface appointment {
     patient: number;
     dentist: number;
     datetime: String;
-    appointDetail: String;
+    detail: String;
     room: number;
 
 }
@@ -71,7 +71,7 @@ const Appointment: FC<{}> = () => {
 const Toast = Swal.mixin({
     position: 'center',
     showConfirmButton: false,
-    timer: 1500,
+    timer: 3000,
     timerProgressBar: true,
     
 });
@@ -160,10 +160,10 @@ function save() {
             </Grid>
             <Grid item xs={9}>
               <FormControl variant="outlined" className={classes.formControl}>
-                <InputLabel>เลือกรหัสและรายชื่อผู้ป่วย</InputLabel>
+                <InputLabel>เลือกรายชื่อผู้ป่วย</InputLabel>
                 <Select
                   name="patient"
-                  label = "เลือกรหัสและรายชื่อผู้ป่วย"
+                  label = "เลือกรายชื่อผู้ป่วย"
                   value={appointment.patient || ''}
                   onChange={handleChange}
                 >
@@ -186,13 +186,13 @@ function save() {
                 <TextField
                     id="detail"
                     label="กรอกสาเหตุการนัดหมาย"
-                    name="AppointDetail"
+                    name="detail"
                     variant="outlined"
                     multiline
                     rows={4}
                     type="string"
                     size="medium"
-                    value={appointment.appointDetail}
+                    value={appointment.detail}
                     onChange={handleChange}
               />
               </FormControl>
@@ -218,28 +218,6 @@ function save() {
               </form>
             </Grid>
 
-            <Grid item xs={3}>
-              <div className={classes.paper}>ทันตแพทย์</div>
-            </Grid>
-            <Grid item xs={9}>
-              <FormControl variant="outlined" className={classes.formControl}>
-                <InputLabel>เลือกทันตแพทย์</InputLabel>
-                <Select
-                  name="dentist"
-                  label="เลือกทันตแพทย์"
-                  value={appointment.dentist || ''}
-                  onChange={handleChange}
-                >
-                  {dentists.map(item => {
-                    return (
-                      <MenuItem key={item.id} value={item.id}>
-                        {item.name}
-                      </MenuItem>
-                    );
-                  })}
-                </Select>
-              </FormControl>
-            </Grid>
 
             <Grid item xs={3}>
               <div className={classes.paper}>ห้องตรวจ</div>

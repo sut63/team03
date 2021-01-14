@@ -12,11 +12,11 @@ import privateMethods from '../privateMethods.js'
  * Instance method to close sweetAlert
  */
 
-function removePopupAndResetState (instance, container, isToast, onAfterClose) {
+function removePopupAndResetState (instance, container, isToast, didClose) {
   if (isToast) {
-    triggerOnAfterCloseAndDispose(instance, onAfterClose)
+    triggerDidCloseAndDispose(instance, didClose)
   } else {
-    restoreActiveElement().then(() => triggerOnAfterCloseAndDispose(instance, onAfterClose))
+    restoreActiveElement().then(() => triggerDidCloseAndDispose(instance, didClose))
     globalState.keydownTarget.removeEventListener('keydown', globalState.keydownHandler, { capture: globalState.keydownListenerCapture })
     globalState.keydownHandlerAdded = false
   }
@@ -55,6 +55,8 @@ export function close (resolveValue) {
     return
   }
 
+  resolveValue = prepareResolveValue(resolveValue)
+
   const innerParams = privateProps.innerParams.get(this)
   if (!innerParams || dom.hasClass(popup, innerParams.hideClass.popup)) {
     return
@@ -70,18 +72,25 @@ export function close (resolveValue) {
 
   handlePopupAnimation(this, popup, innerParams)
 
-  if (typeof resolveValue !== 'undefined') {
-    resolveValue.isDismissed = typeof resolveValue.dismiss !== 'undefined'
-    resolveValue.isConfirmed = typeof resolveValue.dismiss === 'undefined'
-  } else {
-    resolveValue = {
-      isDismissed: true,
+  // Resolve Swal promise
+  swalPromiseResolve(resolveValue)
+}
+
+const prepareResolveValue = (resolveValue) => {
+  // When user calls Swal.close()
+  if (typeof resolveValue === 'undefined') {
+    return {
       isConfirmed: false,
+      isDenied: false,
+      isDismissed: true,
     }
   }
 
-  // Resolve Swal promise
-  swalPromiseResolve(resolveValue || {})
+  return Object.assign({
+    isConfirmed: false,
+    isDenied: false,
+    isDismissed: false,
+  }, resolveValue)
 }
 
 const handlePopupAnimation = (instance, popup, innerParams) => {
@@ -89,22 +98,31 @@ const handlePopupAnimation = (instance, popup, innerParams) => {
   // If animation is supported, animate
   const animationIsSupported = dom.animationEndEvent && dom.hasCssAnimation(popup)
 
-  const { onClose, onAfterClose } = innerParams
+  const {
+    onClose, onAfterClose, // @deprecated
+    willClose, didClose
+  } = innerParams
 
-  if (onClose !== null && typeof onClose === 'function') {
-    onClose(popup)
-  }
+  runDidClose(popup, willClose, onClose)
 
   if (animationIsSupported) {
-    animatePopup(instance, popup, container, onAfterClose)
+    animatePopup(instance, popup, container, didClose || onAfterClose)
   } else {
     // Otherwise, remove immediately
-    removePopupAndResetState(instance, container, dom.isToast(), onAfterClose)
+    removePopupAndResetState(instance, container, dom.isToast(), didClose || onAfterClose)
   }
 }
 
-const animatePopup = (instance, popup, container, onAfterClose) => {
-  globalState.swalCloseEventFinishedCallback = removePopupAndResetState.bind(null, instance, container, dom.isToast(), onAfterClose)
+const runDidClose = (popup, willClose, onClose) => {
+  if (willClose !== null && typeof willClose === 'function') {
+    willClose(popup)
+  } else if (onClose !== null && typeof onClose === 'function') {
+    onClose(popup) // @deprecated
+  }
+}
+
+const animatePopup = (instance, popup, container, didClose) => {
+  globalState.swalCloseEventFinishedCallback = removePopupAndResetState.bind(null, instance, container, dom.isToast(), didClose)
   popup.addEventListener(dom.animationEndEvent, function (e) {
     if (e.target === popup) {
       globalState.swalCloseEventFinishedCallback()
@@ -113,10 +131,10 @@ const animatePopup = (instance, popup, container, onAfterClose) => {
   })
 }
 
-const triggerOnAfterCloseAndDispose = (instance, onAfterClose) => {
+const triggerDidCloseAndDispose = (instance, didClose) => {
   setTimeout(() => {
-    if (typeof onAfterClose === 'function') {
-      onAfterClose()
+    if (typeof didClose === 'function') {
+      didClose()
     }
     instance._destroy()
   })
