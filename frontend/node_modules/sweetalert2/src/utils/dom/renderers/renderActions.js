@@ -5,41 +5,49 @@ import { isLoading } from '../getters.js'
 
 export const renderActions = (instance, params) => {
   const actions = dom.getActions()
+  const loader = dom.getLoader()
   const confirmButton = dom.getConfirmButton()
+  const denyButton = dom.getDenyButton()
   const cancelButton = dom.getCancelButton()
 
   // Actions (buttons) wrapper
-  if (!params.showConfirmButton && !params.showCancelButton) {
+  if (!params.showConfirmButton && !params.showDenyButton && !params.showCancelButton) {
     dom.hide(actions)
   }
 
   // Custom class
   dom.applyCustomClass(actions, params, 'actions')
 
-  // Render confirm button
+  // Render buttons
   renderButton(confirmButton, 'confirm', params)
-  // render Cancel Button
+  renderButton(denyButton, 'deny', params)
   renderButton(cancelButton, 'cancel', params)
 
+  // Loader
+  loader.innerHTML = params.loaderHtml
+
   if (params.buttonsStyling) {
-    handleButtonsStyling(confirmButton, cancelButton, params)
+    handleButtonsStyling(confirmButton, denyButton, cancelButton, params)
   } else {
-    dom.removeClass([confirmButton, cancelButton], swalClasses.styled)
-    confirmButton.style.backgroundColor = confirmButton.style.borderLeftColor = confirmButton.style.borderRightColor = ''
-    cancelButton.style.backgroundColor = cancelButton.style.borderLeftColor = cancelButton.style.borderRightColor = ''
+    dom.removeClass([confirmButton, denyButton, cancelButton], swalClasses.styled)
   }
 
   if (params.reverseButtons) {
-    confirmButton.parentNode.insertBefore(cancelButton, confirmButton)
+    actions.insertBefore(cancelButton, loader)
+    actions.insertBefore(denyButton, loader)
+    actions.insertBefore(confirmButton, loader)
   }
 }
 
-function handleButtonsStyling (confirmButton, cancelButton, params) {
-  dom.addClass([confirmButton, cancelButton], swalClasses.styled)
+function handleButtonsStyling (confirmButton, denyButton, cancelButton, params) {
+  dom.addClass([confirmButton, denyButton, cancelButton], swalClasses.styled)
 
   // Buttons background colors
   if (params.confirmButtonColor) {
     confirmButton.style.backgroundColor = params.confirmButtonColor
+  }
+  if (params.denyButtonColor) {
+    denyButton.style.backgroundColor = params.denyButtonColor
   }
   if (params.cancelButtonColor) {
     cancelButton.style.backgroundColor = params.cancelButtonColor
