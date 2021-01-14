@@ -4,12 +4,6 @@ import { Content, Header, Page, pageTheme } from '@backstage/core';
 import SaveIcon from '@material-ui/icons/Save'; // icon save
 import Swal from 'sweetalert2'; // alert
 import { Link as RouterLink } from 'react-router-dom';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Menu from '@material-ui/core/Menu';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
 
 import {
   Container,
@@ -77,16 +71,6 @@ const SaveMed: FC<{}> = () => {
   const [dentists, setDentists] = React.useState<EntDentist[]>([]); //การประกาศตัวแปร โดยที่เราจะดึงมาใช้ แล้ว Ent ได้มาจากการเจน API
   const [patients, setPatients] = React.useState<EntPatient[]>([]);
   const [nurses, setNurses] = React.useState<EntNurse[]>([]);
-
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
 
   // alert setting
   //const Swal = require('sweetalert2')
@@ -166,16 +150,6 @@ const SaveMed: FC<{}> = () => {
       });
   }
 
-  function redirecLogOut() {
-    //redirec Page ... http://localhost:3000/
-    window.location.href = "http://localhost:3000/";
-  }
-
-  function redirecSearch() {
-    //redirec Page ... http://localhost:3000/Showmed
-    window.location.href = "http://localhost:3000/Showmed";
-  }
-
   return (
     <Page theme={pageTheme.service}>
       <Header
@@ -183,22 +157,7 @@ const SaveMed: FC<{}> = () => {
        subtitle="ระบบบันทึกประวัติทันตกรรม">
 
       <Avatar alt="Remy Sharp" src="../../image/account.jpg" />
-        <div style={{ marginLeft: 20 }}>.... ....</div>
-
-      <Button aria-controls="simple-menu" aria-haspopup="true" color="default" onClick={handleClick}>
-        Menu
-      </Button>
-      <Menu
-        id="simple-menu"
-        anchorEl={anchorEl}
-        keepMounted
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
-      >
-        <MenuItem onClick={redirecSearch}>SEARCH</MenuItem>
-        <MenuItem onClick={redirecLogOut}>LOGOUT</MenuItem>
-      </Menu>
-      
+        <div style={{ marginLeft: 10 }}>Rattawan Khaochalad</div>
      </Header>
 
      
@@ -286,7 +245,7 @@ const SaveMed: FC<{}> = () => {
                   {patients.map(item => {
                     return (
                       <MenuItem key={item.id} value={item.id}>
-                        {item.edges?.medicalcare}
+                        {item.edges?.medicalcare?.name}
                       </MenuItem>
                     );
                   })}
@@ -312,28 +271,6 @@ const SaveMed: FC<{}> = () => {
                   onChange={handleChange}
                 />
               </form>
-            </Grid>
-
-            <Grid item xs={3}>
-              <div className={classes.paper}>พยาบาล</div>
-            </Grid>
-            <Grid item xs={9}>
-              <FormControl variant="outlined" className={classes.formControl}>
-                <InputLabel>เลือกพยาบาลที่ทำการบันทึก</InputLabel>
-                <Select
-                  name="Nurse"
-                  value={medicalfile.Nurse || ''} 
-                  onChange={handleChange}
-                >
-                  {nurses.map(item => {
-                    return (
-                      <MenuItem key={item.id} value={item.id}>
-                        {item.nurseName}
-                      </MenuItem>
-                    );
-                  })}
-                </Select>
-              </FormControl>
             </Grid>
 
             <Grid item xs={3}></Grid>

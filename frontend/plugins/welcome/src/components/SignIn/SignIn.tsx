@@ -1,23 +1,23 @@
-import React, { FC } from 'react';
+import React, { FC, useState , useEffect } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Link from '@material-ui/core/Link';
-//import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import Swal from 'sweetalert2'; // alert
+import { DefaultApi, EntNurse } from '../../api';
+import { Alert } from '@material-ui/lab'; // alert
+import FaceIcon from '@material-ui/icons/Face';
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+      <Link color="inherit" href="https://github.com/sut63/team03">
+          Dental System
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -34,10 +34,10 @@ const useStyles = makeStyles(theme => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: "#CC3333",
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: '100%',
     marginTop: theme.spacing(1),
   },
   submit: {
@@ -45,67 +45,79 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-interface Login {
-  email:    string;
-  password: string;
-
-}
-
 const SignIn: FC<{}> = () => {
+
   const classes = useStyles();
-  const [login, setLogin] = React.useState<Partial<Login>>({});
+  const api = new DefaultApi();
 
-  // alert setting
-  const Toast = Swal.mixin({
-    toast: true,
-    position: 'top-end',
-    showConfirmButton: false,
-    timer: 3000,
-    timerProgressBar: true,
-    didOpen: toast => {
-      toast.addEventListener('mouseenter', Swal.stopTimer);
-      toast.addEventListener('mouseleave', Swal.resumeTimer);
-    },
-  });
+  const [status, SetStatus] = useState(false);
+  const [loading, SetLoading] = useState(true);
+  const [alert, SetAlert] = useState(Boolean);
 
-  function redirecLogin() {
-    if ((login.email == "b6009168@g.sut.ac.th" && login.password == "1234") ||
-      (login.email == "chanyeol@gmail.com" && login.password == "1")
-    ) {
-      Toast.fire({
-        icon: 'success',
-        title: 'เข้าสู่ระบบสำเร็จ',
-      });
-      //redirec Page ... http://localhost:3000/Menu
-      window.location.href = "http://localhost:3000/Menu";
-      console.log("LOGIN TO Medical File System");
-    } else {
-      Toast.fire({
-        icon: 'error',
-        title: 'Email หรือ Password ไม่ถูกต้อง',
-      });
-    }
+  const [nurse, setNurse] = useState<EntNurse[]>([]);
+  const [email, setEmail] = useState(String);
+  const [password, setPassword] = useState(String);
 
+  const PasswordhandelChange = (event : any) => {
+    setPassword(event.target.value as string);
   }
+  const EmailhandelChange = (event : any) => {
+    setEmail(event.target.value as string);
+  };
+  console.log("email",email);
 
-  const handleChange = (
-    event: React.ChangeEvent<{ name?: string; value: unknown }>,
-  ) => {
-    const name = event.target.name as keyof typeof login;
-    const { value } = event.target;
-    setLogin({ ...login, [name]: value });
-    console.log(login);
+
+  useEffect(() => {
+    const getNurse = async () => {
+      const res: any = await api.listNurse({ offset: 0 });
+      SetLoading(false);
+      setNurse(res);
+    };
+    getNurse();
+    localStorage.clear();
+  }, [loading]);
+
+
+  const SinginhandleChange = async () => {
+    nurse.map((item: any) => {
+      console.log(item.email);
+      if (item.email == email && item.password == password) {
+
+        SetAlert(true);
+        localStorage.setItem('nurse-id', JSON.stringify(item.id));
+        localStorage.setItem('nurse-name', JSON.stringify(item.name));
+        localStorage.setItem('nurse-email', JSON.stringify(item.email));
+        history.pushState("", "", "/welcome");
+        window.location.reload(false);
+      }
+    })
+
+  SetStatus(true);
+    // const timer = setTimeout(() => {
+    //   SetStatus(false);
+    // }, 1000);
   };
 
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
+      {status ? (
+            <div>
+              {alert ? (
+                <Alert severity="success">Login Succese</Alert>
+              ) : (
+                <Alert severity="warning" style={{ marginTop: 20 }}>
+                  email or password incorrect!!!
+                </Alert>
+              )}
+            </div>
+          ) : null}
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
+          <FaceIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          Sign In
         </Typography>
         <form className={classes.form} noValidate>
           <TextField
@@ -118,8 +130,7 @@ const SignIn: FC<{}> = () => {
             name="email"
             autoComplete="email"
             autoFocus
-            value={login.email || ""}
-            onChange={handleChange}
+            onChange={EmailhandelChange}
           />
           <TextField
             variant="outlined"
@@ -131,28 +142,27 @@ const SignIn: FC<{}> = () => {
             type="password"
             id="password"
             autoComplete="current-password"
-            value={login.password || ""}
-              onChange={handleChange}
+            onChange={PasswordhandelChange}
           />
-          
           <Button
-              fullWidth
-              variant="contained"
-              color="primary"
-              onClick={redirecLogin}
-            >
-              Sign In
-            </Button>
-
-         
+            style={{ backgroundColor: '#3333FF' }}
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+            onClick={() => {
+              SinginhandleChange()
+            }
+            }
+          >
+            Sign In
+          </Button>
         </form>
       </div>
       <Box mt={8}>
         <Copyright />
       </Box>
-
-      
-         
     </Container>
   );
 };

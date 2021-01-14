@@ -247,7 +247,7 @@ const saveDenExpen: FC<{}> = () => {
                   {medicalfiles.map(item => {
                     return (
                       <MenuItem key={item.id} value={item.id}>
-                        {item.id}
+                        {item.detail}
                       </MenuItem>
                     );
                   })}
@@ -289,7 +289,7 @@ const saveDenExpen: FC<{}> = () => {
                   {nurses.map(item => {
                     return (
                       <MenuItem key={item.id} value={item.id}>
-                        {item.id}
+                        {item.nurseName}
                       </MenuItem>
                     );
                   })}
