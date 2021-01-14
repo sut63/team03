@@ -1588,9 +1588,9 @@ paths:
             $ref: '#/definitions/gin.H'
       summary: Create queue
   /queues/{id}:
-    delete:
+    get:
       description: get queue by ID
-      operationId: delete-queue
+      operationId: get-queue
       parameters:
       - description: Queue ID
         in: path
@@ -1603,7 +1603,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/gin.H'
+            $ref: '#/definitions/ent.Queue'
         "400":
           description: Bad Request
           schema:
@@ -1616,7 +1616,7 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/gin.H'
-      summary: Delete a queue entity by ID
+      summary: Get a queue entity by ID
   /rooms:
     get:
       description: list Room entities

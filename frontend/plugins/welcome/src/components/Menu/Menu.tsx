@@ -8,11 +8,11 @@ import {
   pageTheme,
   ContentHeader,
 } from '@backstage/core';
-import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
-import Grid, { GridSpacing } from '@material-ui/core/Grid';
+import Grid from '@material-ui/core/Grid';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -42,46 +42,18 @@ const Homepage: FC<{}> = () => {
            </Button>
       </Header>
       <Content>
+
+        <center>
         <ContentHeader title="Menu"> </ContentHeader>
-        <Breadcrumbs aria-label="breadcrumb" >
-            <Link 
-            color="textPrimary" 
-            href="/SaveMed" >
-                บันทึกประวัติทันตกรรม
-            </Link>
-           
-            <Link 
-            color="textPrimary" 
-            href="/SaveAppoint" >
-                บันทึกใบนัดหมาย
-            </Link>
+        <ButtonGroup size="small" aria-label="small outlined button group">
+        <Button><Link color="textPrimary" href="/SavePatient" > บันทึกประวัติผู้ป่วย </Link></Button>
+        <Button><Link color="textPrimary" href="/SaveDentist" > บันทึกข้อมูลทันตแพทย์ </Link></Button>
+        <Button><Link color="textPrimary" href="/SaveMed" > บันทึกประวัติทันตกรรม </Link></Button>
+        <Button><Link color="textPrimary" href="/SaveDenExpen" > บันทึกค่ารักษา </Link></Button>
+        <Button><Link color="textPrimary" href="/SaveQueue" > บันทึกการจองคิว </Link></Button>
+        </ButtonGroup>
+        </center>
 
-            <Link 
-            color="textPrimary" 
-            href="/SaveDenExpen" >
-                บันทึกใบเสร็จค่ารักษา
-            </Link>
-
-            <Link 
-            color="textPrimary" 
-            href="/SavePatient" >
-                บันทึกประวัติผู้ป่วย
-            </Link>
-
-            <Link 
-            color="textPrimary" 
-            href="/SaveDentist" >
-                บันทึกข้อมูลแพทย์
-            </Link>
-
-            <Link 
-            color="textPrimary" 
-            href="/SaveQueue" >
-                บันทึกการจองคิว
-            </Link>
-
-        </Breadcrumbs>
-        <br></br>
         <Grid container className={classes.root} spacing={2}>
       <Grid item xs={12}>
         <Grid container justify="center" >

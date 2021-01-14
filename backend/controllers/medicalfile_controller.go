@@ -8,7 +8,6 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/team03/app/ent"
 	"github.com/team03/app/ent/dentist"
-	"github.com/team03/app/ent/nurse"
 	"github.com/team03/app/ent/medicalfile"
 	"github.com/team03/app/ent/patient"
 )
@@ -21,7 +20,6 @@ type MedicalfileController struct {
 
 type Medicalfile struct { 
 	Dentist  	int
-	Nurse	 	int
 	Patient  	int
 	Detial   	string
 	AddedTime  	string
@@ -72,26 +70,12 @@ func (ctl *MedicalfileController) MedicalfileCreate(c *gin.Context) {
 		return
 	}
 
-	n, err := ctl.client.Nurse.
-		Query().
-		Where(nurse.IDEQ(int(obj.Nurse))).
-		Only(context.Background())
-
-	if err != nil {
-		c.JSON(400, gin.H{
-			"error": "nurse not found",
-		})
-		return
-	}
-
-
 	time, err := time.Parse(time.RFC3339, obj.AddedTime)
 
 	m, err := ctl.client.Medicalfile.
 		Create().
 		SetPatient(p).
 		SetDentist(d).
-		SetNurse(n).
 		SetDetail(obj.Detial).
 		SetAddedTime(time).
 		Save(context.Background())
@@ -172,7 +156,6 @@ func (ctl *MedicalfileController) ListMedicalfile(c *gin.Context) { //การ�
 	medicalfiles, err := ctl.client.Medicalfile.
 		Query().
 		WithDentist().
-		WithNurse().
 		WithPatient().
 		Limit(limit).
 		Offset(offset).

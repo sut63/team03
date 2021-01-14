@@ -2,14 +2,13 @@ package controllers
 
 import (
 	"context"
-	"fmt"
 	"strconv"
 	"time"
 
 	"github.com/team03/app/ent"
 	"github.com/team03/app/ent/dentist"
-	"github.com/team03/app/ent/nurse"
 	"github.com/team03/app/ent/patient"
+	"github.com/team03/app/ent/queue"
 	"github.com/gin-gonic/gin"
 )
 
@@ -21,7 +20,6 @@ type QueueController struct {
 type Queue struct {
 	Patient   int
 	Dentist   int
-	Nurse     int
 	Dental    string
 	QueueTime string
 }
@@ -58,18 +56,6 @@ func (ctl *QueueController) CreateQueue(c *gin.Context) {
 		return
 	}
 
-	n, err := ctl.client.Nurse.
-		Query().
-		Where(nurse.IDEQ(int(obj.Nurse))).
-		Only(context.Background())
-
-	if err != nil {
-		c.JSON(400, gin.H{
-			"error": "nurse not found",
-		})
-		return
-	}
-
 	p, err := ctl.client.Patient.
 		Query().
 		Where(patient.IDEQ(int(obj.Patient))).
@@ -88,7 +74,6 @@ func (ctl *QueueController) CreateQueue(c *gin.Context) {
 		Create().
 		SetPatient(p).
 		SetDentist(d).
-		SetNurse(n).
 		SetDental(obj.Dental).
 		SetQueueTime(times).
 		Save(context.Background())
@@ -102,18 +87,18 @@ func (ctl *QueueController) CreateQueue(c *gin.Context) {
 	c.JSON(200, q)
 }
 
-// DeleteQueue handles DELETE requests to delete a queue entity
-// @Summary Delete a queue entity by ID
+// GetQueue handles GET requests to retrieve a queue entity
+// @Summary Get a queue entity by ID
 // @Description get queue by ID
-// @ID delete-queue
+// @ID get-queue
 // @Produce  json
 // @Param id path int true "Queue ID"
-// @Success 200 {object} gin.H
+// @Success 200 {object} ent.Queue
 // @Failure 400 {object} gin.H
 // @Failure 404 {object} gin.H
 // @Failure 500 {object} gin.H
-// @Router /queues/{id} [delete]
-func (ctl *QueueController) DeleteQueue(c *gin.Context) {
+// @Router /queues/{id} [get]
+func (ctl *QueueController) GetQueue(c *gin.Context) { 
 	id, err := strconv.ParseInt(c.Param("id"), 10, 64)
 	if err != nil {
 		c.JSON(400, gin.H{
@@ -121,18 +106,17 @@ func (ctl *QueueController) DeleteQueue(c *gin.Context) {
 		})
 		return
 	}
-
-	err = ctl.client.Queue.
-		DeleteOneID(int(id)).
-		Exec(context.Background())
+	q, err := ctl.client.Queue.
+		Query().
+		Where(queue.IDEQ(int(id))).
+		Only(context.Background())
 	if err != nil {
 		c.JSON(404, gin.H{
 			"error": err.Error(),
 		})
 		return
 	}
-
-	c.JSON(200, gin.H{"result": fmt.Sprintf("ok deleted %v", id)})
+	c.JSON(200, q)
 }
 
 // ListQueue handles request to get a list of queue entities
@@ -169,7 +153,6 @@ func (ctl *QueueController) ListQueue(c *gin.Context) {
 		Query().
 		WithPatient().
 		WithDentist().
-		WithNurse().
 		Limit(limit).
 		Offset(offset).
 		All(context.Background())
@@ -202,6 +185,7 @@ func (ctl *QueueController) register() {
 
 	queues.POST("", ctl.CreateQueue)
 	queues.GET("", ctl.ListQueue)
-	queues.DELETE(":id", ctl.DeleteQueue)
+	queues.GET(":id", ctl.GetQueue)
+	
 
 }

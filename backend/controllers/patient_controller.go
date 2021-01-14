@@ -9,7 +9,6 @@ import (
 	"github.com/team03/app/ent/gender"
 	"github.com/team03/app/ent/medicalcare"
 	"github.com/team03/app/ent/patient"
-	"github.com/team03/app/ent/nurse"
 	//  "fmt"
 	"github.com/team03/app/ent"
 	"github.com/gin-gonic/gin"
@@ -32,7 +31,6 @@ type Patient struct {
 	Age         int
 	Disease     int
 	MedicalCare int
-	Nurse       int
 }
 
 // PatientCreate handles POST requests for adding patient entities
@@ -41,7 +39,7 @@ type Patient struct {
 // @ID create-patient
 // @Accept   json
 // @Produce  json
-// @Param patient body ent.Patient true "Patient entity"
+// @Param Patient body ent.Patient true "Patient entity"
 // @Success 200 {object} ent.Patient
 // @Failure 400 {object} gin.H
 // @Failure 500 {object} gin.H
@@ -50,9 +48,9 @@ func (ctl *PatientController) PatientCreate(c *gin.Context) {
 	obj := Patient{}
 	if err := c.ShouldBind(&obj); err != nil {
 		c.JSON(400, gin.H{
-			"error": "Patient binding failed",
+			"error": "patient binding failed",
 		})
-		return
+		return 
 	}
 
 	g, err := ctl.client.Gender.
@@ -90,17 +88,7 @@ func (ctl *PatientController) PatientCreate(c *gin.Context) {
 		})
 		return
 	}
-	n, err := ctl.client.Nurse.
-		Query().
-		Where(nurse.IDEQ(int(obj.Nurse))).
-		Only(context.Background())
 
-	if err != nil {
-		c.JSON(400, gin.H{
-		"error": "Nurse not found",
-		})
-		return
-}
 
 	time, err := time.Parse(time.RFC3339, obj.Birthday+"T00:00:00Z")  //format time ตามรูปแบบของRFC3339 เอาแค่วันเดือนปี ไม่เอาเวลา
 	p, err := ctl.client.Patient.
@@ -114,7 +102,6 @@ func (ctl *PatientController) PatientCreate(c *gin.Context) {
 		SetAge(obj.Age).
 		SetDisease(ds).
 		SetMedicalcare(mc).
-		SetNurse(n).
 		Save(context.Background())
 	if err != nil {
 		c.JSON(400, gin.H{
@@ -199,7 +186,6 @@ func (ctl *PatientController) ListPatient(c *gin.Context) {
 		WithGender().
 		WithDisease().
 		WithMedicalcare().
-		WithNurse().
 		Limit(limit).
 		Offset(offset).
 		All(context.Background())

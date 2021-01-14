@@ -1,7 +1,6 @@
 
 import React, { FC, useEffect} from 'react';
 import TextField from '@material-ui/core/TextField';
-
 import Button from '@material-ui/core/Button';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -66,7 +65,6 @@ interface saveDentist {
  password:string;
  expert:number;
  degree:number;
-
 }
 
 const SaveDentist: FC<{}> = () => { 
@@ -107,7 +105,6 @@ const SaveDentist: FC<{}> = () => {
     getDegrees();
     getGenders();
     getExperts();
-  
   }, []);
 
 
@@ -144,7 +141,6 @@ const SaveDentist: FC<{}> = () => {
     };
   
     console.log(dentist); // log ดูข้อมูล สามารถ Inspect ดูข้อมูลได้ F12 เลือก Tab Console
-
     fetch(apiUrl, requestOptions)
     .then(response => response.json())
     .then(data => {console.log(data.save);

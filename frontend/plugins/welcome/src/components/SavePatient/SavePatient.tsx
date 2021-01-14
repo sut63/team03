@@ -20,7 +20,7 @@ import {
 import { DefaultApi } from '../../api/apis'; // Api Gennerate From Command
 import { EntGender } from '../../api/models/EntGender'; // import interface Gender
 import { EntMedicalCare } from '../../api/models/EntMedicalCare'; // import interface MedicalCare
-import { EntNurse } from '../../api/models/EntNurse'; // import interface Nurse
+//import { EntNurse } from '../../api/models/EntNurse'; // import interface Nurse
 import { EntDisease } from '../../api/models/EntDisease'; // import interface Disease
 
 // header css
@@ -61,7 +61,6 @@ interface savePatient {
   Birthday: String;
   Age: number;
   MedicalCare: number;
-  Nurse: number;
   Disease: number;
 
 }
@@ -73,7 +72,6 @@ const SavePatient: FC<{}> = () => {
   const [patient, setPatient] = React.useState<Partial<savePatient>>({});
   const [genders, setGenders] = React.useState<EntGender[]>([]);
   const [medicalcares, setMedicalcares] = React.useState<EntMedicalCare[]>([]);
-  const [nurses, setNurses] = React.useState<EntNurse[]>([]);
   const [diseases, setDiseases] = React.useState<EntDisease[]>([]);
 
   // alert setting
@@ -81,23 +79,18 @@ const SavePatient: FC<{}> = () => {
     toast: true,
     position: 'top-end',
     showConfirmButton: false,
-    timer: 3000,
+    timer: 6000,
     timerProgressBar: true,
   });
 
   const getGender = async () => {
-    const res = await http.listGender({ limit: 2, offset: 0 });
+    const res = await http.listGender({ limit: 10, offset: 0 });
     setGenders(res);
   };
 
   const getMedicalcare = async () => {
-    const res = await http.listMedicalcare({ limit: 4, offset: 0 });
+    const res = await http.listMedicalcare({ limit: 10, offset: 0 });
     setMedicalcares(res);
-  };
-
-  const getNurse = async () => {
-    const res = await http.listNurse({ limit: 2, offset: 0 });
-    setNurses(res);
   };
 
   const getDisease = async () => {
@@ -109,7 +102,6 @@ const SavePatient: FC<{}> = () => {
   useEffect(() => {
     getMedicalcare();
     getGender();
-    getNurse();
     getDisease();
   }, []);
 
@@ -150,7 +142,7 @@ const SavePatient: FC<{}> = () => {
       .then(response => response.json())
       .then(data => {console.log(data.save)
         console.log(requestOptions)
-        if (data.status === true) {
+        if (data.status == true) {
           clear();
           Toast.fire({
             icon: 'success',
@@ -167,7 +159,8 @@ const SavePatient: FC<{}> = () => {
 
   return (
     <Page theme={pageTheme.service}>
-      <Header style={HeaderCustom} title={`บันทึกประวัติผู้ป่วย`}>
+      <Header style={HeaderCustom} title={`บันทึกประวัติผู้ป่วย`}
+              subtitle="Dental System - Welcome to Patient">
       </Header>
       <Content>
         <Container maxWidth="sm">
@@ -202,7 +195,7 @@ const SavePatient: FC<{}> = () => {
                   className={classes.formControl}
                   variant="outlined">
                   <TextField
-                    label="ชื่อ - นามสกุล"
+                    label="กรอกชื่อ - นามสกุล"
                     name="Name"
                     variant="outlined"
                     size="medium"
@@ -222,7 +215,7 @@ const SavePatient: FC<{}> = () => {
                   className={classes.formControl}
                   variant="outlined">
                   <TextField
-                    label="เลขบัตรประจำตัวประชาชน"
+                    label="กรอกเลขบัตรประจำตัวประชาชน"
                     name="CardID"
                     variant="outlined"
                     size="medium"
@@ -241,7 +234,7 @@ const SavePatient: FC<{}> = () => {
                 <InputLabel>เพศ</InputLabel>
                 <Select
                   name="Gender"
-                  label="เพศ"
+                  label="เลือกเพศ"
                   value={patient.Gender || ''} // (undefined || '') = ''
                   onChange={handleChange}
                 >
@@ -266,7 +259,7 @@ const SavePatient: FC<{}> = () => {
                   className={classes.formControl}
                   variant="outlined">
                   <TextField
-                    label="เบอร์โทรศัพท์"
+                    label="กรอกเบอร์โทรศัพท์"
                     name="Tel"
                     variant="outlined"
                     size="medium"
@@ -306,7 +299,7 @@ const SavePatient: FC<{}> = () => {
                   className={classes.formControl}
                   variant="outlined">
                   <TextField
-                    label="อายุ"
+                    label="กรอกอายุ"
                     name="Age"
                     type="Number"
                     variant="outlined"
@@ -365,30 +358,6 @@ const SavePatient: FC<{}> = () => {
               </FormControl>
             </Grid>
 
-            <Grid item xs={12}></Grid>
-            <Grid item xs={3}>
-              <div className={classes.paper}>พยาบาล</div>
-            </Grid>
-            <Grid item xs={9}>
-              <FormControl variant="outlined" className={classes.formControl}>
-                <InputLabel>พยาบาลผู้บันทึก</InputLabel>
-                <Select
-                  label="พยาบาลผู้บันทึก"
-                  name="Nurse"
-                  value={patient.Nurse || ''} // (undefined || '') = ''
-                  onChange={handleChange}
-                >
-                  {nurses.map(item => {
-                    return (
-                      <MenuItem key={item.id} value={item.id}>
-                        {item.nurseName}
-                      </MenuItem>
-                    );
-                  })}
-                </Select>
-              </FormControl>
-            </Grid>
-
             <Grid item xs={3}></Grid>
             <Grid item xs={9}>
               <Button
@@ -398,7 +367,7 @@ const SavePatient: FC<{}> = () => {
                 startIcon={<SaveIcon />}
                 onClick={save}
               >
-                บันทึกข้อมูล
+                บันทึกข้อมูลประวัติ
               </Button>
               &emsp;
               <Link component={RouterLink} to="/Menu">
