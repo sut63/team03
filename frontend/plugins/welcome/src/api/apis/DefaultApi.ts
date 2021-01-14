@@ -110,10 +110,6 @@ export interface CreateRoomRequest {
     room: EntRoom;
 }
 
-export interface DeleteQueueRequest {
-    id: number;
-}
-
 export interface GetAppointmentRequest {
     id: number;
 }
@@ -159,6 +155,10 @@ export interface GetPatientRequest {
 }
 
 export interface GetPricetypeRequest {
+    id: number;
+}
+
+export interface GetQueueRequest {
     id: number;
 }
 
@@ -662,38 +662,6 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * get queue by ID
-     * Delete a queue entity by ID
-     */
-    async deleteQueueRaw(requestParameters: DeleteQueueRequest): Promise<runtime.ApiResponse<object>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling deleteQueue.');
-        }
-
-        const queryParameters: runtime.HTTPQuery = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        const response = await this.request({
-            path: `/queues/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
-            method: 'DELETE',
-            headers: headerParameters,
-            query: queryParameters,
-        });
-
-        return new runtime.JSONApiResponse<any>(response);
-    }
-
-    /**
-     * get queue by ID
-     * Delete a queue entity by ID
-     */
-    async deleteQueue(requestParameters: DeleteQueueRequest): Promise<object> {
-        const response = await this.deleteQueueRaw(requestParameters);
-        return await response.value();
-    }
-
-    /**
      * get Appointment by ID
      * Get a Appointment entity by ID
      */
@@ -1074,6 +1042,38 @@ export class DefaultApi extends runtime.BaseAPI {
      */
     async getPricetype(requestParameters: GetPricetypeRequest): Promise<EntPriceType> {
         const response = await this.getPricetypeRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
+     * get queue by ID
+     * Get a queue entity by ID
+     */
+    async getQueueRaw(requestParameters: GetQueueRequest): Promise<runtime.ApiResponse<EntQueue>> {
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getQueue.');
+        }
+
+        const queryParameters: runtime.HTTPQuery = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/queues/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => EntQueueFromJSON(jsonValue));
+    }
+
+    /**
+     * get queue by ID
+     * Get a queue entity by ID
+     */
+    async getQueue(requestParameters: GetQueueRequest): Promise<EntQueue> {
+        const response = await this.getQueueRaw(requestParameters);
         return await response.value();
     }
 

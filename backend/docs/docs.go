@@ -1647,13 +1647,13 @@ var doc = `{
             }
         },
         "/queues/{id}": {
-            "delete": {
+            "get": {
                 "description": "get queue by ID",
                 "produces": [
                     "application/json"
                 ],
-                "summary": "Delete a queue entity by ID",
-                "operationId": "delete-queue",
+                "summary": "Get a queue entity by ID",
+                "operationId": "get-queue",
                 "parameters": [
                     {
                         "type": "integer",
@@ -1667,7 +1667,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/gin.H"
+                            "$ref": "#/definitions/ent.Queue"
                         }
                     },
                     "400": {
