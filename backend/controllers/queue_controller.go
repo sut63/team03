@@ -24,7 +24,7 @@ type Queue struct {
 	QueueTime string
 }
 
-// CreateQueue handles POST requests for adding queue entities
+// QueueCreate handles POST requests for adding queue entities
 // @Summary Create queue
 // @Description Create queue
 // @ID create-queue
@@ -35,7 +35,7 @@ type Queue struct {
 // @Failure 400 {object} gin.H
 // @Failure 500 {object} gin.H
 // @Router /queues [post]
-func (ctl *QueueController) CreateQueue(c *gin.Context) {
+func (ctl *QueueController) QueueCreate(c *gin.Context) {
 	obj := Queue{}
 	if err := c.ShouldBind(&obj); err != nil {
 		c.JSON(400, gin.H{
@@ -84,7 +84,10 @@ func (ctl *QueueController) CreateQueue(c *gin.Context) {
 		return
 	}
 
-	c.JSON(200, q)
+	c.JSON(200, gin.H{
+		"status": true,
+		"data":   q,
+	})
 }
 
 // GetQueue handles GET requests to retrieve a queue entity
@@ -183,7 +186,7 @@ func NewQueueController(router gin.IRouter, client *ent.Client) *QueueController
 func (ctl *QueueController) register() {
 	queues := ctl.router.Group("/queues")
 
-	queues.POST("", ctl.CreateQueue)
+	queues.POST("", ctl.QueueCreate)
 	queues.GET("", ctl.ListQueue)
 	queues.GET(":id", ctl.GetQueue)
 	

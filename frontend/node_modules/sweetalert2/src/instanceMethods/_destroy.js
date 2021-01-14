@@ -22,10 +22,17 @@ export function _destroy () {
     delete globalState.deferDisposalTimer
   }
 
-  if (typeof innerParams.onDestroy === 'function') {
-    innerParams.onDestroy()
-  }
+  runDidDestroy(innerParams)
+
   disposeSwal(this)
+}
+
+const runDidDestroy = (innerParams) => {
+  if (typeof innerParams.didDestroy === 'function') {
+    innerParams.didDestroy()
+  } else if (typeof innerParams.onDestroy === 'function') {
+    innerParams.onDestroy() // @deprecated
+  }
 }
 
 const disposeSwal = (instance) => {

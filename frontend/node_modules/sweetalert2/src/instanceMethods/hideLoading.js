@@ -12,16 +12,17 @@ function hideLoading () {
     return
   }
   const domCache = privateProps.domCache.get(this)
-  if (!innerParams.showConfirmButton) {
-    dom.hide(domCache.confirmButton)
-    if (!innerParams.showCancelButton) {
-      dom.hide(domCache.actions)
-    }
+  dom.hide(domCache.loader)
+  if (innerParams.showConfirmButton) {
+    dom.show(domCache.confirmButton)
+  } else if (!innerParams.showConfirmButton && !innerParams.showCancelButton) {
+    dom.hide(domCache.actions)
   }
   dom.removeClass([domCache.popup, domCache.actions], swalClasses.loading)
   domCache.popup.removeAttribute('aria-busy')
   domCache.popup.removeAttribute('data-loading')
   domCache.confirmButton.disabled = false
+  domCache.denyButton.disabled = false
   domCache.cancelButton.disabled = false
 }
 
