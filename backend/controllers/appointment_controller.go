@@ -8,7 +8,6 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/team03/app/ent"
 	"github.com/team03/app/ent/appointment"
-	"github.com/team03/app/ent/dentist"
 	"github.com/team03/app/ent/patient"
 	"github.com/team03/app/ent/room"
 )
@@ -23,7 +22,7 @@ type AppointmentController struct {
 type Appointment struct {
 	Patient       int
 	Dentist       int
-	AppointDetail string
+	Detail string
 	Datetime      string
 	Room   int
 }
@@ -60,18 +59,6 @@ func (ctl *AppointmentController) AppointmentCreate(c *gin.Context) {
 		return
 	}
 
-	d, err := ctl.client.Dentist.
-		Query().
-		Where(dentist.IDEQ(int(obj.Dentist))).
-		Only(context.Background())
-
-	if err != nil {
-		c.JSON(400, gin.H{
-			"error": "dentist not found",
-		})
-		return
-	}
-
 	r, err := ctl.client.Room.
 		Query().
 		Where(room.IDEQ(int(obj.Room))).
@@ -88,9 +75,8 @@ func (ctl *AppointmentController) AppointmentCreate(c *gin.Context) {
 	ap, err := ctl.client.Appointment.
 		Create().
 		SetPatient(p).
-		SetDentist(d).
 		SetRoom(r).
-		SetDetail(obj.AppointDetail).
+		SetDetail(obj.Detail).
 		SetDatetime(time).
 		Save(context.Background())
 
@@ -174,7 +160,6 @@ func (ctl *AppointmentController) ListAppointment(c *gin.Context) {
 	appointments, err := ctl.client.Appointment.
 		Query().
 		WithPatient().
-		WithDentist().
 		WithRoom().
 		Limit(limit).
 		Offset(offset).
