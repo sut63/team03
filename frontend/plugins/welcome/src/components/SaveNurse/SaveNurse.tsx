@@ -192,7 +192,7 @@ const SaveNurse: FC<{}> = () => {
                 
                 label="Email" 
                 variant="outlined" 
-                name="nurseemail"
+                name="email"
                 type="string"
                 value={nurse.Email }
                 onChange={handleChange}
@@ -210,7 +210,7 @@ const SaveNurse: FC<{}> = () => {
                 
                 label="Password" 
                 variant="outlined" 
-                name="nursepassword"
+                name="password"
                 type="string"
                 value={nurse.Password }
                 onChange={handleChange}
