@@ -7,7 +7,6 @@ import { Alert } from '@material-ui/lab'; // alert
 import { DefaultApi } from '../../api/apis';
 import { EntNurse } from '../../api/models/EntNurse';
 
-
 const HeaderCustom = {
   minHeight: '120px',
 };
@@ -34,21 +33,21 @@ const SignInNurse: FC<{}> = () => {
   const [status, setStatus] = useState(false);
   const [alert, setAlert] = useState(Boolean);
   const api = new DefaultApi();
-  const [nurses, setNurses] = useState<EntNurse[]>([]);
-  const [nurseemails, setNurseEmail] = React.useState(String);
-  const [nursepassword, setNursePassword] = React.useState(String);
+  const [nurses, setNurse] = useState<EntNurse[]>([]);
+  const [emails, setEmail] = React.useState(String);
+  const [password, setPassword] = React.useState(String);
 
 
   const emailHandleChange = (event: any) => {
-    setNurseEmail(event.target.value as string);
+    setEmail(event.target.value as string);
   };
   const passwordHandleChange = (event: any) => {
-    setNursePassword(event.target.value as string);
+    setPassword(event.target.value as string);
   };
 
   const getNurse = async () => {
     const res: any = await api.listNurse({ limit: 0, offset: 0 });
-    setNurses(res);
+    setNurse(res);
   };
 
   const resetData = async () => {
@@ -63,8 +62,8 @@ const SignInNurse: FC<{}> = () => {
     var checkNurse = false;
 
     nurses.map((item: any) => {
-      console.log(item.NurseEmail);
-      if (item.NurseEmail == nurseemails && item.NursePassword == nursepassword) {
+      console.log(item.email);
+      if (item.email == emails && item.password == password) {
         setAlert(true);
         checkNurse = true;
         localStorage.setItem('nurse-id', JSON.stringify(item.id));
@@ -83,7 +82,7 @@ const SignInNurse: FC<{}> = () => {
   return (
     <div className={classes.paper}>
       <Page theme={pageTheme.website}>
-        <Header style={HeaderCustom} title={`Doctor Information`}
+        <Header style={HeaderCustom} title={`Nurse Information`}
           subtitle="กรุณาบันทึกข้อมูลก่อนเข้าสู่ระบบ">
             {status ? (
             <div>
@@ -105,7 +104,7 @@ const SignInNurse: FC<{}> = () => {
             fullWidth
             id="email"
             label="email"
-            name="nurseemail"
+            name="email"
             autoComplete="email"
             autoFocus
             onChange={emailHandleChange}
@@ -115,7 +114,7 @@ const SignInNurse: FC<{}> = () => {
             margin="normal"
             required
             fullWidth
-            name="nursepassword"
+            name="password"
             label="Password"
             type="password"
             id="password"
