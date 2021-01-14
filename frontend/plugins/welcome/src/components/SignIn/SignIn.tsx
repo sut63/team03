@@ -1,29 +1,16 @@
-import React, { FC, useState , useEffect } from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
-import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
+import React, { FC, useState, useEffect } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-import { DefaultApi, EntNurse } from '../../api';
+import { Header, Page, pageTheme, } from '@backstage/core';
+import { TextField, Button, Grid, Link, } from '@material-ui/core';
 import { Alert } from '@material-ui/lab'; // alert
-import FaceIcon from '@material-ui/icons/Face';
+import { DefaultApi } from '../../api/apis';
+import { EntDentist } from '../../api/models/EntDentist';
+import { EntNurse } from '../../api/models/EntNurse';
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://github.com/sut63/team03">
-          Dental System
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+const HeaderCustom = {
+  minHeight: '120px',
+};
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -31,10 +18,6 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: "#CC3333",
   },
   form: {
     width: '100%',
@@ -45,126 +28,142 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const SignIn: FC<{}> = () => {
 
+const Login: FC<{}> = () => {
   const classes = useStyles();
+  const [status, setStatus] = useState(false);
+  const [alert, setAlert] = useState(Boolean);
   const api = new DefaultApi();
+  const [dentist, setDentist] = useState<EntDentist[]>([]);
+  const [nurses, setNurse] = useState<EntNurse[]>([]);
+  const [emails, setEmail] = React.useState(String);
+  const [password, setPassword] = React.useState(String);
 
-  const [status, SetStatus] = useState(false);
-  const [loading, SetLoading] = useState(true);
-  const [alert, SetAlert] = useState(Boolean);
 
-  const [nurse, setNurse] = useState<EntNurse[]>([]);
-  const [email, setEmail] = useState(String);
-  const [password, setPassword] = useState(String);
-
-  const PasswordhandelChange = (event : any) => {
-    setPassword(event.target.value as string);
-  }
-  const EmailhandelChange = (event : any) => {
+  const emailHandleChange = (event: any) => {
     setEmail(event.target.value as string);
   };
-  console.log("email",email);
-
-
-  useEffect(() => {
-    const getNurse = async () => {
-      const res: any = await api.listNurse({ offset: 0 });
-      SetLoading(false);
-      setNurse(res);
-    };
-    getNurse();
-    localStorage.clear();
-  }, [loading]);
-
-
-  const SinginhandleChange = async () => {
-    nurse.map((item: any) => {
-      console.log(item.email);
-      if (item.email == email && item.password == password) {
-
-        SetAlert(true);
-        localStorage.setItem('nurse-id', JSON.stringify(item.id));
-        localStorage.setItem('nurse-name', JSON.stringify(item.name));
-        localStorage.setItem('nurse-email', JSON.stringify(item.email));
-        history.pushState("", "", "/welcome");
-        window.location.reload(false);
-      }
-    })
-
-  SetStatus(true);
-    // const timer = setTimeout(() => {
-    //   SetStatus(false);
-    // }, 1000);
+  const passwordHandleChange = (event: any) => {
+    setPassword(event.target.value as string);
   };
 
-  return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      {status ? (
-            <div>
-              {alert ? (
-                <Alert severity="success">Login Succese</Alert>
-              ) : (
-                <Alert severity="warning" style={{ marginTop: 20 }}>
-                  email or password incorrect!!!
-                </Alert>
-              )}
-            </div>
-          ) : null}
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <FaceIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign In
-        </Typography>
-        <form className={classes.form} noValidate>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
-            onChange={EmailhandelChange}
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-            onChange={PasswordhandelChange}
-          />
-          <Button
-            style={{ backgroundColor: '#3333FF' }}
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-            onClick={() => {
-              SinginhandleChange()
-            }
-            }
-          >
-            Sign In
-          </Button>
-        </form>
-      </div>
-      <Box mt={8}>
-        <Copyright />
-      </Box>
-    </Container>
-  );
-};
+  const getDentist = async () => {
+    const res: any = await api.listDentist({ limit: 0, offset: 0 });
+    setDentist(res);
+  };
 
-export default SignIn;
+  const getNurse = async () => {
+    const res: any = await api.listNurse({ limit: 3, offset: 0 });
+    setNurse(res);
+  };
+  const resetData = async () => {
+    localStorage.clear();
+  };
+  useEffect(() => {
+    getDentist();
+    getNurse();
+    resetData();
+  }, []);
+
+  const SigninCheck = async () => {
+    var checkNurses = false;
+    var checkDentist = false;
+
+    dentist.map((item: any) => {
+      console.log(item.email);
+      if (item.email == emails && item.password == password) {
+        setAlert(true);
+        checkDentist = true;
+        localStorage.setItem('nurse-id', JSON.stringify(item.id));
+        localStorage.setItem('nurse-name', JSON.stringify(item.password));
+        history.pushState('', '', '/menu');
+        window.location.reload(false);
+      }
+    });
+
+      // nurses.map((item: any) => {
+      //   console.log(item.email);
+      //   if (item.email == emails && item.password == password) {
+      //     setAlert(true);
+      //     checkNurses = true;
+      //     localStorage.setItem('nurse-id', JSON.stringify(item.id));
+      //     localStorage.setItem('nurse-name', JSON.stringify(item.name));
+      //     history.pushState('', '', '/menu');
+      //     window.location.reload(false);
+      //   }
+      // });
+      setStatus(true);
+      // const timer = setTimeout(() => {
+      //   setStatus(false);
+      // }, 1000);
+    }
+  
+
+  
+
+    return (
+      <div className={classes.paper}>
+        <Page theme={pageTheme.website}>
+          <Header style={HeaderCustom} title={`Nurse Information`}
+            subtitle="กรุณาบันทึกข้อมูลก่อนเข้าสู่ระบบ">
+            {status ? (
+              <div>
+                {alert ? (
+                  <Alert severity="success">เข้าสู่ระบบสำเร็จ</Alert>
+                ) : (
+                    <Alert severity="warning" style={{ marginTop: 20 }}>
+                      ไม่พบข้อมูลในระบบ
+                    </Alert>
+                  )}
+              </div>
+            ) : null}
+          </Header>
+          <form className={classes.submit} noValidate>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="email"
+              name="email"
+              autoComplete="email"
+              autoFocus
+              onChange={emailHandleChange}
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              onChange={passwordHandleChange}
+              autoComplete="current-password"
+
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+              onClick={SigninCheck}
+            >
+              Sign In
+          </Button>
+            <Grid container>
+              <Grid item>
+                <Link href="/SaveDentist" variant="body2">
+                  {"Don't have an account? Sign Up"}
+                </Link>
+              </Grid>
+            </Grid>
+          </form>
+        </Page>
+      </div>
+    );
+  };
+  export default Login;

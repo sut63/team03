@@ -91,7 +91,7 @@ const SaveMed: FC<{}> = () => {
     setMedicalfile({ ...medicalfile, [name]: value });
     console.log(medicalfile);
   };
-  
+
   const getPatient = async () => {
     const res = await http.listPatient({ limit: 4, offset: 0 });
     setPatients(res);
@@ -112,6 +112,7 @@ const SaveMed: FC<{}> = () => {
     getPatient();
     getDentist();
     getNurse();
+
   }, []);
 
   // clear input form
@@ -133,7 +134,8 @@ const SaveMed: FC<{}> = () => {
 
     fetch(apiUrl, requestOptions)
       .then(response => response.json())
-      .then(data => {console.log(data.save);
+      .then(data => {
+        console.log(data.save);
         console.log(requestOptions)
         if (data.status == true) {
           clear();
@@ -153,15 +155,15 @@ const SaveMed: FC<{}> = () => {
   return (
     <Page theme={pageTheme.service}>
       <Header
-       title="Dental System"
-       subtitle="ระบบบันทึกประวัติทันตกรรม">
+        title="Dental System"
+        subtitle="ระบบบันทึกประวัติทันตกรรม">
 
-      <Avatar alt="Remy Sharp" src="../../image/account.jpg" />
+        <Avatar alt="Remy Sharp" src="../../image/account.jpg" />
         <div style={{ marginLeft: 10 }}>Rattawan Khaochalad</div>
-     </Header>
+      </Header>
 
-     
-         
+
+
 
 
       <Content>
@@ -176,7 +178,7 @@ const SaveMed: FC<{}> = () => {
                 <InputLabel>เลือกรหัสผู้ป่วย</InputLabel>
                 <Select
                   name="Patient"
-                  value={medicalfile.Patient || ''} 
+                  value={medicalfile.Patient || ''}
                   onChange={handleChange}
                 >
                   {patients.map(item => {
@@ -196,14 +198,14 @@ const SaveMed: FC<{}> = () => {
             </Grid>
             <Grid item xs={9}>
               <FormControl variant="outlined" className={classes.formControl}>
-                <TextField 
-                
-                label="ประเภททันตกรรม" 
-                variant="outlined" 
-                name="Detial"
-                type="string"
-                value={medicalfile.Detial || ''}
-                onChange={handleChange}
+                <TextField
+
+                  label="ประเภททันตกรรม"
+                  variant="outlined"
+                  name="Detial"
+                  type="string"
+                  value={medicalfile.Detial || ''}
+                  onChange={handleChange}
                 />
 
               </FormControl>
@@ -217,7 +219,7 @@ const SaveMed: FC<{}> = () => {
                 <InputLabel>เลือกทันตแพทย์ที่ทำการรักษา</InputLabel>
                 <Select
                   name="Dentist"
-                  value={medicalfile.Dentist || ''} 
+                  value={medicalfile.Dentist || ''}
                   onChange={handleChange}
                 >
                   {dentists.map(item => {
@@ -239,14 +241,13 @@ const SaveMed: FC<{}> = () => {
                 <InputLabel>เลือกสิทธิในการรักษา</InputLabel>
                 <Select
                   name="Patient"
-                  value={medicalfile.Patient || ''} 
+                  label="เลือกสิทธิในการรักษา"
+                  value={medicalfile.Patient || ''}
                   onChange={handleChange}
                 >
                   {patients.map(item => {
                     return (
-                      <MenuItem key={item.id} value={item.id}>
-                        {item.edges?.medicalcare?.name}
-                      </MenuItem>
+                      <MenuItem value={item.id}>{item.edges?.medicalcare?.name}</MenuItem>
                     );
                   })}
                 </Select>
@@ -259,11 +260,11 @@ const SaveMed: FC<{}> = () => {
             <Grid item xs={9}>
               <form className={classes.container} noValidate>
                 <TextField
-                  
+
                   label="เลือกวันที่"
                   name="Added"
                   type="datetime-local"
-                  value={medicalfile.Added || ''} 
+                  value={medicalfile.Added || ''}
                   className={classes.textField}
                   InputLabelProps={{
                     shrink: true,
@@ -286,13 +287,13 @@ const SaveMed: FC<{}> = () => {
               </Button>
               &emsp;
               <Link component={RouterLink} to="/Menu">
-              <Button
-                variant="contained"
-                color="default"
-                size="large"
-                style={{ marginLeft: 5 }}
-              >
-                กลับ
+                <Button
+                  variant="contained"
+                  color="default"
+                  size="large"
+                  style={{ marginLeft: 5 }}
+                >
+                  กลับ
               </Button>
               </Link>
             </Grid>
@@ -303,4 +304,4 @@ const SaveMed: FC<{}> = () => {
   );
 };
 
-export default  SaveMed;
+export default SaveMed;
