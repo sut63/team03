@@ -21,16 +21,6 @@ type PriceType struct {
 	Name string
 }
 
-type Nurses struct {
-	Nurse []Nurse
-}
-type Nurse struct {
-	nursename string
-	nurseage int
-	nurseemail string
-	nursepassword string
-}
-
 type Rooms struct {
 	Room []Room
 }
@@ -268,24 +258,7 @@ func main() {
 			Save(context.Background())
 	}
 
-	// Set Nurse Data
-	nurses := Nurses{
-		Nurse: []Nurse{
-			Nurse{"สมปอง สำราญสุข",40,"sompong@gmail.com","1234"},
-			Nurse{"มงคล วารีย์",30,"mong@gmail.com","1212"},
-			Nurse{"พิมภกา สาโรช",30,"pimka@gmail.com","1"},
-		},
-	}
-	for _, n := range nurses.Nurse {
-		client.Nurse.
-			Create().
-			SetNurseName(n.nursename).
-			SetNurseAge(n.nurseage).
-			SetNurseEmail(n.nurseemail).
-			SetNursePassword(n.nursepassword).
-			Save(context.Background())
-	}
-
+	
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	router.Run()
 }

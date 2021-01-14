@@ -4736,8 +4736,8 @@ type NurseMutation struct {
 	nurse_name            *string
 	nurse_age             *int
 	addnurse_age          *int
-	nurse_email           *string
-	nurse_password        *string
+	email                 *string
+	password              *string
 	clearedFields         map[string]struct{}
 	queue                 map[int]struct{}
 	removedqueue          map[int]struct{}
@@ -4926,78 +4926,78 @@ func (m *NurseMutation) ResetNurseAge() {
 	m.addnurse_age = nil
 }
 
-// SetNurseEmail sets the nurse_email field.
-func (m *NurseMutation) SetNurseEmail(s string) {
-	m.nurse_email = &s
+// SetEmail sets the email field.
+func (m *NurseMutation) SetEmail(s string) {
+	m.email = &s
 }
 
-// NurseEmail returns the nurse_email value in the mutation.
-func (m *NurseMutation) NurseEmail() (r string, exists bool) {
-	v := m.nurse_email
+// Email returns the email value in the mutation.
+func (m *NurseMutation) Email() (r string, exists bool) {
+	v := m.email
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// OldNurseEmail returns the old nurse_email value of the Nurse.
+// OldEmail returns the old email value of the Nurse.
 // If the Nurse object wasn't provided to the builder, the object is fetched
 // from the database.
 // An error is returned if the mutation operation is not UpdateOne, or database query fails.
-func (m *NurseMutation) OldNurseEmail(ctx context.Context) (v string, err error) {
+func (m *NurseMutation) OldEmail(ctx context.Context) (v string, err error) {
 	if !m.op.Is(OpUpdateOne) {
-		return v, fmt.Errorf("OldNurseEmail is allowed only on UpdateOne operations")
+		return v, fmt.Errorf("OldEmail is allowed only on UpdateOne operations")
 	}
 	if m.id == nil || m.oldValue == nil {
-		return v, fmt.Errorf("OldNurseEmail requires an ID field in the mutation")
+		return v, fmt.Errorf("OldEmail requires an ID field in the mutation")
 	}
 	oldValue, err := m.oldValue(ctx)
 	if err != nil {
-		return v, fmt.Errorf("querying old value for OldNurseEmail: %w", err)
+		return v, fmt.Errorf("querying old value for OldEmail: %w", err)
 	}
-	return oldValue.NurseEmail, nil
+	return oldValue.Email, nil
 }
 
-// ResetNurseEmail reset all changes of the "nurse_email" field.
-func (m *NurseMutation) ResetNurseEmail() {
-	m.nurse_email = nil
+// ResetEmail reset all changes of the "email" field.
+func (m *NurseMutation) ResetEmail() {
+	m.email = nil
 }
 
-// SetNursePassword sets the nurse_password field.
-func (m *NurseMutation) SetNursePassword(s string) {
-	m.nurse_password = &s
+// SetPassword sets the password field.
+func (m *NurseMutation) SetPassword(s string) {
+	m.password = &s
 }
 
-// NursePassword returns the nurse_password value in the mutation.
-func (m *NurseMutation) NursePassword() (r string, exists bool) {
-	v := m.nurse_password
+// Password returns the password value in the mutation.
+func (m *NurseMutation) Password() (r string, exists bool) {
+	v := m.password
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// OldNursePassword returns the old nurse_password value of the Nurse.
+// OldPassword returns the old password value of the Nurse.
 // If the Nurse object wasn't provided to the builder, the object is fetched
 // from the database.
 // An error is returned if the mutation operation is not UpdateOne, or database query fails.
-func (m *NurseMutation) OldNursePassword(ctx context.Context) (v string, err error) {
+func (m *NurseMutation) OldPassword(ctx context.Context) (v string, err error) {
 	if !m.op.Is(OpUpdateOne) {
-		return v, fmt.Errorf("OldNursePassword is allowed only on UpdateOne operations")
+		return v, fmt.Errorf("OldPassword is allowed only on UpdateOne operations")
 	}
 	if m.id == nil || m.oldValue == nil {
-		return v, fmt.Errorf("OldNursePassword requires an ID field in the mutation")
+		return v, fmt.Errorf("OldPassword requires an ID field in the mutation")
 	}
 	oldValue, err := m.oldValue(ctx)
 	if err != nil {
-		return v, fmt.Errorf("querying old value for OldNursePassword: %w", err)
+		return v, fmt.Errorf("querying old value for OldPassword: %w", err)
 	}
-	return oldValue.NursePassword, nil
+	return oldValue.Password, nil
 }
 
-// ResetNursePassword reset all changes of the "nurse_password" field.
-func (m *NurseMutation) ResetNursePassword() {
-	m.nurse_password = nil
+// ResetPassword reset all changes of the "password" field.
+func (m *NurseMutation) ResetPassword() {
+	m.password = nil
 }
 
 // AddQueueIDs adds the queue edge to Queue by ids.
@@ -5231,11 +5231,11 @@ func (m *NurseMutation) Fields() []string {
 	if m.nurse_age != nil {
 		fields = append(fields, nurse.FieldNurseAge)
 	}
-	if m.nurse_email != nil {
-		fields = append(fields, nurse.FieldNurseEmail)
+	if m.email != nil {
+		fields = append(fields, nurse.FieldEmail)
 	}
-	if m.nurse_password != nil {
-		fields = append(fields, nurse.FieldNursePassword)
+	if m.password != nil {
+		fields = append(fields, nurse.FieldPassword)
 	}
 	return fields
 }
@@ -5249,10 +5249,10 @@ func (m *NurseMutation) Field(name string) (ent.Value, bool) {
 		return m.NurseName()
 	case nurse.FieldNurseAge:
 		return m.NurseAge()
-	case nurse.FieldNurseEmail:
-		return m.NurseEmail()
-	case nurse.FieldNursePassword:
-		return m.NursePassword()
+	case nurse.FieldEmail:
+		return m.Email()
+	case nurse.FieldPassword:
+		return m.Password()
 	}
 	return nil, false
 }
@@ -5266,10 +5266,10 @@ func (m *NurseMutation) OldField(ctx context.Context, name string) (ent.Value, e
 		return m.OldNurseName(ctx)
 	case nurse.FieldNurseAge:
 		return m.OldNurseAge(ctx)
-	case nurse.FieldNurseEmail:
-		return m.OldNurseEmail(ctx)
-	case nurse.FieldNursePassword:
-		return m.OldNursePassword(ctx)
+	case nurse.FieldEmail:
+		return m.OldEmail(ctx)
+	case nurse.FieldPassword:
+		return m.OldPassword(ctx)
 	}
 	return nil, fmt.Errorf("unknown Nurse field %s", name)
 }
@@ -5293,19 +5293,19 @@ func (m *NurseMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetNurseAge(v)
 		return nil
-	case nurse.FieldNurseEmail:
+	case nurse.FieldEmail:
 		v, ok := value.(string)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
-		m.SetNurseEmail(v)
+		m.SetEmail(v)
 		return nil
-	case nurse.FieldNursePassword:
+	case nurse.FieldPassword:
 		v, ok := value.(string)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
-		m.SetNursePassword(v)
+		m.SetPassword(v)
 		return nil
 	}
 	return fmt.Errorf("unknown Nurse field %s", name)
@@ -5378,11 +5378,11 @@ func (m *NurseMutation) ResetField(name string) error {
 	case nurse.FieldNurseAge:
 		m.ResetNurseAge()
 		return nil
-	case nurse.FieldNurseEmail:
-		m.ResetNurseEmail()
+	case nurse.FieldEmail:
+		m.ResetEmail()
 		return nil
-	case nurse.FieldNursePassword:
-		m.ResetNursePassword()
+	case nurse.FieldPassword:
+		m.ResetPassword()
 		return nil
 	}
 	return fmt.Errorf("unknown Nurse field %s", name)

@@ -51,15 +51,15 @@ func (nu *NurseUpdate) AddNurseAge(i int) *NurseUpdate {
 	return nu
 }
 
-// SetNurseEmail sets the nurse_email field.
-func (nu *NurseUpdate) SetNurseEmail(s string) *NurseUpdate {
-	nu.mutation.SetNurseEmail(s)
+// SetEmail sets the email field.
+func (nu *NurseUpdate) SetEmail(s string) *NurseUpdate {
+	nu.mutation.SetEmail(s)
 	return nu
 }
 
-// SetNursePassword sets the nurse_password field.
-func (nu *NurseUpdate) SetNursePassword(s string) *NurseUpdate {
-	nu.mutation.SetNursePassword(s)
+// SetPassword sets the password field.
+func (nu *NurseUpdate) SetPassword(s string) *NurseUpdate {
+	nu.mutation.SetPassword(s)
 	return nu
 }
 
@@ -314,18 +314,18 @@ func (nu *NurseUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Column: nurse.FieldNurseAge,
 		})
 	}
-	if value, ok := nu.mutation.NurseEmail(); ok {
+	if value, ok := nu.mutation.Email(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: nurse.FieldNurseEmail,
+			Column: nurse.FieldEmail,
 		})
 	}
-	if value, ok := nu.mutation.NursePassword(); ok {
+	if value, ok := nu.mutation.Password(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: nurse.FieldNursePassword,
+			Column: nurse.FieldPassword,
 		})
 	}
 	if nodes := nu.mutation.RemovedQueueIDs(); len(nodes) > 0 {
@@ -555,15 +555,15 @@ func (nuo *NurseUpdateOne) AddNurseAge(i int) *NurseUpdateOne {
 	return nuo
 }
 
-// SetNurseEmail sets the nurse_email field.
-func (nuo *NurseUpdateOne) SetNurseEmail(s string) *NurseUpdateOne {
-	nuo.mutation.SetNurseEmail(s)
+// SetEmail sets the email field.
+func (nuo *NurseUpdateOne) SetEmail(s string) *NurseUpdateOne {
+	nuo.mutation.SetEmail(s)
 	return nuo
 }
 
-// SetNursePassword sets the nurse_password field.
-func (nuo *NurseUpdateOne) SetNursePassword(s string) *NurseUpdateOne {
-	nuo.mutation.SetNursePassword(s)
+// SetPassword sets the password field.
+func (nuo *NurseUpdateOne) SetPassword(s string) *NurseUpdateOne {
+	nuo.mutation.SetPassword(s)
 	return nuo
 }
 
@@ -816,18 +816,18 @@ func (nuo *NurseUpdateOne) sqlSave(ctx context.Context) (n *Nurse, err error) {
 			Column: nurse.FieldNurseAge,
 		})
 	}
-	if value, ok := nuo.mutation.NurseEmail(); ok {
+	if value, ok := nuo.mutation.Email(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: nurse.FieldNurseEmail,
+			Column: nurse.FieldEmail,
 		})
 	}
-	if value, ok := nuo.mutation.NursePassword(); ok {
+	if value, ok := nuo.mutation.Password(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: nurse.FieldNursePassword,
+			Column: nurse.FieldPassword,
 		})
 	}
 	if nodes := nuo.mutation.RemovedQueueIDs(); len(nodes) > 0 {

@@ -33,6 +33,12 @@ export interface EntNurse {
      */
     edges?: EntNurseEdges;
     /**
+     * Email holds the value of the "email" field.
+     * @type {string}
+     * @memberof EntNurse
+     */
+    email?: string;
+    /**
      * ID of the ent.
      * @type {number}
      * @memberof EntNurse
@@ -45,23 +51,17 @@ export interface EntNurse {
      */
     nurseAge?: number;
     /**
-     * NurseEmail holds the value of the "nurse_email" field.
-     * @type {string}
-     * @memberof EntNurse
-     */
-    nurseEmail?: string;
-    /**
      * NurseName holds the value of the "nurse_name" field.
      * @type {string}
      * @memberof EntNurse
      */
     nurseName?: string;
     /**
-     * NursePassword holds the value of the "nurse_password" field.
+     * Password holds the value of the "password" field.
      * @type {string}
      * @memberof EntNurse
      */
-    nursePassword?: string;
+    password?: string;
 }
 
 export function EntNurseFromJSON(json: any): EntNurse {
@@ -75,11 +75,11 @@ export function EntNurseFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
     return {
         
         'edges': !exists(json, 'edges') ? undefined : EntNurseEdgesFromJSON(json['edges']),
+        'email': !exists(json, 'email') ? undefined : json['email'],
         'id': !exists(json, 'id') ? undefined : json['id'],
         'nurseAge': !exists(json, 'nurse_age') ? undefined : json['nurse_age'],
-        'nurseEmail': !exists(json, 'nurse_email') ? undefined : json['nurse_email'],
         'nurseName': !exists(json, 'nurse_name') ? undefined : json['nurse_name'],
-        'nursePassword': !exists(json, 'nurse_password') ? undefined : json['nurse_password'],
+        'password': !exists(json, 'password') ? undefined : json['password'],
     };
 }
 
@@ -93,11 +93,11 @@ export function EntNurseToJSON(value?: EntNurse | null): any {
     return {
         
         'edges': EntNurseEdgesToJSON(value.edges),
+        'email': value.email,
         'id': value.id,
         'nurse_age': value.nurseAge,
-        'nurse_email': value.nurseEmail,
         'nurse_name': value.nurseName,
-        'nurse_password': value.nursePassword,
+        'password': value.password,
     };
 }
 

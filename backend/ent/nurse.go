@@ -19,10 +19,10 @@ type Nurse struct {
 	NurseName string `json:"nurse_name,omitempty"`
 	// NurseAge holds the value of the "nurse_age" field.
 	NurseAge int `json:"nurse_age,omitempty"`
-	// NurseEmail holds the value of the "nurse_email" field.
-	NurseEmail string `json:"nurse_email,omitempty"`
-	// NursePassword holds the value of the "nurse_password" field.
-	NursePassword string `json:"nurse_password,omitempty"`
+	// Email holds the value of the "email" field.
+	Email string `json:"email,omitempty"`
+	// Password holds the value of the "password" field.
+	Password string `json:"password,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the NurseQuery when eager-loading is set.
 	Edges NurseEdges `json:"edges"`
@@ -96,8 +96,8 @@ func (*Nurse) scanValues() []interface{} {
 		&sql.NullInt64{},  // id
 		&sql.NullString{}, // nurse_name
 		&sql.NullInt64{},  // nurse_age
-		&sql.NullString{}, // nurse_email
-		&sql.NullString{}, // nurse_password
+		&sql.NullString{}, // email
+		&sql.NullString{}, // password
 	}
 }
 
@@ -124,14 +124,14 @@ func (n *Nurse) assignValues(values ...interface{}) error {
 		n.NurseAge = int(value.Int64)
 	}
 	if value, ok := values[2].(*sql.NullString); !ok {
-		return fmt.Errorf("unexpected type %T for field nurse_email", values[2])
+		return fmt.Errorf("unexpected type %T for field email", values[2])
 	} else if value.Valid {
-		n.NurseEmail = value.String
+		n.Email = value.String
 	}
 	if value, ok := values[3].(*sql.NullString); !ok {
-		return fmt.Errorf("unexpected type %T for field nurse_password", values[3])
+		return fmt.Errorf("unexpected type %T for field password", values[3])
 	} else if value.Valid {
-		n.NursePassword = value.String
+		n.Password = value.String
 	}
 	return nil
 }
@@ -188,10 +188,10 @@ func (n *Nurse) String() string {
 	builder.WriteString(n.NurseName)
 	builder.WriteString(", nurse_age=")
 	builder.WriteString(fmt.Sprintf("%v", n.NurseAge))
-	builder.WriteString(", nurse_email=")
-	builder.WriteString(n.NurseEmail)
-	builder.WriteString(", nurse_password=")
-	builder.WriteString(n.NursePassword)
+	builder.WriteString(", email=")
+	builder.WriteString(n.Email)
+	builder.WriteString(", password=")
+	builder.WriteString(n.Password)
 	builder.WriteByte(')')
 	return builder.String()
 }

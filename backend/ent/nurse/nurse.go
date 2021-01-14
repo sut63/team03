@@ -11,10 +11,10 @@ const (
 	FieldNurseName = "nurse_name"
 	// FieldNurseAge holds the string denoting the nurse_age field in the database.
 	FieldNurseAge = "nurse_age"
-	// FieldNurseEmail holds the string denoting the nurse_email field in the database.
-	FieldNurseEmail = "nurse_email"
-	// FieldNursePassword holds the string denoting the nurse_password field in the database.
-	FieldNursePassword = "nurse_password"
+	// FieldEmail holds the string denoting the email field in the database.
+	FieldEmail = "email"
+	// FieldPassword holds the string denoting the password field in the database.
+	FieldPassword = "password"
 
 	// EdgeQueue holds the string denoting the queue edge name in mutations.
 	EdgeQueue = "queue"
@@ -71,8 +71,8 @@ var Columns = []string{
 	FieldID,
 	FieldNurseName,
 	FieldNurseAge,
-	FieldNurseEmail,
-	FieldNursePassword,
+	FieldEmail,
+	FieldPassword,
 }
 
 var (

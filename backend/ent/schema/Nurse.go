@@ -16,8 +16,8 @@ func (Nurse) Fields() []ent.Field {
 	return []ent.Field{
 		field.String("nurse_name").NotEmpty(),
 		field.Int("nurse_age"),
-		field.String("nurse_email").Unique(),
-		field.String("nurse_password"),
+		field.String("email").Unique(),
+		field.String("password"),
 		
 		
 	}
