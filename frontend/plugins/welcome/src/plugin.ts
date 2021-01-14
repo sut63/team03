@@ -9,10 +9,12 @@ import Appointment from './components/SaveAppoint';
 import Dentist from './components/SaveDentist';
 import Queue from './components/SaveQueue';
 import Nurse from './components/SaveNurse';
+import Welcome from './components/Welcome';
 
 export const plugin = createPlugin({
   id: 'welcome',
   register({ router }) {
+    router.registerRoute('/', Welcome);
     router.registerRoute('/SignInDentist', SignInDentist);
     router.registerRoute('/SignInNurse', SignInNurse);
     router.registerRoute('/Menu', Menu);

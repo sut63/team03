@@ -82,9 +82,8 @@ const SignInNurse: FC<{}> = () => {
 
   return (
     <div className={classes.paper}>
-      <Page theme={pageTheme.website}>
-        <Header style={HeaderCustom} title={`Doctor Information`}
-          subtitle="กรุณาบันทึกข้อมูลก่อนเข้าสู่ระบบ">
+      <Page theme={pageTheme.service}>
+        <Header style={HeaderCustom} title={`Nurse Login`} >
             {status ? (
             <div>
               {alert ? (
@@ -105,7 +104,7 @@ const SignInNurse: FC<{}> = () => {
             fullWidth
             id="email"
             label="email"
-            name="nurseemail"
+            name="email"
             autoComplete="email"
             autoFocus
             onChange={emailHandleChange}
@@ -115,7 +114,7 @@ const SignInNurse: FC<{}> = () => {
             margin="normal"
             required
             fullWidth
-            name="nursepassword"
+            name="password"
             label="Password"
             type="password"
             id="password"
@@ -135,7 +134,7 @@ const SignInNurse: FC<{}> = () => {
           </Button>
           <Grid container>
             <Grid item>
-              <Link href="/user" variant="body2">
+              <Link href="/savenurse" variant="body2">
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>

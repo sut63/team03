@@ -160,7 +160,7 @@ const SaveDentist: FC<{}> = () => {
     });
    }
 
-   const profile = { givenName: 'Detal System' };
+   const profile = { givenName: 'Dental System' };
    return(
     <Page theme={pageTheme.service}>
     <Header

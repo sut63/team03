@@ -134,16 +134,8 @@ const SaveNurse: FC<{}> = () => {
     <Page theme={pageTheme.service}>
       <Header
        title="Dental System"
-       subtitle="ระบบบันทึกประวัติทันตกรรม">
-
-      <Avatar alt="Remy Sharp" src="../../image/account.jpg" />
-        <div style={{ marginLeft: 10 }}>Rattawan Khaochalad</div>
+       subtitle="บันทึกข้อมูลพยาบาล">
      </Header>
-
-     
-         
-
-
       <Content>
         <Container maxWidth="sm">
          
@@ -192,7 +184,7 @@ const SaveNurse: FC<{}> = () => {
                 
                 label="Email" 
                 variant="outlined" 
-                name="nurseemail"
+                name="email"
                 type="string"
                 value={nurse.Email }
                 onChange={handleChange}
@@ -210,7 +202,7 @@ const SaveNurse: FC<{}> = () => {
                 
                 label="Password" 
                 variant="outlined" 
-                name="nursepassword"
+                name="password"
                 type="string"
                 value={nurse.Password }
                 onChange={handleChange}
@@ -219,6 +211,7 @@ const SaveNurse: FC<{}> = () => {
               </FormControl>
             </Grid>
 
+<br></br>
             <Grid item xs={3}></Grid>
             <Grid item xs={9}>
               <Button
@@ -231,7 +224,7 @@ const SaveNurse: FC<{}> = () => {
                 บันทึกพยาบาล
               </Button>
               &emsp;
-              <Link component={RouterLink} to="/Menu">
+              <Link component={RouterLink} to="/signinnurse">
               <Button
                 variant="contained"
                 color="default"

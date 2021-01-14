@@ -81,9 +81,8 @@ const SignInDentist: FC<{}> = () => {
 
   return (
     <div className={classes.paper}>
-      <Page theme={pageTheme.website}>
-        <Header style={HeaderCustom} title={`Doctor Information`}
-          subtitle="กรุณาบันทึกข้อมูลก่อนเข้าสู่ระบบ">
+      <Page theme={pageTheme.service}>
+        <Header style={HeaderCustom} title={`Dentist Login`} >
             {status ? (
             <div>
               {alert ? (
@@ -134,7 +133,7 @@ const SignInDentist: FC<{}> = () => {
           </Button>
           <Grid container>
             <Grid item>
-              <Link href="/user" variant="body2">
+              <Link href="/savedentist" variant="body2">
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>
