@@ -244,9 +244,7 @@ const SaveMed: FC<{}> = () => {
                 >
                   {patients.map(item => {
                     return (
-                      <MenuItem key={item.id} value={item.id}>
-                        {item.edges?.medicalcare?.name}
-                      </MenuItem>
+                      <MenuItem value={item.id}>{item.edges?.medicalcare?.name}</MenuItem>
                     );
                   })}
                 </Select>
