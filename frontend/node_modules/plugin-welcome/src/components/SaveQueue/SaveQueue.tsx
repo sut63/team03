@@ -133,7 +133,7 @@ const SaveQueue: FC<{}> = () => {
       .then(response => response.json())
       .then(data => {console.log(data.save);
         console.log(requestOptions)
-        if (data.status != true) {
+        if (data.status == true) {
           clear();
           Toast.fire({
             icon: 'success',
