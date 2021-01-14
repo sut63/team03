@@ -271,8 +271,9 @@ func main() {
 	// Set Nurse Data
 	nurses := Nurses{
 		Nurse: []Nurse{
-			Nurse{"tony stark",25,"tony@outlook.com","1234"},
-			Nurse{"abc",30,"a11@gmail.com","11"},
+			Nurse{"สมปอง สำราญสุข",40,"sompong@gmail.com","1234"},
+			Nurse{"มงคล วารีย์",30,"mong@gmail.com","1212"},
+			Nurse{"พิมภกา สาโรช",30,"pimka@gmail.com","1"},
 		},
 	}
 	for _, n := range nurses.Nurse {
