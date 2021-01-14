@@ -1,5 +1,5 @@
-import React, { FC,useState, useEffect } from 'react';
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+import React, { FC, useEffect } from 'react';
+import { makeStyles, } from '@material-ui/core/styles';
 import { ContentHeader,Content, Header, Page, pageTheme } from '@backstage/core';
 import SaveIcon from '@material-ui/icons/Save'; // icon save
 import {
@@ -11,7 +11,7 @@ import {
   MenuItem,
   TextField,
   Button,
-  Link,
+  
 } from '@material-ui/core';
 import { Link as RouterLink } from 'react-router-dom';
 
@@ -20,7 +20,7 @@ import Swal from 'sweetalert2'; // alert
 import { DefaultApi } from '../../api/apis'; // Api Gennerate From Command
 import { EntPatient } from '../../api/models/EntPatient'; 
 import { EntDentist } from '../../api/models/EntDentist'; 
-import { EntNurse } from '../../api/models/EntNurse'; 
+
 
 // header css
 const HeaderCustom = {
@@ -58,10 +58,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 interface Queue {
-  
   Patient: Number;
   Dentist: Number;
-  Nurse:  Number;
   Dental: String;
   QueueTime: String;
 
@@ -74,7 +72,7 @@ const SaveQueue: FC<{}> = () => {
   const [queue, setQueue] = React.useState<Partial<Queue>>({});
   const [dentists, setDentists] = React.useState<EntDentist[]>([]);
   const [patients, setPatients] = React.useState<EntPatient[]>([]);
-  const [nurses, setNurses] = React.useState<EntNurse[]>([]);
+  
 
   // alert setting
   //const Swal = require('sweetalert2')
@@ -84,10 +82,6 @@ const SaveQueue: FC<{}> = () => {
     showConfirmButton: false,
     timer: 3000,
     timerProgressBar: true,
-    didOpen: toast => {
-      toast.addEventListener('mouseenter', Swal.stopTimer);
-      toast.addEventListener('mouseleave', Swal.resumeTimer);
-    },
   });
 
   // set data to object queue
@@ -111,16 +105,11 @@ const SaveQueue: FC<{}> = () => {
     setDentists(res);
   };
 
-  const getNurse = async () => {
-    const res = await http.listNurse({ limit: 5, offset: 0 });
-    setNurses(res);
-  };
 
   // Lifecycle Hooks
   useEffect(() => {
     getPatient();
     getDentist();
-    getNurse();
   }, []);
 
   // clear input form
@@ -144,7 +133,7 @@ const SaveQueue: FC<{}> = () => {
       .then(response => response.json())
       .then(data => {console.log(data.save);
         console.log(requestOptions)
-        if (data.status == true) {
+        if (data.status != true) {
           clear();
           Toast.fire({
             icon: 'success',
@@ -220,30 +209,6 @@ const SaveQueue: FC<{}> = () => {
                 </Select>
               </FormControl>
             </Grid>
-            
-
-            <Grid item xs={4}>
-              <div className={classes.paper}>พยาบาลที่ทำการบันทึก</div>
-            </Grid>
-            <Grid item xs={8}>
-              <FormControl variant="outlined" className={classes.formControl}>
-                <InputLabel>เลือกพยาบาล</InputLabel>
-                <Select
-                  name="Nurse"
-                  value={queue.Nurse || ''} 
-                  onChange={handleChange}
-                >
-                  {nurses.map(item => {
-                    return (
-                      <MenuItem key={item.id} value={item.id}>
-                        {item.nurseName}
-                      </MenuItem>
-                    );
-                  })}
-                </Select>
-              </FormControl>
-            </Grid>
-
             
             <Grid item xs={4}>
               <div className={classes.paper}>ทันตกรรมที่ต้องการทำ</div>
