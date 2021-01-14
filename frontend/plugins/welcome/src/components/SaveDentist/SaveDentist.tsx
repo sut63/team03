@@ -1,7 +1,6 @@
 
 import React, { FC, useEffect} from 'react';
 import TextField from '@material-ui/core/TextField';
-
 import Button from '@material-ui/core/Button';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -10,17 +9,14 @@ import Select from '@material-ui/core/Select';
 import Swal from 'sweetalert2'; // alert
 import SaveIcon from '@material-ui/icons/Save'; // icon save
 import { Link as RouterLink } from 'react-router-dom';
-//import { Container,} from '@material-ui/core';
+import { Container,} from '@material-ui/core';
 import 'date-fns';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import { DefaultApi } from '../../api/apis'; // Api Gennerate From Command
 import { EntDegree } from '../../api/models/EntDegree'; // import interface Degree
-//import { EntDentist } from '../../api/models/EntDentist'; // import interface Dentist
 import { EntExpert } from '../../api/models/EntExpert'; // import interface Expert
 import { EntGender } from '../../api/models/EntGender'; // import interface Gender
-//import { EntNurse } from '../../api/models/EntNurse'; // import interface Nurse
-//import { Container } from '@material-ui/core';
 import { 
  Content,
  Header,
@@ -43,15 +39,17 @@ const useStyles = makeStyles((theme) => ({
   noLabel: {
     marginTop: theme.spacing(3),
   },
-  margin: {
-    margin: theme.spacing(3),
-  },
+
   textField: {
     width: '20ch',
   },
   container: {
     display: 'flex',
     flexWrap: 'wrap',
+  },
+  paper: {
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2),
   },
 }));
 
@@ -67,7 +65,6 @@ interface saveDentist {
  password:string;
  expert:number;
  degree:number;
-
 }
 
 const SaveDentist: FC<{}> = () => { 
@@ -108,7 +105,6 @@ const SaveDentist: FC<{}> = () => {
     getDegrees();
     getGenders();
     getExperts();
-  
   }, []);
 
 
@@ -145,7 +141,6 @@ const SaveDentist: FC<{}> = () => {
     };
   
     console.log(dentist); // log ดูข้อมูล สามารถ Inspect ดูข้อมูลได้ F12 เลือก Tab Console
-
     fetch(apiUrl, requestOptions)
     .then(response => response.json())
     .then(data => {console.log(data.save);
@@ -163,23 +158,24 @@ const SaveDentist: FC<{}> = () => {
         });
       }
     });
-  }
+   }
 
-const profile = { givenName: 'Detal System' };
-return(
-    <Page theme={pageTheme.home}>
+   const profile = { givenName: 'Detal System' };
+   return(
+    <Page theme={pageTheme.service}>
     <Header
-      title={`Welcome ${profile.givenName || 'to Backstage'}`}
-     subtitle="ระบบบันทึกข้อมูลทันตแพทย์"  // <dd> <ComponanceTable></ComponanceTable></dd>
+      title={` ${profile.givenName || 'to Backstage'}`}
+     subtitle="ระบบบันทึกข้อมูลทันตแพทย์"  
     ></Header>
     <Content>
- 
-    <div style={{textAlign: "center"}}>
-   
-  
-     <br></br>
+    <Container maxWidth="sm">
+    <Grid container spacing={3}>
+       <Grid item xs={12}></Grid>
+            <Grid item xs={3}>
+              <div className={classes.paper}>ชื่อ - นามสกุล</div>
+            </Grid>
      <Grid item xs={9}>
-     <FormControl variant="outlined" className={classes.formControl}>
+       <FormControl fullWidth variant="outlined" className={classes.formControl}>
               <TextField 
               label="ชื่อ - นามสกุล" 
               variant="outlined" 
@@ -188,9 +184,15 @@ return(
               value={dentist.name || ''}
               onChange={handleChange}
               />
-         <br></br>
-     </FormControl>
-     <Grid item xs={12}>
+   
+       </FormControl>
+       </Grid>
+
+     <Grid item xs={12}></Grid>
+            <Grid item xs={3}>
+              <div className={classes.paper}>อายุ</div>
+            </Grid>
+     <Grid item xs={9}>
             <FormControl
                   fullWidth
                   className={classes.formControl}
@@ -205,11 +207,14 @@ return(
                     onChange={handleNumberChange}
                   />
                 </FormControl>
+       </Grid>
+    
+     <Grid item xs={12}></Grid>
+            <Grid item xs={3}>
+              <div className={classes.paper}>เกิด - วันที่</div>
             </Grid>
-     <br></br>
-     <br></br>
-     <Grid item xs={12}>
-     <FormControl variant="outlined" className={classes.formControl}>
+     <Grid item xs={9}>
+        <FormControl variant="outlined" className={classes.formControl}>
              <form className={classes.container} noValidate>
                <TextField
                  label="เกิด - วันที่"
@@ -224,12 +229,15 @@ return(
                />
              </form>
                
-     </FormControl>
-           </Grid>     
-    <br></br>
-     <br></br>
-
-     <FormControl variant="outlined" className={classes.formControl}>
+        </FormControl>
+       </Grid>     
+      
+     <Grid item xs={12}></Grid>
+            <Grid item xs={3}>
+              <div className={classes.paper}>หมายเลขบัตรประชาชน</div>
+            </Grid>
+     <Grid item xs={9}>
+     <FormControl  fullWidth variant="outlined" className={classes.formControl}>
               <TextField 
               label="หมายเลขบัตรประชาชน" 
               variant="outlined" 
@@ -239,13 +247,16 @@ return(
               onChange={handleChange}
               />
      </FormControl>
-          
-    <br></br>
-     <br></br>
      </Grid>
 
+
+     
+     <Grid item xs={12}></Grid>
+            <Grid item xs={3}>
+              <div className={classes.paper}>วุฒิการศึกษา</div>
+            </Grid>
      <Grid item xs={9}>
-   <FormControl variant="outlined" className={classes.formControl}>
+        <FormControl variant="outlined" className={classes.formControl}>
        <InputLabel >วุฒิการศึกษา</InputLabel>
        <Select
          name="degree"
@@ -260,11 +271,14 @@ return(
                      </MenuItem>
                    );
            })}
-
-         
        </Select>
        </FormControl>
-     </Grid>&emsp; &emsp;
+       </Grid>
+
+       <Grid item xs={12}></Grid>
+            <Grid item xs={3}>
+              <div className={classes.paper}>เพศ</div>
+            </Grid>
        <Grid item xs={9}>
    <FormControl variant="outlined" className={classes.formControl}>
        <InputLabel >เพศ</InputLabel>
@@ -284,8 +298,11 @@ return(
            </Select>
      </FormControl>
      </Grid>
-     <br></br>
-   <br></br>
+
+   <Grid item xs={12}></Grid>
+            <Grid item xs={3}>
+              <div className={classes.paper}>ความเชี่ยวชาญทางทันกรรม</div>
+            </Grid>
    <Grid item xs={9}>
    <FormControl variant="outlined" className={classes.formControl}>
        <InputLabel >ความเชี่ยวชาญทางทันกรรม</InputLabel>
@@ -304,8 +321,11 @@ return(
        </Select>
      </FormControl>
      </Grid>   
-
-         <br></br>
+   
+         <Grid item xs={12}></Grid>
+            <Grid item xs={3}>
+              <div className={classes.paper}>ประสบการณ์ทำงาน</div>
+            </Grid>
      <Grid item xs={9}>
      <FormControl variant="outlined" className={classes.formControl}>
               <TextField 
@@ -319,14 +339,13 @@ return(
               value={dentist.experience || ''}
               onChange={handleChange}
               />
-     </FormControl>
-          
-    <br></br>
-     <br></br>
-     </Grid>   
-     <br></br>
-    
-     <br></br>
+       </FormControl>
+    </Grid>   
+   
+     <Grid item xs={12}></Grid>
+            <Grid item xs={3}>
+              <div className={classes.paper}>เบอร์โทรศัพท์</div>
+            </Grid>
      <Grid item xs={9}>
      <FormControl variant="outlined" className={classes.formControl}>
               <TextField 
@@ -339,13 +358,13 @@ return(
               />
      </FormControl>
     </Grid>
-  
-     <br></br>
-     <br></br>
 
+     <Grid item xs={12}></Grid>
+            <Grid item xs={3}>
+              <div className={classes.paper}>Email</div>
+            </Grid>
      <Grid item xs={9}>
      <FormControl variant="outlined" className={classes.formControl}>
-             
              <TextField 
               label="Email" 
               variant="outlined" 
@@ -354,45 +373,51 @@ return(
               value={dentist.email|| ''}
               onChange={handleChange}
               />
-                <br></br>
+     </FormControl>
+     </Grid>
+     <Grid item xs={12}></Grid>   
+     <Grid item xs={3}>
+              <div className={classes.paper}>Password</div>
+            </Grid>
+         <Grid item xs={9}>
+            <FormControl variant="outlined" className={classes.formControl}>
               <TextField 
-              label="password" 
+              label="Password" 
               variant="outlined" 
               name="password"
               type="string"
               value={dentist.password || ''}
               onChange={handleChange}
               />
+              </FormControl>
+           </Grid>
 
-     </FormControl>
-          
-    <br></br>
-     <br></br>
+            <Grid item xs={3}></Grid>
+            <Grid item xs={9}>
+              <Button
+                variant="contained"
+                color="primary"
+                size="large"
+                style={{ marginRight: 5 }}
+                startIcon={<SaveIcon />}
+                onClick={save}
+              >
+                บันทึกข้อมูล
+              </Button>
+              &emsp;
+              <Link component={RouterLink} to="/Menu">
+              <Button
+                variant="contained"
+                color="default"
+                size="large"
+                style={{ marginLeft: 5 }}
+              >
+                กลับ
+              </Button>
+              </Link>
+            </Grid>    
      </Grid>
-
- 
-     <Grid item xs={3}></Grid>
-           <Grid item xs={9}>
-     <Button
-           variant="contained"
-           color="primary"
-           size="large"
-           startIcon={<SaveIcon />}
-           onClick={save}
-     >
-       บันทึกข้อมูล
-     </Button>&emsp;
-     
-     <Link component={RouterLink} to="/Menu">
-             <Button
-               variant="contained"
-               color="default"
-             >
-              กลับ
-             </Button>
-             </Link>
-     </Grid>                
-    </div>
+    </Container>
     </Content>
  </Page>
 );
