@@ -1348,7 +1348,7 @@ var doc = `{
                 "parameters": [
                     {
                         "description": "Patient entity",
-                        "name": "patient",
+                        "name": "Patient",
                         "in": "body",
                         "required": true,
                         "schema": {
@@ -1834,9 +1834,6 @@ var doc = `{
                     "type": "string"
                 },
                 "dentist": {
-                    "type": "integer"
-                },
-                "nurse": {
                     "type": "integer"
                 },
                 "patient": {

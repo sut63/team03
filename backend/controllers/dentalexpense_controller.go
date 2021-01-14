@@ -8,7 +8,6 @@ import (
 	"github.com/team03/app/ent"
 	"github.com/team03/app/ent/medicalfile"
 	"github.com/team03/app/ent/pricetype"
-	"github.com/team03/app/ent/nurse"
 	"github.com/team03/app/ent/dentalexpense"
 )
 
@@ -20,7 +19,6 @@ type DentalExpenseController struct {
 type DentalExpense struct {
 	Medicalfile   int
 	PriceType     int
-	Nurse         int
 	Added         string
 }
 
@@ -45,7 +43,7 @@ func (ctl *DentalExpenseController) DentalExpenseCreate(c *gin.Context) {
 		return
 	}
 
-	mf, err := ctl.client.Medicalfile.
+	m, err := ctl.client.Medicalfile.
 		Query().
 		Where(medicalfile.IDEQ(int(obj.Medicalfile))).
 		Only(context.Background())
@@ -69,11 +67,6 @@ func (ctl *DentalExpenseController) DentalExpenseCreate(c *gin.Context) {
 		return
 	}
 
-	n, err := ctl.client.Nurse.
-		Query().
-		Where(nurse.IDEQ(int(obj.Nurse))).
-		Only(context.Background())
-
 	if err != nil {
 		c.JSON(400, gin.H{
 			"error": "nurse not found",
@@ -85,9 +78,8 @@ func (ctl *DentalExpenseController) DentalExpenseCreate(c *gin.Context) {
 	de, err := ctl.client.DentalExpense.
 		Create().
 		SetAddedTime(time).
-		SetMedicalfile(mf).
+		SetMedicalfile(m).
 		SetPricetype(pt).
-		SetNurse(n).
 		Save(context.Background())
 
 	if err != nil {
@@ -126,8 +118,7 @@ func (ctl *DentalExpenseController) GetDentalExpense(c *gin.Context) {
 		Query().
 		WithMedicalfile().
 		WithPricetype().
-		WithNurse().
-		Where(dentalexpense.IDEQ(int(id))).
+        Where(dentalexpense.IDEQ(int(id))).
 		Only(context.Background())
 	if err != nil {
 		c.JSON(404, gin.H{
@@ -172,8 +163,7 @@ func (ctl *DentalExpenseController) ListDentalExpense(c *gin.Context) {
 		Query().
 		WithMedicalfile().
 		WithPricetype().
-		WithNurse().
-		Limit(limit).
+	    Limit(limit).
 		Offset(offset).
 		All(context.Background())
 
