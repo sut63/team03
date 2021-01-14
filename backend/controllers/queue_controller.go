@@ -7,7 +7,6 @@ import (
 
 	"github.com/team03/app/ent"
 	"github.com/team03/app/ent/dentist"
-	"github.com/team03/app/ent/nurse"
 	"github.com/team03/app/ent/patient"
 	"github.com/team03/app/ent/queue"
 	"github.com/gin-gonic/gin"
@@ -21,7 +20,6 @@ type QueueController struct {
 type Queue struct {
 	Patient   int
 	Dentist   int
-	Nurse     int
 	Dental    string
 	QueueTime string
 }
@@ -58,18 +56,6 @@ func (ctl *QueueController) CreateQueue(c *gin.Context) {
 		return
 	}
 
-	n, err := ctl.client.Nurse.
-		Query().
-		Where(nurse.IDEQ(int(obj.Nurse))).
-		Only(context.Background())
-
-	if err != nil {
-		c.JSON(400, gin.H{
-			"error": "nurse not found",
-		})
-		return
-	}
-
 	p, err := ctl.client.Patient.
 		Query().
 		Where(patient.IDEQ(int(obj.Patient))).
@@ -88,7 +74,6 @@ func (ctl *QueueController) CreateQueue(c *gin.Context) {
 		Create().
 		SetPatient(p).
 		SetDentist(d).
-		SetNurse(n).
 		SetDental(obj.Dental).
 		SetQueueTime(times).
 		Save(context.Background())
@@ -168,7 +153,6 @@ func (ctl *QueueController) ListQueue(c *gin.Context) {
 		Query().
 		WithPatient().
 		WithDentist().
-		WithNurse().
 		Limit(limit).
 		Offset(offset).
 		All(context.Background())
