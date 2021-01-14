@@ -1333,7 +1333,7 @@
                 "parameters": [
                     {
                         "description": "Patient entity",
-                        "name": "patient",
+                        "name": "Patient",
                         "in": "body",
                         "required": true,
                         "schema": {
@@ -1819,9 +1819,6 @@
                     "type": "string"
                 },
                 "dentist": {
-                    "type": "integer"
-                },
-                "nurse": {
                     "type": "integer"
                 },
                 "patient": {

@@ -6,8 +6,6 @@ definitions:
         type: string
       dentist:
         type: integer
-      nurse:
-        type: integer
       patient:
         type: integer
       queueTime:
@@ -1389,7 +1387,7 @@ paths:
       parameters:
       - description: Patient entity
         in: body
-        name: patient
+        name: Patient
         required: true
         schema:
           $ref: '#/definitions/ent.Patient'
