@@ -18,12 +18,12 @@ type NurseController struct {
 type Nurse struct {
 	NurseName     string
 	NurseAge      int
-	NurseEmail    string
-	NursePassword string
+	Email    string
+	Password string
 	
 }
 
-// CreateNurse handles POST requests for adding nurse entities
+// NurseCreate handles POST requests for adding nurse entities
 // @Summary Create nurse
 // @Description Create nurse
 // @ID create-nurse
@@ -34,7 +34,7 @@ type Nurse struct {
 // @Failure 400 {object} gin.H
 // @Failure 500 {object} gin.H
 // @Router /nurses [post]
-func (ctl *NurseController) CreateNurse(c *gin.Context) {
+func (ctl *NurseController) NurseCreate(c *gin.Context) {
 	obj := Nurse{}
 	if err := c.ShouldBind(&obj); err != nil {
 		c.JSON(400, gin.H{
@@ -47,8 +47,8 @@ func (ctl *NurseController) CreateNurse(c *gin.Context) {
 		Create().
 		SetNurseName(obj.NurseName).
 		SetNurseAge(obj.NurseAge).
-		SetNurseEmail(obj.NurseEmail).
-		SetNursePassword(obj.NursePassword).
+		SetEmail(obj.Email).
+		SetPassword(obj.Password).
 		Save(context.Background())
 
 	if err != nil {
@@ -58,7 +58,10 @@ func (ctl *NurseController) CreateNurse(c *gin.Context) {
 		return
 	}
 
-	c.JSON(200, n)
+	c.JSON(200, gin.H{
+		"status": true,
+		"data":   n,
+	})
 }
 
 // GetNurse handles GET requests to retrieve a nurse entity
@@ -159,7 +162,7 @@ func NewNurseController(router gin.IRouter, client *ent.Client) *NurseController
 func (ctl *NurseController) register() {
 	nurses := ctl.router.Group("/nurses")
 
-	nurses.POST("", ctl.CreateNurse)
+	nurses.POST("", ctl.NurseCreate)
 	nurses.GET(":id", ctl.GetNurse)
 	nurses.GET("", ctl.ListNurse)
 

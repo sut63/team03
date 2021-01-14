@@ -310,20 +310,20 @@ definitions:
           Edges holds the relations/edges for other nodes in the graph.
           The values are being populated by the NurseQuery when eager-loading is set.
         type: object
+      email:
+        description: Email holds the value of the "email" field.
+        type: string
       id:
         description: ID of the ent.
         type: integer
       nurse_age:
         description: NurseAge holds the value of the "nurse_age" field.
         type: integer
-      nurse_email:
-        description: NurseEmail holds the value of the "nurse_email" field.
-        type: string
       nurse_name:
         description: NurseName holds the value of the "nurse_name" field.
         type: string
-      nurse_password:
-        description: NursePassword holds the value of the "nurse_password" field.
+      password:
+        description: Password holds the value of the "password" field.
         type: string
     type: object
   ent.NurseEdges:

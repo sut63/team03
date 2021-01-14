@@ -2230,6 +2230,10 @@ var doc = `{
                     "type": "object",
                     "$ref": "#/definitions/ent.NurseEdges"
                 },
+                "email": {
+                    "description": "Email holds the value of the \"email\" field.",
+                    "type": "string"
+                },
                 "id": {
                     "description": "ID of the ent.",
                     "type": "integer"
@@ -2238,16 +2242,12 @@ var doc = `{
                     "description": "NurseAge holds the value of the \"nurse_age\" field.",
                     "type": "integer"
                 },
-                "nurse_email": {
-                    "description": "NurseEmail holds the value of the \"nurse_email\" field.",
-                    "type": "string"
-                },
                 "nurse_name": {
                     "description": "NurseName holds the value of the \"nurse_name\" field.",
                     "type": "string"
                 },
-                "nurse_password": {
-                    "description": "NursePassword holds the value of the \"nurse_password\" field.",
+                "password": {
+                    "description": "Password holds the value of the \"password\" field.",
                     "type": "string"
                 }
             }

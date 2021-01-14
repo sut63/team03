@@ -105,17 +105,17 @@ func NurseAge(v int) predicate.Nurse {
 	})
 }
 
-// NurseEmail applies equality check predicate on the "nurse_email" field. It's identical to NurseEmailEQ.
-func NurseEmail(v string) predicate.Nurse {
+// Email applies equality check predicate on the "email" field. It's identical to EmailEQ.
+func Email(v string) predicate.Nurse {
 	return predicate.Nurse(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldNurseEmail), v))
+		s.Where(sql.EQ(s.C(FieldEmail), v))
 	})
 }
 
-// NursePassword applies equality check predicate on the "nurse_password" field. It's identical to NursePasswordEQ.
-func NursePassword(v string) predicate.Nurse {
+// Password applies equality check predicate on the "password" field. It's identical to PasswordEQ.
+func Password(v string) predicate.Nurse {
 	return predicate.Nurse(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldNursePassword), v))
+		s.Where(sql.EQ(s.C(FieldPassword), v))
 	})
 }
 
@@ -306,22 +306,22 @@ func NurseAgeLTE(v int) predicate.Nurse {
 	})
 }
 
-// NurseEmailEQ applies the EQ predicate on the "nurse_email" field.
-func NurseEmailEQ(v string) predicate.Nurse {
+// EmailEQ applies the EQ predicate on the "email" field.
+func EmailEQ(v string) predicate.Nurse {
 	return predicate.Nurse(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldNurseEmail), v))
+		s.Where(sql.EQ(s.C(FieldEmail), v))
 	})
 }
 
-// NurseEmailNEQ applies the NEQ predicate on the "nurse_email" field.
-func NurseEmailNEQ(v string) predicate.Nurse {
+// EmailNEQ applies the NEQ predicate on the "email" field.
+func EmailNEQ(v string) predicate.Nurse {
 	return predicate.Nurse(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldNurseEmail), v))
+		s.Where(sql.NEQ(s.C(FieldEmail), v))
 	})
 }
 
-// NurseEmailIn applies the In predicate on the "nurse_email" field.
-func NurseEmailIn(vs ...string) predicate.Nurse {
+// EmailIn applies the In predicate on the "email" field.
+func EmailIn(vs ...string) predicate.Nurse {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -333,12 +333,12 @@ func NurseEmailIn(vs ...string) predicate.Nurse {
 			s.Where(sql.False())
 			return
 		}
-		s.Where(sql.In(s.C(FieldNurseEmail), v...))
+		s.Where(sql.In(s.C(FieldEmail), v...))
 	})
 }
 
-// NurseEmailNotIn applies the NotIn predicate on the "nurse_email" field.
-func NurseEmailNotIn(vs ...string) predicate.Nurse {
+// EmailNotIn applies the NotIn predicate on the "email" field.
+func EmailNotIn(vs ...string) predicate.Nurse {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -350,89 +350,89 @@ func NurseEmailNotIn(vs ...string) predicate.Nurse {
 			s.Where(sql.False())
 			return
 		}
-		s.Where(sql.NotIn(s.C(FieldNurseEmail), v...))
+		s.Where(sql.NotIn(s.C(FieldEmail), v...))
 	})
 }
 
-// NurseEmailGT applies the GT predicate on the "nurse_email" field.
-func NurseEmailGT(v string) predicate.Nurse {
+// EmailGT applies the GT predicate on the "email" field.
+func EmailGT(v string) predicate.Nurse {
 	return predicate.Nurse(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldNurseEmail), v))
+		s.Where(sql.GT(s.C(FieldEmail), v))
 	})
 }
 
-// NurseEmailGTE applies the GTE predicate on the "nurse_email" field.
-func NurseEmailGTE(v string) predicate.Nurse {
+// EmailGTE applies the GTE predicate on the "email" field.
+func EmailGTE(v string) predicate.Nurse {
 	return predicate.Nurse(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldNurseEmail), v))
+		s.Where(sql.GTE(s.C(FieldEmail), v))
 	})
 }
 
-// NurseEmailLT applies the LT predicate on the "nurse_email" field.
-func NurseEmailLT(v string) predicate.Nurse {
+// EmailLT applies the LT predicate on the "email" field.
+func EmailLT(v string) predicate.Nurse {
 	return predicate.Nurse(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldNurseEmail), v))
+		s.Where(sql.LT(s.C(FieldEmail), v))
 	})
 }
 
-// NurseEmailLTE applies the LTE predicate on the "nurse_email" field.
-func NurseEmailLTE(v string) predicate.Nurse {
+// EmailLTE applies the LTE predicate on the "email" field.
+func EmailLTE(v string) predicate.Nurse {
 	return predicate.Nurse(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldNurseEmail), v))
+		s.Where(sql.LTE(s.C(FieldEmail), v))
 	})
 }
 
-// NurseEmailContains applies the Contains predicate on the "nurse_email" field.
-func NurseEmailContains(v string) predicate.Nurse {
+// EmailContains applies the Contains predicate on the "email" field.
+func EmailContains(v string) predicate.Nurse {
 	return predicate.Nurse(func(s *sql.Selector) {
-		s.Where(sql.Contains(s.C(FieldNurseEmail), v))
+		s.Where(sql.Contains(s.C(FieldEmail), v))
 	})
 }
 
-// NurseEmailHasPrefix applies the HasPrefix predicate on the "nurse_email" field.
-func NurseEmailHasPrefix(v string) predicate.Nurse {
+// EmailHasPrefix applies the HasPrefix predicate on the "email" field.
+func EmailHasPrefix(v string) predicate.Nurse {
 	return predicate.Nurse(func(s *sql.Selector) {
-		s.Where(sql.HasPrefix(s.C(FieldNurseEmail), v))
+		s.Where(sql.HasPrefix(s.C(FieldEmail), v))
 	})
 }
 
-// NurseEmailHasSuffix applies the HasSuffix predicate on the "nurse_email" field.
-func NurseEmailHasSuffix(v string) predicate.Nurse {
+// EmailHasSuffix applies the HasSuffix predicate on the "email" field.
+func EmailHasSuffix(v string) predicate.Nurse {
 	return predicate.Nurse(func(s *sql.Selector) {
-		s.Where(sql.HasSuffix(s.C(FieldNurseEmail), v))
+		s.Where(sql.HasSuffix(s.C(FieldEmail), v))
 	})
 }
 
-// NurseEmailEqualFold applies the EqualFold predicate on the "nurse_email" field.
-func NurseEmailEqualFold(v string) predicate.Nurse {
+// EmailEqualFold applies the EqualFold predicate on the "email" field.
+func EmailEqualFold(v string) predicate.Nurse {
 	return predicate.Nurse(func(s *sql.Selector) {
-		s.Where(sql.EqualFold(s.C(FieldNurseEmail), v))
+		s.Where(sql.EqualFold(s.C(FieldEmail), v))
 	})
 }
 
-// NurseEmailContainsFold applies the ContainsFold predicate on the "nurse_email" field.
-func NurseEmailContainsFold(v string) predicate.Nurse {
+// EmailContainsFold applies the ContainsFold predicate on the "email" field.
+func EmailContainsFold(v string) predicate.Nurse {
 	return predicate.Nurse(func(s *sql.Selector) {
-		s.Where(sql.ContainsFold(s.C(FieldNurseEmail), v))
+		s.Where(sql.ContainsFold(s.C(FieldEmail), v))
 	})
 }
 
-// NursePasswordEQ applies the EQ predicate on the "nurse_password" field.
-func NursePasswordEQ(v string) predicate.Nurse {
+// PasswordEQ applies the EQ predicate on the "password" field.
+func PasswordEQ(v string) predicate.Nurse {
 	return predicate.Nurse(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldNursePassword), v))
+		s.Where(sql.EQ(s.C(FieldPassword), v))
 	})
 }
 
-// NursePasswordNEQ applies the NEQ predicate on the "nurse_password" field.
-func NursePasswordNEQ(v string) predicate.Nurse {
+// PasswordNEQ applies the NEQ predicate on the "password" field.
+func PasswordNEQ(v string) predicate.Nurse {
 	return predicate.Nurse(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldNursePassword), v))
+		s.Where(sql.NEQ(s.C(FieldPassword), v))
 	})
 }
 
-// NursePasswordIn applies the In predicate on the "nurse_password" field.
-func NursePasswordIn(vs ...string) predicate.Nurse {
+// PasswordIn applies the In predicate on the "password" field.
+func PasswordIn(vs ...string) predicate.Nurse {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -444,12 +444,12 @@ func NursePasswordIn(vs ...string) predicate.Nurse {
 			s.Where(sql.False())
 			return
 		}
-		s.Where(sql.In(s.C(FieldNursePassword), v...))
+		s.Where(sql.In(s.C(FieldPassword), v...))
 	})
 }
 
-// NursePasswordNotIn applies the NotIn predicate on the "nurse_password" field.
-func NursePasswordNotIn(vs ...string) predicate.Nurse {
+// PasswordNotIn applies the NotIn predicate on the "password" field.
+func PasswordNotIn(vs ...string) predicate.Nurse {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -461,70 +461,70 @@ func NursePasswordNotIn(vs ...string) predicate.Nurse {
 			s.Where(sql.False())
 			return
 		}
-		s.Where(sql.NotIn(s.C(FieldNursePassword), v...))
+		s.Where(sql.NotIn(s.C(FieldPassword), v...))
 	})
 }
 
-// NursePasswordGT applies the GT predicate on the "nurse_password" field.
-func NursePasswordGT(v string) predicate.Nurse {
+// PasswordGT applies the GT predicate on the "password" field.
+func PasswordGT(v string) predicate.Nurse {
 	return predicate.Nurse(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldNursePassword), v))
+		s.Where(sql.GT(s.C(FieldPassword), v))
 	})
 }
 
-// NursePasswordGTE applies the GTE predicate on the "nurse_password" field.
-func NursePasswordGTE(v string) predicate.Nurse {
+// PasswordGTE applies the GTE predicate on the "password" field.
+func PasswordGTE(v string) predicate.Nurse {
 	return predicate.Nurse(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldNursePassword), v))
+		s.Where(sql.GTE(s.C(FieldPassword), v))
 	})
 }
 
-// NursePasswordLT applies the LT predicate on the "nurse_password" field.
-func NursePasswordLT(v string) predicate.Nurse {
+// PasswordLT applies the LT predicate on the "password" field.
+func PasswordLT(v string) predicate.Nurse {
 	return predicate.Nurse(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldNursePassword), v))
+		s.Where(sql.LT(s.C(FieldPassword), v))
 	})
 }
 
-// NursePasswordLTE applies the LTE predicate on the "nurse_password" field.
-func NursePasswordLTE(v string) predicate.Nurse {
+// PasswordLTE applies the LTE predicate on the "password" field.
+func PasswordLTE(v string) predicate.Nurse {
 	return predicate.Nurse(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldNursePassword), v))
+		s.Where(sql.LTE(s.C(FieldPassword), v))
 	})
 }
 
-// NursePasswordContains applies the Contains predicate on the "nurse_password" field.
-func NursePasswordContains(v string) predicate.Nurse {
+// PasswordContains applies the Contains predicate on the "password" field.
+func PasswordContains(v string) predicate.Nurse {
 	return predicate.Nurse(func(s *sql.Selector) {
-		s.Where(sql.Contains(s.C(FieldNursePassword), v))
+		s.Where(sql.Contains(s.C(FieldPassword), v))
 	})
 }
 
-// NursePasswordHasPrefix applies the HasPrefix predicate on the "nurse_password" field.
-func NursePasswordHasPrefix(v string) predicate.Nurse {
+// PasswordHasPrefix applies the HasPrefix predicate on the "password" field.
+func PasswordHasPrefix(v string) predicate.Nurse {
 	return predicate.Nurse(func(s *sql.Selector) {
-		s.Where(sql.HasPrefix(s.C(FieldNursePassword), v))
+		s.Where(sql.HasPrefix(s.C(FieldPassword), v))
 	})
 }
 
-// NursePasswordHasSuffix applies the HasSuffix predicate on the "nurse_password" field.
-func NursePasswordHasSuffix(v string) predicate.Nurse {
+// PasswordHasSuffix applies the HasSuffix predicate on the "password" field.
+func PasswordHasSuffix(v string) predicate.Nurse {
 	return predicate.Nurse(func(s *sql.Selector) {
-		s.Where(sql.HasSuffix(s.C(FieldNursePassword), v))
+		s.Where(sql.HasSuffix(s.C(FieldPassword), v))
 	})
 }
 
-// NursePasswordEqualFold applies the EqualFold predicate on the "nurse_password" field.
-func NursePasswordEqualFold(v string) predicate.Nurse {
+// PasswordEqualFold applies the EqualFold predicate on the "password" field.
+func PasswordEqualFold(v string) predicate.Nurse {
 	return predicate.Nurse(func(s *sql.Selector) {
-		s.Where(sql.EqualFold(s.C(FieldNursePassword), v))
+		s.Where(sql.EqualFold(s.C(FieldPassword), v))
 	})
 }
 
-// NursePasswordContainsFold applies the ContainsFold predicate on the "nurse_password" field.
-func NursePasswordContainsFold(v string) predicate.Nurse {
+// PasswordContainsFold applies the ContainsFold predicate on the "password" field.
+func PasswordContainsFold(v string) predicate.Nurse {
 	return predicate.Nurse(func(s *sql.Selector) {
-		s.Where(sql.ContainsFold(s.C(FieldNursePassword), v))
+		s.Where(sql.ContainsFold(s.C(FieldPassword), v))
 	})
 }
 

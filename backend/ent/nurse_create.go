@@ -36,15 +36,15 @@ func (nc *NurseCreate) SetNurseAge(i int) *NurseCreate {
 	return nc
 }
 
-// SetNurseEmail sets the nurse_email field.
-func (nc *NurseCreate) SetNurseEmail(s string) *NurseCreate {
-	nc.mutation.SetNurseEmail(s)
+// SetEmail sets the email field.
+func (nc *NurseCreate) SetEmail(s string) *NurseCreate {
+	nc.mutation.SetEmail(s)
 	return nc
 }
 
-// SetNursePassword sets the nurse_password field.
-func (nc *NurseCreate) SetNursePassword(s string) *NurseCreate {
-	nc.mutation.SetNursePassword(s)
+// SetPassword sets the password field.
+func (nc *NurseCreate) SetPassword(s string) *NurseCreate {
+	nc.mutation.SetPassword(s)
 	return nc
 }
 
@@ -141,11 +141,11 @@ func (nc *NurseCreate) Save(ctx context.Context) (*Nurse, error) {
 	if _, ok := nc.mutation.NurseAge(); !ok {
 		return nil, &ValidationError{Name: "nurse_age", err: errors.New("ent: missing required field \"nurse_age\"")}
 	}
-	if _, ok := nc.mutation.NurseEmail(); !ok {
-		return nil, &ValidationError{Name: "nurse_email", err: errors.New("ent: missing required field \"nurse_email\"")}
+	if _, ok := nc.mutation.Email(); !ok {
+		return nil, &ValidationError{Name: "email", err: errors.New("ent: missing required field \"email\"")}
 	}
-	if _, ok := nc.mutation.NursePassword(); !ok {
-		return nil, &ValidationError{Name: "nurse_password", err: errors.New("ent: missing required field \"nurse_password\"")}
+	if _, ok := nc.mutation.Password(); !ok {
+		return nil, &ValidationError{Name: "password", err: errors.New("ent: missing required field \"password\"")}
 	}
 	var (
 		err  error
@@ -223,21 +223,21 @@ func (nc *NurseCreate) createSpec() (*Nurse, *sqlgraph.CreateSpec) {
 		})
 		n.NurseAge = value
 	}
-	if value, ok := nc.mutation.NurseEmail(); ok {
+	if value, ok := nc.mutation.Email(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: nurse.FieldNurseEmail,
+			Column: nurse.FieldEmail,
 		})
-		n.NurseEmail = value
+		n.Email = value
 	}
-	if value, ok := nc.mutation.NursePassword(); ok {
+	if value, ok := nc.mutation.Password(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: nurse.FieldNursePassword,
+			Column: nurse.FieldPassword,
 		})
-		n.NursePassword = value
+		n.Password = value
 	}
 	if nodes := nc.mutation.QueueIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{

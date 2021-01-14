@@ -238,8 +238,8 @@ var (
 		{Name: "id", Type: field.TypeInt, Increment: true},
 		{Name: "nurse_name", Type: field.TypeString},
 		{Name: "nurse_age", Type: field.TypeInt},
-		{Name: "nurse_email", Type: field.TypeString, Unique: true},
-		{Name: "nurse_password", Type: field.TypeString},
+		{Name: "email", Type: field.TypeString, Unique: true},
+		{Name: "password", Type: field.TypeString},
 	}
 	// NursesTable holds the schema information for the "nurses" table.
 	NursesTable = &schema.Table{
