@@ -155,15 +155,7 @@ const SaveMed: FC<{}> = () => {
       <Header
        title="Dental System"
        subtitle="ระบบบันทึกประวัติทันตกรรม">
-
-      <Avatar alt="Remy Sharp" src="../../image/account.jpg" />
-        <div style={{ marginLeft: 10 }}>Rattawan Khaochalad</div>
      </Header>
-
-     
-         
-
-
       <Content>
         <Container maxWidth="sm">
           <Grid container spacing={3}>
