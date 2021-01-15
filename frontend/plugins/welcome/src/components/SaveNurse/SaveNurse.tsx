@@ -153,7 +153,7 @@ const SaveNurse: FC<{}> = () => {
               <FormControl variant="outlined" className={classes.formControl}>
                 <TextField 
                 
-                label="ชื่อ-สกุล พยาบาล" 
+                label="ชื่อ-สกุล" 
                 variant="outlined" 
                 name="nursename"
                 type="string"
@@ -231,7 +231,7 @@ const SaveNurse: FC<{}> = () => {
                 บันทึกพยาบาล
               </Button>
               &emsp;
-              <Link component={RouterLink} to="/Menu">
+              <Link component={RouterLink} to="/signinnurse">
               <Button
                 variant="contained"
                 color="default"

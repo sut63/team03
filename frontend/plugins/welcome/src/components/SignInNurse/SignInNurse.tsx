@@ -68,7 +68,7 @@ const SignInNurse: FC<{}> = () => {
         checkNurse = true;
         localStorage.setItem('nurse-id', JSON.stringify(item.id));
         localStorage.setItem('nurse-name', JSON.stringify(item.name));
-        history.pushState('', '', '/Menu'); /////////มาแก้ที่หลังไปยังหน้ารวมเภสัชกร
+        history.pushState('', '', '/Menu'); 
         window.location.reload(false);
       }
     });
@@ -81,9 +81,8 @@ const SignInNurse: FC<{}> = () => {
 
   return (
     <div className={classes.paper}>
-      <Page theme={pageTheme.website}>
-        <Header style={HeaderCustom} title={`Nurse Information`}
-          subtitle="กรุณาบันทึกข้อมูลก่อนเข้าสู่ระบบ">
+      <Page theme={pageTheme.service}>
+        <Header style={HeaderCustom} title={`Nurse Login`} >
             {status ? (
             <div>
               {alert ? (

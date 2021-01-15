@@ -150,7 +150,7 @@ const SaveQueue: FC<{}> = () => {
   }
 
   return (
-    <Page theme={pageTheme.app}>
+    <Page theme={pageTheme.service}>
       <Header
        title="Dental System"
        subtitle="ระบบทันตกรรม">
