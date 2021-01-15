@@ -405,7 +405,7 @@ const SaveDentist: FC<{}> = () => {
                 บันทึกข้อมูล
               </Button>
               &emsp;
-              <Link component={RouterLink} to="/SignInDentist">
+              <Link component={RouterLink} to="/menu">
               <Button
                 variant="contained"
                 color="default"

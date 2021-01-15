@@ -15,6 +15,8 @@ import {
   Button,
   Link,
 } from '@material-ui/core';
+
+import ExitToAppRoundedIcon from '@material-ui/icons/ExitToAppRounded';
 import { DefaultApi } from '../../api/apis'; // Api Gennerate From Command
 import { EntPatient } from '../../api/models/EntPatient'; // import interface Patient
 import { EntDentist } from '../../api/models/EntDentist'; // import interface Dentist
@@ -149,6 +151,8 @@ function save() {
     <Page theme={pageTheme.service}>
       <Header style={HeaderCustom} title={`การนัดหมายผู้ป่วย`}
               subtitle="Welcome to Appointment System.">
+      <Button variant="contained" color="default" href="/" startIcon={<ExitToAppRoundedIcon />}> Logout
+      </Button>
       </Header>
       <Content>
         <Container maxWidth="sm">
