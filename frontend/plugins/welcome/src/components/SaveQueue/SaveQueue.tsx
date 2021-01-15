@@ -16,7 +16,7 @@ import {
 import { Link as RouterLink } from 'react-router-dom';
 
 import Swal from 'sweetalert2'; // alert
-
+import ExitToAppRoundedIcon from '@material-ui/icons/ExitToAppRounded';
 import { DefaultApi } from '../../api/apis'; // Api Gennerate From Command
 import { EntPatient } from '../../api/models/EntPatient'; 
 import { EntDentist } from '../../api/models/EntDentist'; 
@@ -152,8 +152,10 @@ const SaveQueue: FC<{}> = () => {
   return (
     <Page theme={pageTheme.service}>
       <Header
-       title="Dental System"
-       subtitle="ระบบทันตกรรม">
+       title="ระบบจองคิวผู้ป่วย"
+       subtitle="Queue Order System">
+         <Button variant="contained" color="default" href="/SignInNurse" startIcon={<ExitToAppRoundedIcon />}> Logout
+           </Button>
      </Header>
       <Content>
         <ContentHeader title="จองคิวผู้ป่วย"> 
