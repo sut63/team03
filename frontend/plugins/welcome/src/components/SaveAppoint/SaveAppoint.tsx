@@ -255,7 +255,7 @@ function save() {
                 บันทึกการนัดหมาย
               </Button>
 
-              <Link component={RouterLink} to="/homepage">
+              <Link component={RouterLink} to="/signindentist">
               <Button
                 variant="contained"
                 color="primary"

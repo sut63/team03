@@ -81,9 +81,8 @@ const SignInDentist: FC<{}> = () => {
 
   return (
     <div className={classes.paper}>
-      <Page theme={pageTheme.website}>
-        <Header style={HeaderCustom} title={`Doctor Information`}
-          subtitle="กรุณาบันทึกข้อมูลก่อนเข้าสู่ระบบ">
+      <Page theme={pageTheme.service}>
+        <Header style={HeaderCustom} title={`Dentist Login`} >
             {status ? (
             <div>
               {alert ? (
