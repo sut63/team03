@@ -134,10 +134,9 @@ const SaveNurse: FC<{}> = () => {
     <Page theme={pageTheme.service}>
       <Header
        title="Dental System"
-       subtitle="ระบบบันทึกประวัติทันตกรรม">
+       subtitle="บันทึกข้อมูลพยาบาล">
 
-      <Avatar alt="Remy Sharp" src="../../image/account.jpg" />
-        <div style={{ marginLeft: 10 }}>Rattawan Khaochalad</div>
+      
      </Header>
 
      
@@ -218,6 +217,7 @@ const SaveNurse: FC<{}> = () => {
 
               </FormControl>
             </Grid>
+            <br></br>
 
             <Grid item xs={3}></Grid>
             <Grid item xs={9}>

@@ -183,8 +183,8 @@ const saveDenExpen: FC<{}> = () => {
        title="Dental System"
        subtitle="ระบบบันทึกค่ารักษา">
 
-      <Avatar alt="Remy Sharp" src="../../image/account.jpg" />
-        <div style={{ marginLeft: 20 }}>.... ....</div>
+      
+   
 
       <Button aria-controls="simple-menu" aria-haspopup="true" color="default" onClick={handleClick}>
         Menu
