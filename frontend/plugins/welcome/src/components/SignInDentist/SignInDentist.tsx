@@ -134,7 +134,7 @@ const SignInDentist: FC<{}> = () => {
           </Button>
           <Grid container>
             <Grid item>
-              <Link href="/user" variant="body2">
+              <Link href="/SaveDentist" variant="body2">
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>
