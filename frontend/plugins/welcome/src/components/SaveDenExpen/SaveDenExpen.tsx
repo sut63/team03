@@ -4,12 +4,6 @@ import { Content, Header, Page, pageTheme } from '@backstage/core';
 import SaveIcon from '@material-ui/icons/Save'; // icon save
 import Swal from 'sweetalert2'; // alert
 import { Link as RouterLink } from 'react-router-dom';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Menu from '@material-ui/core/Menu';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
 
 import {
   Container,
@@ -19,14 +13,15 @@ import {
   InputLabel,
   MenuItem,
   TextField,
-  Avatar,
+  
   Button,
   Link,
 } from '@material-ui/core';
 import { DefaultApi } from '../../api/apis'; // Api Gennerate From Command
-import { EntPriceType } from '../../api/models/EntPriceType'; // import interface PriceType
+import { EntMedicalfile } from '../../api/models/EntMedicalfile'; // import interface Dentist
 import { EntNurse } from '../../api/models/EntNurse'; // import interface Nurse
-import { EntMedicalfile } from '../../api/models/EntMedicalfile'; // import interface Medicalfile
+import { EntPriceType } from '../../api/models/EntPriceType'; // import interface Patient
+
 
 // css style
 const useStyles = makeStyles(theme => ({
@@ -61,31 +56,21 @@ const useStyles = makeStyles(theme => ({
 }));
 
 interface saveDenExpen {
+  Medicalfile: Number;
   PriceType: Number;
   Nurse: Number;
-  Medicalfile: Number;
   Added: String;
   
 }
 
-const saveDenExpen: FC<{}> = () => {
+const SaveDenExpen: FC<{}> = () => {
   const classes = useStyles();
   const http = new DefaultApi();
 
-  const [dentalexpense, setDentalexpenses] = React.useState<Partial<saveDenExpen>>({});
-  const [pricetypes, setPriceTypes] = React.useState<EntPriceType[]>([]); //การประกาศตัวแปร โดยที่เราจะดึงมาใช้ แล้ว Ent ได้มาจากการเจน API
+  const [dentalexpense, setDentalExpense] = React.useState<Partial<saveDenExpen>>({});
+  const [medicalfiles, setMedicalfiles] = React.useState<EntMedicalfile[]>([]); //การประกาศตัวแปร โดยที่เราจะดึงมาใช้ แล้ว Ent ได้มาจากการเจน API
+  const [pricetypes, setPriceTypes] = React.useState<EntPriceType[]>([]);
   const [nurses, setNurses] = React.useState<EntNurse[]>([]);
-  const [medicalfiles, setMedicalfiles] = React.useState<EntMedicalfile[]>([]);
-
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
 
   // alert setting
   //const Swal = require('sweetalert2')
@@ -97,13 +82,13 @@ const saveDenExpen: FC<{}> = () => {
     timerProgressBar: true,
   });
 
-  // set data to object dentalexpense
+  // set data to object medicalfile
   const handleChange = (
     event: React.ChangeEvent<{ name?: string; value: unknown }>,
   ) => {
     const name = event.target.name as keyof typeof dentalexpense;
     const { value } = event.target;
-    setDentalexpenses({ ...dentalexpense, [name]: value });
+    setDentalExpense({ ...dentalexpense, [name]: value });
     console.log(dentalexpense);
   };
   
@@ -112,15 +97,14 @@ const saveDenExpen: FC<{}> = () => {
     setPriceTypes(res);
   };
 
-  
-  const getNurse = async () => {
-    const res = await http.listNurse({ limit: 4, offset: 0 });
-    setNurses(res);
-  };
-
   const getMedicalfile = async () => {
     const res = await http.listMedicalfile({ limit: 4, offset: 0 });
     setMedicalfiles(res);
+  };
+
+  const getNurse = async () => {
+    const res = await http.listNurse({ limit: 4, offset: 0 });
+    setNurses(res);
   };
 
   // Lifecycle Hooks
@@ -128,12 +112,11 @@ const saveDenExpen: FC<{}> = () => {
     getPriceType();
     getMedicalfile();
     getNurse();
-    
   }, []);
 
   // clear input form
   function clear() {
-    setDentalexpenses({});
+    setDentalExpense({});
   }
 
   // function save data
@@ -143,10 +126,10 @@ const saveDenExpen: FC<{}> = () => {
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(dentalexpense),
+      body: JSON.stringify( dentalexpense),
     };
 
-    console.log(dentalexpense); // log ดูข้อมูล สามารถ Inspect ดูข้อมูลได้ F12 เลือก Tab Console
+    console.log( dentalexpense); // log ดูข้อมูล สามารถ Inspect ดูข้อมูลได้ F12 เลือก Tab Console
 
     fetch(apiUrl, requestOptions)
       .then(response => response.json())
@@ -167,78 +150,26 @@ const saveDenExpen: FC<{}> = () => {
       });
   }
 
-  function redirecLogOut() {
-    //redirec Page ... http://localhost:3000/
-    window.location.href = "http://localhost:3000/";
-  }
-
-  function redirecSearch() {
-    //redirec Page ... http://localhost:3000/Showmed
-    window.location.href = "http://localhost:3000/Showmed";
-  }
-
   return (
     <Page theme={pageTheme.service}>
       <Header
        title="Dental System"
        subtitle="ระบบบันทึกค่ารักษา">
-
-      
-   
-
-      <Button aria-controls="simple-menu" aria-haspopup="true" color="default" onClick={handleClick}>
-        Menu
-      </Button>
-      <Menu
-        id="simple-menu"
-        anchorEl={anchorEl}
-        keepMounted
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
-      >
-        <MenuItem onClick={redirecSearch}>SEARCH</MenuItem>
-        <MenuItem onClick={redirecLogOut}>LOGOUT</MenuItem>
-      </Menu>
-      
      </Header>
-
-     
-         
-
-
       <Content>
         <Container maxWidth="sm">
           <Grid container spacing={3}>
             <Grid item xs={12}></Grid>
             
-            <Grid item xs={3}>
-              <div className={classes.paper}>ประเภทการชำระ</div>
-            </Grid>
-            <Grid item xs={9}>
-              <FormControl variant="outlined" className={classes.formControl}>
-                <InputLabel>เลือกประเภทการชำระ</InputLabel>
-                <Select
-                  name="PriceType"
-                  value={dentalexpense.PriceType || ''} 
-                  onChange={handleChange}
-                >
-                  {pricetypes.map(item => {
-                    return (
-                      <MenuItem key={item.id} value={item.id}>
-                        {item.name}
-                      </MenuItem>
-                    );
-                  })}
-                </Select>
-              </FormControl>
-            </Grid>
+
+            
 
             <Grid item xs={3}>
-              <div className={classes.paper}>ข้อมูลการรักษาผู้ป่วย</div>
+              <div className={classes.paper}>ข้อมูลการรักษา</div>
             </Grid>
             <Grid item xs={9}>
               <FormControl variant="outlined" className={classes.formControl}>
-                <InputLabel>เลือกข้อมูลการรักษาผู้ป่วย</InputLabel>
+                <InputLabel>เลือกข้อมูลการรักษา</InputLabel>
                 <Select
                   name="Medicalfile"
                   value={dentalexpense.Medicalfile || ''} 
@@ -248,6 +179,28 @@ const saveDenExpen: FC<{}> = () => {
                     return (
                       <MenuItem key={item.id} value={item.id}>
                         {item.detail}
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+              </FormControl>
+            </Grid>
+
+            <Grid item xs={3}>
+              <div className={classes.paper}>ประเภทที่ชำระ</div>
+            </Grid>
+            <Grid item xs={9}>
+              <FormControl variant="outlined" className={classes.formControl}>
+                <InputLabel>เลือกประเภทที่ชำระ</InputLabel>
+                <Select
+                  name="PriceType"
+                  value={dentalexpense.Medicalfile || ''} 
+                  onChange={handleChange}
+                >
+                  {pricetypes.map(item => {
+                    return (
+                      <MenuItem key={item.id} value={item.id}>
+                        {item.name}
                       </MenuItem>
                     );
                   })}
@@ -275,28 +228,6 @@ const saveDenExpen: FC<{}> = () => {
               </form>
             </Grid>
 
-            <Grid item xs={3}>
-              <div className={classes.paper}>พยาบาล</div>
-            </Grid>
-            <Grid item xs={9}>
-              <FormControl variant="outlined" className={classes.formControl}>
-                <InputLabel>เลือกพยาบาลที่ทำการบันทึก</InputLabel>
-                <Select
-                  name="Nurse"
-                  value={dentalexpense.Nurse || ''} 
-                  onChange={handleChange}
-                >
-                  {nurses.map(item => {
-                    return (
-                      <MenuItem key={item.id} value={item.id}>
-                        {item.nurseName}
-                      </MenuItem>
-                    );
-                  })}
-                </Select>
-              </FormControl>
-            </Grid>
-
             <Grid item xs={3}></Grid>
             <Grid item xs={9}>
               <Button
@@ -306,7 +237,7 @@ const saveDenExpen: FC<{}> = () => {
                 startIcon={<SaveIcon />}
                 onClick={save}
               >
-                บันทึกประวัติทันตกรรม
+                บันทึกค่ารักษา
               </Button>
               &emsp;
               <Link component={RouterLink} to="/Menu">
@@ -327,4 +258,4 @@ const saveDenExpen: FC<{}> = () => {
   );
 };
 
-export default  saveDenExpen;
+export default  SaveDenExpen;
