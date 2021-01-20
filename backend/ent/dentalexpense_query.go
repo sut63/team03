@@ -332,12 +332,12 @@ func (deq *DentalExpenseQuery) WithPricetype(opts ...func(*PriceTypeQuery)) *Den
 // Example:
 //
 //	var v []struct {
-//		AddedTime time.Time `json:"added_time,omitempty"`
+//		Tax string `json:"tax,omitempty"`
 //		Count int `json:"count,omitempty"`
 //	}
 //
 //	client.DentalExpense.Query().
-//		GroupBy(dentalexpense.FieldAddedTime).
+//		GroupBy(dentalexpense.FieldTax).
 //		Aggregate(ent.Count()).
 //		Scan(ctx, &v)
 //
@@ -358,11 +358,11 @@ func (deq *DentalExpenseQuery) GroupBy(field string, fields ...string) *DentalEx
 // Example:
 //
 //	var v []struct {
-//		AddedTime time.Time `json:"added_time,omitempty"`
+//		Tax string `json:"tax,omitempty"`
 //	}
 //
 //	client.DentalExpense.Query().
-//		Select(dentalexpense.FieldAddedTime).
+//		Select(dentalexpense.FieldTax).
 //		Scan(ctx, &v)
 //
 func (deq *DentalExpenseQuery) Select(field string, fields ...string) *DentalExpenseSelect {

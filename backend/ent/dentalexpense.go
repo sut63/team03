@@ -19,6 +19,14 @@ type DentalExpense struct {
 	config `json:"-"`
 	// ID of the ent.
 	ID int `json:"id,omitempty"`
+	// Tax holds the value of the "tax" field.
+	Tax string `json:"tax,omitempty"`
+	// Name holds the value of the "name" field.
+	Name string `json:"name,omitempty"`
+	// Rates holds the value of the "rates" field.
+	Rates int `json:"rates,omitempty"`
+	// Phone holds the value of the "phone" field.
+	Phone string `json:"phone,omitempty"`
 	// AddedTime holds the value of the "added_time" field.
 	AddedTime time.Time `json:"added_time,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
@@ -87,8 +95,12 @@ func (e DentalExpenseEdges) PricetypeOrErr() (*PriceType, error) {
 // scanValues returns the types for scanning values from sql.Rows.
 func (*DentalExpense) scanValues() []interface{} {
 	return []interface{}{
-		&sql.NullInt64{}, // id
-		&sql.NullTime{},  // added_time
+		&sql.NullInt64{},  // id
+		&sql.NullString{}, // tax
+		&sql.NullString{}, // name
+		&sql.NullInt64{},  // rates
+		&sql.NullString{}, // phone
+		&sql.NullTime{},   // added_time
 	}
 }
 
@@ -113,12 +125,32 @@ func (de *DentalExpense) assignValues(values ...interface{}) error {
 	}
 	de.ID = int(value.Int64)
 	values = values[1:]
-	if value, ok := values[0].(*sql.NullTime); !ok {
-		return fmt.Errorf("unexpected type %T for field added_time", values[0])
+	if value, ok := values[0].(*sql.NullString); !ok {
+		return fmt.Errorf("unexpected type %T for field tax", values[0])
+	} else if value.Valid {
+		de.Tax = value.String
+	}
+	if value, ok := values[1].(*sql.NullString); !ok {
+		return fmt.Errorf("unexpected type %T for field name", values[1])
+	} else if value.Valid {
+		de.Name = value.String
+	}
+	if value, ok := values[2].(*sql.NullInt64); !ok {
+		return fmt.Errorf("unexpected type %T for field rates", values[2])
+	} else if value.Valid {
+		de.Rates = int(value.Int64)
+	}
+	if value, ok := values[3].(*sql.NullString); !ok {
+		return fmt.Errorf("unexpected type %T for field phone", values[3])
+	} else if value.Valid {
+		de.Phone = value.String
+	}
+	if value, ok := values[4].(*sql.NullTime); !ok {
+		return fmt.Errorf("unexpected type %T for field added_time", values[4])
 	} else if value.Valid {
 		de.AddedTime = value.Time
 	}
-	values = values[1:]
+	values = values[5:]
 	if len(values) == len(dentalexpense.ForeignKeys) {
 		if value, ok := values[0].(*sql.NullInt64); !ok {
 			return fmt.Errorf("unexpected type %T for edge-field medicalfile_id", value)
@@ -180,6 +212,14 @@ func (de *DentalExpense) String() string {
 	var builder strings.Builder
 	builder.WriteString("DentalExpense(")
 	builder.WriteString(fmt.Sprintf("id=%v", de.ID))
+	builder.WriteString(", tax=")
+	builder.WriteString(de.Tax)
+	builder.WriteString(", name=")
+	builder.WriteString(de.Name)
+	builder.WriteString(", rates=")
+	builder.WriteString(fmt.Sprintf("%v", de.Rates))
+	builder.WriteString(", phone=")
+	builder.WriteString(de.Phone)
 	builder.WriteString(", added_time=")
 	builder.WriteString(de.AddedTime.Format(time.ANSIC))
 	builder.WriteByte(')')

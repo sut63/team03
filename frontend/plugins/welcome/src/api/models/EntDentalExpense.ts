@@ -44,6 +44,30 @@ export interface EntDentalExpense {
      * @memberof EntDentalExpense
      */
     id?: number;
+    /**
+     * Name holds the value of the "name" field.
+     * @type {string}
+     * @memberof EntDentalExpense
+     */
+    name?: string;
+    /**
+     * Phone holds the value of the "phone" field.
+     * @type {string}
+     * @memberof EntDentalExpense
+     */
+    phone?: string;
+    /**
+     * Rates holds the value of the "rates" field.
+     * @type {number}
+     * @memberof EntDentalExpense
+     */
+    rates?: number;
+    /**
+     * Tax holds the value of the "tax" field.
+     * @type {string}
+     * @memberof EntDentalExpense
+     */
+    tax?: string;
 }
 
 export function EntDentalExpenseFromJSON(json: any): EntDentalExpense {
@@ -59,6 +83,10 @@ export function EntDentalExpenseFromJSONTyped(json: any, ignoreDiscriminator: bo
         'addedTime': !exists(json, 'added_time') ? undefined : json['added_time'],
         'edges': !exists(json, 'edges') ? undefined : EntDentalExpenseEdgesFromJSON(json['edges']),
         'id': !exists(json, 'id') ? undefined : json['id'],
+        'name': !exists(json, 'name') ? undefined : json['name'],
+        'phone': !exists(json, 'phone') ? undefined : json['phone'],
+        'rates': !exists(json, 'rates') ? undefined : json['rates'],
+        'tax': !exists(json, 'tax') ? undefined : json['tax'],
     };
 }
 
@@ -74,6 +102,10 @@ export function EntDentalExpenseToJSON(value?: EntDentalExpense | null): any {
         'added_time': value.addedTime,
         'edges': EntDentalExpenseEdgesToJSON(value.edges),
         'id': value.id,
+        'name': value.name,
+        'phone': value.phone,
+        'rates': value.rates,
+        'tax': value.tax,
     };
 }
 

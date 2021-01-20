@@ -1931,6 +1931,22 @@ var doc = `{
                 "id": {
                     "description": "ID of the ent.",
                     "type": "integer"
+                },
+                "name": {
+                    "description": "Name holds the value of the \"name\" field.",
+                    "type": "string"
+                },
+                "phone": {
+                    "description": "Phone holds the value of the \"phone\" field.",
+                    "type": "string"
+                },
+                "rates": {
+                    "description": "Rates holds the value of the \"rates\" field.",
+                    "type": "integer"
+                },
+                "tax": {
+                    "description": "Tax holds the value of the \"tax\" field.",
+                    "type": "string"
                 }
             }
         },

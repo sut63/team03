@@ -5,6 +5,7 @@ package ent
 import (
 	"github.com/team03/app/ent/appointment"
 	"github.com/team03/app/ent/degree"
+	"github.com/team03/app/ent/dentalexpense"
 	"github.com/team03/app/ent/dentist"
 	"github.com/team03/app/ent/disease"
 	"github.com/team03/app/ent/expert"
@@ -33,6 +34,24 @@ func init() {
 	degreeDescName := degreeFields[0].Descriptor()
 	// degree.NameValidator is a validator for the "name" field. It is called by the builders before save.
 	degree.NameValidator = degreeDescName.Validators[0].(func(string) error)
+	dentalexpenseFields := schema.DentalExpense{}.Fields()
+	_ = dentalexpenseFields
+	// dentalexpenseDescTax is the schema descriptor for tax field.
+	dentalexpenseDescTax := dentalexpenseFields[0].Descriptor()
+	// dentalexpense.TaxValidator is a validator for the "tax" field. It is called by the builders before save.
+	dentalexpense.TaxValidator = dentalexpenseDescTax.Validators[0].(func(string) error)
+	// dentalexpenseDescName is the schema descriptor for name field.
+	dentalexpenseDescName := dentalexpenseFields[1].Descriptor()
+	// dentalexpense.NameValidator is a validator for the "name" field. It is called by the builders before save.
+	dentalexpense.NameValidator = dentalexpenseDescName.Validators[0].(func(string) error)
+	// dentalexpenseDescRates is the schema descriptor for rates field.
+	dentalexpenseDescRates := dentalexpenseFields[2].Descriptor()
+	// dentalexpense.RatesValidator is a validator for the "rates" field. It is called by the builders before save.
+	dentalexpense.RatesValidator = dentalexpenseDescRates.Validators[0].(func(int) error)
+	// dentalexpenseDescPhone is the schema descriptor for phone field.
+	dentalexpenseDescPhone := dentalexpenseFields[3].Descriptor()
+	// dentalexpense.PhoneValidator is a validator for the "phone" field. It is called by the builders before save.
+	dentalexpense.PhoneValidator = dentalexpenseDescPhone.Validators[0].(func(string) error)
 	dentistFields := schema.Dentist{}.Fields()
 	_ = dentistFields
 	// dentistDescName is the schema descriptor for name field.

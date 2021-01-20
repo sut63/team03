@@ -140,9 +140,9 @@ func main() {
 	// Set PriceType Data
 	pricetypes := PriceTypes{
 		PriceType: []PriceType{
-			PriceType{"จ่ายเองโดยตรง"},
-			PriceType{"เบิกได้"},
-			PriceType{"ญาติผู้ป่วย"},
+			PriceType{"บัตรเครดิต"},
+			PriceType{"เงินสด"},
+			
 		},
 	}
 
