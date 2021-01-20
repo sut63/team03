@@ -13,14 +13,14 @@ import {
   InputLabel,
   MenuItem,
   TextField,
-  
+  Avatar,
   Button,
   Link,
 } from '@material-ui/core';
 import { DefaultApi } from '../../api/apis'; // Api Gennerate From Command
 import { EntMedicalfile } from '../../api/models/EntMedicalfile'; // import interface Dentist
-import { EntNurse } from '../../api/models/EntNurse'; // import interface Nurse
-import { EntPriceType } from '../../api/models/EntPriceType'; // import interface Patient
+import { EntPriceType } from '../../api/models/EntPriceType'; // import interface Nurse
+import { EntNurse } from '../../api/models/EntNurse'; // import interface Patient
 
 
 // css style
@@ -59,8 +59,11 @@ interface saveDenExpen {
   Medicalfile: Number;
   PriceType: Number;
   Nurse: Number;
+  Rates: Number;
   Added: String;
-  
+  Tax: String;
+  Name: String;
+  Phone: String;
 }
 
 const SaveDenExpen: FC<{}> = () => {
@@ -109,8 +112,8 @@ const SaveDenExpen: FC<{}> = () => {
 
   // Lifecycle Hooks
   useEffect(() => {
-    getPriceType();
     getMedicalfile();
+    getPriceType();
     getNurse();
   }, []);
 
@@ -126,10 +129,10 @@ const SaveDenExpen: FC<{}> = () => {
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify( dentalexpense),
+      body: JSON.stringify(dentalexpense),
     };
 
-    console.log( dentalexpense); // log ดูข้อมูล สามารถ Inspect ดูข้อมูลได้ F12 เลือก Tab Console
+    console.log(dentalexpense); // log ดูข้อมูล สามารถ Inspect ดูข้อมูลได้ F12 เลือก Tab Console
 
     fetch(apiUrl, requestOptions)
       .then(response => response.json())
@@ -160,16 +163,30 @@ const SaveDenExpen: FC<{}> = () => {
         <Container maxWidth="sm">
           <Grid container spacing={3}>
             <Grid item xs={12}></Grid>
-            
-
-            
-
             <Grid item xs={3}>
-              <div className={classes.paper}>ข้อมูลการรักษา</div>
+              <div className={classes.paper}>เลขที่กำกับภาษี</div>
             </Grid>
             <Grid item xs={9}>
               <FormControl variant="outlined" className={classes.formControl}>
-                <InputLabel>เลือกข้อมูลการรักษา</InputLabel>
+                <TextField 
+                
+                label="ระบุเลขที่กำกับภาษี" 
+                variant="outlined" 
+                name="Tax"
+                type="string"
+                value={dentalexpense.Tax || ''}
+                onChange={handleChange}
+                />
+
+              </FormControl>
+            </Grid>
+
+            <Grid item xs={3}>
+              <div className={classes.paper}>ข้อมูลการรับบริการทันตกรรม</div>
+            </Grid>
+            <Grid item xs={9}>
+              <FormControl variant="outlined" className={classes.formControl}>
+                <InputLabel>เลือกข้อมูลการรับบริการทันตกรรม</InputLabel>
                 <Select
                   name="Medicalfile"
                   value={dentalexpense.Medicalfile || ''} 
@@ -185,31 +202,82 @@ const SaveDenExpen: FC<{}> = () => {
                 </Select>
               </FormControl>
             </Grid>
-
             <Grid item xs={3}>
-              <div className={classes.paper}>ประเภทที่ชำระ</div>
+              <div className={classes.paper}>ค่าบริการ</div>
             </Grid>
             <Grid item xs={9}>
               <FormControl variant="outlined" className={classes.formControl}>
-                <InputLabel>เลือกประเภทที่ชำระ</InputLabel>
+                <TextField 
+                
+                label="ระบุค่าบริการ" 
+                variant="outlined" 
+                name="Rates"
+                type="string"
+                value={dentalexpense.Rates || ''}
+                onChange={handleChange}
+                />
+
+              </FormControl>
+            </Grid>
+
+            <Grid item xs={3}>
+              <div className={classes.paper}>ประเภทการชำระ</div>
+            </Grid>
+            <Grid item xs={9}>
+              <FormControl variant="outlined" className={classes.formControl}>
+                <InputLabel>เลือกประเภทการชำระ</InputLabel>
                 <Select
                   name="PriceType"
-                  value={dentalexpense.Medicalfile || ''} 
+                  value={dentalexpense.PriceType || ''} 
                   onChange={handleChange}
                 >
                   {pricetypes.map(item => {
                     return (
                       <MenuItem key={item.id} value={item.id}>
-                        {item.name}
+                      {item.name}
                       </MenuItem>
                     );
                   })}
                 </Select>
               </FormControl>
             </Grid>
+            <Grid item xs={3}>
+              <div className={classes.paper}>ชื่อผู้ชำระค่าบริการ</div>
+            </Grid>
+            <Grid item xs={9}>
+              <FormControl variant="outlined" className={classes.formControl}>
+                <TextField 
+                
+                label="ระบุชื่อผู้ชำระค่าบริการ" 
+                variant="outlined" 
+                name="Name"
+                type="string"
+                value={dentalexpense.Name || ''}
+                onChange={handleChange}
+                />
+
+              </FormControl>
+            </Grid>
+            <Grid item xs={3}>
+              <div className={classes.paper}>เบอร์ที่สามารถติดต่อได้</div>
+            </Grid>
+            <Grid item xs={9}>
+              <FormControl variant="outlined" className={classes.formControl}>
+                <TextField 
+                
+                label="ระบุเบอร์โทรศัพท์" 
+                variant="outlined" 
+                name="Phone"
+                type="string"
+                value={dentalexpense.Phone || ''}
+                onChange={handleChange}
+                />
+
+              </FormControl>
+            </Grid>
 
             <Grid item xs={3}>
-              <div className={classes.paper}>วันที่ทำการรักษา</div>
+              <div className={classes.paper}>วันที่ชำระค่าบริการ</div>
             </Grid>
             <Grid item xs={9}>
               <form className={classes.container} noValidate>

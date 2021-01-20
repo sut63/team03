@@ -31,6 +31,37 @@ func (deu *DentalExpenseUpdate) Where(ps ...predicate.DentalExpense) *DentalExpe
 	return deu
 }
 
+// SetTax sets the tax field.
+func (deu *DentalExpenseUpdate) SetTax(s string) *DentalExpenseUpdate {
+	deu.mutation.SetTax(s)
+	return deu
+}
+
+// SetName sets the name field.
+func (deu *DentalExpenseUpdate) SetName(s string) *DentalExpenseUpdate {
+	deu.mutation.SetName(s)
+	return deu
+}
+
+// SetRates sets the rates field.
+func (deu *DentalExpenseUpdate) SetRates(i int) *DentalExpenseUpdate {
+	deu.mutation.ResetRates()
+	deu.mutation.SetRates(i)
+	return deu
+}
+
+// AddRates adds i to rates.
+func (deu *DentalExpenseUpdate) AddRates(i int) *DentalExpenseUpdate {
+	deu.mutation.AddRates(i)
+	return deu
+}
+
+// SetPhone sets the phone field.
+func (deu *DentalExpenseUpdate) SetPhone(s string) *DentalExpenseUpdate {
+	deu.mutation.SetPhone(s)
+	return deu
+}
+
 // SetAddedTime sets the added_time field.
 func (deu *DentalExpenseUpdate) SetAddedTime(t time.Time) *DentalExpenseUpdate {
 	deu.mutation.SetAddedTime(t)
@@ -119,6 +150,26 @@ func (deu *DentalExpenseUpdate) ClearPricetype() *DentalExpenseUpdate {
 
 // Save executes the query and returns the number of rows/vertices matched by this operation.
 func (deu *DentalExpenseUpdate) Save(ctx context.Context) (int, error) {
+	if v, ok := deu.mutation.Tax(); ok {
+		if err := dentalexpense.TaxValidator(v); err != nil {
+			return 0, &ValidationError{Name: "tax", err: fmt.Errorf("ent: validator failed for field \"tax\": %w", err)}
+		}
+	}
+	if v, ok := deu.mutation.Name(); ok {
+		if err := dentalexpense.NameValidator(v); err != nil {
+			return 0, &ValidationError{Name: "name", err: fmt.Errorf("ent: validator failed for field \"name\": %w", err)}
+		}
+	}
+	if v, ok := deu.mutation.Rates(); ok {
+		if err := dentalexpense.RatesValidator(v); err != nil {
+			return 0, &ValidationError{Name: "rates", err: fmt.Errorf("ent: validator failed for field \"rates\": %w", err)}
+		}
+	}
+	if v, ok := deu.mutation.Phone(); ok {
+		if err := dentalexpense.PhoneValidator(v); err != nil {
+			return 0, &ValidationError{Name: "phone", err: fmt.Errorf("ent: validator failed for field \"phone\": %w", err)}
+		}
+	}
 
 	var (
 		err      error
@@ -186,6 +237,41 @@ func (deu *DentalExpenseUpdate) sqlSave(ctx context.Context) (n int, err error) 
 				ps[i](selector)
 			}
 		}
+	}
+	if value, ok := deu.mutation.Tax(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: dentalexpense.FieldTax,
+		})
+	}
+	if value, ok := deu.mutation.Name(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: dentalexpense.FieldName,
+		})
+	}
+	if value, ok := deu.mutation.Rates(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: dentalexpense.FieldRates,
+		})
+	}
+	if value, ok := deu.mutation.AddedRates(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: dentalexpense.FieldRates,
+		})
+	}
+	if value, ok := deu.mutation.Phone(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: dentalexpense.FieldPhone,
+		})
 	}
 	if value, ok := deu.mutation.AddedTime(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
@@ -317,6 +403,37 @@ type DentalExpenseUpdateOne struct {
 	mutation *DentalExpenseMutation
 }
 
+// SetTax sets the tax field.
+func (deuo *DentalExpenseUpdateOne) SetTax(s string) *DentalExpenseUpdateOne {
+	deuo.mutation.SetTax(s)
+	return deuo
+}
+
+// SetName sets the name field.
+func (deuo *DentalExpenseUpdateOne) SetName(s string) *DentalExpenseUpdateOne {
+	deuo.mutation.SetName(s)
+	return deuo
+}
+
+// SetRates sets the rates field.
+func (deuo *DentalExpenseUpdateOne) SetRates(i int) *DentalExpenseUpdateOne {
+	deuo.mutation.ResetRates()
+	deuo.mutation.SetRates(i)
+	return deuo
+}
+
+// AddRates adds i to rates.
+func (deuo *DentalExpenseUpdateOne) AddRates(i int) *DentalExpenseUpdateOne {
+	deuo.mutation.AddRates(i)
+	return deuo
+}
+
+// SetPhone sets the phone field.
+func (deuo *DentalExpenseUpdateOne) SetPhone(s string) *DentalExpenseUpdateOne {
+	deuo.mutation.SetPhone(s)
+	return deuo
+}
+
 // SetAddedTime sets the added_time field.
 func (deuo *DentalExpenseUpdateOne) SetAddedTime(t time.Time) *DentalExpenseUpdateOne {
 	deuo.mutation.SetAddedTime(t)
@@ -405,6 +522,26 @@ func (deuo *DentalExpenseUpdateOne) ClearPricetype() *DentalExpenseUpdateOne {
 
 // Save executes the query and returns the updated entity.
 func (deuo *DentalExpenseUpdateOne) Save(ctx context.Context) (*DentalExpense, error) {
+	if v, ok := deuo.mutation.Tax(); ok {
+		if err := dentalexpense.TaxValidator(v); err != nil {
+			return nil, &ValidationError{Name: "tax", err: fmt.Errorf("ent: validator failed for field \"tax\": %w", err)}
+		}
+	}
+	if v, ok := deuo.mutation.Name(); ok {
+		if err := dentalexpense.NameValidator(v); err != nil {
+			return nil, &ValidationError{Name: "name", err: fmt.Errorf("ent: validator failed for field \"name\": %w", err)}
+		}
+	}
+	if v, ok := deuo.mutation.Rates(); ok {
+		if err := dentalexpense.RatesValidator(v); err != nil {
+			return nil, &ValidationError{Name: "rates", err: fmt.Errorf("ent: validator failed for field \"rates\": %w", err)}
+		}
+	}
+	if v, ok := deuo.mutation.Phone(); ok {
+		if err := dentalexpense.PhoneValidator(v); err != nil {
+			return nil, &ValidationError{Name: "phone", err: fmt.Errorf("ent: validator failed for field \"phone\": %w", err)}
+		}
+	}
 
 	var (
 		err  error
@@ -471,6 +608,41 @@ func (deuo *DentalExpenseUpdateOne) sqlSave(ctx context.Context) (de *DentalExpe
 		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing DentalExpense.ID for update")}
 	}
 	_spec.Node.ID.Value = id
+	if value, ok := deuo.mutation.Tax(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: dentalexpense.FieldTax,
+		})
+	}
+	if value, ok := deuo.mutation.Name(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: dentalexpense.FieldName,
+		})
+	}
+	if value, ok := deuo.mutation.Rates(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: dentalexpense.FieldRates,
+		})
+	}
+	if value, ok := deuo.mutation.AddedRates(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: dentalexpense.FieldRates,
+		})
+	}
+	if value, ok := deuo.mutation.Phone(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: dentalexpense.FieldPhone,
+		})
+	}
 	if value, ok := deuo.mutation.AddedTime(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeTime,

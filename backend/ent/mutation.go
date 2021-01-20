@@ -961,6 +961,11 @@ type DentalExpenseMutation struct {
 	op                 Op
 	typ                string
 	id                 *int
+	tax                *string
+	name               *string
+	rates              *int
+	addrates           *int
+	phone              *string
 	added_time         *time.Time
 	clearedFields      map[string]struct{}
 	nurse              *int
@@ -1050,6 +1055,174 @@ func (m *DentalExpenseMutation) ID() (id int, exists bool) {
 		return
 	}
 	return *m.id, true
+}
+
+// SetTax sets the tax field.
+func (m *DentalExpenseMutation) SetTax(s string) {
+	m.tax = &s
+}
+
+// Tax returns the tax value in the mutation.
+func (m *DentalExpenseMutation) Tax() (r string, exists bool) {
+	v := m.tax
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldTax returns the old tax value of the DentalExpense.
+// If the DentalExpense object wasn't provided to the builder, the object is fetched
+// from the database.
+// An error is returned if the mutation operation is not UpdateOne, or database query fails.
+func (m *DentalExpenseMutation) OldTax(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldTax is allowed only on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldTax requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldTax: %w", err)
+	}
+	return oldValue.Tax, nil
+}
+
+// ResetTax reset all changes of the "tax" field.
+func (m *DentalExpenseMutation) ResetTax() {
+	m.tax = nil
+}
+
+// SetName sets the name field.
+func (m *DentalExpenseMutation) SetName(s string) {
+	m.name = &s
+}
+
+// Name returns the name value in the mutation.
+func (m *DentalExpenseMutation) Name() (r string, exists bool) {
+	v := m.name
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldName returns the old name value of the DentalExpense.
+// If the DentalExpense object wasn't provided to the builder, the object is fetched
+// from the database.
+// An error is returned if the mutation operation is not UpdateOne, or database query fails.
+func (m *DentalExpenseMutation) OldName(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldName is allowed only on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldName requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldName: %w", err)
+	}
+	return oldValue.Name, nil
+}
+
+// ResetName reset all changes of the "name" field.
+func (m *DentalExpenseMutation) ResetName() {
+	m.name = nil
+}
+
+// SetRates sets the rates field.
+func (m *DentalExpenseMutation) SetRates(i int) {
+	m.rates = &i
+	m.addrates = nil
+}
+
+// Rates returns the rates value in the mutation.
+func (m *DentalExpenseMutation) Rates() (r int, exists bool) {
+	v := m.rates
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldRates returns the old rates value of the DentalExpense.
+// If the DentalExpense object wasn't provided to the builder, the object is fetched
+// from the database.
+// An error is returned if the mutation operation is not UpdateOne, or database query fails.
+func (m *DentalExpenseMutation) OldRates(ctx context.Context) (v int, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldRates is allowed only on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldRates requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldRates: %w", err)
+	}
+	return oldValue.Rates, nil
+}
+
+// AddRates adds i to rates.
+func (m *DentalExpenseMutation) AddRates(i int) {
+	if m.addrates != nil {
+		*m.addrates += i
+	} else {
+		m.addrates = &i
+	}
+}
+
+// AddedRates returns the value that was added to the rates field in this mutation.
+func (m *DentalExpenseMutation) AddedRates() (r int, exists bool) {
+	v := m.addrates
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetRates reset all changes of the "rates" field.
+func (m *DentalExpenseMutation) ResetRates() {
+	m.rates = nil
+	m.addrates = nil
+}
+
+// SetPhone sets the phone field.
+func (m *DentalExpenseMutation) SetPhone(s string) {
+	m.phone = &s
+}
+
+// Phone returns the phone value in the mutation.
+func (m *DentalExpenseMutation) Phone() (r string, exists bool) {
+	v := m.phone
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldPhone returns the old phone value of the DentalExpense.
+// If the DentalExpense object wasn't provided to the builder, the object is fetched
+// from the database.
+// An error is returned if the mutation operation is not UpdateOne, or database query fails.
+func (m *DentalExpenseMutation) OldPhone(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldPhone is allowed only on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldPhone requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldPhone: %w", err)
+	}
+	return oldValue.Phone, nil
+}
+
+// ResetPhone reset all changes of the "phone" field.
+func (m *DentalExpenseMutation) ResetPhone() {
+	m.phone = nil
 }
 
 // SetAddedTime sets the added_time field.
@@ -1220,7 +1393,19 @@ func (m *DentalExpenseMutation) Type() string {
 // this mutation. Note that, in order to get all numeric
 // fields that were in/decremented, call AddedFields().
 func (m *DentalExpenseMutation) Fields() []string {
-	fields := make([]string, 0, 1)
+	fields := make([]string, 0, 5)
+	if m.tax != nil {
+		fields = append(fields, dentalexpense.FieldTax)
+	}
+	if m.name != nil {
+		fields = append(fields, dentalexpense.FieldName)
+	}
+	if m.rates != nil {
+		fields = append(fields, dentalexpense.FieldRates)
+	}
+	if m.phone != nil {
+		fields = append(fields, dentalexpense.FieldPhone)
+	}
 	if m.added_time != nil {
 		fields = append(fields, dentalexpense.FieldAddedTime)
 	}
@@ -1232,6 +1417,14 @@ func (m *DentalExpenseMutation) Fields() []string {
 // not set, or was not define in the schema.
 func (m *DentalExpenseMutation) Field(name string) (ent.Value, bool) {
 	switch name {
+	case dentalexpense.FieldTax:
+		return m.Tax()
+	case dentalexpense.FieldName:
+		return m.Name()
+	case dentalexpense.FieldRates:
+		return m.Rates()
+	case dentalexpense.FieldPhone:
+		return m.Phone()
 	case dentalexpense.FieldAddedTime:
 		return m.AddedTime()
 	}
@@ -1243,6 +1436,14 @@ func (m *DentalExpenseMutation) Field(name string) (ent.Value, bool) {
 // or the query to the database was failed.
 func (m *DentalExpenseMutation) OldField(ctx context.Context, name string) (ent.Value, error) {
 	switch name {
+	case dentalexpense.FieldTax:
+		return m.OldTax(ctx)
+	case dentalexpense.FieldName:
+		return m.OldName(ctx)
+	case dentalexpense.FieldRates:
+		return m.OldRates(ctx)
+	case dentalexpense.FieldPhone:
+		return m.OldPhone(ctx)
 	case dentalexpense.FieldAddedTime:
 		return m.OldAddedTime(ctx)
 	}
@@ -1254,6 +1455,34 @@ func (m *DentalExpenseMutation) OldField(ctx context.Context, name string) (ent.
 // type mismatch the field type.
 func (m *DentalExpenseMutation) SetField(name string, value ent.Value) error {
 	switch name {
+	case dentalexpense.FieldTax:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetTax(v)
+		return nil
+	case dentalexpense.FieldName:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetName(v)
+		return nil
+	case dentalexpense.FieldRates:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetRates(v)
+		return nil
+	case dentalexpense.FieldPhone:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetPhone(v)
+		return nil
 	case dentalexpense.FieldAddedTime:
 		v, ok := value.(time.Time)
 		if !ok {
@@ -1268,13 +1497,21 @@ func (m *DentalExpenseMutation) SetField(name string, value ent.Value) error {
 // AddedFields returns all numeric fields that were incremented
 // or decremented during this mutation.
 func (m *DentalExpenseMutation) AddedFields() []string {
-	return nil
+	var fields []string
+	if m.addrates != nil {
+		fields = append(fields, dentalexpense.FieldRates)
+	}
+	return fields
 }
 
 // AddedField returns the numeric value that was in/decremented
 // from a field with the given name. The second value indicates
 // that this field was not set, or was not define in the schema.
 func (m *DentalExpenseMutation) AddedField(name string) (ent.Value, bool) {
+	switch name {
+	case dentalexpense.FieldRates:
+		return m.AddedRates()
+	}
 	return nil, false
 }
 
@@ -1283,6 +1520,13 @@ func (m *DentalExpenseMutation) AddedField(name string) (ent.Value, bool) {
 // type mismatch the field type.
 func (m *DentalExpenseMutation) AddField(name string, value ent.Value) error {
 	switch name {
+	case dentalexpense.FieldRates:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddRates(v)
+		return nil
 	}
 	return fmt.Errorf("unknown DentalExpense numeric field %s", name)
 }
@@ -1311,6 +1555,18 @@ func (m *DentalExpenseMutation) ClearField(name string) error {
 // defined in the schema.
 func (m *DentalExpenseMutation) ResetField(name string) error {
 	switch name {
+	case dentalexpense.FieldTax:
+		m.ResetTax()
+		return nil
+	case dentalexpense.FieldName:
+		m.ResetName()
+		return nil
+	case dentalexpense.FieldRates:
+		m.ResetRates()
+		return nil
+	case dentalexpense.FieldPhone:
+		m.ResetPhone()
+		return nil
 	case dentalexpense.FieldAddedTime:
 		m.ResetAddedTime()
 		return nil

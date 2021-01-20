@@ -61,6 +61,10 @@ var (
 	// DentalExpensesColumns holds the columns for the "dental_expenses" table.
 	DentalExpensesColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt, Increment: true},
+		{Name: "tax", Type: field.TypeString, Unique: true},
+		{Name: "name", Type: field.TypeString},
+		{Name: "rates", Type: field.TypeInt},
+		{Name: "phone", Type: field.TypeString},
 		{Name: "added_time", Type: field.TypeTime},
 		{Name: "medicalfile_id", Type: field.TypeInt, Nullable: true},
 		{Name: "nurse_id", Type: field.TypeInt, Nullable: true},
@@ -74,21 +78,21 @@ var (
 		ForeignKeys: []*schema.ForeignKey{
 			{
 				Symbol:  "dental_expenses_medicalfiles_dentalexpenses",
-				Columns: []*schema.Column{DentalExpensesColumns[2]},
+				Columns: []*schema.Column{DentalExpensesColumns[6]},
 
 				RefColumns: []*schema.Column{MedicalfilesColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
 			{
 				Symbol:  "dental_expenses_nurses_dentalexpenses",
-				Columns: []*schema.Column{DentalExpensesColumns[3]},
+				Columns: []*schema.Column{DentalExpensesColumns[7]},
 
 				RefColumns: []*schema.Column{NursesColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
 			{
 				Symbol:  "dental_expenses_price_types_dentalexpenses",
-				Columns: []*schema.Column{DentalExpensesColumns[4]},
+				Columns: []*schema.Column{DentalExpensesColumns[8]},
 
 				RefColumns: []*schema.Column{PriceTypesColumns[0]},
 				OnDelete:   schema.SetNull,

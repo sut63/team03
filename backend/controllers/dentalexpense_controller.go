@@ -19,6 +19,10 @@ type DentalExpenseController struct {
 type DentalExpense struct {
 	Medicalfile   int
 	PriceType     int
+	Tax           string
+	Rates         int
+	Name          string
+	Phone         string
 	Added         string
 }
 
@@ -77,6 +81,10 @@ func (ctl *DentalExpenseController) DentalExpenseCreate(c *gin.Context) {
 	time, err := time.Parse(time.RFC3339, obj.Added)
 	de, err := ctl.client.DentalExpense.
 		Create().
+		SetName(obj.Name).
+		SetTax(obj.Tax).
+		SetPhone(obj.Phone).
+		SetRates(obj.Rates).
 		SetAddedTime(time).
 		SetMedicalfile(m).
 		SetPricetype(pt).

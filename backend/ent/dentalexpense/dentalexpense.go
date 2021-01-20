@@ -7,6 +7,14 @@ const (
 	Label = "dental_expense"
 	// FieldID holds the string denoting the id field in the database.
 	FieldID = "id"
+	// FieldTax holds the string denoting the tax field in the database.
+	FieldTax = "tax"
+	// FieldName holds the string denoting the name field in the database.
+	FieldName = "name"
+	// FieldRates holds the string denoting the rates field in the database.
+	FieldRates = "rates"
+	// FieldPhone holds the string denoting the phone field in the database.
+	FieldPhone = "phone"
 	// FieldAddedTime holds the string denoting the added_time field in the database.
 	FieldAddedTime = "added_time"
 
@@ -45,6 +53,10 @@ const (
 // Columns holds all SQL columns for dentalexpense fields.
 var Columns = []string{
 	FieldID,
+	FieldTax,
+	FieldName,
+	FieldRates,
+	FieldPhone,
 	FieldAddedTime,
 }
 
@@ -54,3 +66,14 @@ var ForeignKeys = []string{
 	"nurse_id",
 	"pricetype_id",
 }
+
+var (
+	// TaxValidator is a validator for the "tax" field. It is called by the builders before save.
+	TaxValidator func(string) error
+	// NameValidator is a validator for the "name" field. It is called by the builders before save.
+	NameValidator func(string) error
+	// RatesValidator is a validator for the "rates" field. It is called by the builders before save.
+	RatesValidator func(int) error
+	// PhoneValidator is a validator for the "phone" field. It is called by the builders before save.
+	PhoneValidator func(string) error
+)
