@@ -24,15 +24,27 @@ type MedicalfileCreate struct {
 	hooks    []Hook
 }
 
-// SetDetail sets the detail field.
-func (mc *MedicalfileCreate) SetDetail(s string) *MedicalfileCreate {
-	mc.mutation.SetDetail(s)
+// SetDrugAllergy sets the DrugAllergy field.
+func (mc *MedicalfileCreate) SetDrugAllergy(s string) *MedicalfileCreate {
+	mc.mutation.SetDrugAllergy(s)
 	return mc
 }
 
-// SetAddedTime sets the added_time field.
+// SetDetial sets the Detial field.
+func (mc *MedicalfileCreate) SetDetial(s string) *MedicalfileCreate {
+	mc.mutation.SetDetial(s)
+	return mc
+}
+
+// SetAddedTime sets the AddedTime field.
 func (mc *MedicalfileCreate) SetAddedTime(t time.Time) *MedicalfileCreate {
 	mc.mutation.SetAddedTime(t)
+	return mc
+}
+
+// SetMedno sets the Medno field.
+func (mc *MedicalfileCreate) SetMedno(s string) *MedicalfileCreate {
+	mc.mutation.SetMedno(s)
 	return mc
 }
 
@@ -115,16 +127,32 @@ func (mc *MedicalfileCreate) Mutation() *MedicalfileMutation {
 
 // Save creates the Medicalfile in the database.
 func (mc *MedicalfileCreate) Save(ctx context.Context) (*Medicalfile, error) {
-	if _, ok := mc.mutation.Detail(); !ok {
-		return nil, &ValidationError{Name: "detail", err: errors.New("ent: missing required field \"detail\"")}
+	if _, ok := mc.mutation.DrugAllergy(); !ok {
+		return nil, &ValidationError{Name: "DrugAllergy", err: errors.New("ent: missing required field \"DrugAllergy\"")}
 	}
-	if v, ok := mc.mutation.Detail(); ok {
-		if err := medicalfile.DetailValidator(v); err != nil {
-			return nil, &ValidationError{Name: "detail", err: fmt.Errorf("ent: validator failed for field \"detail\": %w", err)}
+	if v, ok := mc.mutation.DrugAllergy(); ok {
+		if err := medicalfile.DrugAllergyValidator(v); err != nil {
+			return nil, &ValidationError{Name: "DrugAllergy", err: fmt.Errorf("ent: validator failed for field \"DrugAllergy\": %w", err)}
+		}
+	}
+	if _, ok := mc.mutation.Detial(); !ok {
+		return nil, &ValidationError{Name: "Detial", err: errors.New("ent: missing required field \"Detial\"")}
+	}
+	if v, ok := mc.mutation.Detial(); ok {
+		if err := medicalfile.DetialValidator(v); err != nil {
+			return nil, &ValidationError{Name: "Detial", err: fmt.Errorf("ent: validator failed for field \"Detial\": %w", err)}
 		}
 	}
 	if _, ok := mc.mutation.AddedTime(); !ok {
-		return nil, &ValidationError{Name: "added_time", err: errors.New("ent: missing required field \"added_time\"")}
+		return nil, &ValidationError{Name: "AddedTime", err: errors.New("ent: missing required field \"AddedTime\"")}
+	}
+	if _, ok := mc.mutation.Medno(); !ok {
+		return nil, &ValidationError{Name: "Medno", err: errors.New("ent: missing required field \"Medno\"")}
+	}
+	if v, ok := mc.mutation.Medno(); ok {
+		if err := medicalfile.MednoValidator(v); err != nil {
+			return nil, &ValidationError{Name: "Medno", err: fmt.Errorf("ent: validator failed for field \"Medno\": %w", err)}
+		}
 	}
 	var (
 		err  error
@@ -186,13 +214,21 @@ func (mc *MedicalfileCreate) createSpec() (*Medicalfile, *sqlgraph.CreateSpec) {
 			},
 		}
 	)
-	if value, ok := mc.mutation.Detail(); ok {
+	if value, ok := mc.mutation.DrugAllergy(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: medicalfile.FieldDetail,
+			Column: medicalfile.FieldDrugAllergy,
 		})
-		m.Detail = value
+		m.DrugAllergy = value
+	}
+	if value, ok := mc.mutation.Detial(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: medicalfile.FieldDetial,
+		})
+		m.Detial = value
 	}
 	if value, ok := mc.mutation.AddedTime(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
@@ -201,6 +237,14 @@ func (mc *MedicalfileCreate) createSpec() (*Medicalfile, *sqlgraph.CreateSpec) {
 			Column: medicalfile.FieldAddedTime,
 		})
 		m.AddedTime = value
+	}
+	if value, ok := mc.mutation.Medno(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: medicalfile.FieldMedno,
+		})
+		m.Medno = value
 	}
 	if nodes := mc.mutation.DentistIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{

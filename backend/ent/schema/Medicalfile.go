@@ -1,6 +1,8 @@
 package schema
 
 import (
+   "errors"
+	"regexp"
    "github.com/facebookincubator/ent"
    "github.com/facebookincubator/ent/schema/field"
    "github.com/facebookincubator/ent/schema/edge"
@@ -14,8 +16,16 @@ type Medicalfile struct {
 // Fields of the Medicalfile.
 func (Medicalfile) Fields() []ent.Field {
    return []ent.Field{
-		field.String("detail").NotEmpty(),
-		field.Time("added_time"),
+      field.String("DrugAllergy").NotEmpty().MaxLen(30),
+		field.String("Detial").NotEmpty().MaxLen(30),
+      field.Time("AddedTime"),
+      field.String("Medno").Validate(func(s string) error {
+			match, _ := regexp.MatchString("[M]\\d{3}", s)
+			if !match {
+				return errors.New("รูปแบบรหัสประวัติทันตกรรมไม่ถูกต้อง")
+			}
+			return nil
+		}),
    }
 }
 

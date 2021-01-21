@@ -32,15 +32,27 @@ func (mu *MedicalfileUpdate) Where(ps ...predicate.Medicalfile) *MedicalfileUpda
 	return mu
 }
 
-// SetDetail sets the detail field.
-func (mu *MedicalfileUpdate) SetDetail(s string) *MedicalfileUpdate {
-	mu.mutation.SetDetail(s)
+// SetDrugAllergy sets the DrugAllergy field.
+func (mu *MedicalfileUpdate) SetDrugAllergy(s string) *MedicalfileUpdate {
+	mu.mutation.SetDrugAllergy(s)
 	return mu
 }
 
-// SetAddedTime sets the added_time field.
+// SetDetial sets the Detial field.
+func (mu *MedicalfileUpdate) SetDetial(s string) *MedicalfileUpdate {
+	mu.mutation.SetDetial(s)
+	return mu
+}
+
+// SetAddedTime sets the AddedTime field.
 func (mu *MedicalfileUpdate) SetAddedTime(t time.Time) *MedicalfileUpdate {
 	mu.mutation.SetAddedTime(t)
+	return mu
+}
+
+// SetMedno sets the Medno field.
+func (mu *MedicalfileUpdate) SetMedno(s string) *MedicalfileUpdate {
+	mu.mutation.SetMedno(s)
 	return mu
 }
 
@@ -156,9 +168,19 @@ func (mu *MedicalfileUpdate) RemoveDentalexpenses(d ...*DentalExpense) *Medicalf
 
 // Save executes the query and returns the number of rows/vertices matched by this operation.
 func (mu *MedicalfileUpdate) Save(ctx context.Context) (int, error) {
-	if v, ok := mu.mutation.Detail(); ok {
-		if err := medicalfile.DetailValidator(v); err != nil {
-			return 0, &ValidationError{Name: "detail", err: fmt.Errorf("ent: validator failed for field \"detail\": %w", err)}
+	if v, ok := mu.mutation.DrugAllergy(); ok {
+		if err := medicalfile.DrugAllergyValidator(v); err != nil {
+			return 0, &ValidationError{Name: "DrugAllergy", err: fmt.Errorf("ent: validator failed for field \"DrugAllergy\": %w", err)}
+		}
+	}
+	if v, ok := mu.mutation.Detial(); ok {
+		if err := medicalfile.DetialValidator(v); err != nil {
+			return 0, &ValidationError{Name: "Detial", err: fmt.Errorf("ent: validator failed for field \"Detial\": %w", err)}
+		}
+	}
+	if v, ok := mu.mutation.Medno(); ok {
+		if err := medicalfile.MednoValidator(v); err != nil {
+			return 0, &ValidationError{Name: "Medno", err: fmt.Errorf("ent: validator failed for field \"Medno\": %w", err)}
 		}
 	}
 
@@ -229,11 +251,18 @@ func (mu *MedicalfileUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			}
 		}
 	}
-	if value, ok := mu.mutation.Detail(); ok {
+	if value, ok := mu.mutation.DrugAllergy(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: medicalfile.FieldDetail,
+			Column: medicalfile.FieldDrugAllergy,
+		})
+	}
+	if value, ok := mu.mutation.Detial(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: medicalfile.FieldDetial,
 		})
 	}
 	if value, ok := mu.mutation.AddedTime(); ok {
@@ -241,6 +270,13 @@ func (mu *MedicalfileUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Type:   field.TypeTime,
 			Value:  value,
 			Column: medicalfile.FieldAddedTime,
+		})
+	}
+	if value, ok := mu.mutation.Medno(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: medicalfile.FieldMedno,
 		})
 	}
 	if mu.mutation.DentistCleared() {
@@ -404,15 +440,27 @@ type MedicalfileUpdateOne struct {
 	mutation *MedicalfileMutation
 }
 
-// SetDetail sets the detail field.
-func (muo *MedicalfileUpdateOne) SetDetail(s string) *MedicalfileUpdateOne {
-	muo.mutation.SetDetail(s)
+// SetDrugAllergy sets the DrugAllergy field.
+func (muo *MedicalfileUpdateOne) SetDrugAllergy(s string) *MedicalfileUpdateOne {
+	muo.mutation.SetDrugAllergy(s)
 	return muo
 }
 
-// SetAddedTime sets the added_time field.
+// SetDetial sets the Detial field.
+func (muo *MedicalfileUpdateOne) SetDetial(s string) *MedicalfileUpdateOne {
+	muo.mutation.SetDetial(s)
+	return muo
+}
+
+// SetAddedTime sets the AddedTime field.
 func (muo *MedicalfileUpdateOne) SetAddedTime(t time.Time) *MedicalfileUpdateOne {
 	muo.mutation.SetAddedTime(t)
+	return muo
+}
+
+// SetMedno sets the Medno field.
+func (muo *MedicalfileUpdateOne) SetMedno(s string) *MedicalfileUpdateOne {
+	muo.mutation.SetMedno(s)
 	return muo
 }
 
@@ -528,9 +576,19 @@ func (muo *MedicalfileUpdateOne) RemoveDentalexpenses(d ...*DentalExpense) *Medi
 
 // Save executes the query and returns the updated entity.
 func (muo *MedicalfileUpdateOne) Save(ctx context.Context) (*Medicalfile, error) {
-	if v, ok := muo.mutation.Detail(); ok {
-		if err := medicalfile.DetailValidator(v); err != nil {
-			return nil, &ValidationError{Name: "detail", err: fmt.Errorf("ent: validator failed for field \"detail\": %w", err)}
+	if v, ok := muo.mutation.DrugAllergy(); ok {
+		if err := medicalfile.DrugAllergyValidator(v); err != nil {
+			return nil, &ValidationError{Name: "DrugAllergy", err: fmt.Errorf("ent: validator failed for field \"DrugAllergy\": %w", err)}
+		}
+	}
+	if v, ok := muo.mutation.Detial(); ok {
+		if err := medicalfile.DetialValidator(v); err != nil {
+			return nil, &ValidationError{Name: "Detial", err: fmt.Errorf("ent: validator failed for field \"Detial\": %w", err)}
+		}
+	}
+	if v, ok := muo.mutation.Medno(); ok {
+		if err := medicalfile.MednoValidator(v); err != nil {
+			return nil, &ValidationError{Name: "Medno", err: fmt.Errorf("ent: validator failed for field \"Medno\": %w", err)}
 		}
 	}
 
@@ -599,11 +657,18 @@ func (muo *MedicalfileUpdateOne) sqlSave(ctx context.Context) (m *Medicalfile, e
 		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing Medicalfile.ID for update")}
 	}
 	_spec.Node.ID.Value = id
-	if value, ok := muo.mutation.Detail(); ok {
+	if value, ok := muo.mutation.DrugAllergy(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: medicalfile.FieldDetail,
+			Column: medicalfile.FieldDrugAllergy,
+		})
+	}
+	if value, ok := muo.mutation.Detial(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: medicalfile.FieldDetial,
 		})
 	}
 	if value, ok := muo.mutation.AddedTime(); ok {
@@ -611,6 +676,13 @@ func (muo *MedicalfileUpdateOne) sqlSave(ctx context.Context) (m *Medicalfile, e
 			Type:   field.TypeTime,
 			Value:  value,
 			Column: medicalfile.FieldAddedTime,
+		})
+	}
+	if value, ok := muo.mutation.Medno(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: medicalfile.FieldMedno,
 		})
 	}
 	if muo.mutation.DentistCleared() {

@@ -19,10 +19,14 @@ type Medicalfile struct {
 	config `json:"-"`
 	// ID of the ent.
 	ID int `json:"id,omitempty"`
-	// Detail holds the value of the "detail" field.
-	Detail string `json:"detail,omitempty"`
-	// AddedTime holds the value of the "added_time" field.
-	AddedTime time.Time `json:"added_time,omitempty"`
+	// DrugAllergy holds the value of the "DrugAllergy" field.
+	DrugAllergy string `json:"DrugAllergy,omitempty"`
+	// Detial holds the value of the "Detial" field.
+	Detial string `json:"Detial,omitempty"`
+	// AddedTime holds the value of the "AddedTime" field.
+	AddedTime time.Time `json:"AddedTime,omitempty"`
+	// Medno holds the value of the "Medno" field.
+	Medno string `json:"Medno,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the MedicalfileQuery when eager-loading is set.
 	Edges      MedicalfileEdges `json:"edges"`
@@ -101,8 +105,10 @@ func (e MedicalfileEdges) DentalexpensesOrErr() ([]*DentalExpense, error) {
 func (*Medicalfile) scanValues() []interface{} {
 	return []interface{}{
 		&sql.NullInt64{},  // id
-		&sql.NullString{}, // detail
-		&sql.NullTime{},   // added_time
+		&sql.NullString{}, // DrugAllergy
+		&sql.NullString{}, // Detial
+		&sql.NullTime{},   // AddedTime
+		&sql.NullString{}, // Medno
 	}
 }
 
@@ -128,16 +134,26 @@ func (m *Medicalfile) assignValues(values ...interface{}) error {
 	m.ID = int(value.Int64)
 	values = values[1:]
 	if value, ok := values[0].(*sql.NullString); !ok {
-		return fmt.Errorf("unexpected type %T for field detail", values[0])
+		return fmt.Errorf("unexpected type %T for field DrugAllergy", values[0])
 	} else if value.Valid {
-		m.Detail = value.String
+		m.DrugAllergy = value.String
 	}
-	if value, ok := values[1].(*sql.NullTime); !ok {
-		return fmt.Errorf("unexpected type %T for field added_time", values[1])
+	if value, ok := values[1].(*sql.NullString); !ok {
+		return fmt.Errorf("unexpected type %T for field Detial", values[1])
+	} else if value.Valid {
+		m.Detial = value.String
+	}
+	if value, ok := values[2].(*sql.NullTime); !ok {
+		return fmt.Errorf("unexpected type %T for field AddedTime", values[2])
 	} else if value.Valid {
 		m.AddedTime = value.Time
 	}
-	values = values[2:]
+	if value, ok := values[3].(*sql.NullString); !ok {
+		return fmt.Errorf("unexpected type %T for field Medno", values[3])
+	} else if value.Valid {
+		m.Medno = value.String
+	}
+	values = values[4:]
 	if len(values) == len(medicalfile.ForeignKeys) {
 		if value, ok := values[0].(*sql.NullInt64); !ok {
 			return fmt.Errorf("unexpected type %T for edge-field dentist_id", value)
@@ -204,10 +220,14 @@ func (m *Medicalfile) String() string {
 	var builder strings.Builder
 	builder.WriteString("Medicalfile(")
 	builder.WriteString(fmt.Sprintf("id=%v", m.ID))
-	builder.WriteString(", detail=")
-	builder.WriteString(m.Detail)
-	builder.WriteString(", added_time=")
+	builder.WriteString(", DrugAllergy=")
+	builder.WriteString(m.DrugAllergy)
+	builder.WriteString(", Detial=")
+	builder.WriteString(m.Detial)
+	builder.WriteString(", AddedTime=")
 	builder.WriteString(m.AddedTime.Format(time.ANSIC))
+	builder.WriteString(", Medno=")
+	builder.WriteString(m.Medno)
 	builder.WriteByte(')')
 	return builder.String()
 }

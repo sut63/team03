@@ -4,6 +4,7 @@ import (
 	"context"
 	"strconv"
 	"time"
+	"fmt"
 
 	"github.com/gin-gonic/gin"
 	"github.com/team03/app/ent"
@@ -23,6 +24,8 @@ type Medicalfile struct {
 	Patient  	int
 	Detial   	string
 	AddedTime  	string
+	Medno		string
+	DrugAllergy string
 	
 }
 
@@ -76,13 +79,17 @@ func (ctl *MedicalfileController) MedicalfileCreate(c *gin.Context) {
 		Create().
 		SetPatient(p).
 		SetDentist(d).
-		SetDetail(obj.Detial).
+		SetDetial(obj.Detial).
+		SetMedno(obj.Medno).
 		SetAddedTime(time).
+		SetDrugAllergy(obj.DrugAllergy).
 		Save(context.Background())
 
 	if err != nil {
+		fmt.Println(err)
 		c.JSON(400, gin.H{
-			"error": "saving failed",
+			"status": false,
+			"error":  err,
 		})
 		return
 	}

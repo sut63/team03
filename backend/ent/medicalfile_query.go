@@ -364,12 +364,12 @@ func (mq *MedicalfileQuery) WithDentalexpenses(opts ...func(*DentalExpenseQuery)
 // Example:
 //
 //	var v []struct {
-//		Detail string `json:"detail,omitempty"`
+//		DrugAllergy string `json:"DrugAllergy,omitempty"`
 //		Count int `json:"count,omitempty"`
 //	}
 //
 //	client.Medicalfile.Query().
-//		GroupBy(medicalfile.FieldDetail).
+//		GroupBy(medicalfile.FieldDrugAllergy).
 //		Aggregate(ent.Count()).
 //		Scan(ctx, &v)
 //
@@ -390,11 +390,11 @@ func (mq *MedicalfileQuery) GroupBy(field string, fields ...string) *Medicalfile
 // Example:
 //
 //	var v []struct {
-//		Detail string `json:"detail,omitempty"`
+//		DrugAllergy string `json:"DrugAllergy,omitempty"`
 //	}
 //
 //	client.Medicalfile.Query().
-//		Select(medicalfile.FieldDetail).
+//		Select(medicalfile.FieldDrugAllergy).
 //		Scan(ctx, &v)
 //
 func (mq *MedicalfileQuery) Select(field string, fields ...string) *MedicalfileSelect {

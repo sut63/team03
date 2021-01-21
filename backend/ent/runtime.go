@@ -108,10 +108,46 @@ func init() {
 	medicalcare.NameValidator = medicalcareDescName.Validators[0].(func(string) error)
 	medicalfileFields := schema.Medicalfile{}.Fields()
 	_ = medicalfileFields
-	// medicalfileDescDetail is the schema descriptor for detail field.
-	medicalfileDescDetail := medicalfileFields[0].Descriptor()
-	// medicalfile.DetailValidator is a validator for the "detail" field. It is called by the builders before save.
-	medicalfile.DetailValidator = medicalfileDescDetail.Validators[0].(func(string) error)
+	// medicalfileDescDrugAllergy is the schema descriptor for DrugAllergy field.
+	medicalfileDescDrugAllergy := medicalfileFields[0].Descriptor()
+	// medicalfile.DrugAllergyValidator is a validator for the "DrugAllergy" field. It is called by the builders before save.
+	medicalfile.DrugAllergyValidator = func() func(string) error {
+		validators := medicalfileDescDrugAllergy.Validators
+		fns := [...]func(string) error{
+			validators[0].(func(string) error),
+			validators[1].(func(string) error),
+		}
+		return func(_DrugAllergy string) error {
+			for _, fn := range fns {
+				if err := fn(_DrugAllergy); err != nil {
+					return err
+				}
+			}
+			return nil
+		}
+	}()
+	// medicalfileDescDetial is the schema descriptor for Detial field.
+	medicalfileDescDetial := medicalfileFields[1].Descriptor()
+	// medicalfile.DetialValidator is a validator for the "Detial" field. It is called by the builders before save.
+	medicalfile.DetialValidator = func() func(string) error {
+		validators := medicalfileDescDetial.Validators
+		fns := [...]func(string) error{
+			validators[0].(func(string) error),
+			validators[1].(func(string) error),
+		}
+		return func(_Detial string) error {
+			for _, fn := range fns {
+				if err := fn(_Detial); err != nil {
+					return err
+				}
+			}
+			return nil
+		}
+	}()
+	// medicalfileDescMedno is the schema descriptor for Medno field.
+	medicalfileDescMedno := medicalfileFields[3].Descriptor()
+	// medicalfile.MednoValidator is a validator for the "Medno" field. It is called by the builders before save.
+	medicalfile.MednoValidator = medicalfileDescMedno.Validators[0].(func(string) error)
 	nurseFields := schema.Nurse{}.Fields()
 	_ = nurseFields
 	// nurseDescNurseName is the schema descriptor for nurse_name field.

@@ -202,8 +202,10 @@ var (
 	// MedicalfilesColumns holds the columns for the "medicalfiles" table.
 	MedicalfilesColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt, Increment: true},
-		{Name: "detail", Type: field.TypeString},
+		{Name: "drug_allergy", Type: field.TypeString, Size: 30},
+		{Name: "detial", Type: field.TypeString, Size: 30},
 		{Name: "added_time", Type: field.TypeTime},
+		{Name: "medno", Type: field.TypeString},
 		{Name: "dentist_id", Type: field.TypeInt, Nullable: true},
 		{Name: "nurse_id", Type: field.TypeInt, Nullable: true},
 		{Name: "patient_id", Type: field.TypeInt, Nullable: true},
@@ -216,21 +218,21 @@ var (
 		ForeignKeys: []*schema.ForeignKey{
 			{
 				Symbol:  "medicalfiles_dentists_medicalfiles",
-				Columns: []*schema.Column{MedicalfilesColumns[3]},
+				Columns: []*schema.Column{MedicalfilesColumns[5]},
 
 				RefColumns: []*schema.Column{DentistsColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
 			{
 				Symbol:  "medicalfiles_nurses_medicalfiles",
-				Columns: []*schema.Column{MedicalfilesColumns[4]},
+				Columns: []*schema.Column{MedicalfilesColumns[6]},
 
 				RefColumns: []*schema.Column{NursesColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
 			{
 				Symbol:  "medicalfiles_patients_medicalfiles",
-				Columns: []*schema.Column{MedicalfilesColumns[5]},
+				Columns: []*schema.Column{MedicalfilesColumns[7]},
 
 				RefColumns: []*schema.Column{PatientsColumns[0]},
 				OnDelete:   schema.SetNull,
