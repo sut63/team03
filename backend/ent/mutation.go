@@ -58,8 +58,10 @@ type AppointmentMutation struct {
 	op             Op
 	typ            string
 	id             *int
-	detail         *string
-	datetime       *time.Time
+	_AppointID     *string
+	_Detail        *string
+	_Datetime      *time.Time
+	_Remark        *string
 	clearedFields  map[string]struct{}
 	patient        *int
 	clearedpatient bool
@@ -150,21 +152,58 @@ func (m *AppointmentMutation) ID() (id int, exists bool) {
 	return *m.id, true
 }
 
-// SetDetail sets the detail field.
-func (m *AppointmentMutation) SetDetail(s string) {
-	m.detail = &s
+// SetAppointID sets the AppointID field.
+func (m *AppointmentMutation) SetAppointID(s string) {
+	m._AppointID = &s
 }
 
-// Detail returns the detail value in the mutation.
-func (m *AppointmentMutation) Detail() (r string, exists bool) {
-	v := m.detail
+// AppointID returns the AppointID value in the mutation.
+func (m *AppointmentMutation) AppointID() (r string, exists bool) {
+	v := m._AppointID
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// OldDetail returns the old detail value of the Appointment.
+// OldAppointID returns the old AppointID value of the Appointment.
+// If the Appointment object wasn't provided to the builder, the object is fetched
+// from the database.
+// An error is returned if the mutation operation is not UpdateOne, or database query fails.
+func (m *AppointmentMutation) OldAppointID(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldAppointID is allowed only on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldAppointID requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldAppointID: %w", err)
+	}
+	return oldValue.AppointID, nil
+}
+
+// ResetAppointID reset all changes of the "AppointID" field.
+func (m *AppointmentMutation) ResetAppointID() {
+	m._AppointID = nil
+}
+
+// SetDetail sets the Detail field.
+func (m *AppointmentMutation) SetDetail(s string) {
+	m._Detail = &s
+}
+
+// Detail returns the Detail value in the mutation.
+func (m *AppointmentMutation) Detail() (r string, exists bool) {
+	v := m._Detail
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldDetail returns the old Detail value of the Appointment.
 // If the Appointment object wasn't provided to the builder, the object is fetched
 // from the database.
 // An error is returned if the mutation operation is not UpdateOne, or database query fails.
@@ -182,26 +221,26 @@ func (m *AppointmentMutation) OldDetail(ctx context.Context) (v string, err erro
 	return oldValue.Detail, nil
 }
 
-// ResetDetail reset all changes of the "detail" field.
+// ResetDetail reset all changes of the "Detail" field.
 func (m *AppointmentMutation) ResetDetail() {
-	m.detail = nil
+	m._Detail = nil
 }
 
-// SetDatetime sets the datetime field.
+// SetDatetime sets the Datetime field.
 func (m *AppointmentMutation) SetDatetime(t time.Time) {
-	m.datetime = &t
+	m._Datetime = &t
 }
 
-// Datetime returns the datetime value in the mutation.
+// Datetime returns the Datetime value in the mutation.
 func (m *AppointmentMutation) Datetime() (r time.Time, exists bool) {
-	v := m.datetime
+	v := m._Datetime
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// OldDatetime returns the old datetime value of the Appointment.
+// OldDatetime returns the old Datetime value of the Appointment.
 // If the Appointment object wasn't provided to the builder, the object is fetched
 // from the database.
 // An error is returned if the mutation operation is not UpdateOne, or database query fails.
@@ -219,9 +258,46 @@ func (m *AppointmentMutation) OldDatetime(ctx context.Context) (v time.Time, err
 	return oldValue.Datetime, nil
 }
 
-// ResetDatetime reset all changes of the "datetime" field.
+// ResetDatetime reset all changes of the "Datetime" field.
 func (m *AppointmentMutation) ResetDatetime() {
-	m.datetime = nil
+	m._Datetime = nil
+}
+
+// SetRemark sets the Remark field.
+func (m *AppointmentMutation) SetRemark(s string) {
+	m._Remark = &s
+}
+
+// Remark returns the Remark value in the mutation.
+func (m *AppointmentMutation) Remark() (r string, exists bool) {
+	v := m._Remark
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldRemark returns the old Remark value of the Appointment.
+// If the Appointment object wasn't provided to the builder, the object is fetched
+// from the database.
+// An error is returned if the mutation operation is not UpdateOne, or database query fails.
+func (m *AppointmentMutation) OldRemark(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldRemark is allowed only on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldRemark requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldRemark: %w", err)
+	}
+	return oldValue.Remark, nil
+}
+
+// ResetRemark reset all changes of the "Remark" field.
+func (m *AppointmentMutation) ResetRemark() {
+	m._Remark = nil
 }
 
 // SetPatientID sets the patient edge to Patient by id.
@@ -355,12 +431,18 @@ func (m *AppointmentMutation) Type() string {
 // this mutation. Note that, in order to get all numeric
 // fields that were in/decremented, call AddedFields().
 func (m *AppointmentMutation) Fields() []string {
-	fields := make([]string, 0, 2)
-	if m.detail != nil {
+	fields := make([]string, 0, 4)
+	if m._AppointID != nil {
+		fields = append(fields, appointment.FieldAppointID)
+	}
+	if m._Detail != nil {
 		fields = append(fields, appointment.FieldDetail)
 	}
-	if m.datetime != nil {
+	if m._Datetime != nil {
 		fields = append(fields, appointment.FieldDatetime)
+	}
+	if m._Remark != nil {
+		fields = append(fields, appointment.FieldRemark)
 	}
 	return fields
 }
@@ -370,10 +452,14 @@ func (m *AppointmentMutation) Fields() []string {
 // not set, or was not define in the schema.
 func (m *AppointmentMutation) Field(name string) (ent.Value, bool) {
 	switch name {
+	case appointment.FieldAppointID:
+		return m.AppointID()
 	case appointment.FieldDetail:
 		return m.Detail()
 	case appointment.FieldDatetime:
 		return m.Datetime()
+	case appointment.FieldRemark:
+		return m.Remark()
 	}
 	return nil, false
 }
@@ -383,10 +469,14 @@ func (m *AppointmentMutation) Field(name string) (ent.Value, bool) {
 // or the query to the database was failed.
 func (m *AppointmentMutation) OldField(ctx context.Context, name string) (ent.Value, error) {
 	switch name {
+	case appointment.FieldAppointID:
+		return m.OldAppointID(ctx)
 	case appointment.FieldDetail:
 		return m.OldDetail(ctx)
 	case appointment.FieldDatetime:
 		return m.OldDatetime(ctx)
+	case appointment.FieldRemark:
+		return m.OldRemark(ctx)
 	}
 	return nil, fmt.Errorf("unknown Appointment field %s", name)
 }
@@ -396,6 +486,13 @@ func (m *AppointmentMutation) OldField(ctx context.Context, name string) (ent.Va
 // type mismatch the field type.
 func (m *AppointmentMutation) SetField(name string, value ent.Value) error {
 	switch name {
+	case appointment.FieldAppointID:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetAppointID(v)
+		return nil
 	case appointment.FieldDetail:
 		v, ok := value.(string)
 		if !ok {
@@ -409,6 +506,13 @@ func (m *AppointmentMutation) SetField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetDatetime(v)
+		return nil
+	case appointment.FieldRemark:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetRemark(v)
 		return nil
 	}
 	return fmt.Errorf("unknown Appointment field %s", name)
@@ -460,11 +564,17 @@ func (m *AppointmentMutation) ClearField(name string) error {
 // defined in the schema.
 func (m *AppointmentMutation) ResetField(name string) error {
 	switch name {
+	case appointment.FieldAppointID:
+		m.ResetAppointID()
+		return nil
 	case appointment.FieldDetail:
 		m.ResetDetail()
 		return nil
 	case appointment.FieldDatetime:
 		m.ResetDatetime()
+		return nil
+	case appointment.FieldRemark:
+		m.ResetRemark()
 		return nil
 	}
 	return fmt.Errorf("unknown Appointment field %s", name)

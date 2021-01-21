@@ -7,10 +7,14 @@ const (
 	Label = "appointment"
 	// FieldID holds the string denoting the id field in the database.
 	FieldID = "id"
+	// FieldAppointID holds the string denoting the appointid field in the database.
+	FieldAppointID = "appoint_id"
 	// FieldDetail holds the string denoting the detail field in the database.
 	FieldDetail = "detail"
 	// FieldDatetime holds the string denoting the datetime field in the database.
 	FieldDatetime = "datetime"
+	// FieldRemark holds the string denoting the remark field in the database.
+	FieldRemark = "remark"
 
 	// EdgePatient holds the string denoting the patient edge name in mutations.
 	EdgePatient = "patient"
@@ -47,8 +51,10 @@ const (
 // Columns holds all SQL columns for appointment fields.
 var Columns = []string{
 	FieldID,
+	FieldAppointID,
 	FieldDetail,
 	FieldDatetime,
+	FieldRemark,
 }
 
 // ForeignKeys holds the SQL foreign-keys that are owned by the Appointment type.
@@ -59,6 +65,10 @@ var ForeignKeys = []string{
 }
 
 var (
-	// DetailValidator is a validator for the "detail" field. It is called by the builders before save.
+	// AppointIDValidator is a validator for the "AppointID" field. It is called by the builders before save.
+	AppointIDValidator func(string) error
+	// DetailValidator is a validator for the "Detail" field. It is called by the builders before save.
 	DetailValidator func(string) error
+	// RemarkValidator is a validator for the "Remark" field. It is called by the builders before save.
+	RemarkValidator func(string) error
 )

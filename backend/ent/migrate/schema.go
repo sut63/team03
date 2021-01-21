@@ -11,8 +11,10 @@ var (
 	// AppointmentsColumns holds the columns for the "appointments" table.
 	AppointmentsColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt, Increment: true},
+		{Name: "appoint_id", Type: field.TypeString},
 		{Name: "detail", Type: field.TypeString},
 		{Name: "datetime", Type: field.TypeTime},
+		{Name: "remark", Type: field.TypeString},
 		{Name: "dentist_id", Type: field.TypeInt, Nullable: true},
 		{Name: "patient_id", Type: field.TypeInt, Nullable: true},
 		{Name: "room_id", Type: field.TypeInt, Nullable: true},
@@ -25,21 +27,21 @@ var (
 		ForeignKeys: []*schema.ForeignKey{
 			{
 				Symbol:  "appointments_dentists_appointment",
-				Columns: []*schema.Column{AppointmentsColumns[3]},
+				Columns: []*schema.Column{AppointmentsColumns[5]},
 
 				RefColumns: []*schema.Column{DentistsColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
 			{
 				Symbol:  "appointments_patients_appointment",
-				Columns: []*schema.Column{AppointmentsColumns[4]},
+				Columns: []*schema.Column{AppointmentsColumns[6]},
 
 				RefColumns: []*schema.Column{PatientsColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
 			{
 				Symbol:  "appointments_rooms_appointment",
-				Columns: []*schema.Column{AppointmentsColumns[5]},
+				Columns: []*schema.Column{AppointmentsColumns[7]},
 
 				RefColumns: []*schema.Column{RoomsColumns[0]},
 				OnDelete:   schema.SetNull,

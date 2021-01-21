@@ -23,15 +23,27 @@ type AppointmentCreate struct {
 	hooks    []Hook
 }
 
-// SetDetail sets the detail field.
+// SetAppointID sets the AppointID field.
+func (ac *AppointmentCreate) SetAppointID(s string) *AppointmentCreate {
+	ac.mutation.SetAppointID(s)
+	return ac
+}
+
+// SetDetail sets the Detail field.
 func (ac *AppointmentCreate) SetDetail(s string) *AppointmentCreate {
 	ac.mutation.SetDetail(s)
 	return ac
 }
 
-// SetDatetime sets the datetime field.
+// SetDatetime sets the Datetime field.
 func (ac *AppointmentCreate) SetDatetime(t time.Time) *AppointmentCreate {
 	ac.mutation.SetDatetime(t)
+	return ac
+}
+
+// SetRemark sets the Remark field.
+func (ac *AppointmentCreate) SetRemark(s string) *AppointmentCreate {
+	ac.mutation.SetRemark(s)
 	return ac
 }
 
@@ -99,16 +111,32 @@ func (ac *AppointmentCreate) Mutation() *AppointmentMutation {
 
 // Save creates the Appointment in the database.
 func (ac *AppointmentCreate) Save(ctx context.Context) (*Appointment, error) {
+	if _, ok := ac.mutation.AppointID(); !ok {
+		return nil, &ValidationError{Name: "AppointID", err: errors.New("ent: missing required field \"AppointID\"")}
+	}
+	if v, ok := ac.mutation.AppointID(); ok {
+		if err := appointment.AppointIDValidator(v); err != nil {
+			return nil, &ValidationError{Name: "AppointID", err: fmt.Errorf("ent: validator failed for field \"AppointID\": %w", err)}
+		}
+	}
 	if _, ok := ac.mutation.Detail(); !ok {
-		return nil, &ValidationError{Name: "detail", err: errors.New("ent: missing required field \"detail\"")}
+		return nil, &ValidationError{Name: "Detail", err: errors.New("ent: missing required field \"Detail\"")}
 	}
 	if v, ok := ac.mutation.Detail(); ok {
 		if err := appointment.DetailValidator(v); err != nil {
-			return nil, &ValidationError{Name: "detail", err: fmt.Errorf("ent: validator failed for field \"detail\": %w", err)}
+			return nil, &ValidationError{Name: "Detail", err: fmt.Errorf("ent: validator failed for field \"Detail\": %w", err)}
 		}
 	}
 	if _, ok := ac.mutation.Datetime(); !ok {
-		return nil, &ValidationError{Name: "datetime", err: errors.New("ent: missing required field \"datetime\"")}
+		return nil, &ValidationError{Name: "Datetime", err: errors.New("ent: missing required field \"Datetime\"")}
+	}
+	if _, ok := ac.mutation.Remark(); !ok {
+		return nil, &ValidationError{Name: "Remark", err: errors.New("ent: missing required field \"Remark\"")}
+	}
+	if v, ok := ac.mutation.Remark(); ok {
+		if err := appointment.RemarkValidator(v); err != nil {
+			return nil, &ValidationError{Name: "Remark", err: fmt.Errorf("ent: validator failed for field \"Remark\": %w", err)}
+		}
 	}
 	var (
 		err  error
@@ -170,6 +198,14 @@ func (ac *AppointmentCreate) createSpec() (*Appointment, *sqlgraph.CreateSpec) {
 			},
 		}
 	)
+	if value, ok := ac.mutation.AppointID(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: appointment.FieldAppointID,
+		})
+		a.AppointID = value
+	}
 	if value, ok := ac.mutation.Detail(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
@@ -185,6 +221,14 @@ func (ac *AppointmentCreate) createSpec() (*Appointment, *sqlgraph.CreateSpec) {
 			Column: appointment.FieldDatetime,
 		})
 		a.Datetime = value
+	}
+	if value, ok := ac.mutation.Remark(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: appointment.FieldRemark,
+		})
+		a.Remark = value
 	}
 	if nodes := ac.mutation.PatientIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{

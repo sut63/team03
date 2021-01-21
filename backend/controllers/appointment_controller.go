@@ -4,6 +4,7 @@ import (
 	"context"
 	"strconv"
 	"time"
+	"fmt"
 
 	"github.com/gin-gonic/gin"
 	"github.com/team03/app/ent"
@@ -20,11 +21,14 @@ type AppointmentController struct {
 
 //Appointment defind the struct for the Appointment controller
 type Appointment struct {
-	Patient       int
-	Dentist       int
-	Detail string
-	Datetime      string
-	Room   int
+	AppointID	string
+	Patient     int
+	Dentist     int
+	Detail 		string
+	Datetime    string
+	Room   		int
+	Remark		string
+	
 }
 
 // AppointmentCreate handles POST requests for adding  Appointment entities
@@ -74,15 +78,19 @@ func (ctl *AppointmentController) AppointmentCreate(c *gin.Context) {
 	time, err := time.Parse(time.RFC3339, obj.Datetime)
 	ap, err := ctl.client.Appointment.
 		Create().
+		SetAppointID(obj.AppointID).
 		SetPatient(p).
 		SetRoom(r).
 		SetDetail(obj.Detail).
 		SetDatetime(time).
+		SetRemark(obj.Remark).
 		Save(context.Background())
 
 	if err != nil {
+		fmt.Println(err)
 		c.JSON(400, gin.H{
-			"error": "saving failed",
+			"status": false,
+			"error":  err,
 		})
 		return
 	}

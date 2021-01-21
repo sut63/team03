@@ -19,10 +19,14 @@ type Appointment struct {
 	config `json:"-"`
 	// ID of the ent.
 	ID int `json:"id,omitempty"`
-	// Detail holds the value of the "detail" field.
-	Detail string `json:"detail,omitempty"`
-	// Datetime holds the value of the "datetime" field.
-	Datetime time.Time `json:"datetime,omitempty"`
+	// AppointID holds the value of the "AppointID" field.
+	AppointID string `json:"AppointID,omitempty"`
+	// Detail holds the value of the "Detail" field.
+	Detail string `json:"Detail,omitempty"`
+	// Datetime holds the value of the "Datetime" field.
+	Datetime time.Time `json:"Datetime,omitempty"`
+	// Remark holds the value of the "Remark" field.
+	Remark string `json:"Remark,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the AppointmentQuery when eager-loading is set.
 	Edges      AppointmentEdges `json:"edges"`
@@ -90,8 +94,10 @@ func (e AppointmentEdges) DentistOrErr() (*Dentist, error) {
 func (*Appointment) scanValues() []interface{} {
 	return []interface{}{
 		&sql.NullInt64{},  // id
-		&sql.NullString{}, // detail
-		&sql.NullTime{},   // datetime
+		&sql.NullString{}, // AppointID
+		&sql.NullString{}, // Detail
+		&sql.NullTime{},   // Datetime
+		&sql.NullString{}, // Remark
 	}
 }
 
@@ -117,16 +123,26 @@ func (a *Appointment) assignValues(values ...interface{}) error {
 	a.ID = int(value.Int64)
 	values = values[1:]
 	if value, ok := values[0].(*sql.NullString); !ok {
-		return fmt.Errorf("unexpected type %T for field detail", values[0])
+		return fmt.Errorf("unexpected type %T for field AppointID", values[0])
+	} else if value.Valid {
+		a.AppointID = value.String
+	}
+	if value, ok := values[1].(*sql.NullString); !ok {
+		return fmt.Errorf("unexpected type %T for field Detail", values[1])
 	} else if value.Valid {
 		a.Detail = value.String
 	}
-	if value, ok := values[1].(*sql.NullTime); !ok {
-		return fmt.Errorf("unexpected type %T for field datetime", values[1])
+	if value, ok := values[2].(*sql.NullTime); !ok {
+		return fmt.Errorf("unexpected type %T for field Datetime", values[2])
 	} else if value.Valid {
 		a.Datetime = value.Time
 	}
-	values = values[2:]
+	if value, ok := values[3].(*sql.NullString); !ok {
+		return fmt.Errorf("unexpected type %T for field Remark", values[3])
+	} else if value.Valid {
+		a.Remark = value.String
+	}
+	values = values[4:]
 	if len(values) == len(appointment.ForeignKeys) {
 		if value, ok := values[0].(*sql.NullInt64); !ok {
 			return fmt.Errorf("unexpected type %T for edge-field dentist_id", value)
@@ -188,10 +204,14 @@ func (a *Appointment) String() string {
 	var builder strings.Builder
 	builder.WriteString("Appointment(")
 	builder.WriteString(fmt.Sprintf("id=%v", a.ID))
-	builder.WriteString(", detail=")
+	builder.WriteString(", AppointID=")
+	builder.WriteString(a.AppointID)
+	builder.WriteString(", Detail=")
 	builder.WriteString(a.Detail)
-	builder.WriteString(", datetime=")
+	builder.WriteString(", Datetime=")
 	builder.WriteString(a.Datetime.Format(time.ANSIC))
+	builder.WriteString(", Remark=")
+	builder.WriteString(a.Remark)
 	builder.WriteByte(')')
 	return builder.String()
 }

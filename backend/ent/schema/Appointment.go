@@ -1,6 +1,9 @@
 package schema
 
 import (
+	"errors"
+	"regexp"
+
 	"github.com/facebookincubator/ent"
 	"github.com/facebookincubator/ent/schema/edge"
 	"github.com/facebookincubator/ent/schema/field"
@@ -14,8 +17,16 @@ type Appointment struct {
 // Fields of the Appointment.
 func (Appointment) Fields() []ent.Field {
 	return []ent.Field{
-		field.String("detail").NotEmpty(),
-		field.Time("datetime"),
+		field.String("AppointID").Validate(func(s string) error {
+			match, _ := regexp.MatchString("[A]\\d{5}", s)
+			if !match {
+				return errors.New("รูปแบบรหัสการนัดหมายไม่ถูกต้อง")
+			}
+			return nil
+		}),
+		field.String("Detail").MinLen(5),
+		field.Time("Datetime"),
+		field.String("Remark").MinLen(1),
 	}
 }
 

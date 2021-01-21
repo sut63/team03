@@ -332,12 +332,12 @@ func (aq *AppointmentQuery) WithDentist(opts ...func(*DentistQuery)) *Appointmen
 // Example:
 //
 //	var v []struct {
-//		Detail string `json:"detail,omitempty"`
+//		AppointID string `json:"AppointID,omitempty"`
 //		Count int `json:"count,omitempty"`
 //	}
 //
 //	client.Appointment.Query().
-//		GroupBy(appointment.FieldDetail).
+//		GroupBy(appointment.FieldAppointID).
 //		Aggregate(ent.Count()).
 //		Scan(ctx, &v)
 //
@@ -358,11 +358,11 @@ func (aq *AppointmentQuery) GroupBy(field string, fields ...string) *Appointment
 // Example:
 //
 //	var v []struct {
-//		Detail string `json:"detail,omitempty"`
+//		AppointID string `json:"AppointID,omitempty"`
 //	}
 //
 //	client.Appointment.Query().
-//		Select(appointment.FieldDetail).
+//		Select(appointment.FieldAppointID).
 //		Scan(ctx, &v)
 //
 func (aq *AppointmentQuery) Select(field string, fields ...string) *AppointmentSelect {
