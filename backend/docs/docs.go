@@ -2192,12 +2192,20 @@ var doc = `{
         "ent.Medicalfile": {
             "type": "object",
             "properties": {
-                "added_time": {
-                    "description": "AddedTime holds the value of the \"added_time\" field.",
+                "AddedTime": {
+                    "description": "AddedTime holds the value of the \"AddedTime\" field.",
                     "type": "string"
                 },
-                "detail": {
-                    "description": "Detail holds the value of the \"detail\" field.",
+                "Detial": {
+                    "description": "Detial holds the value of the \"Detial\" field.",
+                    "type": "string"
+                },
+                "DrugAllergy": {
+                    "description": "DrugAllergy holds the value of the \"DrugAllergy\" field.",
+                    "type": "string"
+                },
+                "Medno": {
+                    "description": "Medno holds the value of the \"Medno\" field.",
                     "type": "string"
                 },
                 "edges": {

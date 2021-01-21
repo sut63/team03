@@ -4389,8 +4389,10 @@ type MedicalfileMutation struct {
 	op                    Op
 	typ                   string
 	id                    *int
-	detail                *string
-	added_time            *time.Time
+	_DrugAllergy          *string
+	_Detial               *string
+	_AddedTime            *time.Time
+	_Medno                *string
 	clearedFields         map[string]struct{}
 	dentist               *int
 	cleareddentist        bool
@@ -4483,58 +4485,95 @@ func (m *MedicalfileMutation) ID() (id int, exists bool) {
 	return *m.id, true
 }
 
-// SetDetail sets the detail field.
-func (m *MedicalfileMutation) SetDetail(s string) {
-	m.detail = &s
+// SetDrugAllergy sets the DrugAllergy field.
+func (m *MedicalfileMutation) SetDrugAllergy(s string) {
+	m._DrugAllergy = &s
 }
 
-// Detail returns the detail value in the mutation.
-func (m *MedicalfileMutation) Detail() (r string, exists bool) {
-	v := m.detail
+// DrugAllergy returns the DrugAllergy value in the mutation.
+func (m *MedicalfileMutation) DrugAllergy() (r string, exists bool) {
+	v := m._DrugAllergy
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// OldDetail returns the old detail value of the Medicalfile.
+// OldDrugAllergy returns the old DrugAllergy value of the Medicalfile.
 // If the Medicalfile object wasn't provided to the builder, the object is fetched
 // from the database.
 // An error is returned if the mutation operation is not UpdateOne, or database query fails.
-func (m *MedicalfileMutation) OldDetail(ctx context.Context) (v string, err error) {
+func (m *MedicalfileMutation) OldDrugAllergy(ctx context.Context) (v string, err error) {
 	if !m.op.Is(OpUpdateOne) {
-		return v, fmt.Errorf("OldDetail is allowed only on UpdateOne operations")
+		return v, fmt.Errorf("OldDrugAllergy is allowed only on UpdateOne operations")
 	}
 	if m.id == nil || m.oldValue == nil {
-		return v, fmt.Errorf("OldDetail requires an ID field in the mutation")
+		return v, fmt.Errorf("OldDrugAllergy requires an ID field in the mutation")
 	}
 	oldValue, err := m.oldValue(ctx)
 	if err != nil {
-		return v, fmt.Errorf("querying old value for OldDetail: %w", err)
+		return v, fmt.Errorf("querying old value for OldDrugAllergy: %w", err)
 	}
-	return oldValue.Detail, nil
+	return oldValue.DrugAllergy, nil
 }
 
-// ResetDetail reset all changes of the "detail" field.
-func (m *MedicalfileMutation) ResetDetail() {
-	m.detail = nil
+// ResetDrugAllergy reset all changes of the "DrugAllergy" field.
+func (m *MedicalfileMutation) ResetDrugAllergy() {
+	m._DrugAllergy = nil
 }
 
-// SetAddedTime sets the added_time field.
-func (m *MedicalfileMutation) SetAddedTime(t time.Time) {
-	m.added_time = &t
+// SetDetial sets the Detial field.
+func (m *MedicalfileMutation) SetDetial(s string) {
+	m._Detial = &s
 }
 
-// AddedTime returns the added_time value in the mutation.
-func (m *MedicalfileMutation) AddedTime() (r time.Time, exists bool) {
-	v := m.added_time
+// Detial returns the Detial value in the mutation.
+func (m *MedicalfileMutation) Detial() (r string, exists bool) {
+	v := m._Detial
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// OldAddedTime returns the old added_time value of the Medicalfile.
+// OldDetial returns the old Detial value of the Medicalfile.
+// If the Medicalfile object wasn't provided to the builder, the object is fetched
+// from the database.
+// An error is returned if the mutation operation is not UpdateOne, or database query fails.
+func (m *MedicalfileMutation) OldDetial(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldDetial is allowed only on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldDetial requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldDetial: %w", err)
+	}
+	return oldValue.Detial, nil
+}
+
+// ResetDetial reset all changes of the "Detial" field.
+func (m *MedicalfileMutation) ResetDetial() {
+	m._Detial = nil
+}
+
+// SetAddedTime sets the AddedTime field.
+func (m *MedicalfileMutation) SetAddedTime(t time.Time) {
+	m._AddedTime = &t
+}
+
+// AddedTime returns the AddedTime value in the mutation.
+func (m *MedicalfileMutation) AddedTime() (r time.Time, exists bool) {
+	v := m._AddedTime
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldAddedTime returns the old AddedTime value of the Medicalfile.
 // If the Medicalfile object wasn't provided to the builder, the object is fetched
 // from the database.
 // An error is returned if the mutation operation is not UpdateOne, or database query fails.
@@ -4552,9 +4591,46 @@ func (m *MedicalfileMutation) OldAddedTime(ctx context.Context) (v time.Time, er
 	return oldValue.AddedTime, nil
 }
 
-// ResetAddedTime reset all changes of the "added_time" field.
+// ResetAddedTime reset all changes of the "AddedTime" field.
 func (m *MedicalfileMutation) ResetAddedTime() {
-	m.added_time = nil
+	m._AddedTime = nil
+}
+
+// SetMedno sets the Medno field.
+func (m *MedicalfileMutation) SetMedno(s string) {
+	m._Medno = &s
+}
+
+// Medno returns the Medno value in the mutation.
+func (m *MedicalfileMutation) Medno() (r string, exists bool) {
+	v := m._Medno
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldMedno returns the old Medno value of the Medicalfile.
+// If the Medicalfile object wasn't provided to the builder, the object is fetched
+// from the database.
+// An error is returned if the mutation operation is not UpdateOne, or database query fails.
+func (m *MedicalfileMutation) OldMedno(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldMedno is allowed only on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldMedno requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldMedno: %w", err)
+	}
+	return oldValue.Medno, nil
+}
+
+// ResetMedno reset all changes of the "Medno" field.
+func (m *MedicalfileMutation) ResetMedno() {
+	m._Medno = nil
 }
 
 // SetDentistID sets the dentist edge to Dentist by id.
@@ -4730,12 +4806,18 @@ func (m *MedicalfileMutation) Type() string {
 // this mutation. Note that, in order to get all numeric
 // fields that were in/decremented, call AddedFields().
 func (m *MedicalfileMutation) Fields() []string {
-	fields := make([]string, 0, 2)
-	if m.detail != nil {
-		fields = append(fields, medicalfile.FieldDetail)
+	fields := make([]string, 0, 4)
+	if m._DrugAllergy != nil {
+		fields = append(fields, medicalfile.FieldDrugAllergy)
 	}
-	if m.added_time != nil {
+	if m._Detial != nil {
+		fields = append(fields, medicalfile.FieldDetial)
+	}
+	if m._AddedTime != nil {
 		fields = append(fields, medicalfile.FieldAddedTime)
+	}
+	if m._Medno != nil {
+		fields = append(fields, medicalfile.FieldMedno)
 	}
 	return fields
 }
@@ -4745,10 +4827,14 @@ func (m *MedicalfileMutation) Fields() []string {
 // not set, or was not define in the schema.
 func (m *MedicalfileMutation) Field(name string) (ent.Value, bool) {
 	switch name {
-	case medicalfile.FieldDetail:
-		return m.Detail()
+	case medicalfile.FieldDrugAllergy:
+		return m.DrugAllergy()
+	case medicalfile.FieldDetial:
+		return m.Detial()
 	case medicalfile.FieldAddedTime:
 		return m.AddedTime()
+	case medicalfile.FieldMedno:
+		return m.Medno()
 	}
 	return nil, false
 }
@@ -4758,10 +4844,14 @@ func (m *MedicalfileMutation) Field(name string) (ent.Value, bool) {
 // or the query to the database was failed.
 func (m *MedicalfileMutation) OldField(ctx context.Context, name string) (ent.Value, error) {
 	switch name {
-	case medicalfile.FieldDetail:
-		return m.OldDetail(ctx)
+	case medicalfile.FieldDrugAllergy:
+		return m.OldDrugAllergy(ctx)
+	case medicalfile.FieldDetial:
+		return m.OldDetial(ctx)
 	case medicalfile.FieldAddedTime:
 		return m.OldAddedTime(ctx)
+	case medicalfile.FieldMedno:
+		return m.OldMedno(ctx)
 	}
 	return nil, fmt.Errorf("unknown Medicalfile field %s", name)
 }
@@ -4771,12 +4861,19 @@ func (m *MedicalfileMutation) OldField(ctx context.Context, name string) (ent.Va
 // type mismatch the field type.
 func (m *MedicalfileMutation) SetField(name string, value ent.Value) error {
 	switch name {
-	case medicalfile.FieldDetail:
+	case medicalfile.FieldDrugAllergy:
 		v, ok := value.(string)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
-		m.SetDetail(v)
+		m.SetDrugAllergy(v)
+		return nil
+	case medicalfile.FieldDetial:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetDetial(v)
 		return nil
 	case medicalfile.FieldAddedTime:
 		v, ok := value.(time.Time)
@@ -4784,6 +4881,13 @@ func (m *MedicalfileMutation) SetField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetAddedTime(v)
+		return nil
+	case medicalfile.FieldMedno:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetMedno(v)
 		return nil
 	}
 	return fmt.Errorf("unknown Medicalfile field %s", name)
@@ -4835,11 +4939,17 @@ func (m *MedicalfileMutation) ClearField(name string) error {
 // defined in the schema.
 func (m *MedicalfileMutation) ResetField(name string) error {
 	switch name {
-	case medicalfile.FieldDetail:
-		m.ResetDetail()
+	case medicalfile.FieldDrugAllergy:
+		m.ResetDrugAllergy()
+		return nil
+	case medicalfile.FieldDetial:
+		m.ResetDetial()
 		return nil
 	case medicalfile.FieldAddedTime:
 		m.ResetAddedTime()
+		return nil
+	case medicalfile.FieldMedno:
+		m.ResetMedno()
 		return nil
 	}
 	return fmt.Errorf("unknown Medicalfile field %s", name)

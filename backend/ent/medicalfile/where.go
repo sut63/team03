@@ -93,36 +93,50 @@ func IDLTE(id int) predicate.Medicalfile {
 	})
 }
 
-// Detail applies equality check predicate on the "detail" field. It's identical to DetailEQ.
-func Detail(v string) predicate.Medicalfile {
+// DrugAllergy applies equality check predicate on the "DrugAllergy" field. It's identical to DrugAllergyEQ.
+func DrugAllergy(v string) predicate.Medicalfile {
 	return predicate.Medicalfile(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldDetail), v))
+		s.Where(sql.EQ(s.C(FieldDrugAllergy), v))
 	})
 }
 
-// AddedTime applies equality check predicate on the "added_time" field. It's identical to AddedTimeEQ.
+// Detial applies equality check predicate on the "Detial" field. It's identical to DetialEQ.
+func Detial(v string) predicate.Medicalfile {
+	return predicate.Medicalfile(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldDetial), v))
+	})
+}
+
+// AddedTime applies equality check predicate on the "AddedTime" field. It's identical to AddedTimeEQ.
 func AddedTime(v time.Time) predicate.Medicalfile {
 	return predicate.Medicalfile(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldAddedTime), v))
 	})
 }
 
-// DetailEQ applies the EQ predicate on the "detail" field.
-func DetailEQ(v string) predicate.Medicalfile {
+// Medno applies equality check predicate on the "Medno" field. It's identical to MednoEQ.
+func Medno(v string) predicate.Medicalfile {
 	return predicate.Medicalfile(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldDetail), v))
+		s.Where(sql.EQ(s.C(FieldMedno), v))
 	})
 }
 
-// DetailNEQ applies the NEQ predicate on the "detail" field.
-func DetailNEQ(v string) predicate.Medicalfile {
+// DrugAllergyEQ applies the EQ predicate on the "DrugAllergy" field.
+func DrugAllergyEQ(v string) predicate.Medicalfile {
 	return predicate.Medicalfile(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldDetail), v))
+		s.Where(sql.EQ(s.C(FieldDrugAllergy), v))
 	})
 }
 
-// DetailIn applies the In predicate on the "detail" field.
-func DetailIn(vs ...string) predicate.Medicalfile {
+// DrugAllergyNEQ applies the NEQ predicate on the "DrugAllergy" field.
+func DrugAllergyNEQ(v string) predicate.Medicalfile {
+	return predicate.Medicalfile(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldDrugAllergy), v))
+	})
+}
+
+// DrugAllergyIn applies the In predicate on the "DrugAllergy" field.
+func DrugAllergyIn(vs ...string) predicate.Medicalfile {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -134,12 +148,12 @@ func DetailIn(vs ...string) predicate.Medicalfile {
 			s.Where(sql.False())
 			return
 		}
-		s.Where(sql.In(s.C(FieldDetail), v...))
+		s.Where(sql.In(s.C(FieldDrugAllergy), v...))
 	})
 }
 
-// DetailNotIn applies the NotIn predicate on the "detail" field.
-func DetailNotIn(vs ...string) predicate.Medicalfile {
+// DrugAllergyNotIn applies the NotIn predicate on the "DrugAllergy" field.
+func DrugAllergyNotIn(vs ...string) predicate.Medicalfile {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -151,88 +165,199 @@ func DetailNotIn(vs ...string) predicate.Medicalfile {
 			s.Where(sql.False())
 			return
 		}
-		s.Where(sql.NotIn(s.C(FieldDetail), v...))
+		s.Where(sql.NotIn(s.C(FieldDrugAllergy), v...))
 	})
 }
 
-// DetailGT applies the GT predicate on the "detail" field.
-func DetailGT(v string) predicate.Medicalfile {
+// DrugAllergyGT applies the GT predicate on the "DrugAllergy" field.
+func DrugAllergyGT(v string) predicate.Medicalfile {
 	return predicate.Medicalfile(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldDetail), v))
+		s.Where(sql.GT(s.C(FieldDrugAllergy), v))
 	})
 }
 
-// DetailGTE applies the GTE predicate on the "detail" field.
-func DetailGTE(v string) predicate.Medicalfile {
+// DrugAllergyGTE applies the GTE predicate on the "DrugAllergy" field.
+func DrugAllergyGTE(v string) predicate.Medicalfile {
 	return predicate.Medicalfile(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldDetail), v))
+		s.Where(sql.GTE(s.C(FieldDrugAllergy), v))
 	})
 }
 
-// DetailLT applies the LT predicate on the "detail" field.
-func DetailLT(v string) predicate.Medicalfile {
+// DrugAllergyLT applies the LT predicate on the "DrugAllergy" field.
+func DrugAllergyLT(v string) predicate.Medicalfile {
 	return predicate.Medicalfile(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldDetail), v))
+		s.Where(sql.LT(s.C(FieldDrugAllergy), v))
 	})
 }
 
-// DetailLTE applies the LTE predicate on the "detail" field.
-func DetailLTE(v string) predicate.Medicalfile {
+// DrugAllergyLTE applies the LTE predicate on the "DrugAllergy" field.
+func DrugAllergyLTE(v string) predicate.Medicalfile {
 	return predicate.Medicalfile(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldDetail), v))
+		s.Where(sql.LTE(s.C(FieldDrugAllergy), v))
 	})
 }
 
-// DetailContains applies the Contains predicate on the "detail" field.
-func DetailContains(v string) predicate.Medicalfile {
+// DrugAllergyContains applies the Contains predicate on the "DrugAllergy" field.
+func DrugAllergyContains(v string) predicate.Medicalfile {
 	return predicate.Medicalfile(func(s *sql.Selector) {
-		s.Where(sql.Contains(s.C(FieldDetail), v))
+		s.Where(sql.Contains(s.C(FieldDrugAllergy), v))
 	})
 }
 
-// DetailHasPrefix applies the HasPrefix predicate on the "detail" field.
-func DetailHasPrefix(v string) predicate.Medicalfile {
+// DrugAllergyHasPrefix applies the HasPrefix predicate on the "DrugAllergy" field.
+func DrugAllergyHasPrefix(v string) predicate.Medicalfile {
 	return predicate.Medicalfile(func(s *sql.Selector) {
-		s.Where(sql.HasPrefix(s.C(FieldDetail), v))
+		s.Where(sql.HasPrefix(s.C(FieldDrugAllergy), v))
 	})
 }
 
-// DetailHasSuffix applies the HasSuffix predicate on the "detail" field.
-func DetailHasSuffix(v string) predicate.Medicalfile {
+// DrugAllergyHasSuffix applies the HasSuffix predicate on the "DrugAllergy" field.
+func DrugAllergyHasSuffix(v string) predicate.Medicalfile {
 	return predicate.Medicalfile(func(s *sql.Selector) {
-		s.Where(sql.HasSuffix(s.C(FieldDetail), v))
+		s.Where(sql.HasSuffix(s.C(FieldDrugAllergy), v))
 	})
 }
 
-// DetailEqualFold applies the EqualFold predicate on the "detail" field.
-func DetailEqualFold(v string) predicate.Medicalfile {
+// DrugAllergyEqualFold applies the EqualFold predicate on the "DrugAllergy" field.
+func DrugAllergyEqualFold(v string) predicate.Medicalfile {
 	return predicate.Medicalfile(func(s *sql.Selector) {
-		s.Where(sql.EqualFold(s.C(FieldDetail), v))
+		s.Where(sql.EqualFold(s.C(FieldDrugAllergy), v))
 	})
 }
 
-// DetailContainsFold applies the ContainsFold predicate on the "detail" field.
-func DetailContainsFold(v string) predicate.Medicalfile {
+// DrugAllergyContainsFold applies the ContainsFold predicate on the "DrugAllergy" field.
+func DrugAllergyContainsFold(v string) predicate.Medicalfile {
 	return predicate.Medicalfile(func(s *sql.Selector) {
-		s.Where(sql.ContainsFold(s.C(FieldDetail), v))
+		s.Where(sql.ContainsFold(s.C(FieldDrugAllergy), v))
 	})
 }
 
-// AddedTimeEQ applies the EQ predicate on the "added_time" field.
+// DetialEQ applies the EQ predicate on the "Detial" field.
+func DetialEQ(v string) predicate.Medicalfile {
+	return predicate.Medicalfile(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldDetial), v))
+	})
+}
+
+// DetialNEQ applies the NEQ predicate on the "Detial" field.
+func DetialNEQ(v string) predicate.Medicalfile {
+	return predicate.Medicalfile(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldDetial), v))
+	})
+}
+
+// DetialIn applies the In predicate on the "Detial" field.
+func DetialIn(vs ...string) predicate.Medicalfile {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Medicalfile(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldDetial), v...))
+	})
+}
+
+// DetialNotIn applies the NotIn predicate on the "Detial" field.
+func DetialNotIn(vs ...string) predicate.Medicalfile {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Medicalfile(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldDetial), v...))
+	})
+}
+
+// DetialGT applies the GT predicate on the "Detial" field.
+func DetialGT(v string) predicate.Medicalfile {
+	return predicate.Medicalfile(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldDetial), v))
+	})
+}
+
+// DetialGTE applies the GTE predicate on the "Detial" field.
+func DetialGTE(v string) predicate.Medicalfile {
+	return predicate.Medicalfile(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldDetial), v))
+	})
+}
+
+// DetialLT applies the LT predicate on the "Detial" field.
+func DetialLT(v string) predicate.Medicalfile {
+	return predicate.Medicalfile(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldDetial), v))
+	})
+}
+
+// DetialLTE applies the LTE predicate on the "Detial" field.
+func DetialLTE(v string) predicate.Medicalfile {
+	return predicate.Medicalfile(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldDetial), v))
+	})
+}
+
+// DetialContains applies the Contains predicate on the "Detial" field.
+func DetialContains(v string) predicate.Medicalfile {
+	return predicate.Medicalfile(func(s *sql.Selector) {
+		s.Where(sql.Contains(s.C(FieldDetial), v))
+	})
+}
+
+// DetialHasPrefix applies the HasPrefix predicate on the "Detial" field.
+func DetialHasPrefix(v string) predicate.Medicalfile {
+	return predicate.Medicalfile(func(s *sql.Selector) {
+		s.Where(sql.HasPrefix(s.C(FieldDetial), v))
+	})
+}
+
+// DetialHasSuffix applies the HasSuffix predicate on the "Detial" field.
+func DetialHasSuffix(v string) predicate.Medicalfile {
+	return predicate.Medicalfile(func(s *sql.Selector) {
+		s.Where(sql.HasSuffix(s.C(FieldDetial), v))
+	})
+}
+
+// DetialEqualFold applies the EqualFold predicate on the "Detial" field.
+func DetialEqualFold(v string) predicate.Medicalfile {
+	return predicate.Medicalfile(func(s *sql.Selector) {
+		s.Where(sql.EqualFold(s.C(FieldDetial), v))
+	})
+}
+
+// DetialContainsFold applies the ContainsFold predicate on the "Detial" field.
+func DetialContainsFold(v string) predicate.Medicalfile {
+	return predicate.Medicalfile(func(s *sql.Selector) {
+		s.Where(sql.ContainsFold(s.C(FieldDetial), v))
+	})
+}
+
+// AddedTimeEQ applies the EQ predicate on the "AddedTime" field.
 func AddedTimeEQ(v time.Time) predicate.Medicalfile {
 	return predicate.Medicalfile(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldAddedTime), v))
 	})
 }
 
-// AddedTimeNEQ applies the NEQ predicate on the "added_time" field.
+// AddedTimeNEQ applies the NEQ predicate on the "AddedTime" field.
 func AddedTimeNEQ(v time.Time) predicate.Medicalfile {
 	return predicate.Medicalfile(func(s *sql.Selector) {
 		s.Where(sql.NEQ(s.C(FieldAddedTime), v))
 	})
 }
 
-// AddedTimeIn applies the In predicate on the "added_time" field.
+// AddedTimeIn applies the In predicate on the "AddedTime" field.
 func AddedTimeIn(vs ...time.Time) predicate.Medicalfile {
 	v := make([]interface{}, len(vs))
 	for i := range v {
@@ -249,7 +374,7 @@ func AddedTimeIn(vs ...time.Time) predicate.Medicalfile {
 	})
 }
 
-// AddedTimeNotIn applies the NotIn predicate on the "added_time" field.
+// AddedTimeNotIn applies the NotIn predicate on the "AddedTime" field.
 func AddedTimeNotIn(vs ...time.Time) predicate.Medicalfile {
 	v := make([]interface{}, len(vs))
 	for i := range v {
@@ -266,31 +391,142 @@ func AddedTimeNotIn(vs ...time.Time) predicate.Medicalfile {
 	})
 }
 
-// AddedTimeGT applies the GT predicate on the "added_time" field.
+// AddedTimeGT applies the GT predicate on the "AddedTime" field.
 func AddedTimeGT(v time.Time) predicate.Medicalfile {
 	return predicate.Medicalfile(func(s *sql.Selector) {
 		s.Where(sql.GT(s.C(FieldAddedTime), v))
 	})
 }
 
-// AddedTimeGTE applies the GTE predicate on the "added_time" field.
+// AddedTimeGTE applies the GTE predicate on the "AddedTime" field.
 func AddedTimeGTE(v time.Time) predicate.Medicalfile {
 	return predicate.Medicalfile(func(s *sql.Selector) {
 		s.Where(sql.GTE(s.C(FieldAddedTime), v))
 	})
 }
 
-// AddedTimeLT applies the LT predicate on the "added_time" field.
+// AddedTimeLT applies the LT predicate on the "AddedTime" field.
 func AddedTimeLT(v time.Time) predicate.Medicalfile {
 	return predicate.Medicalfile(func(s *sql.Selector) {
 		s.Where(sql.LT(s.C(FieldAddedTime), v))
 	})
 }
 
-// AddedTimeLTE applies the LTE predicate on the "added_time" field.
+// AddedTimeLTE applies the LTE predicate on the "AddedTime" field.
 func AddedTimeLTE(v time.Time) predicate.Medicalfile {
 	return predicate.Medicalfile(func(s *sql.Selector) {
 		s.Where(sql.LTE(s.C(FieldAddedTime), v))
+	})
+}
+
+// MednoEQ applies the EQ predicate on the "Medno" field.
+func MednoEQ(v string) predicate.Medicalfile {
+	return predicate.Medicalfile(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldMedno), v))
+	})
+}
+
+// MednoNEQ applies the NEQ predicate on the "Medno" field.
+func MednoNEQ(v string) predicate.Medicalfile {
+	return predicate.Medicalfile(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldMedno), v))
+	})
+}
+
+// MednoIn applies the In predicate on the "Medno" field.
+func MednoIn(vs ...string) predicate.Medicalfile {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Medicalfile(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldMedno), v...))
+	})
+}
+
+// MednoNotIn applies the NotIn predicate on the "Medno" field.
+func MednoNotIn(vs ...string) predicate.Medicalfile {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Medicalfile(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldMedno), v...))
+	})
+}
+
+// MednoGT applies the GT predicate on the "Medno" field.
+func MednoGT(v string) predicate.Medicalfile {
+	return predicate.Medicalfile(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldMedno), v))
+	})
+}
+
+// MednoGTE applies the GTE predicate on the "Medno" field.
+func MednoGTE(v string) predicate.Medicalfile {
+	return predicate.Medicalfile(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldMedno), v))
+	})
+}
+
+// MednoLT applies the LT predicate on the "Medno" field.
+func MednoLT(v string) predicate.Medicalfile {
+	return predicate.Medicalfile(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldMedno), v))
+	})
+}
+
+// MednoLTE applies the LTE predicate on the "Medno" field.
+func MednoLTE(v string) predicate.Medicalfile {
+	return predicate.Medicalfile(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldMedno), v))
+	})
+}
+
+// MednoContains applies the Contains predicate on the "Medno" field.
+func MednoContains(v string) predicate.Medicalfile {
+	return predicate.Medicalfile(func(s *sql.Selector) {
+		s.Where(sql.Contains(s.C(FieldMedno), v))
+	})
+}
+
+// MednoHasPrefix applies the HasPrefix predicate on the "Medno" field.
+func MednoHasPrefix(v string) predicate.Medicalfile {
+	return predicate.Medicalfile(func(s *sql.Selector) {
+		s.Where(sql.HasPrefix(s.C(FieldMedno), v))
+	})
+}
+
+// MednoHasSuffix applies the HasSuffix predicate on the "Medno" field.
+func MednoHasSuffix(v string) predicate.Medicalfile {
+	return predicate.Medicalfile(func(s *sql.Selector) {
+		s.Where(sql.HasSuffix(s.C(FieldMedno), v))
+	})
+}
+
+// MednoEqualFold applies the EqualFold predicate on the "Medno" field.
+func MednoEqualFold(v string) predicate.Medicalfile {
+	return predicate.Medicalfile(func(s *sql.Selector) {
+		s.Where(sql.EqualFold(s.C(FieldMedno), v))
+	})
+}
+
+// MednoContainsFold applies the ContainsFold predicate on the "Medno" field.
+func MednoContainsFold(v string) predicate.Medicalfile {
+	return predicate.Medicalfile(func(s *sql.Selector) {
+		s.Where(sql.ContainsFold(s.C(FieldMedno), v))
 	})
 }
 

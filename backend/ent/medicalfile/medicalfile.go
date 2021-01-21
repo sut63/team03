@@ -7,10 +7,14 @@ const (
 	Label = "medicalfile"
 	// FieldID holds the string denoting the id field in the database.
 	FieldID = "id"
-	// FieldDetail holds the string denoting the detail field in the database.
-	FieldDetail = "detail"
-	// FieldAddedTime holds the string denoting the added_time field in the database.
+	// FieldDrugAllergy holds the string denoting the drugallergy field in the database.
+	FieldDrugAllergy = "drug_allergy"
+	// FieldDetial holds the string denoting the detial field in the database.
+	FieldDetial = "detial"
+	// FieldAddedTime holds the string denoting the addedtime field in the database.
 	FieldAddedTime = "added_time"
+	// FieldMedno holds the string denoting the medno field in the database.
+	FieldMedno = "medno"
 
 	// EdgeDentist holds the string denoting the dentist edge name in mutations.
 	EdgeDentist = "dentist"
@@ -56,8 +60,10 @@ const (
 // Columns holds all SQL columns for medicalfile fields.
 var Columns = []string{
 	FieldID,
-	FieldDetail,
+	FieldDrugAllergy,
+	FieldDetial,
 	FieldAddedTime,
+	FieldMedno,
 }
 
 // ForeignKeys holds the SQL foreign-keys that are owned by the Medicalfile type.
@@ -68,6 +74,10 @@ var ForeignKeys = []string{
 }
 
 var (
-	// DetailValidator is a validator for the "detail" field. It is called by the builders before save.
-	DetailValidator func(string) error
+	// DrugAllergyValidator is a validator for the "DrugAllergy" field. It is called by the builders before save.
+	DrugAllergyValidator func(string) error
+	// DetialValidator is a validator for the "Detial" field. It is called by the builders before save.
+	DetialValidator func(string) error
+	// MednoValidator is a validator for the "Medno" field. It is called by the builders before save.
+	MednoValidator func(string) error
 )

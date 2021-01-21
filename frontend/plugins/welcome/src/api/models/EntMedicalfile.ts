@@ -27,17 +27,29 @@ import {
  */
 export interface EntMedicalfile {
     /**
-     * AddedTime holds the value of the "added_time" field.
+     * AddedTime holds the value of the "AddedTime" field.
      * @type {string}
      * @memberof EntMedicalfile
      */
     addedTime?: string;
     /**
-     * Detail holds the value of the "detail" field.
+     * Detial holds the value of the "Detial" field.
      * @type {string}
      * @memberof EntMedicalfile
      */
-    detail?: string;
+    detial?: string;
+    /**
+     * DrugAllergy holds the value of the "DrugAllergy" field.
+     * @type {string}
+     * @memberof EntMedicalfile
+     */
+    drugAllergy?: string;
+    /**
+     * Medno holds the value of the "Medno" field.
+     * @type {string}
+     * @memberof EntMedicalfile
+     */
+    medno?: string;
     /**
      * 
      * @type {EntMedicalfileEdges}
@@ -62,8 +74,10 @@ export function EntMedicalfileFromJSONTyped(json: any, ignoreDiscriminator: bool
     }
     return {
         
-        'addedTime': !exists(json, 'added_time') ? undefined : json['added_time'],
-        'detail': !exists(json, 'detail') ? undefined : json['detail'],
+        'addedTime': !exists(json, 'AddedTime') ? undefined : json['AddedTime'],
+        'detial': !exists(json, 'Detial') ? undefined : json['Detial'],
+        'drugAllergy': !exists(json, 'DrugAllergy') ? undefined : json['DrugAllergy'],
+        'medno': !exists(json, 'Medno') ? undefined : json['Medno'],
         'edges': !exists(json, 'edges') ? undefined : EntMedicalfileEdgesFromJSON(json['edges']),
         'id': !exists(json, 'id') ? undefined : json['id'],
     };
@@ -78,8 +92,10 @@ export function EntMedicalfileToJSON(value?: EntMedicalfile | null): any {
     }
     return {
         
-        'added_time': value.addedTime,
-        'detail': value.detail,
+        'AddedTime': value.addedTime,
+        'Detial': value.detial,
+        'DrugAllergy': value.drugAllergy,
+        'Medno': value.medno,
         'edges': EntMedicalfileEdgesToJSON(value.edges),
         'id': value.id,
     };
