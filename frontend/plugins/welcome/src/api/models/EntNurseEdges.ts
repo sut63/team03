@@ -14,10 +14,10 @@
 
 import { exists, mapValues } from '../runtime';
 import {
-    EntDentalExpense,
-    EntDentalExpenseFromJSON,
-    EntDentalExpenseFromJSONTyped,
-    EntDentalExpenseToJSON,
+    EntDentalexpense,
+    EntDentalexpenseFromJSON,
+    EntDentalexpenseFromJSONTyped,
+    EntDentalexpenseToJSON,
     EntDentist,
     EntDentistFromJSON,
     EntDentistFromJSONTyped,
@@ -44,10 +44,10 @@ import {
 export interface EntNurseEdges {
     /**
      * Dentalexpenses holds the value of the dentalexpenses edge.
-     * @type {Array<EntDentalExpense>}
+     * @type {Array<EntDentalexpense>}
      * @memberof EntNurseEdges
      */
-    dentalexpenses?: Array<EntDentalExpense>;
+    dentalexpenses?: Array<EntDentalexpense>;
     /**
      * Dentists holds the value of the dentists edge.
      * @type {Array<EntDentist>}
@@ -84,7 +84,7 @@ export function EntNurseEdgesFromJSONTyped(json: any, ignoreDiscriminator: boole
     }
     return {
         
-        'dentalexpenses': !exists(json, 'dentalexpenses') ? undefined : ((json['dentalexpenses'] as Array<any>).map(EntDentalExpenseFromJSON)),
+        'dentalexpenses': !exists(json, 'dentalexpenses') ? undefined : ((json['dentalexpenses'] as Array<any>).map(EntDentalexpenseFromJSON)),
         'dentists': !exists(json, 'dentists') ? undefined : ((json['dentists'] as Array<any>).map(EntDentistFromJSON)),
         'medicalfiles': !exists(json, 'medicalfiles') ? undefined : ((json['medicalfiles'] as Array<any>).map(EntMedicalfileFromJSON)),
         'patients': !exists(json, 'patients') ? undefined : ((json['patients'] as Array<any>).map(EntPatientFromJSON)),
@@ -101,7 +101,7 @@ export function EntNurseEdgesToJSON(value?: EntNurseEdges | null): any {
     }
     return {
         
-        'dentalexpenses': value.dentalexpenses === undefined ? undefined : ((value.dentalexpenses as Array<any>).map(EntDentalExpenseToJSON)),
+        'dentalexpenses': value.dentalexpenses === undefined ? undefined : ((value.dentalexpenses as Array<any>).map(EntDentalexpenseToJSON)),
         'dentists': value.dentists === undefined ? undefined : ((value.dentists as Array<any>).map(EntDentistToJSON)),
         'medicalfiles': value.medicalfiles === undefined ? undefined : ((value.medicalfiles as Array<any>).map(EntMedicalfileToJSON)),
         'patients': value.patients === undefined ? undefined : ((value.patients as Array<any>).map(EntPatientToJSON)),

@@ -10,22 +10,22 @@ import (
 	"github.com/team03/app/ent/pricetype"
 )
 
-// PriceType is the model entity for the PriceType schema.
-type PriceType struct {
+// Pricetype is the model entity for the Pricetype schema.
+type Pricetype struct {
 	config `json:"-"`
 	// ID of the ent.
 	ID int `json:"id,omitempty"`
 	// Name holds the value of the "name" field.
 	Name string `json:"name,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
-	// The values are being populated by the PriceTypeQuery when eager-loading is set.
-	Edges PriceTypeEdges `json:"edges"`
+	// The values are being populated by the PricetypeQuery when eager-loading is set.
+	Edges PricetypeEdges `json:"edges"`
 }
 
-// PriceTypeEdges holds the relations/edges for other nodes in the graph.
-type PriceTypeEdges struct {
+// PricetypeEdges holds the relations/edges for other nodes in the graph.
+type PricetypeEdges struct {
 	// Dentalexpenses holds the value of the dentalexpenses edge.
-	Dentalexpenses []*DentalExpense
+	Dentalexpenses []*Dentalexpense
 	// loadedTypes holds the information for reporting if a
 	// type was loaded (or requested) in eager-loading or not.
 	loadedTypes [1]bool
@@ -33,7 +33,7 @@ type PriceTypeEdges struct {
 
 // DentalexpensesOrErr returns the Dentalexpenses value or an error if the edge
 // was not loaded in eager-loading.
-func (e PriceTypeEdges) DentalexpensesOrErr() ([]*DentalExpense, error) {
+func (e PricetypeEdges) DentalexpensesOrErr() ([]*Dentalexpense, error) {
 	if e.loadedTypes[0] {
 		return e.Dentalexpenses, nil
 	}
@@ -41,7 +41,7 @@ func (e PriceTypeEdges) DentalexpensesOrErr() ([]*DentalExpense, error) {
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
-func (*PriceType) scanValues() []interface{} {
+func (*Pricetype) scanValues() []interface{} {
 	return []interface{}{
 		&sql.NullInt64{},  // id
 		&sql.NullString{}, // name
@@ -49,8 +49,8 @@ func (*PriceType) scanValues() []interface{} {
 }
 
 // assignValues assigns the values that were returned from sql.Rows (after scanning)
-// to the PriceType fields.
-func (pt *PriceType) assignValues(values ...interface{}) error {
+// to the Pricetype fields.
+func (pr *Pricetype) assignValues(values ...interface{}) error {
 	if m, n := len(values), len(pricetype.Columns); m < n {
 		return fmt.Errorf("mismatch number of scan values: %d != %d", m, n)
 	}
@@ -58,55 +58,55 @@ func (pt *PriceType) assignValues(values ...interface{}) error {
 	if !ok {
 		return fmt.Errorf("unexpected type %T for field id", value)
 	}
-	pt.ID = int(value.Int64)
+	pr.ID = int(value.Int64)
 	values = values[1:]
 	if value, ok := values[0].(*sql.NullString); !ok {
 		return fmt.Errorf("unexpected type %T for field name", values[0])
 	} else if value.Valid {
-		pt.Name = value.String
+		pr.Name = value.String
 	}
 	return nil
 }
 
-// QueryDentalexpenses queries the dentalexpenses edge of the PriceType.
-func (pt *PriceType) QueryDentalexpenses() *DentalExpenseQuery {
-	return (&PriceTypeClient{config: pt.config}).QueryDentalexpenses(pt)
+// QueryDentalexpenses queries the dentalexpenses edge of the Pricetype.
+func (pr *Pricetype) QueryDentalexpenses() *DentalexpenseQuery {
+	return (&PricetypeClient{config: pr.config}).QueryDentalexpenses(pr)
 }
 
-// Update returns a builder for updating this PriceType.
-// Note that, you need to call PriceType.Unwrap() before calling this method, if this PriceType
+// Update returns a builder for updating this Pricetype.
+// Note that, you need to call Pricetype.Unwrap() before calling this method, if this Pricetype
 // was returned from a transaction, and the transaction was committed or rolled back.
-func (pt *PriceType) Update() *PriceTypeUpdateOne {
-	return (&PriceTypeClient{config: pt.config}).UpdateOne(pt)
+func (pr *Pricetype) Update() *PricetypeUpdateOne {
+	return (&PricetypeClient{config: pr.config}).UpdateOne(pr)
 }
 
 // Unwrap unwraps the entity that was returned from a transaction after it was closed,
 // so that all next queries will be executed through the driver which created the transaction.
-func (pt *PriceType) Unwrap() *PriceType {
-	tx, ok := pt.config.driver.(*txDriver)
+func (pr *Pricetype) Unwrap() *Pricetype {
+	tx, ok := pr.config.driver.(*txDriver)
 	if !ok {
-		panic("ent: PriceType is not a transactional entity")
+		panic("ent: Pricetype is not a transactional entity")
 	}
-	pt.config.driver = tx.drv
-	return pt
+	pr.config.driver = tx.drv
+	return pr
 }
 
 // String implements the fmt.Stringer.
-func (pt *PriceType) String() string {
+func (pr *Pricetype) String() string {
 	var builder strings.Builder
-	builder.WriteString("PriceType(")
-	builder.WriteString(fmt.Sprintf("id=%v", pt.ID))
+	builder.WriteString("Pricetype(")
+	builder.WriteString(fmt.Sprintf("id=%v", pr.ID))
 	builder.WriteString(", name=")
-	builder.WriteString(pt.Name)
+	builder.WriteString(pr.Name)
 	builder.WriteByte(')')
 	return builder.String()
 }
 
-// PriceTypes is a parsable slice of PriceType.
-type PriceTypes []*PriceType
+// Pricetypes is a parsable slice of Pricetype.
+type Pricetypes []*Pricetype
 
-func (pt PriceTypes) config(cfg config) {
-	for _i := range pt {
-		pt[_i].config = cfg
+func (pr Pricetypes) config(cfg config) {
+	for _i := range pr {
+		pr[_i].config = cfg
 	}
 }

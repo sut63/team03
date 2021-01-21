@@ -42,24 +42,52 @@ func init() {
 	degreeDescName := degreeFields[0].Descriptor()
 	// degree.NameValidator is a validator for the "name" field. It is called by the builders before save.
 	degree.NameValidator = degreeDescName.Validators[0].(func(string) error)
-	dentalexpenseFields := schema.DentalExpense{}.Fields()
+	dentalexpenseFields := schema.Dentalexpense{}.Fields()
 	_ = dentalexpenseFields
-	// dentalexpenseDescTax is the schema descriptor for tax field.
-	dentalexpenseDescTax := dentalexpenseFields[0].Descriptor()
-	// dentalexpense.TaxValidator is a validator for the "tax" field. It is called by the builders before save.
+	// dentalexpenseDescName is the schema descriptor for Name field.
+	dentalexpenseDescName := dentalexpenseFields[0].Descriptor()
+	// dentalexpense.NameValidator is a validator for the "Name" field. It is called by the builders before save.
+	dentalexpense.NameValidator = func() func(string) error {
+		validators := dentalexpenseDescName.Validators
+		fns := [...]func(string) error{
+			validators[0].(func(string) error),
+			validators[1].(func(string) error),
+		}
+		return func(_Name string) error {
+			for _, fn := range fns {
+				if err := fn(_Name); err != nil {
+					return err
+				}
+			}
+			return nil
+		}
+	}()
+	// dentalexpenseDescPhone is the schema descriptor for Phone field.
+	dentalexpenseDescPhone := dentalexpenseFields[1].Descriptor()
+	// dentalexpense.PhoneValidator is a validator for the "Phone" field. It is called by the builders before save.
+	dentalexpense.PhoneValidator = func() func(string) error {
+		validators := dentalexpenseDescPhone.Validators
+		fns := [...]func(string) error{
+			validators[0].(func(string) error),
+			validators[1].(func(string) error),
+		}
+		return func(_Phone string) error {
+			for _, fn := range fns {
+				if err := fn(_Phone); err != nil {
+					return err
+				}
+			}
+			return nil
+		}
+	}()
+	// dentalexpenseDescRates is the schema descriptor for Rates field.
+	dentalexpenseDescRates := dentalexpenseFields[3].Descriptor()
+	// dentalexpense.RatesValidator is a validator for the "Rates" field. It is called by the builders before save.
+	dentalexpense.RatesValidator = dentalexpenseDescRates.Validators[0].(func(float64) error)
+	// dentalexpenseDescTax is the schema descriptor for Tax field.
+	dentalexpenseDescTax := dentalexpenseFields[4].Descriptor()
+	// dentalexpense.TaxValidator is a validator for the "Tax" field. It is called by the builders before save.
 	dentalexpense.TaxValidator = dentalexpenseDescTax.Validators[0].(func(string) error)
-	// dentalexpenseDescName is the schema descriptor for name field.
-	dentalexpenseDescName := dentalexpenseFields[1].Descriptor()
-	// dentalexpense.NameValidator is a validator for the "name" field. It is called by the builders before save.
-	dentalexpense.NameValidator = dentalexpenseDescName.Validators[0].(func(string) error)
-	// dentalexpenseDescRates is the schema descriptor for rates field.
-	dentalexpenseDescRates := dentalexpenseFields[2].Descriptor()
-	// dentalexpense.RatesValidator is a validator for the "rates" field. It is called by the builders before save.
-	dentalexpense.RatesValidator = dentalexpenseDescRates.Validators[0].(func(int) error)
-	// dentalexpenseDescPhone is the schema descriptor for phone field.
-	dentalexpenseDescPhone := dentalexpenseFields[3].Descriptor()
-	// dentalexpense.PhoneValidator is a validator for the "phone" field. It is called by the builders before save.
-	dentalexpense.PhoneValidator = dentalexpenseDescPhone.Validators[0].(func(string) error)
 	dentistFields := schema.Dentist{}.Fields()
 	_ = dentistFields
 	// dentistDescName is the schema descriptor for name field.

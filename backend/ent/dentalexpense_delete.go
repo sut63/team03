@@ -13,43 +13,43 @@ import (
 	"github.com/team03/app/ent/predicate"
 )
 
-// DentalExpenseDelete is the builder for deleting a DentalExpense entity.
-type DentalExpenseDelete struct {
+// DentalexpenseDelete is the builder for deleting a Dentalexpense entity.
+type DentalexpenseDelete struct {
 	config
 	hooks      []Hook
-	mutation   *DentalExpenseMutation
-	predicates []predicate.DentalExpense
+	mutation   *DentalexpenseMutation
+	predicates []predicate.Dentalexpense
 }
 
 // Where adds a new predicate to the delete builder.
-func (ded *DentalExpenseDelete) Where(ps ...predicate.DentalExpense) *DentalExpenseDelete {
-	ded.predicates = append(ded.predicates, ps...)
-	return ded
+func (dd *DentalexpenseDelete) Where(ps ...predicate.Dentalexpense) *DentalexpenseDelete {
+	dd.predicates = append(dd.predicates, ps...)
+	return dd
 }
 
 // Exec executes the deletion query and returns how many vertices were deleted.
-func (ded *DentalExpenseDelete) Exec(ctx context.Context) (int, error) {
+func (dd *DentalexpenseDelete) Exec(ctx context.Context) (int, error) {
 	var (
 		err      error
 		affected int
 	)
-	if len(ded.hooks) == 0 {
-		affected, err = ded.sqlExec(ctx)
+	if len(dd.hooks) == 0 {
+		affected, err = dd.sqlExec(ctx)
 	} else {
 		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-			mutation, ok := m.(*DentalExpenseMutation)
+			mutation, ok := m.(*DentalexpenseMutation)
 			if !ok {
 				return nil, fmt.Errorf("unexpected mutation type %T", m)
 			}
-			ded.mutation = mutation
-			affected, err = ded.sqlExec(ctx)
+			dd.mutation = mutation
+			affected, err = dd.sqlExec(ctx)
 			mutation.done = true
 			return affected, err
 		})
-		for i := len(ded.hooks) - 1; i >= 0; i-- {
-			mut = ded.hooks[i](mut)
+		for i := len(dd.hooks) - 1; i >= 0; i-- {
+			mut = dd.hooks[i](mut)
 		}
-		if _, err := mut.Mutate(ctx, ded.mutation); err != nil {
+		if _, err := mut.Mutate(ctx, dd.mutation); err != nil {
 			return 0, err
 		}
 	}
@@ -57,15 +57,15 @@ func (ded *DentalExpenseDelete) Exec(ctx context.Context) (int, error) {
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (ded *DentalExpenseDelete) ExecX(ctx context.Context) int {
-	n, err := ded.Exec(ctx)
+func (dd *DentalexpenseDelete) ExecX(ctx context.Context) int {
+	n, err := dd.Exec(ctx)
 	if err != nil {
 		panic(err)
 	}
 	return n
 }
 
-func (ded *DentalExpenseDelete) sqlExec(ctx context.Context) (int, error) {
+func (dd *DentalexpenseDelete) sqlExec(ctx context.Context) (int, error) {
 	_spec := &sqlgraph.DeleteSpec{
 		Node: &sqlgraph.NodeSpec{
 			Table: dentalexpense.Table,
@@ -75,24 +75,24 @@ func (ded *DentalExpenseDelete) sqlExec(ctx context.Context) (int, error) {
 			},
 		},
 	}
-	if ps := ded.predicates; len(ps) > 0 {
+	if ps := dd.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	return sqlgraph.DeleteNodes(ctx, ded.driver, _spec)
+	return sqlgraph.DeleteNodes(ctx, dd.driver, _spec)
 }
 
-// DentalExpenseDeleteOne is the builder for deleting a single DentalExpense entity.
-type DentalExpenseDeleteOne struct {
-	ded *DentalExpenseDelete
+// DentalexpenseDeleteOne is the builder for deleting a single Dentalexpense entity.
+type DentalexpenseDeleteOne struct {
+	dd *DentalexpenseDelete
 }
 
 // Exec executes the deletion query.
-func (dedo *DentalExpenseDeleteOne) Exec(ctx context.Context) error {
-	n, err := dedo.ded.Exec(ctx)
+func (ddo *DentalexpenseDeleteOne) Exec(ctx context.Context) error {
+	n, err := ddo.dd.Exec(ctx)
 	switch {
 	case err != nil:
 		return err
@@ -104,6 +104,6 @@ func (dedo *DentalExpenseDeleteOne) Exec(ctx context.Context) error {
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (dedo *DentalExpenseDeleteOne) ExecX(ctx context.Context) {
-	dedo.ded.ExecX(ctx)
+func (ddo *DentalexpenseDeleteOne) ExecX(ctx context.Context) {
+	ddo.dd.ExecX(ctx)
 }

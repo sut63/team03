@@ -14,10 +14,10 @@ import (
 	"github.com/team03/app/ent"
 )
 
-type PriceTypes struct {
-	PriceType []PriceType
+type Pricetypes struct {
+	Pricetype []Pricetype
 }
-type PriceType struct {
+type Pricetype struct {
 	Name string
 }
 
@@ -128,8 +128,8 @@ func main() {
 	controllers.NewMedicalfileController(v1, client)
 	controllers.NewPatientController(v1, client)
 	controllers.NewMedicalCareController(v1, client)
-	controllers.NewDentalExpenseController(v1, client)
-	controllers.NewPriceTypeController(v1, client)
+	controllers.NewDentalexpenseController(v1, client)
+	controllers.NewPricetypeController(v1, client)
 	controllers.NewAppointmentController(v1, client)
 	controllers.NewRoomController(v1, client)
 	controllers.NewDegreeController(v1, client)
@@ -138,17 +138,17 @@ func main() {
 	controllers.NewDiseaseController(v1, client)
 	controllers.NewGenderController(v1, client)
 	// Set PriceType Data
-	pricetypes := PriceTypes{
-		PriceType: []PriceType{
-			PriceType{"บัตรเครดิต"},
-			PriceType{"เงินสด"},
+	pricetypes := Pricetypes{
+		Pricetype: []Pricetype{
+			Pricetype{"บัตรเครดิต"},
+			Pricetype{"เงินสด"},
 			
 		},
 	}
 
-	for _, pt := range pricetypes.PriceType {
+	for _, pt := range pricetypes.Pricetype {
 
-		client.PriceType.
+		client.Pricetype.
 			Create().
 			SetName(pt.Name).
 			Save(context.Background())

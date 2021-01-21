@@ -2,26 +2,25 @@ package schema
 
 import (
 	"github.com/facebookincubator/ent"
-	"github.com/facebookincubator/ent/schema/field"
 	"github.com/facebookincubator/ent/schema/edge"
+	"github.com/facebookincubator/ent/schema/field"
 )
 
-// PriceType holds the schema definition for the PriceType entity.
-type PriceType struct {
+// Pricetype holds the schema definition for the Pricetype entity.
+type Pricetype struct {
 	ent.Schema
 }
 
-// Fields of the PriceType.
-func (PriceType) Fields() []ent.Field {
+// Fields of the Pricetype.
+func (Pricetype) Fields() []ent.Field {
 	return []ent.Field{
 		field.String("name"),
-		
 	}
 }
 
-// Edges of the PriceType.
-func (PriceType) Edges() []ent.Edge {
+// Edges of the Pricetype.
+func (Pricetype) Edges() []ent.Edge {
 	return []ent.Edge{
-		edge.To("dentalexpenses", DentalExpense.Type).StorageKey(edge.Column("pricetype_id")),
+		edge.To("dentalexpenses", Dentalexpense.Type).StorageKey(edge.Column("pricetype_id")),
 	}
 }

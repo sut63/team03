@@ -24,9 +24,9 @@ import {
     EntDegree,
     EntDegreeFromJSON,
     EntDegreeToJSON,
-    EntDentalExpense,
-    EntDentalExpenseFromJSON,
-    EntDentalExpenseToJSON,
+    EntDentalexpense,
+    EntDentalexpenseFromJSON,
+    EntDentalexpenseToJSON,
     EntDentist,
     EntDentistFromJSON,
     EntDentistToJSON,
@@ -51,9 +51,9 @@ import {
     EntPatient,
     EntPatientFromJSON,
     EntPatientToJSON,
-    EntPriceType,
-    EntPriceTypeFromJSON,
-    EntPriceTypeToJSON,
+    EntPricetype,
+    EntPricetypeFromJSON,
+    EntPricetypeToJSON,
     EntQueue,
     EntQueueFromJSON,
     EntQueueToJSON,
@@ -71,7 +71,7 @@ export interface CreateDegreeRequest {
 }
 
 export interface CreateDentalexpenseRequest {
-    dentalexpense: EntDentalExpense;
+    dentalexpense: EntDentalexpense;
 }
 
 export interface CreateDentistRequest {
@@ -99,7 +99,7 @@ export interface CreatePatientRequest {
 }
 
 export interface CreatePricetypeRequest {
-    pricetype: EntPriceType;
+    pricetype: EntPricetype;
 }
 
 export interface CreateQueueRequest {
@@ -315,7 +315,7 @@ export class DefaultApi extends runtime.BaseAPI {
      * Create dentalexpense
      * Create dentalexpense
      */
-    async createDentalexpenseRaw(requestParameters: CreateDentalexpenseRequest): Promise<runtime.ApiResponse<EntDentalExpense>> {
+    async createDentalexpenseRaw(requestParameters: CreateDentalexpenseRequest): Promise<runtime.ApiResponse<EntDentalexpense>> {
         if (requestParameters.dentalexpense === null || requestParameters.dentalexpense === undefined) {
             throw new runtime.RequiredError('dentalexpense','Required parameter requestParameters.dentalexpense was null or undefined when calling createDentalexpense.');
         }
@@ -331,17 +331,17 @@ export class DefaultApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: EntDentalExpenseToJSON(requestParameters.dentalexpense),
+            body: EntDentalexpenseToJSON(requestParameters.dentalexpense),
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => EntDentalExpenseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => EntDentalexpenseFromJSON(jsonValue));
     }
 
     /**
      * Create dentalexpense
      * Create dentalexpense
      */
-    async createDentalexpense(requestParameters: CreateDentalexpenseRequest): Promise<EntDentalExpense> {
+    async createDentalexpense(requestParameters: CreateDentalexpenseRequest): Promise<EntDentalexpense> {
         const response = await this.createDentalexpenseRaw(requestParameters);
         return await response.value();
     }
@@ -560,7 +560,7 @@ export class DefaultApi extends runtime.BaseAPI {
      * Create pricetype
      * Create pricetype
      */
-    async createPricetypeRaw(requestParameters: CreatePricetypeRequest): Promise<runtime.ApiResponse<EntPriceType>> {
+    async createPricetypeRaw(requestParameters: CreatePricetypeRequest): Promise<runtime.ApiResponse<EntPricetype>> {
         if (requestParameters.pricetype === null || requestParameters.pricetype === undefined) {
             throw new runtime.RequiredError('pricetype','Required parameter requestParameters.pricetype was null or undefined when calling createPricetype.');
         }
@@ -576,17 +576,17 @@ export class DefaultApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: EntPriceTypeToJSON(requestParameters.pricetype),
+            body: EntPricetypeToJSON(requestParameters.pricetype),
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => EntPriceTypeFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => EntPricetypeFromJSON(jsonValue));
     }
 
     /**
      * Create pricetype
      * Create pricetype
      */
-    async createPricetype(requestParameters: CreatePricetypeRequest): Promise<EntPriceType> {
+    async createPricetype(requestParameters: CreatePricetypeRequest): Promise<EntPricetype> {
         const response = await this.createPricetypeRaw(requestParameters);
         return await response.value();
     }
@@ -726,10 +726,10 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * get dentalexpense by ID
-     * Get a dentalexpense entity by ID
+     * get Dentalexpense by ID
+     * Get a Dentalexpense entity by ID
      */
-    async getDentalexpenseRaw(requestParameters: GetDentalexpenseRequest): Promise<runtime.ApiResponse<EntDentalExpense>> {
+    async getDentalexpenseRaw(requestParameters: GetDentalexpenseRequest): Promise<runtime.ApiResponse<EntDentalexpense>> {
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getDentalexpense.');
         }
@@ -745,14 +745,14 @@ export class DefaultApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => EntDentalExpenseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => EntDentalexpenseFromJSON(jsonValue));
     }
 
     /**
-     * get dentalexpense by ID
-     * Get a dentalexpense entity by ID
+     * get Dentalexpense by ID
+     * Get a Dentalexpense entity by ID
      */
-    async getDentalexpense(requestParameters: GetDentalexpenseRequest): Promise<EntDentalExpense> {
+    async getDentalexpense(requestParameters: GetDentalexpenseRequest): Promise<EntDentalexpense> {
         const response = await this.getDentalexpenseRaw(requestParameters);
         return await response.value();
     }
@@ -1017,7 +1017,7 @@ export class DefaultApi extends runtime.BaseAPI {
      * get pricetype by ID
      * Get a pricetype entity by ID
      */
-    async getPricetypeRaw(requestParameters: GetPricetypeRequest): Promise<runtime.ApiResponse<EntPriceType>> {
+    async getPricetypeRaw(requestParameters: GetPricetypeRequest): Promise<runtime.ApiResponse<EntPricetype>> {
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getPricetype.');
         }
@@ -1033,14 +1033,14 @@ export class DefaultApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => EntPriceTypeFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => EntPricetypeFromJSON(jsonValue));
     }
 
     /**
      * get pricetype by ID
      * Get a pricetype entity by ID
      */
-    async getPricetype(requestParameters: GetPricetypeRequest): Promise<EntPriceType> {
+    async getPricetype(requestParameters: GetPricetypeRequest): Promise<EntPricetype> {
         const response = await this.getPricetypeRaw(requestParameters);
         return await response.value();
     }
@@ -1182,10 +1182,10 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * list dentalexpense entities
-     * List dentalexpense entities
+     * list Dentalexpense entities
+     * List Dentalexpense entities
      */
-    async listDentalexpenseRaw(requestParameters: ListDentalexpenseRequest): Promise<runtime.ApiResponse<Array<EntDentalExpense>>> {
+    async listDentalexpenseRaw(requestParameters: ListDentalexpenseRequest): Promise<runtime.ApiResponse<Array<EntDentalexpense>>> {
         const queryParameters: runtime.HTTPQuery = {};
 
         if (requestParameters.limit !== undefined) {
@@ -1205,14 +1205,14 @@ export class DefaultApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(EntDentalExpenseFromJSON));
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(EntDentalexpenseFromJSON));
     }
 
     /**
-     * list dentalexpense entities
-     * List dentalexpense entities
+     * list Dentalexpense entities
+     * List Dentalexpense entities
      */
-    async listDentalexpense(requestParameters: ListDentalexpenseRequest): Promise<Array<EntDentalExpense>> {
+    async listDentalexpense(requestParameters: ListDentalexpenseRequest): Promise<Array<EntDentalexpense>> {
         const response = await this.listDentalexpenseRaw(requestParameters);
         return await response.value();
     }
@@ -1509,7 +1509,7 @@ export class DefaultApi extends runtime.BaseAPI {
      * list pricetype entities
      * List pricetype entities
      */
-    async listPricetypeRaw(requestParameters: ListPricetypeRequest): Promise<runtime.ApiResponse<Array<EntPriceType>>> {
+    async listPricetypeRaw(requestParameters: ListPricetypeRequest): Promise<runtime.ApiResponse<Array<EntPricetype>>> {
         const queryParameters: runtime.HTTPQuery = {};
 
         if (requestParameters.limit !== undefined) {
@@ -1529,14 +1529,14 @@ export class DefaultApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(EntPriceTypeFromJSON));
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(EntPricetypeFromJSON));
     }
 
     /**
      * list pricetype entities
      * List pricetype entities
      */
-    async listPricetype(requestParameters: ListPricetypeRequest): Promise<Array<EntPriceType>> {
+    async listPricetype(requestParameters: ListPricetypeRequest): Promise<Array<EntPricetype>> {
         const response = await this.listPricetypeRaw(requestParameters);
         return await response.value();
     }

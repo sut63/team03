@@ -258,28 +258,28 @@ func (f DegreeMutationRuleFunc) EvalMutation(ctx context.Context, m ent.Mutation
 	return Denyf("ent/privacy: unexpected mutation type %T, expect *ent.DegreeMutation", m)
 }
 
-// The DentalExpenseQueryRuleFunc type is an adapter to allow the use of ordinary
+// The DentalexpenseQueryRuleFunc type is an adapter to allow the use of ordinary
 // functions as a query rule.
-type DentalExpenseQueryRuleFunc func(context.Context, *ent.DentalExpenseQuery) error
+type DentalexpenseQueryRuleFunc func(context.Context, *ent.DentalexpenseQuery) error
 
 // EvalQuery return f(ctx, q).
-func (f DentalExpenseQueryRuleFunc) EvalQuery(ctx context.Context, q ent.Query) error {
-	if q, ok := q.(*ent.DentalExpenseQuery); ok {
+func (f DentalexpenseQueryRuleFunc) EvalQuery(ctx context.Context, q ent.Query) error {
+	if q, ok := q.(*ent.DentalexpenseQuery); ok {
 		return f(ctx, q)
 	}
-	return Denyf("ent/privacy: unexpected query type %T, expect *ent.DentalExpenseQuery", q)
+	return Denyf("ent/privacy: unexpected query type %T, expect *ent.DentalexpenseQuery", q)
 }
 
-// The DentalExpenseMutationRuleFunc type is an adapter to allow the use of ordinary
+// The DentalexpenseMutationRuleFunc type is an adapter to allow the use of ordinary
 // functions as a mutation rule.
-type DentalExpenseMutationRuleFunc func(context.Context, *ent.DentalExpenseMutation) error
+type DentalexpenseMutationRuleFunc func(context.Context, *ent.DentalexpenseMutation) error
 
 // EvalMutation calls f(ctx, m).
-func (f DentalExpenseMutationRuleFunc) EvalMutation(ctx context.Context, m ent.Mutation) error {
-	if m, ok := m.(*ent.DentalExpenseMutation); ok {
+func (f DentalexpenseMutationRuleFunc) EvalMutation(ctx context.Context, m ent.Mutation) error {
+	if m, ok := m.(*ent.DentalexpenseMutation); ok {
 		return f(ctx, m)
 	}
-	return Denyf("ent/privacy: unexpected mutation type %T, expect *ent.DentalExpenseMutation", m)
+	return Denyf("ent/privacy: unexpected mutation type %T, expect *ent.DentalexpenseMutation", m)
 }
 
 // The DentistQueryRuleFunc type is an adapter to allow the use of ordinary
@@ -474,28 +474,28 @@ func (f PatientMutationRuleFunc) EvalMutation(ctx context.Context, m ent.Mutatio
 	return Denyf("ent/privacy: unexpected mutation type %T, expect *ent.PatientMutation", m)
 }
 
-// The PriceTypeQueryRuleFunc type is an adapter to allow the use of ordinary
+// The PricetypeQueryRuleFunc type is an adapter to allow the use of ordinary
 // functions as a query rule.
-type PriceTypeQueryRuleFunc func(context.Context, *ent.PriceTypeQuery) error
+type PricetypeQueryRuleFunc func(context.Context, *ent.PricetypeQuery) error
 
 // EvalQuery return f(ctx, q).
-func (f PriceTypeQueryRuleFunc) EvalQuery(ctx context.Context, q ent.Query) error {
-	if q, ok := q.(*ent.PriceTypeQuery); ok {
+func (f PricetypeQueryRuleFunc) EvalQuery(ctx context.Context, q ent.Query) error {
+	if q, ok := q.(*ent.PricetypeQuery); ok {
 		return f(ctx, q)
 	}
-	return Denyf("ent/privacy: unexpected query type %T, expect *ent.PriceTypeQuery", q)
+	return Denyf("ent/privacy: unexpected query type %T, expect *ent.PricetypeQuery", q)
 }
 
-// The PriceTypeMutationRuleFunc type is an adapter to allow the use of ordinary
+// The PricetypeMutationRuleFunc type is an adapter to allow the use of ordinary
 // functions as a mutation rule.
-type PriceTypeMutationRuleFunc func(context.Context, *ent.PriceTypeMutation) error
+type PricetypeMutationRuleFunc func(context.Context, *ent.PricetypeMutation) error
 
 // EvalMutation calls f(ctx, m).
-func (f PriceTypeMutationRuleFunc) EvalMutation(ctx context.Context, m ent.Mutation) error {
-	if m, ok := m.(*ent.PriceTypeMutation); ok {
+func (f PricetypeMutationRuleFunc) EvalMutation(ctx context.Context, m ent.Mutation) error {
+	if m, ok := m.(*ent.PricetypeMutation); ok {
 		return f(ctx, m)
 	}
-	return Denyf("ent/privacy: unexpected mutation type %T, expect *ent.PriceTypeMutation", m)
+	return Denyf("ent/privacy: unexpected mutation type %T, expect *ent.PricetypeMutation", m)
 }
 
 // The QueueQueryRuleFunc type is an adapter to allow the use of ordinary

@@ -303,12 +303,12 @@ var doc = `{
         },
         "/dentalexpenses": {
             "get": {
-                "description": "list dentalexpense entities",
+                "description": "list Dentalexpense entities",
                 "produces": [
                     "application/json"
                 ],
-                "summary": "List dentalexpense entities",
-                "operationId": "list-dentalexpense",
+                "summary": "List Dentalexpense entities",
+                "operationId": "list-Dentalexpense",
                 "parameters": [
                     {
                         "type": "integer",
@@ -329,7 +329,7 @@ var doc = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/ent.DentalExpense"
+                                "$ref": "#/definitions/ent.Dentalexpense"
                             }
                         }
                     },
@@ -359,12 +359,12 @@ var doc = `{
                 "operationId": "create-dentalexpense",
                 "parameters": [
                     {
-                        "description": "DentalExpense entity",
-                        "name": "dentalexpense",
+                        "description": "Dentalexpense entity",
+                        "name": "Dentalexpense",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/ent.DentalExpense"
+                            "$ref": "#/definitions/ent.Dentalexpense"
                         }
                     }
                 ],
@@ -372,7 +372,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/ent.DentalExpense"
+                            "$ref": "#/definitions/ent.Dentalexpense"
                         }
                     },
                     "400": {
@@ -392,16 +392,16 @@ var doc = `{
         },
         "/dentalexpenses/{id}": {
             "get": {
-                "description": "get dentalexpense by ID",
+                "description": "get Dentalexpense by ID",
                 "produces": [
                     "application/json"
                 ],
-                "summary": "Get a dentalexpense entity by ID",
-                "operationId": "get-dentalexpense",
+                "summary": "Get a Dentalexpense entity by ID",
+                "operationId": "get-Dentalexpense",
                 "parameters": [
                     {
                         "type": "integer",
-                        "description": "DentalExpense ID",
+                        "description": "Dentalexpense ID",
                         "name": "id",
                         "in": "path",
                         "required": true
@@ -411,7 +411,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/ent.DentalExpense"
+                            "$ref": "#/definitions/ent.Dentalexpense"
                         }
                     },
                     "400": {
@@ -1451,7 +1451,7 @@ var doc = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/ent.PriceType"
+                                "$ref": "#/definitions/ent.Pricetype"
                             }
                         }
                     },
@@ -1481,12 +1481,12 @@ var doc = `{
                 "operationId": "create-pricetype",
                 "parameters": [
                     {
-                        "description": "PriceType entity",
+                        "description": "Pricetype entity",
                         "name": "pricetype",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/ent.PriceType"
+                            "$ref": "#/definitions/ent.Pricetype"
                         }
                     }
                 ],
@@ -1494,7 +1494,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/ent.PriceType"
+                            "$ref": "#/definitions/ent.Pricetype"
                         }
                     },
                     "400": {
@@ -1523,7 +1523,7 @@ var doc = `{
                 "parameters": [
                     {
                         "type": "integer",
-                        "description": "PriceType ID",
+                        "description": "Pricetype ID",
                         "name": "id",
                         "in": "path",
                         "required": true
@@ -1533,7 +1533,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/ent.PriceType"
+                            "$ref": "#/definitions/ent.Pricetype"
                         }
                     },
                     "400": {
@@ -1847,12 +1847,20 @@ var doc = `{
         "ent.Appointment": {
             "type": "object",
             "properties": {
-                "datetime": {
-                    "description": "Datetime holds the value of the \"datetime\" field.",
+                "AppointID": {
+                    "description": "AppointID holds the value of the \"AppointID\" field.",
                     "type": "string"
                 },
-                "detail": {
-                    "description": "Detail holds the value of the \"detail\" field.",
+                "Datetime": {
+                    "description": "Datetime holds the value of the \"Datetime\" field.",
+                    "type": "string"
+                },
+                "Detail": {
+                    "description": "Detail holds the value of the \"Detail\" field.",
+                    "type": "string"
+                },
+                "Remark": {
+                    "description": "Remark holds the value of the \"Remark\" field.",
                     "type": "string"
                 },
                 "edges": {
@@ -1916,41 +1924,41 @@ var doc = `{
                 }
             }
         },
-        "ent.DentalExpense": {
+        "ent.Dentalexpense": {
             "type": "object",
             "properties": {
-                "added_time": {
-                    "description": "AddedTime holds the value of the \"added_time\" field.",
+                "AddedTime": {
+                    "description": "AddedTime holds the value of the \"AddedTime\" field.",
+                    "type": "string"
+                },
+                "Name": {
+                    "description": "Name holds the value of the \"Name\" field.",
+                    "type": "string"
+                },
+                "Phone": {
+                    "description": "Phone holds the value of the \"Phone\" field.",
+                    "type": "string"
+                },
+                "Rates": {
+                    "description": "Rates holds the value of the \"Rates\" field.",
+                    "type": "number"
+                },
+                "Tax": {
+                    "description": "Tax holds the value of the \"Tax\" field.",
                     "type": "string"
                 },
                 "edges": {
-                    "description": "Edges holds the relations/edges for other nodes in the graph.\nThe values are being populated by the DentalExpenseQuery when eager-loading is set.",
+                    "description": "Edges holds the relations/edges for other nodes in the graph.\nThe values are being populated by the DentalexpenseQuery when eager-loading is set.",
                     "type": "object",
-                    "$ref": "#/definitions/ent.DentalExpenseEdges"
+                    "$ref": "#/definitions/ent.DentalexpenseEdges"
                 },
                 "id": {
                     "description": "ID of the ent.",
                     "type": "integer"
-                },
-                "name": {
-                    "description": "Name holds the value of the \"name\" field.",
-                    "type": "string"
-                },
-                "phone": {
-                    "description": "Phone holds the value of the \"phone\" field.",
-                    "type": "string"
-                },
-                "rates": {
-                    "description": "Rates holds the value of the \"rates\" field.",
-                    "type": "integer"
-                },
-                "tax": {
-                    "description": "Tax holds the value of the \"tax\" field.",
-                    "type": "string"
                 }
             }
         },
-        "ent.DentalExpenseEdges": {
+        "ent.DentalexpenseEdges": {
             "type": "object",
             "properties": {
                 "medicalfile": {
@@ -1966,7 +1974,7 @@ var doc = `{
                 "pricetype": {
                     "description": "Pricetype holds the value of the pricetype edge.",
                     "type": "object",
-                    "$ref": "#/definitions/ent.PriceType"
+                    "$ref": "#/definitions/ent.Pricetype"
                 }
             }
         },
@@ -2226,7 +2234,7 @@ var doc = `{
                     "description": "Dentalexpenses holds the value of the dentalexpenses edge.",
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/ent.DentalExpense"
+                        "$ref": "#/definitions/ent.Dentalexpense"
                     }
                 },
                 "dentist": {
@@ -2283,7 +2291,7 @@ var doc = `{
                     "description": "Dentalexpenses holds the value of the dentalexpenses edge.",
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/ent.DentalExpense"
+                        "$ref": "#/definitions/ent.Dentalexpense"
                     }
                 },
                 "dentists": {
@@ -2400,13 +2408,13 @@ var doc = `{
                 }
             }
         },
-        "ent.PriceType": {
+        "ent.Pricetype": {
             "type": "object",
             "properties": {
                 "edges": {
-                    "description": "Edges holds the relations/edges for other nodes in the graph.\nThe values are being populated by the PriceTypeQuery when eager-loading is set.",
+                    "description": "Edges holds the relations/edges for other nodes in the graph.\nThe values are being populated by the PricetypeQuery when eager-loading is set.",
                     "type": "object",
-                    "$ref": "#/definitions/ent.PriceTypeEdges"
+                    "$ref": "#/definitions/ent.PricetypeEdges"
                 },
                 "id": {
                     "description": "ID of the ent.",
@@ -2418,14 +2426,14 @@ var doc = `{
                 }
             }
         },
-        "ent.PriceTypeEdges": {
+        "ent.PricetypeEdges": {
             "type": "object",
             "properties": {
                 "dentalexpenses": {
                     "description": "Dentalexpenses holds the value of the dentalexpenses edge.",
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/ent.DentalExpense"
+                        "$ref": "#/definitions/ent.Dentalexpense"
                     }
                 }
             }

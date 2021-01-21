@@ -13,11 +13,17 @@ definitions:
     type: object
   ent.Appointment:
     properties:
-      datetime:
-        description: Datetime holds the value of the "datetime" field.
+      AppointID:
+        description: AppointID holds the value of the "AppointID" field.
         type: string
-      detail:
-        description: Detail holds the value of the "detail" field.
+      Datetime:
+        description: Datetime holds the value of the "Datetime" field.
+        type: string
+      Detail:
+        description: Detail holds the value of the "Detail" field.
+        type: string
+      Remark:
+        description: Remark holds the value of the "Remark" field.
         type: string
       edges:
         $ref: '#/definitions/ent.AppointmentEdges'
@@ -67,34 +73,34 @@ definitions:
           $ref: '#/definitions/ent.Dentist'
         type: array
     type: object
-  ent.DentalExpense:
+  ent.Dentalexpense:
     properties:
-      added_time:
-        description: AddedTime holds the value of the "added_time" field.
+      AddedTime:
+        description: AddedTime holds the value of the "AddedTime" field.
+        type: string
+      Name:
+        description: Name holds the value of the "Name" field.
+        type: string
+      Phone:
+        description: Phone holds the value of the "Phone" field.
+        type: string
+      Rates:
+        description: Rates holds the value of the "Rates" field.
+        type: number
+      Tax:
+        description: Tax holds the value of the "Tax" field.
         type: string
       edges:
-        $ref: '#/definitions/ent.DentalExpenseEdges'
+        $ref: '#/definitions/ent.DentalexpenseEdges'
         description: |-
           Edges holds the relations/edges for other nodes in the graph.
-          The values are being populated by the DentalExpenseQuery when eager-loading is set.
+          The values are being populated by the DentalexpenseQuery when eager-loading is set.
         type: object
       id:
         description: ID of the ent.
         type: integer
-      name:
-        description: Name holds the value of the "name" field.
-        type: string
-      phone:
-        description: Phone holds the value of the "phone" field.
-        type: string
-      rates:
-        description: Rates holds the value of the "rates" field.
-        type: integer
-      tax:
-        description: Tax holds the value of the "tax" field.
-        type: string
     type: object
-  ent.DentalExpenseEdges:
+  ent.DentalexpenseEdges:
     properties:
       medicalfile:
         $ref: '#/definitions/ent.Medicalfile'
@@ -105,7 +111,7 @@ definitions:
         description: Nurse holds the value of the nurse edge.
         type: object
       pricetype:
-        $ref: '#/definitions/ent.PriceType'
+        $ref: '#/definitions/ent.Pricetype'
         description: Pricetype holds the value of the pricetype edge.
         type: object
     type: object
@@ -305,7 +311,7 @@ definitions:
       dentalexpenses:
         description: Dentalexpenses holds the value of the dentalexpenses edge.
         items:
-          $ref: '#/definitions/ent.DentalExpense'
+          $ref: '#/definitions/ent.Dentalexpense'
         type: array
       dentist:
         $ref: '#/definitions/ent.Dentist'
@@ -349,7 +355,7 @@ definitions:
       dentalexpenses:
         description: Dentalexpenses holds the value of the dentalexpenses edge.
         items:
-          $ref: '#/definitions/ent.DentalExpense'
+          $ref: '#/definitions/ent.Dentalexpense'
         type: array
       dentists:
         description: Dentists holds the value of the dentists edge.
@@ -436,13 +442,13 @@ definitions:
           $ref: '#/definitions/ent.Queue'
         type: array
     type: object
-  ent.PriceType:
+  ent.Pricetype:
     properties:
       edges:
-        $ref: '#/definitions/ent.PriceTypeEdges'
+        $ref: '#/definitions/ent.PricetypeEdges'
         description: |-
           Edges holds the relations/edges for other nodes in the graph.
-          The values are being populated by the PriceTypeQuery when eager-loading is set.
+          The values are being populated by the PricetypeQuery when eager-loading is set.
         type: object
       id:
         description: ID of the ent.
@@ -451,12 +457,12 @@ definitions:
         description: Name holds the value of the "name" field.
         type: string
     type: object
-  ent.PriceTypeEdges:
+  ent.PricetypeEdges:
     properties:
       dentalexpenses:
         description: Dentalexpenses holds the value of the dentalexpenses edge.
         items:
-          $ref: '#/definitions/ent.DentalExpense'
+          $ref: '#/definitions/ent.Dentalexpense'
         type: array
     type: object
   ent.Queue:
@@ -712,8 +718,8 @@ paths:
       summary: Get a Degree entity by ID
   /dentalexpenses:
     get:
-      description: list dentalexpense entities
-      operationId: list-dentalexpense
+      description: list Dentalexpense entities
+      operationId: list-Dentalexpense
       parameters:
       - description: Limit
         in: query
@@ -730,7 +736,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/ent.DentalExpense'
+              $ref: '#/definitions/ent.Dentalexpense'
             type: array
         "400":
           description: Bad Request
@@ -740,26 +746,26 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/gin.H'
-      summary: List dentalexpense entities
+      summary: List Dentalexpense entities
     post:
       consumes:
       - application/json
       description: Create dentalexpense
       operationId: create-dentalexpense
       parameters:
-      - description: DentalExpense entity
+      - description: Dentalexpense entity
         in: body
-        name: dentalexpense
+        name: Dentalexpense
         required: true
         schema:
-          $ref: '#/definitions/ent.DentalExpense'
+          $ref: '#/definitions/ent.Dentalexpense'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/ent.DentalExpense'
+            $ref: '#/definitions/ent.Dentalexpense'
         "400":
           description: Bad Request
           schema:
@@ -771,10 +777,10 @@ paths:
       summary: Create dentalexpense
   /dentalexpenses/{id}:
     get:
-      description: get dentalexpense by ID
-      operationId: get-dentalexpense
+      description: get Dentalexpense by ID
+      operationId: get-Dentalexpense
       parameters:
-      - description: DentalExpense ID
+      - description: Dentalexpense ID
         in: path
         name: id
         required: true
@@ -785,7 +791,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/ent.DentalExpense'
+            $ref: '#/definitions/ent.Dentalexpense'
         "400":
           description: Bad Request
           schema:
@@ -798,7 +804,7 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/gin.H'
-      summary: Get a dentalexpense entity by ID
+      summary: Get a Dentalexpense entity by ID
   /dentists:
     get:
       description: list dentist entities
@@ -1475,7 +1481,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/ent.PriceType'
+              $ref: '#/definitions/ent.Pricetype'
             type: array
         "400":
           description: Bad Request
@@ -1492,19 +1498,19 @@ paths:
       description: Create pricetype
       operationId: create-pricetype
       parameters:
-      - description: PriceType entity
+      - description: Pricetype entity
         in: body
         name: pricetype
         required: true
         schema:
-          $ref: '#/definitions/ent.PriceType'
+          $ref: '#/definitions/ent.Pricetype'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/ent.PriceType'
+            $ref: '#/definitions/ent.Pricetype'
         "400":
           description: Bad Request
           schema:
@@ -1519,7 +1525,7 @@ paths:
       description: get pricetype by ID
       operationId: get-pricetype
       parameters:
-      - description: PriceType ID
+      - description: Pricetype ID
         in: path
         name: id
         required: true
@@ -1530,7 +1536,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/ent.PriceType'
+            $ref: '#/definitions/ent.Pricetype'
         "400":
           description: Bad Request
           schema:

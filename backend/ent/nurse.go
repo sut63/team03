@@ -35,7 +35,7 @@ type NurseEdges struct {
 	// Medicalfiles holds the value of the medicalfiles edge.
 	Medicalfiles []*Medicalfile
 	// Dentalexpenses holds the value of the dentalexpenses edge.
-	Dentalexpenses []*DentalExpense
+	Dentalexpenses []*Dentalexpense
 	// Patients holds the value of the patients edge.
 	Patients []*Patient
 	// Dentists holds the value of the dentists edge.
@@ -65,7 +65,7 @@ func (e NurseEdges) MedicalfilesOrErr() ([]*Medicalfile, error) {
 
 // DentalexpensesOrErr returns the Dentalexpenses value or an error if the edge
 // was not loaded in eager-loading.
-func (e NurseEdges) DentalexpensesOrErr() ([]*DentalExpense, error) {
+func (e NurseEdges) DentalexpensesOrErr() ([]*Dentalexpense, error) {
 	if e.loadedTypes[2] {
 		return e.Dentalexpenses, nil
 	}
@@ -147,7 +147,7 @@ func (n *Nurse) QueryMedicalfiles() *MedicalfileQuery {
 }
 
 // QueryDentalexpenses queries the dentalexpenses edge of the Nurse.
-func (n *Nurse) QueryDentalexpenses() *DentalExpenseQuery {
+func (n *Nurse) QueryDentalexpenses() *DentalexpenseQuery {
 	return (&NurseClient{config: n.config}).QueryDentalexpenses(n)
 }
 

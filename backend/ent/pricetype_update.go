@@ -14,85 +14,85 @@ import (
 	"github.com/team03/app/ent/pricetype"
 )
 
-// PriceTypeUpdate is the builder for updating PriceType entities.
-type PriceTypeUpdate struct {
+// PricetypeUpdate is the builder for updating Pricetype entities.
+type PricetypeUpdate struct {
 	config
 	hooks      []Hook
-	mutation   *PriceTypeMutation
-	predicates []predicate.PriceType
+	mutation   *PricetypeMutation
+	predicates []predicate.Pricetype
 }
 
 // Where adds a new predicate for the builder.
-func (ptu *PriceTypeUpdate) Where(ps ...predicate.PriceType) *PriceTypeUpdate {
-	ptu.predicates = append(ptu.predicates, ps...)
-	return ptu
+func (pu *PricetypeUpdate) Where(ps ...predicate.Pricetype) *PricetypeUpdate {
+	pu.predicates = append(pu.predicates, ps...)
+	return pu
 }
 
 // SetName sets the name field.
-func (ptu *PriceTypeUpdate) SetName(s string) *PriceTypeUpdate {
-	ptu.mutation.SetName(s)
-	return ptu
+func (pu *PricetypeUpdate) SetName(s string) *PricetypeUpdate {
+	pu.mutation.SetName(s)
+	return pu
 }
 
-// AddDentalexpenseIDs adds the dentalexpenses edge to DentalExpense by ids.
-func (ptu *PriceTypeUpdate) AddDentalexpenseIDs(ids ...int) *PriceTypeUpdate {
-	ptu.mutation.AddDentalexpenseIDs(ids...)
-	return ptu
+// AddDentalexpenseIDs adds the dentalexpenses edge to Dentalexpense by ids.
+func (pu *PricetypeUpdate) AddDentalexpenseIDs(ids ...int) *PricetypeUpdate {
+	pu.mutation.AddDentalexpenseIDs(ids...)
+	return pu
 }
 
-// AddDentalexpenses adds the dentalexpenses edges to DentalExpense.
-func (ptu *PriceTypeUpdate) AddDentalexpenses(d ...*DentalExpense) *PriceTypeUpdate {
+// AddDentalexpenses adds the dentalexpenses edges to Dentalexpense.
+func (pu *PricetypeUpdate) AddDentalexpenses(d ...*Dentalexpense) *PricetypeUpdate {
 	ids := make([]int, len(d))
 	for i := range d {
 		ids[i] = d[i].ID
 	}
-	return ptu.AddDentalexpenseIDs(ids...)
+	return pu.AddDentalexpenseIDs(ids...)
 }
 
-// Mutation returns the PriceTypeMutation object of the builder.
-func (ptu *PriceTypeUpdate) Mutation() *PriceTypeMutation {
-	return ptu.mutation
+// Mutation returns the PricetypeMutation object of the builder.
+func (pu *PricetypeUpdate) Mutation() *PricetypeMutation {
+	return pu.mutation
 }
 
-// RemoveDentalexpenseIDs removes the dentalexpenses edge to DentalExpense by ids.
-func (ptu *PriceTypeUpdate) RemoveDentalexpenseIDs(ids ...int) *PriceTypeUpdate {
-	ptu.mutation.RemoveDentalexpenseIDs(ids...)
-	return ptu
+// RemoveDentalexpenseIDs removes the dentalexpenses edge to Dentalexpense by ids.
+func (pu *PricetypeUpdate) RemoveDentalexpenseIDs(ids ...int) *PricetypeUpdate {
+	pu.mutation.RemoveDentalexpenseIDs(ids...)
+	return pu
 }
 
-// RemoveDentalexpenses removes dentalexpenses edges to DentalExpense.
-func (ptu *PriceTypeUpdate) RemoveDentalexpenses(d ...*DentalExpense) *PriceTypeUpdate {
+// RemoveDentalexpenses removes dentalexpenses edges to Dentalexpense.
+func (pu *PricetypeUpdate) RemoveDentalexpenses(d ...*Dentalexpense) *PricetypeUpdate {
 	ids := make([]int, len(d))
 	for i := range d {
 		ids[i] = d[i].ID
 	}
-	return ptu.RemoveDentalexpenseIDs(ids...)
+	return pu.RemoveDentalexpenseIDs(ids...)
 }
 
 // Save executes the query and returns the number of rows/vertices matched by this operation.
-func (ptu *PriceTypeUpdate) Save(ctx context.Context) (int, error) {
+func (pu *PricetypeUpdate) Save(ctx context.Context) (int, error) {
 
 	var (
 		err      error
 		affected int
 	)
-	if len(ptu.hooks) == 0 {
-		affected, err = ptu.sqlSave(ctx)
+	if len(pu.hooks) == 0 {
+		affected, err = pu.sqlSave(ctx)
 	} else {
 		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-			mutation, ok := m.(*PriceTypeMutation)
+			mutation, ok := m.(*PricetypeMutation)
 			if !ok {
 				return nil, fmt.Errorf("unexpected mutation type %T", m)
 			}
-			ptu.mutation = mutation
-			affected, err = ptu.sqlSave(ctx)
+			pu.mutation = mutation
+			affected, err = pu.sqlSave(ctx)
 			mutation.done = true
 			return affected, err
 		})
-		for i := len(ptu.hooks) - 1; i >= 0; i-- {
-			mut = ptu.hooks[i](mut)
+		for i := len(pu.hooks) - 1; i >= 0; i-- {
+			mut = pu.hooks[i](mut)
 		}
-		if _, err := mut.Mutate(ctx, ptu.mutation); err != nil {
+		if _, err := mut.Mutate(ctx, pu.mutation); err != nil {
 			return 0, err
 		}
 	}
@@ -100,8 +100,8 @@ func (ptu *PriceTypeUpdate) Save(ctx context.Context) (int, error) {
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (ptu *PriceTypeUpdate) SaveX(ctx context.Context) int {
-	affected, err := ptu.Save(ctx)
+func (pu *PricetypeUpdate) SaveX(ctx context.Context) int {
+	affected, err := pu.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -109,19 +109,19 @@ func (ptu *PriceTypeUpdate) SaveX(ctx context.Context) int {
 }
 
 // Exec executes the query.
-func (ptu *PriceTypeUpdate) Exec(ctx context.Context) error {
-	_, err := ptu.Save(ctx)
+func (pu *PricetypeUpdate) Exec(ctx context.Context) error {
+	_, err := pu.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (ptu *PriceTypeUpdate) ExecX(ctx context.Context) {
-	if err := ptu.Exec(ctx); err != nil {
+func (pu *PricetypeUpdate) ExecX(ctx context.Context) {
+	if err := pu.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
-func (ptu *PriceTypeUpdate) sqlSave(ctx context.Context) (n int, err error) {
+func (pu *PricetypeUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	_spec := &sqlgraph.UpdateSpec{
 		Node: &sqlgraph.NodeSpec{
 			Table:   pricetype.Table,
@@ -132,21 +132,21 @@ func (ptu *PriceTypeUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			},
 		},
 	}
-	if ps := ptu.predicates; len(ps) > 0 {
+	if ps := pu.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if value, ok := ptu.mutation.Name(); ok {
+	if value, ok := pu.mutation.Name(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
 			Column: pricetype.FieldName,
 		})
 	}
-	if nodes := ptu.mutation.RemovedDentalexpensesIDs(); len(nodes) > 0 {
+	if nodes := pu.mutation.RemovedDentalexpensesIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -165,7 +165,7 @@ func (ptu *PriceTypeUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := ptu.mutation.DentalexpensesIDs(); len(nodes) > 0 {
+	if nodes := pu.mutation.DentalexpensesIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -184,7 +184,7 @@ func (ptu *PriceTypeUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if n, err = sqlgraph.UpdateNodes(ctx, ptu.driver, _spec); err != nil {
+	if n, err = sqlgraph.UpdateNodes(ctx, pu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{pricetype.Label}
 		} else if cerr, ok := isSQLConstraintError(err); ok {
@@ -195,78 +195,78 @@ func (ptu *PriceTypeUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	return n, nil
 }
 
-// PriceTypeUpdateOne is the builder for updating a single PriceType entity.
-type PriceTypeUpdateOne struct {
+// PricetypeUpdateOne is the builder for updating a single Pricetype entity.
+type PricetypeUpdateOne struct {
 	config
 	hooks    []Hook
-	mutation *PriceTypeMutation
+	mutation *PricetypeMutation
 }
 
 // SetName sets the name field.
-func (ptuo *PriceTypeUpdateOne) SetName(s string) *PriceTypeUpdateOne {
-	ptuo.mutation.SetName(s)
-	return ptuo
+func (puo *PricetypeUpdateOne) SetName(s string) *PricetypeUpdateOne {
+	puo.mutation.SetName(s)
+	return puo
 }
 
-// AddDentalexpenseIDs adds the dentalexpenses edge to DentalExpense by ids.
-func (ptuo *PriceTypeUpdateOne) AddDentalexpenseIDs(ids ...int) *PriceTypeUpdateOne {
-	ptuo.mutation.AddDentalexpenseIDs(ids...)
-	return ptuo
+// AddDentalexpenseIDs adds the dentalexpenses edge to Dentalexpense by ids.
+func (puo *PricetypeUpdateOne) AddDentalexpenseIDs(ids ...int) *PricetypeUpdateOne {
+	puo.mutation.AddDentalexpenseIDs(ids...)
+	return puo
 }
 
-// AddDentalexpenses adds the dentalexpenses edges to DentalExpense.
-func (ptuo *PriceTypeUpdateOne) AddDentalexpenses(d ...*DentalExpense) *PriceTypeUpdateOne {
+// AddDentalexpenses adds the dentalexpenses edges to Dentalexpense.
+func (puo *PricetypeUpdateOne) AddDentalexpenses(d ...*Dentalexpense) *PricetypeUpdateOne {
 	ids := make([]int, len(d))
 	for i := range d {
 		ids[i] = d[i].ID
 	}
-	return ptuo.AddDentalexpenseIDs(ids...)
+	return puo.AddDentalexpenseIDs(ids...)
 }
 
-// Mutation returns the PriceTypeMutation object of the builder.
-func (ptuo *PriceTypeUpdateOne) Mutation() *PriceTypeMutation {
-	return ptuo.mutation
+// Mutation returns the PricetypeMutation object of the builder.
+func (puo *PricetypeUpdateOne) Mutation() *PricetypeMutation {
+	return puo.mutation
 }
 
-// RemoveDentalexpenseIDs removes the dentalexpenses edge to DentalExpense by ids.
-func (ptuo *PriceTypeUpdateOne) RemoveDentalexpenseIDs(ids ...int) *PriceTypeUpdateOne {
-	ptuo.mutation.RemoveDentalexpenseIDs(ids...)
-	return ptuo
+// RemoveDentalexpenseIDs removes the dentalexpenses edge to Dentalexpense by ids.
+func (puo *PricetypeUpdateOne) RemoveDentalexpenseIDs(ids ...int) *PricetypeUpdateOne {
+	puo.mutation.RemoveDentalexpenseIDs(ids...)
+	return puo
 }
 
-// RemoveDentalexpenses removes dentalexpenses edges to DentalExpense.
-func (ptuo *PriceTypeUpdateOne) RemoveDentalexpenses(d ...*DentalExpense) *PriceTypeUpdateOne {
+// RemoveDentalexpenses removes dentalexpenses edges to Dentalexpense.
+func (puo *PricetypeUpdateOne) RemoveDentalexpenses(d ...*Dentalexpense) *PricetypeUpdateOne {
 	ids := make([]int, len(d))
 	for i := range d {
 		ids[i] = d[i].ID
 	}
-	return ptuo.RemoveDentalexpenseIDs(ids...)
+	return puo.RemoveDentalexpenseIDs(ids...)
 }
 
 // Save executes the query and returns the updated entity.
-func (ptuo *PriceTypeUpdateOne) Save(ctx context.Context) (*PriceType, error) {
+func (puo *PricetypeUpdateOne) Save(ctx context.Context) (*Pricetype, error) {
 
 	var (
 		err  error
-		node *PriceType
+		node *Pricetype
 	)
-	if len(ptuo.hooks) == 0 {
-		node, err = ptuo.sqlSave(ctx)
+	if len(puo.hooks) == 0 {
+		node, err = puo.sqlSave(ctx)
 	} else {
 		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-			mutation, ok := m.(*PriceTypeMutation)
+			mutation, ok := m.(*PricetypeMutation)
 			if !ok {
 				return nil, fmt.Errorf("unexpected mutation type %T", m)
 			}
-			ptuo.mutation = mutation
-			node, err = ptuo.sqlSave(ctx)
+			puo.mutation = mutation
+			node, err = puo.sqlSave(ctx)
 			mutation.done = true
 			return node, err
 		})
-		for i := len(ptuo.hooks) - 1; i >= 0; i-- {
-			mut = ptuo.hooks[i](mut)
+		for i := len(puo.hooks) - 1; i >= 0; i-- {
+			mut = puo.hooks[i](mut)
 		}
-		if _, err := mut.Mutate(ctx, ptuo.mutation); err != nil {
+		if _, err := mut.Mutate(ctx, puo.mutation); err != nil {
 			return nil, err
 		}
 	}
@@ -274,28 +274,28 @@ func (ptuo *PriceTypeUpdateOne) Save(ctx context.Context) (*PriceType, error) {
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (ptuo *PriceTypeUpdateOne) SaveX(ctx context.Context) *PriceType {
-	pt, err := ptuo.Save(ctx)
+func (puo *PricetypeUpdateOne) SaveX(ctx context.Context) *Pricetype {
+	pr, err := puo.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
-	return pt
+	return pr
 }
 
 // Exec executes the query on the entity.
-func (ptuo *PriceTypeUpdateOne) Exec(ctx context.Context) error {
-	_, err := ptuo.Save(ctx)
+func (puo *PricetypeUpdateOne) Exec(ctx context.Context) error {
+	_, err := puo.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (ptuo *PriceTypeUpdateOne) ExecX(ctx context.Context) {
-	if err := ptuo.Exec(ctx); err != nil {
+func (puo *PricetypeUpdateOne) ExecX(ctx context.Context) {
+	if err := puo.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
-func (ptuo *PriceTypeUpdateOne) sqlSave(ctx context.Context) (pt *PriceType, err error) {
+func (puo *PricetypeUpdateOne) sqlSave(ctx context.Context) (pr *Pricetype, err error) {
 	_spec := &sqlgraph.UpdateSpec{
 		Node: &sqlgraph.NodeSpec{
 			Table:   pricetype.Table,
@@ -306,19 +306,19 @@ func (ptuo *PriceTypeUpdateOne) sqlSave(ctx context.Context) (pt *PriceType, err
 			},
 		},
 	}
-	id, ok := ptuo.mutation.ID()
+	id, ok := puo.mutation.ID()
 	if !ok {
-		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing PriceType.ID for update")}
+		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing Pricetype.ID for update")}
 	}
 	_spec.Node.ID.Value = id
-	if value, ok := ptuo.mutation.Name(); ok {
+	if value, ok := puo.mutation.Name(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
 			Column: pricetype.FieldName,
 		})
 	}
-	if nodes := ptuo.mutation.RemovedDentalexpensesIDs(); len(nodes) > 0 {
+	if nodes := puo.mutation.RemovedDentalexpensesIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -337,7 +337,7 @@ func (ptuo *PriceTypeUpdateOne) sqlSave(ctx context.Context) (pt *PriceType, err
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := ptuo.mutation.DentalexpensesIDs(); len(nodes) > 0 {
+	if nodes := puo.mutation.DentalexpensesIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -356,10 +356,10 @@ func (ptuo *PriceTypeUpdateOne) sqlSave(ctx context.Context) (pt *PriceType, err
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	pt = &PriceType{config: ptuo.config}
-	_spec.Assign = pt.assignValues
-	_spec.ScanValues = pt.scanValues()
-	if err = sqlgraph.UpdateNode(ctx, ptuo.driver, _spec); err != nil {
+	pr = &Pricetype{config: puo.config}
+	_spec.Assign = pr.assignValues
+	_spec.ScanValues = pr.scanValues()
+	if err = sqlgraph.UpdateNode(ctx, puo.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{pricetype.Label}
 		} else if cerr, ok := isSQLConstraintError(err); ok {
@@ -367,5 +367,5 @@ func (ptuo *PriceTypeUpdateOne) sqlSave(ctx context.Context) (pt *PriceType, err
 		}
 		return nil, err
 	}
-	return pt, nil
+	return pr, nil
 }

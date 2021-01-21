@@ -14,10 +14,10 @@
 
 import { exists, mapValues } from '../runtime';
 import {
-    EntDentalExpense,
-    EntDentalExpenseFromJSON,
-    EntDentalExpenseFromJSONTyped,
-    EntDentalExpenseToJSON,
+    EntDentalexpense,
+    EntDentalexpenseFromJSON,
+    EntDentalexpenseFromJSONTyped,
+    EntDentalexpenseToJSON,
     EntDentist,
     EntDentistFromJSON,
     EntDentistFromJSONTyped,
@@ -40,10 +40,10 @@ import {
 export interface EntMedicalfileEdges {
     /**
      * Dentalexpenses holds the value of the dentalexpenses edge.
-     * @type {Array<EntDentalExpense>}
+     * @type {Array<EntDentalexpense>}
      * @memberof EntMedicalfileEdges
      */
-    dentalexpenses?: Array<EntDentalExpense>;
+    dentalexpenses?: Array<EntDentalexpense>;
     /**
      * 
      * @type {EntDentist}
@@ -74,7 +74,7 @@ export function EntMedicalfileEdgesFromJSONTyped(json: any, ignoreDiscriminator:
     }
     return {
         
-        'dentalexpenses': !exists(json, 'dentalexpenses') ? undefined : ((json['dentalexpenses'] as Array<any>).map(EntDentalExpenseFromJSON)),
+        'dentalexpenses': !exists(json, 'dentalexpenses') ? undefined : ((json['dentalexpenses'] as Array<any>).map(EntDentalexpenseFromJSON)),
         'dentist': !exists(json, 'dentist') ? undefined : EntDentistFromJSON(json['dentist']),
         'nurse': !exists(json, 'nurse') ? undefined : EntNurseFromJSON(json['nurse']),
         'patient': !exists(json, 'patient') ? undefined : EntPatientFromJSON(json['patient']),
@@ -90,7 +90,7 @@ export function EntMedicalfileEdgesToJSON(value?: EntMedicalfileEdges | null): a
     }
     return {
         
-        'dentalexpenses': value.dentalexpenses === undefined ? undefined : ((value.dentalexpenses as Array<any>).map(EntDentalExpenseToJSON)),
+        'dentalexpenses': value.dentalexpenses === undefined ? undefined : ((value.dentalexpenses as Array<any>).map(EntDentalexpenseToJSON)),
         'dentist': EntDentistToJSON(value.dentist),
         'nurse': EntNurseToJSON(value.nurse),
         'patient': EntPatientToJSON(value.patient),

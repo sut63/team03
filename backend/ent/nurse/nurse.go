@@ -44,10 +44,10 @@ const (
 	// MedicalfilesColumn is the table column denoting the medicalfiles relation/edge.
 	MedicalfilesColumn = "nurse_id"
 	// DentalexpensesTable is the table the holds the dentalexpenses relation/edge.
-	DentalexpensesTable = "dental_expenses"
-	// DentalexpensesInverseTable is the table name for the DentalExpense entity.
+	DentalexpensesTable = "dentalexpenses"
+	// DentalexpensesInverseTable is the table name for the Dentalexpense entity.
 	// It exists in this package in order to avoid circular dependency with the "dentalexpense" package.
-	DentalexpensesInverseTable = "dental_expenses"
+	DentalexpensesInverseTable = "dentalexpenses"
 	// DentalexpensesColumn is the table column denoting the dentalexpenses relation/edge.
 	DentalexpensesColumn = "nurse_id"
 	// PatientsTable is the table the holds the patients relation/edge.

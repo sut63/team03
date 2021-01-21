@@ -26,7 +26,7 @@ type config struct {
 type hooks struct {
 	Appointment   []ent.Hook
 	Degree        []ent.Hook
-	DentalExpense []ent.Hook
+	Dentalexpense []ent.Hook
 	Dentist       []ent.Hook
 	Disease       []ent.Hook
 	Expert        []ent.Hook
@@ -35,7 +35,7 @@ type hooks struct {
 	Medicalfile   []ent.Hook
 	Nurse         []ent.Hook
 	Patient       []ent.Hook
-	PriceType     []ent.Hook
+	Pricetype     []ent.Hook
 	Queue         []ent.Hook
 	Room          []ent.Hook
 }

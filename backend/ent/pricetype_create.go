@@ -13,65 +13,65 @@ import (
 	"github.com/team03/app/ent/pricetype"
 )
 
-// PriceTypeCreate is the builder for creating a PriceType entity.
-type PriceTypeCreate struct {
+// PricetypeCreate is the builder for creating a Pricetype entity.
+type PricetypeCreate struct {
 	config
-	mutation *PriceTypeMutation
+	mutation *PricetypeMutation
 	hooks    []Hook
 }
 
 // SetName sets the name field.
-func (ptc *PriceTypeCreate) SetName(s string) *PriceTypeCreate {
-	ptc.mutation.SetName(s)
-	return ptc
+func (pc *PricetypeCreate) SetName(s string) *PricetypeCreate {
+	pc.mutation.SetName(s)
+	return pc
 }
 
-// AddDentalexpenseIDs adds the dentalexpenses edge to DentalExpense by ids.
-func (ptc *PriceTypeCreate) AddDentalexpenseIDs(ids ...int) *PriceTypeCreate {
-	ptc.mutation.AddDentalexpenseIDs(ids...)
-	return ptc
+// AddDentalexpenseIDs adds the dentalexpenses edge to Dentalexpense by ids.
+func (pc *PricetypeCreate) AddDentalexpenseIDs(ids ...int) *PricetypeCreate {
+	pc.mutation.AddDentalexpenseIDs(ids...)
+	return pc
 }
 
-// AddDentalexpenses adds the dentalexpenses edges to DentalExpense.
-func (ptc *PriceTypeCreate) AddDentalexpenses(d ...*DentalExpense) *PriceTypeCreate {
+// AddDentalexpenses adds the dentalexpenses edges to Dentalexpense.
+func (pc *PricetypeCreate) AddDentalexpenses(d ...*Dentalexpense) *PricetypeCreate {
 	ids := make([]int, len(d))
 	for i := range d {
 		ids[i] = d[i].ID
 	}
-	return ptc.AddDentalexpenseIDs(ids...)
+	return pc.AddDentalexpenseIDs(ids...)
 }
 
-// Mutation returns the PriceTypeMutation object of the builder.
-func (ptc *PriceTypeCreate) Mutation() *PriceTypeMutation {
-	return ptc.mutation
+// Mutation returns the PricetypeMutation object of the builder.
+func (pc *PricetypeCreate) Mutation() *PricetypeMutation {
+	return pc.mutation
 }
 
-// Save creates the PriceType in the database.
-func (ptc *PriceTypeCreate) Save(ctx context.Context) (*PriceType, error) {
-	if _, ok := ptc.mutation.Name(); !ok {
+// Save creates the Pricetype in the database.
+func (pc *PricetypeCreate) Save(ctx context.Context) (*Pricetype, error) {
+	if _, ok := pc.mutation.Name(); !ok {
 		return nil, &ValidationError{Name: "name", err: errors.New("ent: missing required field \"name\"")}
 	}
 	var (
 		err  error
-		node *PriceType
+		node *Pricetype
 	)
-	if len(ptc.hooks) == 0 {
-		node, err = ptc.sqlSave(ctx)
+	if len(pc.hooks) == 0 {
+		node, err = pc.sqlSave(ctx)
 	} else {
 		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-			mutation, ok := m.(*PriceTypeMutation)
+			mutation, ok := m.(*PricetypeMutation)
 			if !ok {
 				return nil, fmt.Errorf("unexpected mutation type %T", m)
 			}
-			ptc.mutation = mutation
-			node, err = ptc.sqlSave(ctx)
+			pc.mutation = mutation
+			node, err = pc.sqlSave(ctx)
 			mutation.done = true
 			return node, err
 		})
-		for i := len(ptc.hooks) - 1; i >= 0; i-- {
-			mut = ptc.hooks[i](mut)
+		for i := len(pc.hooks) - 1; i >= 0; i-- {
+			mut = pc.hooks[i](mut)
 		}
-		if _, err := mut.Mutate(ctx, ptc.mutation); err != nil {
+		if _, err := mut.Mutate(ctx, pc.mutation); err != nil {
 			return nil, err
 		}
 	}
@@ -79,30 +79,30 @@ func (ptc *PriceTypeCreate) Save(ctx context.Context) (*PriceType, error) {
 }
 
 // SaveX calls Save and panics if Save returns an error.
-func (ptc *PriceTypeCreate) SaveX(ctx context.Context) *PriceType {
-	v, err := ptc.Save(ctx)
+func (pc *PricetypeCreate) SaveX(ctx context.Context) *Pricetype {
+	v, err := pc.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
 	return v
 }
 
-func (ptc *PriceTypeCreate) sqlSave(ctx context.Context) (*PriceType, error) {
-	pt, _spec := ptc.createSpec()
-	if err := sqlgraph.CreateNode(ctx, ptc.driver, _spec); err != nil {
+func (pc *PricetypeCreate) sqlSave(ctx context.Context) (*Pricetype, error) {
+	pr, _spec := pc.createSpec()
+	if err := sqlgraph.CreateNode(ctx, pc.driver, _spec); err != nil {
 		if cerr, ok := isSQLConstraintError(err); ok {
 			err = cerr
 		}
 		return nil, err
 	}
 	id := _spec.ID.Value.(int64)
-	pt.ID = int(id)
-	return pt, nil
+	pr.ID = int(id)
+	return pr, nil
 }
 
-func (ptc *PriceTypeCreate) createSpec() (*PriceType, *sqlgraph.CreateSpec) {
+func (pc *PricetypeCreate) createSpec() (*Pricetype, *sqlgraph.CreateSpec) {
 	var (
-		pt    = &PriceType{config: ptc.config}
+		pr    = &Pricetype{config: pc.config}
 		_spec = &sqlgraph.CreateSpec{
 			Table: pricetype.Table,
 			ID: &sqlgraph.FieldSpec{
@@ -111,15 +111,15 @@ func (ptc *PriceTypeCreate) createSpec() (*PriceType, *sqlgraph.CreateSpec) {
 			},
 		}
 	)
-	if value, ok := ptc.mutation.Name(); ok {
+	if value, ok := pc.mutation.Name(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
 			Column: pricetype.FieldName,
 		})
-		pt.Name = value
+		pr.Name = value
 	}
-	if nodes := ptc.mutation.DentalexpensesIDs(); len(nodes) > 0 {
+	if nodes := pc.mutation.DentalexpensesIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -138,5 +138,5 @@ func (ptc *PriceTypeCreate) createSpec() (*PriceType, *sqlgraph.CreateSpec) {
 		}
 		_spec.Edges = append(_spec.Edges, edge)
 	}
-	return pt, _spec
+	return pr, _spec
 }

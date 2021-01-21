@@ -18,18 +18,18 @@ import (
 	"github.com/team03/app/ent/pricetype"
 )
 
-// DentalExpenseQuery is the builder for querying DentalExpense entities.
-type DentalExpenseQuery struct {
+// DentalexpenseQuery is the builder for querying Dentalexpense entities.
+type DentalexpenseQuery struct {
 	config
 	limit      *int
 	offset     *int
 	order      []OrderFunc
 	unique     []string
-	predicates []predicate.DentalExpense
+	predicates []predicate.Dentalexpense
 	// eager-loading edges.
 	withNurse       *NurseQuery
 	withMedicalfile *MedicalfileQuery
-	withPricetype   *PriceTypeQuery
+	withPricetype   *PricetypeQuery
 	withFKs         bool
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
@@ -37,108 +37,108 @@ type DentalExpenseQuery struct {
 }
 
 // Where adds a new predicate for the builder.
-func (deq *DentalExpenseQuery) Where(ps ...predicate.DentalExpense) *DentalExpenseQuery {
-	deq.predicates = append(deq.predicates, ps...)
-	return deq
+func (dq *DentalexpenseQuery) Where(ps ...predicate.Dentalexpense) *DentalexpenseQuery {
+	dq.predicates = append(dq.predicates, ps...)
+	return dq
 }
 
 // Limit adds a limit step to the query.
-func (deq *DentalExpenseQuery) Limit(limit int) *DentalExpenseQuery {
-	deq.limit = &limit
-	return deq
+func (dq *DentalexpenseQuery) Limit(limit int) *DentalexpenseQuery {
+	dq.limit = &limit
+	return dq
 }
 
 // Offset adds an offset step to the query.
-func (deq *DentalExpenseQuery) Offset(offset int) *DentalExpenseQuery {
-	deq.offset = &offset
-	return deq
+func (dq *DentalexpenseQuery) Offset(offset int) *DentalexpenseQuery {
+	dq.offset = &offset
+	return dq
 }
 
 // Order adds an order step to the query.
-func (deq *DentalExpenseQuery) Order(o ...OrderFunc) *DentalExpenseQuery {
-	deq.order = append(deq.order, o...)
-	return deq
+func (dq *DentalexpenseQuery) Order(o ...OrderFunc) *DentalexpenseQuery {
+	dq.order = append(dq.order, o...)
+	return dq
 }
 
 // QueryNurse chains the current query on the nurse edge.
-func (deq *DentalExpenseQuery) QueryNurse() *NurseQuery {
-	query := &NurseQuery{config: deq.config}
+func (dq *DentalexpenseQuery) QueryNurse() *NurseQuery {
+	query := &NurseQuery{config: dq.config}
 	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
-		if err := deq.prepareQuery(ctx); err != nil {
+		if err := dq.prepareQuery(ctx); err != nil {
 			return nil, err
 		}
 		step := sqlgraph.NewStep(
-			sqlgraph.From(dentalexpense.Table, dentalexpense.FieldID, deq.sqlQuery()),
+			sqlgraph.From(dentalexpense.Table, dentalexpense.FieldID, dq.sqlQuery()),
 			sqlgraph.To(nurse.Table, nurse.FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, dentalexpense.NurseTable, dentalexpense.NurseColumn),
 		)
-		fromU = sqlgraph.SetNeighbors(deq.driver.Dialect(), step)
+		fromU = sqlgraph.SetNeighbors(dq.driver.Dialect(), step)
 		return fromU, nil
 	}
 	return query
 }
 
 // QueryMedicalfile chains the current query on the medicalfile edge.
-func (deq *DentalExpenseQuery) QueryMedicalfile() *MedicalfileQuery {
-	query := &MedicalfileQuery{config: deq.config}
+func (dq *DentalexpenseQuery) QueryMedicalfile() *MedicalfileQuery {
+	query := &MedicalfileQuery{config: dq.config}
 	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
-		if err := deq.prepareQuery(ctx); err != nil {
+		if err := dq.prepareQuery(ctx); err != nil {
 			return nil, err
 		}
 		step := sqlgraph.NewStep(
-			sqlgraph.From(dentalexpense.Table, dentalexpense.FieldID, deq.sqlQuery()),
+			sqlgraph.From(dentalexpense.Table, dentalexpense.FieldID, dq.sqlQuery()),
 			sqlgraph.To(medicalfile.Table, medicalfile.FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, dentalexpense.MedicalfileTable, dentalexpense.MedicalfileColumn),
 		)
-		fromU = sqlgraph.SetNeighbors(deq.driver.Dialect(), step)
+		fromU = sqlgraph.SetNeighbors(dq.driver.Dialect(), step)
 		return fromU, nil
 	}
 	return query
 }
 
 // QueryPricetype chains the current query on the pricetype edge.
-func (deq *DentalExpenseQuery) QueryPricetype() *PriceTypeQuery {
-	query := &PriceTypeQuery{config: deq.config}
+func (dq *DentalexpenseQuery) QueryPricetype() *PricetypeQuery {
+	query := &PricetypeQuery{config: dq.config}
 	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
-		if err := deq.prepareQuery(ctx); err != nil {
+		if err := dq.prepareQuery(ctx); err != nil {
 			return nil, err
 		}
 		step := sqlgraph.NewStep(
-			sqlgraph.From(dentalexpense.Table, dentalexpense.FieldID, deq.sqlQuery()),
+			sqlgraph.From(dentalexpense.Table, dentalexpense.FieldID, dq.sqlQuery()),
 			sqlgraph.To(pricetype.Table, pricetype.FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, dentalexpense.PricetypeTable, dentalexpense.PricetypeColumn),
 		)
-		fromU = sqlgraph.SetNeighbors(deq.driver.Dialect(), step)
+		fromU = sqlgraph.SetNeighbors(dq.driver.Dialect(), step)
 		return fromU, nil
 	}
 	return query
 }
 
-// First returns the first DentalExpense entity in the query. Returns *NotFoundError when no dentalexpense was found.
-func (deq *DentalExpenseQuery) First(ctx context.Context) (*DentalExpense, error) {
-	des, err := deq.Limit(1).All(ctx)
+// First returns the first Dentalexpense entity in the query. Returns *NotFoundError when no dentalexpense was found.
+func (dq *DentalexpenseQuery) First(ctx context.Context) (*Dentalexpense, error) {
+	ds, err := dq.Limit(1).All(ctx)
 	if err != nil {
 		return nil, err
 	}
-	if len(des) == 0 {
+	if len(ds) == 0 {
 		return nil, &NotFoundError{dentalexpense.Label}
 	}
-	return des[0], nil
+	return ds[0], nil
 }
 
 // FirstX is like First, but panics if an error occurs.
-func (deq *DentalExpenseQuery) FirstX(ctx context.Context) *DentalExpense {
-	de, err := deq.First(ctx)
+func (dq *DentalexpenseQuery) FirstX(ctx context.Context) *Dentalexpense {
+	d, err := dq.First(ctx)
 	if err != nil && !IsNotFound(err) {
 		panic(err)
 	}
-	return de
+	return d
 }
 
-// FirstID returns the first DentalExpense id in the query. Returns *NotFoundError when no id was found.
-func (deq *DentalExpenseQuery) FirstID(ctx context.Context) (id int, err error) {
+// FirstID returns the first Dentalexpense id in the query. Returns *NotFoundError when no id was found.
+func (dq *DentalexpenseQuery) FirstID(ctx context.Context) (id int, err error) {
 	var ids []int
-	if ids, err = deq.Limit(1).IDs(ctx); err != nil {
+	if ids, err = dq.Limit(1).IDs(ctx); err != nil {
 		return
 	}
 	if len(ids) == 0 {
@@ -149,23 +149,23 @@ func (deq *DentalExpenseQuery) FirstID(ctx context.Context) (id int, err error) 
 }
 
 // FirstXID is like FirstID, but panics if an error occurs.
-func (deq *DentalExpenseQuery) FirstXID(ctx context.Context) int {
-	id, err := deq.FirstID(ctx)
+func (dq *DentalexpenseQuery) FirstXID(ctx context.Context) int {
+	id, err := dq.FirstID(ctx)
 	if err != nil && !IsNotFound(err) {
 		panic(err)
 	}
 	return id
 }
 
-// Only returns the only DentalExpense entity in the query, returns an error if not exactly one entity was returned.
-func (deq *DentalExpenseQuery) Only(ctx context.Context) (*DentalExpense, error) {
-	des, err := deq.Limit(2).All(ctx)
+// Only returns the only Dentalexpense entity in the query, returns an error if not exactly one entity was returned.
+func (dq *DentalexpenseQuery) Only(ctx context.Context) (*Dentalexpense, error) {
+	ds, err := dq.Limit(2).All(ctx)
 	if err != nil {
 		return nil, err
 	}
-	switch len(des) {
+	switch len(ds) {
 	case 1:
-		return des[0], nil
+		return ds[0], nil
 	case 0:
 		return nil, &NotFoundError{dentalexpense.Label}
 	default:
@@ -174,18 +174,18 @@ func (deq *DentalExpenseQuery) Only(ctx context.Context) (*DentalExpense, error)
 }
 
 // OnlyX is like Only, but panics if an error occurs.
-func (deq *DentalExpenseQuery) OnlyX(ctx context.Context) *DentalExpense {
-	de, err := deq.Only(ctx)
+func (dq *DentalexpenseQuery) OnlyX(ctx context.Context) *Dentalexpense {
+	d, err := dq.Only(ctx)
 	if err != nil {
 		panic(err)
 	}
-	return de
+	return d
 }
 
-// OnlyID returns the only DentalExpense id in the query, returns an error if not exactly one id was returned.
-func (deq *DentalExpenseQuery) OnlyID(ctx context.Context) (id int, err error) {
+// OnlyID returns the only Dentalexpense id in the query, returns an error if not exactly one id was returned.
+func (dq *DentalexpenseQuery) OnlyID(ctx context.Context) (id int, err error) {
 	var ids []int
-	if ids, err = deq.Limit(2).IDs(ctx); err != nil {
+	if ids, err = dq.Limit(2).IDs(ctx); err != nil {
 		return
 	}
 	switch len(ids) {
@@ -200,43 +200,43 @@ func (deq *DentalExpenseQuery) OnlyID(ctx context.Context) (id int, err error) {
 }
 
 // OnlyIDX is like OnlyID, but panics if an error occurs.
-func (deq *DentalExpenseQuery) OnlyIDX(ctx context.Context) int {
-	id, err := deq.OnlyID(ctx)
+func (dq *DentalexpenseQuery) OnlyIDX(ctx context.Context) int {
+	id, err := dq.OnlyID(ctx)
 	if err != nil {
 		panic(err)
 	}
 	return id
 }
 
-// All executes the query and returns a list of DentalExpenses.
-func (deq *DentalExpenseQuery) All(ctx context.Context) ([]*DentalExpense, error) {
-	if err := deq.prepareQuery(ctx); err != nil {
+// All executes the query and returns a list of Dentalexpenses.
+func (dq *DentalexpenseQuery) All(ctx context.Context) ([]*Dentalexpense, error) {
+	if err := dq.prepareQuery(ctx); err != nil {
 		return nil, err
 	}
-	return deq.sqlAll(ctx)
+	return dq.sqlAll(ctx)
 }
 
 // AllX is like All, but panics if an error occurs.
-func (deq *DentalExpenseQuery) AllX(ctx context.Context) []*DentalExpense {
-	des, err := deq.All(ctx)
+func (dq *DentalexpenseQuery) AllX(ctx context.Context) []*Dentalexpense {
+	ds, err := dq.All(ctx)
 	if err != nil {
 		panic(err)
 	}
-	return des
+	return ds
 }
 
-// IDs executes the query and returns a list of DentalExpense ids.
-func (deq *DentalExpenseQuery) IDs(ctx context.Context) ([]int, error) {
+// IDs executes the query and returns a list of Dentalexpense ids.
+func (dq *DentalexpenseQuery) IDs(ctx context.Context) ([]int, error) {
 	var ids []int
-	if err := deq.Select(dentalexpense.FieldID).Scan(ctx, &ids); err != nil {
+	if err := dq.Select(dentalexpense.FieldID).Scan(ctx, &ids); err != nil {
 		return nil, err
 	}
 	return ids, nil
 }
 
 // IDsX is like IDs, but panics if an error occurs.
-func (deq *DentalExpenseQuery) IDsX(ctx context.Context) []int {
-	ids, err := deq.IDs(ctx)
+func (dq *DentalexpenseQuery) IDsX(ctx context.Context) []int {
+	ids, err := dq.IDs(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -244,16 +244,16 @@ func (deq *DentalExpenseQuery) IDsX(ctx context.Context) []int {
 }
 
 // Count returns the count of the given query.
-func (deq *DentalExpenseQuery) Count(ctx context.Context) (int, error) {
-	if err := deq.prepareQuery(ctx); err != nil {
+func (dq *DentalexpenseQuery) Count(ctx context.Context) (int, error) {
+	if err := dq.prepareQuery(ctx); err != nil {
 		return 0, err
 	}
-	return deq.sqlCount(ctx)
+	return dq.sqlCount(ctx)
 }
 
 // CountX is like Count, but panics if an error occurs.
-func (deq *DentalExpenseQuery) CountX(ctx context.Context) int {
-	count, err := deq.Count(ctx)
+func (dq *DentalexpenseQuery) CountX(ctx context.Context) int {
+	count, err := dq.Count(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -261,16 +261,16 @@ func (deq *DentalExpenseQuery) CountX(ctx context.Context) int {
 }
 
 // Exist returns true if the query has elements in the graph.
-func (deq *DentalExpenseQuery) Exist(ctx context.Context) (bool, error) {
-	if err := deq.prepareQuery(ctx); err != nil {
+func (dq *DentalexpenseQuery) Exist(ctx context.Context) (bool, error) {
+	if err := dq.prepareQuery(ctx); err != nil {
 		return false, err
 	}
-	return deq.sqlExist(ctx)
+	return dq.sqlExist(ctx)
 }
 
 // ExistX is like Exist, but panics if an error occurs.
-func (deq *DentalExpenseQuery) ExistX(ctx context.Context) bool {
-	exist, err := deq.Exist(ctx)
+func (dq *DentalexpenseQuery) ExistX(ctx context.Context) bool {
+	exist, err := dq.Exist(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -279,51 +279,51 @@ func (deq *DentalExpenseQuery) ExistX(ctx context.Context) bool {
 
 // Clone returns a duplicate of the query builder, including all associated steps. It can be
 // used to prepare common query builders and use them differently after the clone is made.
-func (deq *DentalExpenseQuery) Clone() *DentalExpenseQuery {
-	return &DentalExpenseQuery{
-		config:     deq.config,
-		limit:      deq.limit,
-		offset:     deq.offset,
-		order:      append([]OrderFunc{}, deq.order...),
-		unique:     append([]string{}, deq.unique...),
-		predicates: append([]predicate.DentalExpense{}, deq.predicates...),
+func (dq *DentalexpenseQuery) Clone() *DentalexpenseQuery {
+	return &DentalexpenseQuery{
+		config:     dq.config,
+		limit:      dq.limit,
+		offset:     dq.offset,
+		order:      append([]OrderFunc{}, dq.order...),
+		unique:     append([]string{}, dq.unique...),
+		predicates: append([]predicate.Dentalexpense{}, dq.predicates...),
 		// clone intermediate query.
-		sql:  deq.sql.Clone(),
-		path: deq.path,
+		sql:  dq.sql.Clone(),
+		path: dq.path,
 	}
 }
 
 //  WithNurse tells the query-builder to eager-loads the nodes that are connected to
 // the "nurse" edge. The optional arguments used to configure the query builder of the edge.
-func (deq *DentalExpenseQuery) WithNurse(opts ...func(*NurseQuery)) *DentalExpenseQuery {
-	query := &NurseQuery{config: deq.config}
+func (dq *DentalexpenseQuery) WithNurse(opts ...func(*NurseQuery)) *DentalexpenseQuery {
+	query := &NurseQuery{config: dq.config}
 	for _, opt := range opts {
 		opt(query)
 	}
-	deq.withNurse = query
-	return deq
+	dq.withNurse = query
+	return dq
 }
 
 //  WithMedicalfile tells the query-builder to eager-loads the nodes that are connected to
 // the "medicalfile" edge. The optional arguments used to configure the query builder of the edge.
-func (deq *DentalExpenseQuery) WithMedicalfile(opts ...func(*MedicalfileQuery)) *DentalExpenseQuery {
-	query := &MedicalfileQuery{config: deq.config}
+func (dq *DentalexpenseQuery) WithMedicalfile(opts ...func(*MedicalfileQuery)) *DentalexpenseQuery {
+	query := &MedicalfileQuery{config: dq.config}
 	for _, opt := range opts {
 		opt(query)
 	}
-	deq.withMedicalfile = query
-	return deq
+	dq.withMedicalfile = query
+	return dq
 }
 
 //  WithPricetype tells the query-builder to eager-loads the nodes that are connected to
 // the "pricetype" edge. The optional arguments used to configure the query builder of the edge.
-func (deq *DentalExpenseQuery) WithPricetype(opts ...func(*PriceTypeQuery)) *DentalExpenseQuery {
-	query := &PriceTypeQuery{config: deq.config}
+func (dq *DentalexpenseQuery) WithPricetype(opts ...func(*PricetypeQuery)) *DentalexpenseQuery {
+	query := &PricetypeQuery{config: dq.config}
 	for _, opt := range opts {
 		opt(query)
 	}
-	deq.withPricetype = query
-	return deq
+	dq.withPricetype = query
+	return dq
 }
 
 // GroupBy used to group vertices by one or more fields/columns.
@@ -332,23 +332,23 @@ func (deq *DentalExpenseQuery) WithPricetype(opts ...func(*PriceTypeQuery)) *Den
 // Example:
 //
 //	var v []struct {
-//		Tax string `json:"tax,omitempty"`
+//		Name string `json:"Name,omitempty"`
 //		Count int `json:"count,omitempty"`
 //	}
 //
-//	client.DentalExpense.Query().
-//		GroupBy(dentalexpense.FieldTax).
+//	client.Dentalexpense.Query().
+//		GroupBy(dentalexpense.FieldName).
 //		Aggregate(ent.Count()).
 //		Scan(ctx, &v)
 //
-func (deq *DentalExpenseQuery) GroupBy(field string, fields ...string) *DentalExpenseGroupBy {
-	group := &DentalExpenseGroupBy{config: deq.config}
+func (dq *DentalexpenseQuery) GroupBy(field string, fields ...string) *DentalexpenseGroupBy {
+	group := &DentalexpenseGroupBy{config: dq.config}
 	group.fields = append([]string{field}, fields...)
 	group.path = func(ctx context.Context) (prev *sql.Selector, err error) {
-		if err := deq.prepareQuery(ctx); err != nil {
+		if err := dq.prepareQuery(ctx); err != nil {
 			return nil, err
 		}
-		return deq.sqlQuery(), nil
+		return dq.sqlQuery(), nil
 	}
 	return group
 }
@@ -358,55 +358,55 @@ func (deq *DentalExpenseQuery) GroupBy(field string, fields ...string) *DentalEx
 // Example:
 //
 //	var v []struct {
-//		Tax string `json:"tax,omitempty"`
+//		Name string `json:"Name,omitempty"`
 //	}
 //
-//	client.DentalExpense.Query().
-//		Select(dentalexpense.FieldTax).
+//	client.Dentalexpense.Query().
+//		Select(dentalexpense.FieldName).
 //		Scan(ctx, &v)
 //
-func (deq *DentalExpenseQuery) Select(field string, fields ...string) *DentalExpenseSelect {
-	selector := &DentalExpenseSelect{config: deq.config}
+func (dq *DentalexpenseQuery) Select(field string, fields ...string) *DentalexpenseSelect {
+	selector := &DentalexpenseSelect{config: dq.config}
 	selector.fields = append([]string{field}, fields...)
 	selector.path = func(ctx context.Context) (prev *sql.Selector, err error) {
-		if err := deq.prepareQuery(ctx); err != nil {
+		if err := dq.prepareQuery(ctx); err != nil {
 			return nil, err
 		}
-		return deq.sqlQuery(), nil
+		return dq.sqlQuery(), nil
 	}
 	return selector
 }
 
-func (deq *DentalExpenseQuery) prepareQuery(ctx context.Context) error {
-	if deq.path != nil {
-		prev, err := deq.path(ctx)
+func (dq *DentalexpenseQuery) prepareQuery(ctx context.Context) error {
+	if dq.path != nil {
+		prev, err := dq.path(ctx)
 		if err != nil {
 			return err
 		}
-		deq.sql = prev
+		dq.sql = prev
 	}
 	return nil
 }
 
-func (deq *DentalExpenseQuery) sqlAll(ctx context.Context) ([]*DentalExpense, error) {
+func (dq *DentalexpenseQuery) sqlAll(ctx context.Context) ([]*Dentalexpense, error) {
 	var (
-		nodes       = []*DentalExpense{}
-		withFKs     = deq.withFKs
-		_spec       = deq.querySpec()
+		nodes       = []*Dentalexpense{}
+		withFKs     = dq.withFKs
+		_spec       = dq.querySpec()
 		loadedTypes = [3]bool{
-			deq.withNurse != nil,
-			deq.withMedicalfile != nil,
-			deq.withPricetype != nil,
+			dq.withNurse != nil,
+			dq.withMedicalfile != nil,
+			dq.withPricetype != nil,
 		}
 	)
-	if deq.withNurse != nil || deq.withMedicalfile != nil || deq.withPricetype != nil {
+	if dq.withNurse != nil || dq.withMedicalfile != nil || dq.withPricetype != nil {
 		withFKs = true
 	}
 	if withFKs {
 		_spec.Node.Columns = append(_spec.Node.Columns, dentalexpense.ForeignKeys...)
 	}
 	_spec.ScanValues = func() []interface{} {
-		node := &DentalExpense{config: deq.config}
+		node := &Dentalexpense{config: dq.config}
 		nodes = append(nodes, node)
 		values := node.scanValues()
 		if withFKs {
@@ -422,16 +422,16 @@ func (deq *DentalExpenseQuery) sqlAll(ctx context.Context) ([]*DentalExpense, er
 		node.Edges.loadedTypes = loadedTypes
 		return node.assignValues(values...)
 	}
-	if err := sqlgraph.QueryNodes(ctx, deq.driver, _spec); err != nil {
+	if err := sqlgraph.QueryNodes(ctx, dq.driver, _spec); err != nil {
 		return nil, err
 	}
 	if len(nodes) == 0 {
 		return nodes, nil
 	}
 
-	if query := deq.withNurse; query != nil {
+	if query := dq.withNurse; query != nil {
 		ids := make([]int, 0, len(nodes))
-		nodeids := make(map[int][]*DentalExpense)
+		nodeids := make(map[int][]*Dentalexpense)
 		for i := range nodes {
 			if fk := nodes[i].nurse_id; fk != nil {
 				ids = append(ids, *fk)
@@ -454,9 +454,9 @@ func (deq *DentalExpenseQuery) sqlAll(ctx context.Context) ([]*DentalExpense, er
 		}
 	}
 
-	if query := deq.withMedicalfile; query != nil {
+	if query := dq.withMedicalfile; query != nil {
 		ids := make([]int, 0, len(nodes))
-		nodeids := make(map[int][]*DentalExpense)
+		nodeids := make(map[int][]*Dentalexpense)
 		for i := range nodes {
 			if fk := nodes[i].medicalfile_id; fk != nil {
 				ids = append(ids, *fk)
@@ -479,9 +479,9 @@ func (deq *DentalExpenseQuery) sqlAll(ctx context.Context) ([]*DentalExpense, er
 		}
 	}
 
-	if query := deq.withPricetype; query != nil {
+	if query := dq.withPricetype; query != nil {
 		ids := make([]int, 0, len(nodes))
-		nodeids := make(map[int][]*DentalExpense)
+		nodeids := make(map[int][]*Dentalexpense)
 		for i := range nodes {
 			if fk := nodes[i].pricetype_id; fk != nil {
 				ids = append(ids, *fk)
@@ -507,20 +507,20 @@ func (deq *DentalExpenseQuery) sqlAll(ctx context.Context) ([]*DentalExpense, er
 	return nodes, nil
 }
 
-func (deq *DentalExpenseQuery) sqlCount(ctx context.Context) (int, error) {
-	_spec := deq.querySpec()
-	return sqlgraph.CountNodes(ctx, deq.driver, _spec)
+func (dq *DentalexpenseQuery) sqlCount(ctx context.Context) (int, error) {
+	_spec := dq.querySpec()
+	return sqlgraph.CountNodes(ctx, dq.driver, _spec)
 }
 
-func (deq *DentalExpenseQuery) sqlExist(ctx context.Context) (bool, error) {
-	n, err := deq.sqlCount(ctx)
+func (dq *DentalexpenseQuery) sqlExist(ctx context.Context) (bool, error) {
+	n, err := dq.sqlCount(ctx)
 	if err != nil {
 		return false, fmt.Errorf("ent: check existence: %v", err)
 	}
 	return n > 0, nil
 }
 
-func (deq *DentalExpenseQuery) querySpec() *sqlgraph.QuerySpec {
+func (dq *DentalexpenseQuery) querySpec() *sqlgraph.QuerySpec {
 	_spec := &sqlgraph.QuerySpec{
 		Node: &sqlgraph.NodeSpec{
 			Table:   dentalexpense.Table,
@@ -530,23 +530,23 @@ func (deq *DentalExpenseQuery) querySpec() *sqlgraph.QuerySpec {
 				Column: dentalexpense.FieldID,
 			},
 		},
-		From:   deq.sql,
+		From:   dq.sql,
 		Unique: true,
 	}
-	if ps := deq.predicates; len(ps) > 0 {
+	if ps := dq.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if limit := deq.limit; limit != nil {
+	if limit := dq.limit; limit != nil {
 		_spec.Limit = *limit
 	}
-	if offset := deq.offset; offset != nil {
+	if offset := dq.offset; offset != nil {
 		_spec.Offset = *offset
 	}
-	if ps := deq.order; len(ps) > 0 {
+	if ps := dq.order; len(ps) > 0 {
 		_spec.Order = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
@@ -556,33 +556,33 @@ func (deq *DentalExpenseQuery) querySpec() *sqlgraph.QuerySpec {
 	return _spec
 }
 
-func (deq *DentalExpenseQuery) sqlQuery() *sql.Selector {
-	builder := sql.Dialect(deq.driver.Dialect())
+func (dq *DentalexpenseQuery) sqlQuery() *sql.Selector {
+	builder := sql.Dialect(dq.driver.Dialect())
 	t1 := builder.Table(dentalexpense.Table)
 	selector := builder.Select(t1.Columns(dentalexpense.Columns...)...).From(t1)
-	if deq.sql != nil {
-		selector = deq.sql
+	if dq.sql != nil {
+		selector = dq.sql
 		selector.Select(selector.Columns(dentalexpense.Columns...)...)
 	}
-	for _, p := range deq.predicates {
+	for _, p := range dq.predicates {
 		p(selector)
 	}
-	for _, p := range deq.order {
+	for _, p := range dq.order {
 		p(selector)
 	}
-	if offset := deq.offset; offset != nil {
+	if offset := dq.offset; offset != nil {
 		// limit is mandatory for offset clause. We start
 		// with default value, and override it below if needed.
 		selector.Offset(*offset).Limit(math.MaxInt32)
 	}
-	if limit := deq.limit; limit != nil {
+	if limit := dq.limit; limit != nil {
 		selector.Limit(*limit)
 	}
 	return selector
 }
 
-// DentalExpenseGroupBy is the builder for group-by DentalExpense entities.
-type DentalExpenseGroupBy struct {
+// DentalexpenseGroupBy is the builder for group-by Dentalexpense entities.
+type DentalexpenseGroupBy struct {
 	config
 	fields []string
 	fns    []AggregateFunc
@@ -592,43 +592,43 @@ type DentalExpenseGroupBy struct {
 }
 
 // Aggregate adds the given aggregation functions to the group-by query.
-func (degb *DentalExpenseGroupBy) Aggregate(fns ...AggregateFunc) *DentalExpenseGroupBy {
-	degb.fns = append(degb.fns, fns...)
-	return degb
+func (dgb *DentalexpenseGroupBy) Aggregate(fns ...AggregateFunc) *DentalexpenseGroupBy {
+	dgb.fns = append(dgb.fns, fns...)
+	return dgb
 }
 
 // Scan applies the group-by query and scan the result into the given value.
-func (degb *DentalExpenseGroupBy) Scan(ctx context.Context, v interface{}) error {
-	query, err := degb.path(ctx)
+func (dgb *DentalexpenseGroupBy) Scan(ctx context.Context, v interface{}) error {
+	query, err := dgb.path(ctx)
 	if err != nil {
 		return err
 	}
-	degb.sql = query
-	return degb.sqlScan(ctx, v)
+	dgb.sql = query
+	return dgb.sqlScan(ctx, v)
 }
 
 // ScanX is like Scan, but panics if an error occurs.
-func (degb *DentalExpenseGroupBy) ScanX(ctx context.Context, v interface{}) {
-	if err := degb.Scan(ctx, v); err != nil {
+func (dgb *DentalexpenseGroupBy) ScanX(ctx context.Context, v interface{}) {
+	if err := dgb.Scan(ctx, v); err != nil {
 		panic(err)
 	}
 }
 
 // Strings returns list of strings from group-by. It is only allowed when querying group-by with one field.
-func (degb *DentalExpenseGroupBy) Strings(ctx context.Context) ([]string, error) {
-	if len(degb.fields) > 1 {
-		return nil, errors.New("ent: DentalExpenseGroupBy.Strings is not achievable when grouping more than 1 field")
+func (dgb *DentalexpenseGroupBy) Strings(ctx context.Context) ([]string, error) {
+	if len(dgb.fields) > 1 {
+		return nil, errors.New("ent: DentalexpenseGroupBy.Strings is not achievable when grouping more than 1 field")
 	}
 	var v []string
-	if err := degb.Scan(ctx, &v); err != nil {
+	if err := dgb.Scan(ctx, &v); err != nil {
 		return nil, err
 	}
 	return v, nil
 }
 
 // StringsX is like Strings, but panics if an error occurs.
-func (degb *DentalExpenseGroupBy) StringsX(ctx context.Context) []string {
-	v, err := degb.Strings(ctx)
+func (dgb *DentalexpenseGroupBy) StringsX(ctx context.Context) []string {
+	v, err := dgb.Strings(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -636,9 +636,9 @@ func (degb *DentalExpenseGroupBy) StringsX(ctx context.Context) []string {
 }
 
 // String returns a single string from group-by. It is only allowed when querying group-by with one field.
-func (degb *DentalExpenseGroupBy) String(ctx context.Context) (_ string, err error) {
+func (dgb *DentalexpenseGroupBy) String(ctx context.Context) (_ string, err error) {
 	var v []string
-	if v, err = degb.Strings(ctx); err != nil {
+	if v, err = dgb.Strings(ctx); err != nil {
 		return
 	}
 	switch len(v) {
@@ -647,14 +647,14 @@ func (degb *DentalExpenseGroupBy) String(ctx context.Context) (_ string, err err
 	case 0:
 		err = &NotFoundError{dentalexpense.Label}
 	default:
-		err = fmt.Errorf("ent: DentalExpenseGroupBy.Strings returned %d results when one was expected", len(v))
+		err = fmt.Errorf("ent: DentalexpenseGroupBy.Strings returned %d results when one was expected", len(v))
 	}
 	return
 }
 
 // StringX is like String, but panics if an error occurs.
-func (degb *DentalExpenseGroupBy) StringX(ctx context.Context) string {
-	v, err := degb.String(ctx)
+func (dgb *DentalexpenseGroupBy) StringX(ctx context.Context) string {
+	v, err := dgb.String(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -662,20 +662,20 @@ func (degb *DentalExpenseGroupBy) StringX(ctx context.Context) string {
 }
 
 // Ints returns list of ints from group-by. It is only allowed when querying group-by with one field.
-func (degb *DentalExpenseGroupBy) Ints(ctx context.Context) ([]int, error) {
-	if len(degb.fields) > 1 {
-		return nil, errors.New("ent: DentalExpenseGroupBy.Ints is not achievable when grouping more than 1 field")
+func (dgb *DentalexpenseGroupBy) Ints(ctx context.Context) ([]int, error) {
+	if len(dgb.fields) > 1 {
+		return nil, errors.New("ent: DentalexpenseGroupBy.Ints is not achievable when grouping more than 1 field")
 	}
 	var v []int
-	if err := degb.Scan(ctx, &v); err != nil {
+	if err := dgb.Scan(ctx, &v); err != nil {
 		return nil, err
 	}
 	return v, nil
 }
 
 // IntsX is like Ints, but panics if an error occurs.
-func (degb *DentalExpenseGroupBy) IntsX(ctx context.Context) []int {
-	v, err := degb.Ints(ctx)
+func (dgb *DentalexpenseGroupBy) IntsX(ctx context.Context) []int {
+	v, err := dgb.Ints(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -683,9 +683,9 @@ func (degb *DentalExpenseGroupBy) IntsX(ctx context.Context) []int {
 }
 
 // Int returns a single int from group-by. It is only allowed when querying group-by with one field.
-func (degb *DentalExpenseGroupBy) Int(ctx context.Context) (_ int, err error) {
+func (dgb *DentalexpenseGroupBy) Int(ctx context.Context) (_ int, err error) {
 	var v []int
-	if v, err = degb.Ints(ctx); err != nil {
+	if v, err = dgb.Ints(ctx); err != nil {
 		return
 	}
 	switch len(v) {
@@ -694,14 +694,14 @@ func (degb *DentalExpenseGroupBy) Int(ctx context.Context) (_ int, err error) {
 	case 0:
 		err = &NotFoundError{dentalexpense.Label}
 	default:
-		err = fmt.Errorf("ent: DentalExpenseGroupBy.Ints returned %d results when one was expected", len(v))
+		err = fmt.Errorf("ent: DentalexpenseGroupBy.Ints returned %d results when one was expected", len(v))
 	}
 	return
 }
 
 // IntX is like Int, but panics if an error occurs.
-func (degb *DentalExpenseGroupBy) IntX(ctx context.Context) int {
-	v, err := degb.Int(ctx)
+func (dgb *DentalexpenseGroupBy) IntX(ctx context.Context) int {
+	v, err := dgb.Int(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -709,20 +709,20 @@ func (degb *DentalExpenseGroupBy) IntX(ctx context.Context) int {
 }
 
 // Float64s returns list of float64s from group-by. It is only allowed when querying group-by with one field.
-func (degb *DentalExpenseGroupBy) Float64s(ctx context.Context) ([]float64, error) {
-	if len(degb.fields) > 1 {
-		return nil, errors.New("ent: DentalExpenseGroupBy.Float64s is not achievable when grouping more than 1 field")
+func (dgb *DentalexpenseGroupBy) Float64s(ctx context.Context) ([]float64, error) {
+	if len(dgb.fields) > 1 {
+		return nil, errors.New("ent: DentalexpenseGroupBy.Float64s is not achievable when grouping more than 1 field")
 	}
 	var v []float64
-	if err := degb.Scan(ctx, &v); err != nil {
+	if err := dgb.Scan(ctx, &v); err != nil {
 		return nil, err
 	}
 	return v, nil
 }
 
 // Float64sX is like Float64s, but panics if an error occurs.
-func (degb *DentalExpenseGroupBy) Float64sX(ctx context.Context) []float64 {
-	v, err := degb.Float64s(ctx)
+func (dgb *DentalexpenseGroupBy) Float64sX(ctx context.Context) []float64 {
+	v, err := dgb.Float64s(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -730,9 +730,9 @@ func (degb *DentalExpenseGroupBy) Float64sX(ctx context.Context) []float64 {
 }
 
 // Float64 returns a single float64 from group-by. It is only allowed when querying group-by with one field.
-func (degb *DentalExpenseGroupBy) Float64(ctx context.Context) (_ float64, err error) {
+func (dgb *DentalexpenseGroupBy) Float64(ctx context.Context) (_ float64, err error) {
 	var v []float64
-	if v, err = degb.Float64s(ctx); err != nil {
+	if v, err = dgb.Float64s(ctx); err != nil {
 		return
 	}
 	switch len(v) {
@@ -741,14 +741,14 @@ func (degb *DentalExpenseGroupBy) Float64(ctx context.Context) (_ float64, err e
 	case 0:
 		err = &NotFoundError{dentalexpense.Label}
 	default:
-		err = fmt.Errorf("ent: DentalExpenseGroupBy.Float64s returned %d results when one was expected", len(v))
+		err = fmt.Errorf("ent: DentalexpenseGroupBy.Float64s returned %d results when one was expected", len(v))
 	}
 	return
 }
 
 // Float64X is like Float64, but panics if an error occurs.
-func (degb *DentalExpenseGroupBy) Float64X(ctx context.Context) float64 {
-	v, err := degb.Float64(ctx)
+func (dgb *DentalexpenseGroupBy) Float64X(ctx context.Context) float64 {
+	v, err := dgb.Float64(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -756,20 +756,20 @@ func (degb *DentalExpenseGroupBy) Float64X(ctx context.Context) float64 {
 }
 
 // Bools returns list of bools from group-by. It is only allowed when querying group-by with one field.
-func (degb *DentalExpenseGroupBy) Bools(ctx context.Context) ([]bool, error) {
-	if len(degb.fields) > 1 {
-		return nil, errors.New("ent: DentalExpenseGroupBy.Bools is not achievable when grouping more than 1 field")
+func (dgb *DentalexpenseGroupBy) Bools(ctx context.Context) ([]bool, error) {
+	if len(dgb.fields) > 1 {
+		return nil, errors.New("ent: DentalexpenseGroupBy.Bools is not achievable when grouping more than 1 field")
 	}
 	var v []bool
-	if err := degb.Scan(ctx, &v); err != nil {
+	if err := dgb.Scan(ctx, &v); err != nil {
 		return nil, err
 	}
 	return v, nil
 }
 
 // BoolsX is like Bools, but panics if an error occurs.
-func (degb *DentalExpenseGroupBy) BoolsX(ctx context.Context) []bool {
-	v, err := degb.Bools(ctx)
+func (dgb *DentalexpenseGroupBy) BoolsX(ctx context.Context) []bool {
+	v, err := dgb.Bools(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -777,9 +777,9 @@ func (degb *DentalExpenseGroupBy) BoolsX(ctx context.Context) []bool {
 }
 
 // Bool returns a single bool from group-by. It is only allowed when querying group-by with one field.
-func (degb *DentalExpenseGroupBy) Bool(ctx context.Context) (_ bool, err error) {
+func (dgb *DentalexpenseGroupBy) Bool(ctx context.Context) (_ bool, err error) {
 	var v []bool
-	if v, err = degb.Bools(ctx); err != nil {
+	if v, err = dgb.Bools(ctx); err != nil {
 		return
 	}
 	switch len(v) {
@@ -788,42 +788,42 @@ func (degb *DentalExpenseGroupBy) Bool(ctx context.Context) (_ bool, err error) 
 	case 0:
 		err = &NotFoundError{dentalexpense.Label}
 	default:
-		err = fmt.Errorf("ent: DentalExpenseGroupBy.Bools returned %d results when one was expected", len(v))
+		err = fmt.Errorf("ent: DentalexpenseGroupBy.Bools returned %d results when one was expected", len(v))
 	}
 	return
 }
 
 // BoolX is like Bool, but panics if an error occurs.
-func (degb *DentalExpenseGroupBy) BoolX(ctx context.Context) bool {
-	v, err := degb.Bool(ctx)
+func (dgb *DentalexpenseGroupBy) BoolX(ctx context.Context) bool {
+	v, err := dgb.Bool(ctx)
 	if err != nil {
 		panic(err)
 	}
 	return v
 }
 
-func (degb *DentalExpenseGroupBy) sqlScan(ctx context.Context, v interface{}) error {
+func (dgb *DentalexpenseGroupBy) sqlScan(ctx context.Context, v interface{}) error {
 	rows := &sql.Rows{}
-	query, args := degb.sqlQuery().Query()
-	if err := degb.driver.Query(ctx, query, args, rows); err != nil {
+	query, args := dgb.sqlQuery().Query()
+	if err := dgb.driver.Query(ctx, query, args, rows); err != nil {
 		return err
 	}
 	defer rows.Close()
 	return sql.ScanSlice(rows, v)
 }
 
-func (degb *DentalExpenseGroupBy) sqlQuery() *sql.Selector {
-	selector := degb.sql
-	columns := make([]string, 0, len(degb.fields)+len(degb.fns))
-	columns = append(columns, degb.fields...)
-	for _, fn := range degb.fns {
+func (dgb *DentalexpenseGroupBy) sqlQuery() *sql.Selector {
+	selector := dgb.sql
+	columns := make([]string, 0, len(dgb.fields)+len(dgb.fns))
+	columns = append(columns, dgb.fields...)
+	for _, fn := range dgb.fns {
 		columns = append(columns, fn(selector))
 	}
-	return selector.Select(columns...).GroupBy(degb.fields...)
+	return selector.Select(columns...).GroupBy(dgb.fields...)
 }
 
-// DentalExpenseSelect is the builder for select fields of DentalExpense entities.
-type DentalExpenseSelect struct {
+// DentalexpenseSelect is the builder for select fields of Dentalexpense entities.
+type DentalexpenseSelect struct {
 	config
 	fields []string
 	// intermediate query (i.e. traversal path).
@@ -832,37 +832,37 @@ type DentalExpenseSelect struct {
 }
 
 // Scan applies the selector query and scan the result into the given value.
-func (des *DentalExpenseSelect) Scan(ctx context.Context, v interface{}) error {
-	query, err := des.path(ctx)
+func (ds *DentalexpenseSelect) Scan(ctx context.Context, v interface{}) error {
+	query, err := ds.path(ctx)
 	if err != nil {
 		return err
 	}
-	des.sql = query
-	return des.sqlScan(ctx, v)
+	ds.sql = query
+	return ds.sqlScan(ctx, v)
 }
 
 // ScanX is like Scan, but panics if an error occurs.
-func (des *DentalExpenseSelect) ScanX(ctx context.Context, v interface{}) {
-	if err := des.Scan(ctx, v); err != nil {
+func (ds *DentalexpenseSelect) ScanX(ctx context.Context, v interface{}) {
+	if err := ds.Scan(ctx, v); err != nil {
 		panic(err)
 	}
 }
 
 // Strings returns list of strings from selector. It is only allowed when selecting one field.
-func (des *DentalExpenseSelect) Strings(ctx context.Context) ([]string, error) {
-	if len(des.fields) > 1 {
-		return nil, errors.New("ent: DentalExpenseSelect.Strings is not achievable when selecting more than 1 field")
+func (ds *DentalexpenseSelect) Strings(ctx context.Context) ([]string, error) {
+	if len(ds.fields) > 1 {
+		return nil, errors.New("ent: DentalexpenseSelect.Strings is not achievable when selecting more than 1 field")
 	}
 	var v []string
-	if err := des.Scan(ctx, &v); err != nil {
+	if err := ds.Scan(ctx, &v); err != nil {
 		return nil, err
 	}
 	return v, nil
 }
 
 // StringsX is like Strings, but panics if an error occurs.
-func (des *DentalExpenseSelect) StringsX(ctx context.Context) []string {
-	v, err := des.Strings(ctx)
+func (ds *DentalexpenseSelect) StringsX(ctx context.Context) []string {
+	v, err := ds.Strings(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -870,9 +870,9 @@ func (des *DentalExpenseSelect) StringsX(ctx context.Context) []string {
 }
 
 // String returns a single string from selector. It is only allowed when selecting one field.
-func (des *DentalExpenseSelect) String(ctx context.Context) (_ string, err error) {
+func (ds *DentalexpenseSelect) String(ctx context.Context) (_ string, err error) {
 	var v []string
-	if v, err = des.Strings(ctx); err != nil {
+	if v, err = ds.Strings(ctx); err != nil {
 		return
 	}
 	switch len(v) {
@@ -881,14 +881,14 @@ func (des *DentalExpenseSelect) String(ctx context.Context) (_ string, err error
 	case 0:
 		err = &NotFoundError{dentalexpense.Label}
 	default:
-		err = fmt.Errorf("ent: DentalExpenseSelect.Strings returned %d results when one was expected", len(v))
+		err = fmt.Errorf("ent: DentalexpenseSelect.Strings returned %d results when one was expected", len(v))
 	}
 	return
 }
 
 // StringX is like String, but panics if an error occurs.
-func (des *DentalExpenseSelect) StringX(ctx context.Context) string {
-	v, err := des.String(ctx)
+func (ds *DentalexpenseSelect) StringX(ctx context.Context) string {
+	v, err := ds.String(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -896,20 +896,20 @@ func (des *DentalExpenseSelect) StringX(ctx context.Context) string {
 }
 
 // Ints returns list of ints from selector. It is only allowed when selecting one field.
-func (des *DentalExpenseSelect) Ints(ctx context.Context) ([]int, error) {
-	if len(des.fields) > 1 {
-		return nil, errors.New("ent: DentalExpenseSelect.Ints is not achievable when selecting more than 1 field")
+func (ds *DentalexpenseSelect) Ints(ctx context.Context) ([]int, error) {
+	if len(ds.fields) > 1 {
+		return nil, errors.New("ent: DentalexpenseSelect.Ints is not achievable when selecting more than 1 field")
 	}
 	var v []int
-	if err := des.Scan(ctx, &v); err != nil {
+	if err := ds.Scan(ctx, &v); err != nil {
 		return nil, err
 	}
 	return v, nil
 }
 
 // IntsX is like Ints, but panics if an error occurs.
-func (des *DentalExpenseSelect) IntsX(ctx context.Context) []int {
-	v, err := des.Ints(ctx)
+func (ds *DentalexpenseSelect) IntsX(ctx context.Context) []int {
+	v, err := ds.Ints(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -917,9 +917,9 @@ func (des *DentalExpenseSelect) IntsX(ctx context.Context) []int {
 }
 
 // Int returns a single int from selector. It is only allowed when selecting one field.
-func (des *DentalExpenseSelect) Int(ctx context.Context) (_ int, err error) {
+func (ds *DentalexpenseSelect) Int(ctx context.Context) (_ int, err error) {
 	var v []int
-	if v, err = des.Ints(ctx); err != nil {
+	if v, err = ds.Ints(ctx); err != nil {
 		return
 	}
 	switch len(v) {
@@ -928,14 +928,14 @@ func (des *DentalExpenseSelect) Int(ctx context.Context) (_ int, err error) {
 	case 0:
 		err = &NotFoundError{dentalexpense.Label}
 	default:
-		err = fmt.Errorf("ent: DentalExpenseSelect.Ints returned %d results when one was expected", len(v))
+		err = fmt.Errorf("ent: DentalexpenseSelect.Ints returned %d results when one was expected", len(v))
 	}
 	return
 }
 
 // IntX is like Int, but panics if an error occurs.
-func (des *DentalExpenseSelect) IntX(ctx context.Context) int {
-	v, err := des.Int(ctx)
+func (ds *DentalexpenseSelect) IntX(ctx context.Context) int {
+	v, err := ds.Int(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -943,20 +943,20 @@ func (des *DentalExpenseSelect) IntX(ctx context.Context) int {
 }
 
 // Float64s returns list of float64s from selector. It is only allowed when selecting one field.
-func (des *DentalExpenseSelect) Float64s(ctx context.Context) ([]float64, error) {
-	if len(des.fields) > 1 {
-		return nil, errors.New("ent: DentalExpenseSelect.Float64s is not achievable when selecting more than 1 field")
+func (ds *DentalexpenseSelect) Float64s(ctx context.Context) ([]float64, error) {
+	if len(ds.fields) > 1 {
+		return nil, errors.New("ent: DentalexpenseSelect.Float64s is not achievable when selecting more than 1 field")
 	}
 	var v []float64
-	if err := des.Scan(ctx, &v); err != nil {
+	if err := ds.Scan(ctx, &v); err != nil {
 		return nil, err
 	}
 	return v, nil
 }
 
 // Float64sX is like Float64s, but panics if an error occurs.
-func (des *DentalExpenseSelect) Float64sX(ctx context.Context) []float64 {
-	v, err := des.Float64s(ctx)
+func (ds *DentalexpenseSelect) Float64sX(ctx context.Context) []float64 {
+	v, err := ds.Float64s(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -964,9 +964,9 @@ func (des *DentalExpenseSelect) Float64sX(ctx context.Context) []float64 {
 }
 
 // Float64 returns a single float64 from selector. It is only allowed when selecting one field.
-func (des *DentalExpenseSelect) Float64(ctx context.Context) (_ float64, err error) {
+func (ds *DentalexpenseSelect) Float64(ctx context.Context) (_ float64, err error) {
 	var v []float64
-	if v, err = des.Float64s(ctx); err != nil {
+	if v, err = ds.Float64s(ctx); err != nil {
 		return
 	}
 	switch len(v) {
@@ -975,14 +975,14 @@ func (des *DentalExpenseSelect) Float64(ctx context.Context) (_ float64, err err
 	case 0:
 		err = &NotFoundError{dentalexpense.Label}
 	default:
-		err = fmt.Errorf("ent: DentalExpenseSelect.Float64s returned %d results when one was expected", len(v))
+		err = fmt.Errorf("ent: DentalexpenseSelect.Float64s returned %d results when one was expected", len(v))
 	}
 	return
 }
 
 // Float64X is like Float64, but panics if an error occurs.
-func (des *DentalExpenseSelect) Float64X(ctx context.Context) float64 {
-	v, err := des.Float64(ctx)
+func (ds *DentalexpenseSelect) Float64X(ctx context.Context) float64 {
+	v, err := ds.Float64(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -990,20 +990,20 @@ func (des *DentalExpenseSelect) Float64X(ctx context.Context) float64 {
 }
 
 // Bools returns list of bools from selector. It is only allowed when selecting one field.
-func (des *DentalExpenseSelect) Bools(ctx context.Context) ([]bool, error) {
-	if len(des.fields) > 1 {
-		return nil, errors.New("ent: DentalExpenseSelect.Bools is not achievable when selecting more than 1 field")
+func (ds *DentalexpenseSelect) Bools(ctx context.Context) ([]bool, error) {
+	if len(ds.fields) > 1 {
+		return nil, errors.New("ent: DentalexpenseSelect.Bools is not achievable when selecting more than 1 field")
 	}
 	var v []bool
-	if err := des.Scan(ctx, &v); err != nil {
+	if err := ds.Scan(ctx, &v); err != nil {
 		return nil, err
 	}
 	return v, nil
 }
 
 // BoolsX is like Bools, but panics if an error occurs.
-func (des *DentalExpenseSelect) BoolsX(ctx context.Context) []bool {
-	v, err := des.Bools(ctx)
+func (ds *DentalexpenseSelect) BoolsX(ctx context.Context) []bool {
+	v, err := ds.Bools(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -1011,9 +1011,9 @@ func (des *DentalExpenseSelect) BoolsX(ctx context.Context) []bool {
 }
 
 // Bool returns a single bool from selector. It is only allowed when selecting one field.
-func (des *DentalExpenseSelect) Bool(ctx context.Context) (_ bool, err error) {
+func (ds *DentalexpenseSelect) Bool(ctx context.Context) (_ bool, err error) {
 	var v []bool
-	if v, err = des.Bools(ctx); err != nil {
+	if v, err = ds.Bools(ctx); err != nil {
 		return
 	}
 	switch len(v) {
@@ -1022,32 +1022,32 @@ func (des *DentalExpenseSelect) Bool(ctx context.Context) (_ bool, err error) {
 	case 0:
 		err = &NotFoundError{dentalexpense.Label}
 	default:
-		err = fmt.Errorf("ent: DentalExpenseSelect.Bools returned %d results when one was expected", len(v))
+		err = fmt.Errorf("ent: DentalexpenseSelect.Bools returned %d results when one was expected", len(v))
 	}
 	return
 }
 
 // BoolX is like Bool, but panics if an error occurs.
-func (des *DentalExpenseSelect) BoolX(ctx context.Context) bool {
-	v, err := des.Bool(ctx)
+func (ds *DentalexpenseSelect) BoolX(ctx context.Context) bool {
+	v, err := ds.Bool(ctx)
 	if err != nil {
 		panic(err)
 	}
 	return v
 }
 
-func (des *DentalExpenseSelect) sqlScan(ctx context.Context, v interface{}) error {
+func (ds *DentalexpenseSelect) sqlScan(ctx context.Context, v interface{}) error {
 	rows := &sql.Rows{}
-	query, args := des.sqlQuery().Query()
-	if err := des.driver.Query(ctx, query, args, rows); err != nil {
+	query, args := ds.sqlQuery().Query()
+	if err := ds.driver.Query(ctx, query, args, rows); err != nil {
 		return err
 	}
 	defer rows.Close()
 	return sql.ScanSlice(rows, v)
 }
 
-func (des *DentalExpenseSelect) sqlQuery() sql.Querier {
-	selector := des.sql
-	selector.Select(selector.Columns(des.fields...)...)
+func (ds *DentalexpenseSelect) sqlQuery() sql.Querier {
+	selector := ds.sql
+	selector.Select(selector.Columns(ds.fields...)...)
 	return selector
 }

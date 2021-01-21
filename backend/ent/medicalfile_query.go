@@ -32,7 +32,7 @@ type MedicalfileQuery struct {
 	withDentist        *DentistQuery
 	withPatient        *PatientQuery
 	withNurse          *NurseQuery
-	withDentalexpenses *DentalExpenseQuery
+	withDentalexpenses *DentalexpenseQuery
 	withFKs            bool
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
@@ -118,8 +118,8 @@ func (mq *MedicalfileQuery) QueryNurse() *NurseQuery {
 }
 
 // QueryDentalexpenses chains the current query on the dentalexpenses edge.
-func (mq *MedicalfileQuery) QueryDentalexpenses() *DentalExpenseQuery {
-	query := &DentalExpenseQuery{config: mq.config}
+func (mq *MedicalfileQuery) QueryDentalexpenses() *DentalexpenseQuery {
+	query := &DentalexpenseQuery{config: mq.config}
 	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
 		if err := mq.prepareQuery(ctx); err != nil {
 			return nil, err
@@ -349,8 +349,8 @@ func (mq *MedicalfileQuery) WithNurse(opts ...func(*NurseQuery)) *MedicalfileQue
 
 //  WithDentalexpenses tells the query-builder to eager-loads the nodes that are connected to
 // the "dentalexpenses" edge. The optional arguments used to configure the query builder of the edge.
-func (mq *MedicalfileQuery) WithDentalexpenses(opts ...func(*DentalExpenseQuery)) *MedicalfileQuery {
-	query := &DentalExpenseQuery{config: mq.config}
+func (mq *MedicalfileQuery) WithDentalexpenses(opts ...func(*DentalexpenseQuery)) *MedicalfileQuery {
+	query := &DentalexpenseQuery{config: mq.config}
 	for _, opt := range opts {
 		opt(query)
 	}
@@ -545,7 +545,7 @@ func (mq *MedicalfileQuery) sqlAll(ctx context.Context) ([]*Medicalfile, error) 
 			nodeids[nodes[i].ID] = nodes[i]
 		}
 		query.withFKs = true
-		query.Where(predicate.DentalExpense(func(s *sql.Selector) {
+		query.Where(predicate.Dentalexpense(func(s *sql.Selector) {
 			s.Where(sql.InValues(medicalfile.DentalexpensesColumn, fks...))
 		}))
 		neighbors, err := query.All(ctx)

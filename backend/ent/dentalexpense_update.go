@@ -17,157 +17,157 @@ import (
 	"github.com/team03/app/ent/pricetype"
 )
 
-// DentalExpenseUpdate is the builder for updating DentalExpense entities.
-type DentalExpenseUpdate struct {
+// DentalexpenseUpdate is the builder for updating Dentalexpense entities.
+type DentalexpenseUpdate struct {
 	config
 	hooks      []Hook
-	mutation   *DentalExpenseMutation
-	predicates []predicate.DentalExpense
+	mutation   *DentalexpenseMutation
+	predicates []predicate.Dentalexpense
 }
 
 // Where adds a new predicate for the builder.
-func (deu *DentalExpenseUpdate) Where(ps ...predicate.DentalExpense) *DentalExpenseUpdate {
-	deu.predicates = append(deu.predicates, ps...)
-	return deu
+func (du *DentalexpenseUpdate) Where(ps ...predicate.Dentalexpense) *DentalexpenseUpdate {
+	du.predicates = append(du.predicates, ps...)
+	return du
 }
 
-// SetTax sets the tax field.
-func (deu *DentalExpenseUpdate) SetTax(s string) *DentalExpenseUpdate {
-	deu.mutation.SetTax(s)
-	return deu
+// SetName sets the Name field.
+func (du *DentalexpenseUpdate) SetName(s string) *DentalexpenseUpdate {
+	du.mutation.SetName(s)
+	return du
 }
 
-// SetName sets the name field.
-func (deu *DentalExpenseUpdate) SetName(s string) *DentalExpenseUpdate {
-	deu.mutation.SetName(s)
-	return deu
+// SetPhone sets the Phone field.
+func (du *DentalexpenseUpdate) SetPhone(s string) *DentalexpenseUpdate {
+	du.mutation.SetPhone(s)
+	return du
 }
 
-// SetRates sets the rates field.
-func (deu *DentalExpenseUpdate) SetRates(i int) *DentalExpenseUpdate {
-	deu.mutation.ResetRates()
-	deu.mutation.SetRates(i)
-	return deu
+// SetAddedTime sets the AddedTime field.
+func (du *DentalexpenseUpdate) SetAddedTime(t time.Time) *DentalexpenseUpdate {
+	du.mutation.SetAddedTime(t)
+	return du
 }
 
-// AddRates adds i to rates.
-func (deu *DentalExpenseUpdate) AddRates(i int) *DentalExpenseUpdate {
-	deu.mutation.AddRates(i)
-	return deu
+// SetRates sets the Rates field.
+func (du *DentalexpenseUpdate) SetRates(f float64) *DentalexpenseUpdate {
+	du.mutation.ResetRates()
+	du.mutation.SetRates(f)
+	return du
 }
 
-// SetPhone sets the phone field.
-func (deu *DentalExpenseUpdate) SetPhone(s string) *DentalExpenseUpdate {
-	deu.mutation.SetPhone(s)
-	return deu
+// AddRates adds f to Rates.
+func (du *DentalexpenseUpdate) AddRates(f float64) *DentalexpenseUpdate {
+	du.mutation.AddRates(f)
+	return du
 }
 
-// SetAddedTime sets the added_time field.
-func (deu *DentalExpenseUpdate) SetAddedTime(t time.Time) *DentalExpenseUpdate {
-	deu.mutation.SetAddedTime(t)
-	return deu
+// SetTax sets the Tax field.
+func (du *DentalexpenseUpdate) SetTax(s string) *DentalexpenseUpdate {
+	du.mutation.SetTax(s)
+	return du
 }
 
 // SetNurseID sets the nurse edge to Nurse by id.
-func (deu *DentalExpenseUpdate) SetNurseID(id int) *DentalExpenseUpdate {
-	deu.mutation.SetNurseID(id)
-	return deu
+func (du *DentalexpenseUpdate) SetNurseID(id int) *DentalexpenseUpdate {
+	du.mutation.SetNurseID(id)
+	return du
 }
 
 // SetNillableNurseID sets the nurse edge to Nurse by id if the given value is not nil.
-func (deu *DentalExpenseUpdate) SetNillableNurseID(id *int) *DentalExpenseUpdate {
+func (du *DentalexpenseUpdate) SetNillableNurseID(id *int) *DentalexpenseUpdate {
 	if id != nil {
-		deu = deu.SetNurseID(*id)
+		du = du.SetNurseID(*id)
 	}
-	return deu
+	return du
 }
 
 // SetNurse sets the nurse edge to Nurse.
-func (deu *DentalExpenseUpdate) SetNurse(n *Nurse) *DentalExpenseUpdate {
-	return deu.SetNurseID(n.ID)
+func (du *DentalexpenseUpdate) SetNurse(n *Nurse) *DentalexpenseUpdate {
+	return du.SetNurseID(n.ID)
 }
 
 // SetMedicalfileID sets the medicalfile edge to Medicalfile by id.
-func (deu *DentalExpenseUpdate) SetMedicalfileID(id int) *DentalExpenseUpdate {
-	deu.mutation.SetMedicalfileID(id)
-	return deu
+func (du *DentalexpenseUpdate) SetMedicalfileID(id int) *DentalexpenseUpdate {
+	du.mutation.SetMedicalfileID(id)
+	return du
 }
 
 // SetNillableMedicalfileID sets the medicalfile edge to Medicalfile by id if the given value is not nil.
-func (deu *DentalExpenseUpdate) SetNillableMedicalfileID(id *int) *DentalExpenseUpdate {
+func (du *DentalexpenseUpdate) SetNillableMedicalfileID(id *int) *DentalexpenseUpdate {
 	if id != nil {
-		deu = deu.SetMedicalfileID(*id)
+		du = du.SetMedicalfileID(*id)
 	}
-	return deu
+	return du
 }
 
 // SetMedicalfile sets the medicalfile edge to Medicalfile.
-func (deu *DentalExpenseUpdate) SetMedicalfile(m *Medicalfile) *DentalExpenseUpdate {
-	return deu.SetMedicalfileID(m.ID)
+func (du *DentalexpenseUpdate) SetMedicalfile(m *Medicalfile) *DentalexpenseUpdate {
+	return du.SetMedicalfileID(m.ID)
 }
 
-// SetPricetypeID sets the pricetype edge to PriceType by id.
-func (deu *DentalExpenseUpdate) SetPricetypeID(id int) *DentalExpenseUpdate {
-	deu.mutation.SetPricetypeID(id)
-	return deu
+// SetPricetypeID sets the pricetype edge to Pricetype by id.
+func (du *DentalexpenseUpdate) SetPricetypeID(id int) *DentalexpenseUpdate {
+	du.mutation.SetPricetypeID(id)
+	return du
 }
 
-// SetNillablePricetypeID sets the pricetype edge to PriceType by id if the given value is not nil.
-func (deu *DentalExpenseUpdate) SetNillablePricetypeID(id *int) *DentalExpenseUpdate {
+// SetNillablePricetypeID sets the pricetype edge to Pricetype by id if the given value is not nil.
+func (du *DentalexpenseUpdate) SetNillablePricetypeID(id *int) *DentalexpenseUpdate {
 	if id != nil {
-		deu = deu.SetPricetypeID(*id)
+		du = du.SetPricetypeID(*id)
 	}
-	return deu
+	return du
 }
 
-// SetPricetype sets the pricetype edge to PriceType.
-func (deu *DentalExpenseUpdate) SetPricetype(p *PriceType) *DentalExpenseUpdate {
-	return deu.SetPricetypeID(p.ID)
+// SetPricetype sets the pricetype edge to Pricetype.
+func (du *DentalexpenseUpdate) SetPricetype(p *Pricetype) *DentalexpenseUpdate {
+	return du.SetPricetypeID(p.ID)
 }
 
-// Mutation returns the DentalExpenseMutation object of the builder.
-func (deu *DentalExpenseUpdate) Mutation() *DentalExpenseMutation {
-	return deu.mutation
+// Mutation returns the DentalexpenseMutation object of the builder.
+func (du *DentalexpenseUpdate) Mutation() *DentalexpenseMutation {
+	return du.mutation
 }
 
 // ClearNurse clears the nurse edge to Nurse.
-func (deu *DentalExpenseUpdate) ClearNurse() *DentalExpenseUpdate {
-	deu.mutation.ClearNurse()
-	return deu
+func (du *DentalexpenseUpdate) ClearNurse() *DentalexpenseUpdate {
+	du.mutation.ClearNurse()
+	return du
 }
 
 // ClearMedicalfile clears the medicalfile edge to Medicalfile.
-func (deu *DentalExpenseUpdate) ClearMedicalfile() *DentalExpenseUpdate {
-	deu.mutation.ClearMedicalfile()
-	return deu
+func (du *DentalexpenseUpdate) ClearMedicalfile() *DentalexpenseUpdate {
+	du.mutation.ClearMedicalfile()
+	return du
 }
 
-// ClearPricetype clears the pricetype edge to PriceType.
-func (deu *DentalExpenseUpdate) ClearPricetype() *DentalExpenseUpdate {
-	deu.mutation.ClearPricetype()
-	return deu
+// ClearPricetype clears the pricetype edge to Pricetype.
+func (du *DentalexpenseUpdate) ClearPricetype() *DentalexpenseUpdate {
+	du.mutation.ClearPricetype()
+	return du
 }
 
 // Save executes the query and returns the number of rows/vertices matched by this operation.
-func (deu *DentalExpenseUpdate) Save(ctx context.Context) (int, error) {
-	if v, ok := deu.mutation.Tax(); ok {
-		if err := dentalexpense.TaxValidator(v); err != nil {
-			return 0, &ValidationError{Name: "tax", err: fmt.Errorf("ent: validator failed for field \"tax\": %w", err)}
-		}
-	}
-	if v, ok := deu.mutation.Name(); ok {
+func (du *DentalexpenseUpdate) Save(ctx context.Context) (int, error) {
+	if v, ok := du.mutation.Name(); ok {
 		if err := dentalexpense.NameValidator(v); err != nil {
-			return 0, &ValidationError{Name: "name", err: fmt.Errorf("ent: validator failed for field \"name\": %w", err)}
+			return 0, &ValidationError{Name: "Name", err: fmt.Errorf("ent: validator failed for field \"Name\": %w", err)}
 		}
 	}
-	if v, ok := deu.mutation.Rates(); ok {
-		if err := dentalexpense.RatesValidator(v); err != nil {
-			return 0, &ValidationError{Name: "rates", err: fmt.Errorf("ent: validator failed for field \"rates\": %w", err)}
-		}
-	}
-	if v, ok := deu.mutation.Phone(); ok {
+	if v, ok := du.mutation.Phone(); ok {
 		if err := dentalexpense.PhoneValidator(v); err != nil {
-			return 0, &ValidationError{Name: "phone", err: fmt.Errorf("ent: validator failed for field \"phone\": %w", err)}
+			return 0, &ValidationError{Name: "Phone", err: fmt.Errorf("ent: validator failed for field \"Phone\": %w", err)}
+		}
+	}
+	if v, ok := du.mutation.Rates(); ok {
+		if err := dentalexpense.RatesValidator(v); err != nil {
+			return 0, &ValidationError{Name: "Rates", err: fmt.Errorf("ent: validator failed for field \"Rates\": %w", err)}
+		}
+	}
+	if v, ok := du.mutation.Tax(); ok {
+		if err := dentalexpense.TaxValidator(v); err != nil {
+			return 0, &ValidationError{Name: "Tax", err: fmt.Errorf("ent: validator failed for field \"Tax\": %w", err)}
 		}
 	}
 
@@ -175,23 +175,23 @@ func (deu *DentalExpenseUpdate) Save(ctx context.Context) (int, error) {
 		err      error
 		affected int
 	)
-	if len(deu.hooks) == 0 {
-		affected, err = deu.sqlSave(ctx)
+	if len(du.hooks) == 0 {
+		affected, err = du.sqlSave(ctx)
 	} else {
 		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-			mutation, ok := m.(*DentalExpenseMutation)
+			mutation, ok := m.(*DentalexpenseMutation)
 			if !ok {
 				return nil, fmt.Errorf("unexpected mutation type %T", m)
 			}
-			deu.mutation = mutation
-			affected, err = deu.sqlSave(ctx)
+			du.mutation = mutation
+			affected, err = du.sqlSave(ctx)
 			mutation.done = true
 			return affected, err
 		})
-		for i := len(deu.hooks) - 1; i >= 0; i-- {
-			mut = deu.hooks[i](mut)
+		for i := len(du.hooks) - 1; i >= 0; i-- {
+			mut = du.hooks[i](mut)
 		}
-		if _, err := mut.Mutate(ctx, deu.mutation); err != nil {
+		if _, err := mut.Mutate(ctx, du.mutation); err != nil {
 			return 0, err
 		}
 	}
@@ -199,8 +199,8 @@ func (deu *DentalExpenseUpdate) Save(ctx context.Context) (int, error) {
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (deu *DentalExpenseUpdate) SaveX(ctx context.Context) int {
-	affected, err := deu.Save(ctx)
+func (du *DentalexpenseUpdate) SaveX(ctx context.Context) int {
+	affected, err := du.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -208,19 +208,19 @@ func (deu *DentalExpenseUpdate) SaveX(ctx context.Context) int {
 }
 
 // Exec executes the query.
-func (deu *DentalExpenseUpdate) Exec(ctx context.Context) error {
-	_, err := deu.Save(ctx)
+func (du *DentalexpenseUpdate) Exec(ctx context.Context) error {
+	_, err := du.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (deu *DentalExpenseUpdate) ExecX(ctx context.Context) {
-	if err := deu.Exec(ctx); err != nil {
+func (du *DentalexpenseUpdate) ExecX(ctx context.Context) {
+	if err := du.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
-func (deu *DentalExpenseUpdate) sqlSave(ctx context.Context) (n int, err error) {
+func (du *DentalexpenseUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	_spec := &sqlgraph.UpdateSpec{
 		Node: &sqlgraph.NodeSpec{
 			Table:   dentalexpense.Table,
@@ -231,56 +231,56 @@ func (deu *DentalExpenseUpdate) sqlSave(ctx context.Context) (n int, err error) 
 			},
 		},
 	}
-	if ps := deu.predicates; len(ps) > 0 {
+	if ps := du.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if value, ok := deu.mutation.Tax(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: dentalexpense.FieldTax,
-		})
-	}
-	if value, ok := deu.mutation.Name(); ok {
+	if value, ok := du.mutation.Name(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
 			Column: dentalexpense.FieldName,
 		})
 	}
-	if value, ok := deu.mutation.Rates(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: dentalexpense.FieldRates,
-		})
-	}
-	if value, ok := deu.mutation.AddedRates(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: dentalexpense.FieldRates,
-		})
-	}
-	if value, ok := deu.mutation.Phone(); ok {
+	if value, ok := du.mutation.Phone(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
 			Column: dentalexpense.FieldPhone,
 		})
 	}
-	if value, ok := deu.mutation.AddedTime(); ok {
+	if value, ok := du.mutation.AddedTime(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeTime,
 			Value:  value,
 			Column: dentalexpense.FieldAddedTime,
 		})
 	}
-	if deu.mutation.NurseCleared() {
+	if value, ok := du.mutation.Rates(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeFloat64,
+			Value:  value,
+			Column: dentalexpense.FieldRates,
+		})
+	}
+	if value, ok := du.mutation.AddedRates(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeFloat64,
+			Value:  value,
+			Column: dentalexpense.FieldRates,
+		})
+	}
+	if value, ok := du.mutation.Tax(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: dentalexpense.FieldTax,
+		})
+	}
+	if du.mutation.NurseCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -296,7 +296,7 @@ func (deu *DentalExpenseUpdate) sqlSave(ctx context.Context) (n int, err error) 
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := deu.mutation.NurseIDs(); len(nodes) > 0 {
+	if nodes := du.mutation.NurseIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -315,7 +315,7 @@ func (deu *DentalExpenseUpdate) sqlSave(ctx context.Context) (n int, err error) 
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if deu.mutation.MedicalfileCleared() {
+	if du.mutation.MedicalfileCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -331,7 +331,7 @@ func (deu *DentalExpenseUpdate) sqlSave(ctx context.Context) (n int, err error) 
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := deu.mutation.MedicalfileIDs(); len(nodes) > 0 {
+	if nodes := du.mutation.MedicalfileIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -350,7 +350,7 @@ func (deu *DentalExpenseUpdate) sqlSave(ctx context.Context) (n int, err error) 
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if deu.mutation.PricetypeCleared() {
+	if du.mutation.PricetypeCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -366,7 +366,7 @@ func (deu *DentalExpenseUpdate) sqlSave(ctx context.Context) (n int, err error) 
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := deu.mutation.PricetypeIDs(); len(nodes) > 0 {
+	if nodes := du.mutation.PricetypeIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -385,7 +385,7 @@ func (deu *DentalExpenseUpdate) sqlSave(ctx context.Context) (n int, err error) 
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if n, err = sqlgraph.UpdateNodes(ctx, deu.driver, _spec); err != nil {
+	if n, err = sqlgraph.UpdateNodes(ctx, du.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{dentalexpense.Label}
 		} else if cerr, ok := isSQLConstraintError(err); ok {
@@ -396,174 +396,174 @@ func (deu *DentalExpenseUpdate) sqlSave(ctx context.Context) (n int, err error) 
 	return n, nil
 }
 
-// DentalExpenseUpdateOne is the builder for updating a single DentalExpense entity.
-type DentalExpenseUpdateOne struct {
+// DentalexpenseUpdateOne is the builder for updating a single Dentalexpense entity.
+type DentalexpenseUpdateOne struct {
 	config
 	hooks    []Hook
-	mutation *DentalExpenseMutation
+	mutation *DentalexpenseMutation
 }
 
-// SetTax sets the tax field.
-func (deuo *DentalExpenseUpdateOne) SetTax(s string) *DentalExpenseUpdateOne {
-	deuo.mutation.SetTax(s)
-	return deuo
+// SetName sets the Name field.
+func (duo *DentalexpenseUpdateOne) SetName(s string) *DentalexpenseUpdateOne {
+	duo.mutation.SetName(s)
+	return duo
 }
 
-// SetName sets the name field.
-func (deuo *DentalExpenseUpdateOne) SetName(s string) *DentalExpenseUpdateOne {
-	deuo.mutation.SetName(s)
-	return deuo
+// SetPhone sets the Phone field.
+func (duo *DentalexpenseUpdateOne) SetPhone(s string) *DentalexpenseUpdateOne {
+	duo.mutation.SetPhone(s)
+	return duo
 }
 
-// SetRates sets the rates field.
-func (deuo *DentalExpenseUpdateOne) SetRates(i int) *DentalExpenseUpdateOne {
-	deuo.mutation.ResetRates()
-	deuo.mutation.SetRates(i)
-	return deuo
+// SetAddedTime sets the AddedTime field.
+func (duo *DentalexpenseUpdateOne) SetAddedTime(t time.Time) *DentalexpenseUpdateOne {
+	duo.mutation.SetAddedTime(t)
+	return duo
 }
 
-// AddRates adds i to rates.
-func (deuo *DentalExpenseUpdateOne) AddRates(i int) *DentalExpenseUpdateOne {
-	deuo.mutation.AddRates(i)
-	return deuo
+// SetRates sets the Rates field.
+func (duo *DentalexpenseUpdateOne) SetRates(f float64) *DentalexpenseUpdateOne {
+	duo.mutation.ResetRates()
+	duo.mutation.SetRates(f)
+	return duo
 }
 
-// SetPhone sets the phone field.
-func (deuo *DentalExpenseUpdateOne) SetPhone(s string) *DentalExpenseUpdateOne {
-	deuo.mutation.SetPhone(s)
-	return deuo
+// AddRates adds f to Rates.
+func (duo *DentalexpenseUpdateOne) AddRates(f float64) *DentalexpenseUpdateOne {
+	duo.mutation.AddRates(f)
+	return duo
 }
 
-// SetAddedTime sets the added_time field.
-func (deuo *DentalExpenseUpdateOne) SetAddedTime(t time.Time) *DentalExpenseUpdateOne {
-	deuo.mutation.SetAddedTime(t)
-	return deuo
+// SetTax sets the Tax field.
+func (duo *DentalexpenseUpdateOne) SetTax(s string) *DentalexpenseUpdateOne {
+	duo.mutation.SetTax(s)
+	return duo
 }
 
 // SetNurseID sets the nurse edge to Nurse by id.
-func (deuo *DentalExpenseUpdateOne) SetNurseID(id int) *DentalExpenseUpdateOne {
-	deuo.mutation.SetNurseID(id)
-	return deuo
+func (duo *DentalexpenseUpdateOne) SetNurseID(id int) *DentalexpenseUpdateOne {
+	duo.mutation.SetNurseID(id)
+	return duo
 }
 
 // SetNillableNurseID sets the nurse edge to Nurse by id if the given value is not nil.
-func (deuo *DentalExpenseUpdateOne) SetNillableNurseID(id *int) *DentalExpenseUpdateOne {
+func (duo *DentalexpenseUpdateOne) SetNillableNurseID(id *int) *DentalexpenseUpdateOne {
 	if id != nil {
-		deuo = deuo.SetNurseID(*id)
+		duo = duo.SetNurseID(*id)
 	}
-	return deuo
+	return duo
 }
 
 // SetNurse sets the nurse edge to Nurse.
-func (deuo *DentalExpenseUpdateOne) SetNurse(n *Nurse) *DentalExpenseUpdateOne {
-	return deuo.SetNurseID(n.ID)
+func (duo *DentalexpenseUpdateOne) SetNurse(n *Nurse) *DentalexpenseUpdateOne {
+	return duo.SetNurseID(n.ID)
 }
 
 // SetMedicalfileID sets the medicalfile edge to Medicalfile by id.
-func (deuo *DentalExpenseUpdateOne) SetMedicalfileID(id int) *DentalExpenseUpdateOne {
-	deuo.mutation.SetMedicalfileID(id)
-	return deuo
+func (duo *DentalexpenseUpdateOne) SetMedicalfileID(id int) *DentalexpenseUpdateOne {
+	duo.mutation.SetMedicalfileID(id)
+	return duo
 }
 
 // SetNillableMedicalfileID sets the medicalfile edge to Medicalfile by id if the given value is not nil.
-func (deuo *DentalExpenseUpdateOne) SetNillableMedicalfileID(id *int) *DentalExpenseUpdateOne {
+func (duo *DentalexpenseUpdateOne) SetNillableMedicalfileID(id *int) *DentalexpenseUpdateOne {
 	if id != nil {
-		deuo = deuo.SetMedicalfileID(*id)
+		duo = duo.SetMedicalfileID(*id)
 	}
-	return deuo
+	return duo
 }
 
 // SetMedicalfile sets the medicalfile edge to Medicalfile.
-func (deuo *DentalExpenseUpdateOne) SetMedicalfile(m *Medicalfile) *DentalExpenseUpdateOne {
-	return deuo.SetMedicalfileID(m.ID)
+func (duo *DentalexpenseUpdateOne) SetMedicalfile(m *Medicalfile) *DentalexpenseUpdateOne {
+	return duo.SetMedicalfileID(m.ID)
 }
 
-// SetPricetypeID sets the pricetype edge to PriceType by id.
-func (deuo *DentalExpenseUpdateOne) SetPricetypeID(id int) *DentalExpenseUpdateOne {
-	deuo.mutation.SetPricetypeID(id)
-	return deuo
+// SetPricetypeID sets the pricetype edge to Pricetype by id.
+func (duo *DentalexpenseUpdateOne) SetPricetypeID(id int) *DentalexpenseUpdateOne {
+	duo.mutation.SetPricetypeID(id)
+	return duo
 }
 
-// SetNillablePricetypeID sets the pricetype edge to PriceType by id if the given value is not nil.
-func (deuo *DentalExpenseUpdateOne) SetNillablePricetypeID(id *int) *DentalExpenseUpdateOne {
+// SetNillablePricetypeID sets the pricetype edge to Pricetype by id if the given value is not nil.
+func (duo *DentalexpenseUpdateOne) SetNillablePricetypeID(id *int) *DentalexpenseUpdateOne {
 	if id != nil {
-		deuo = deuo.SetPricetypeID(*id)
+		duo = duo.SetPricetypeID(*id)
 	}
-	return deuo
+	return duo
 }
 
-// SetPricetype sets the pricetype edge to PriceType.
-func (deuo *DentalExpenseUpdateOne) SetPricetype(p *PriceType) *DentalExpenseUpdateOne {
-	return deuo.SetPricetypeID(p.ID)
+// SetPricetype sets the pricetype edge to Pricetype.
+func (duo *DentalexpenseUpdateOne) SetPricetype(p *Pricetype) *DentalexpenseUpdateOne {
+	return duo.SetPricetypeID(p.ID)
 }
 
-// Mutation returns the DentalExpenseMutation object of the builder.
-func (deuo *DentalExpenseUpdateOne) Mutation() *DentalExpenseMutation {
-	return deuo.mutation
+// Mutation returns the DentalexpenseMutation object of the builder.
+func (duo *DentalexpenseUpdateOne) Mutation() *DentalexpenseMutation {
+	return duo.mutation
 }
 
 // ClearNurse clears the nurse edge to Nurse.
-func (deuo *DentalExpenseUpdateOne) ClearNurse() *DentalExpenseUpdateOne {
-	deuo.mutation.ClearNurse()
-	return deuo
+func (duo *DentalexpenseUpdateOne) ClearNurse() *DentalexpenseUpdateOne {
+	duo.mutation.ClearNurse()
+	return duo
 }
 
 // ClearMedicalfile clears the medicalfile edge to Medicalfile.
-func (deuo *DentalExpenseUpdateOne) ClearMedicalfile() *DentalExpenseUpdateOne {
-	deuo.mutation.ClearMedicalfile()
-	return deuo
+func (duo *DentalexpenseUpdateOne) ClearMedicalfile() *DentalexpenseUpdateOne {
+	duo.mutation.ClearMedicalfile()
+	return duo
 }
 
-// ClearPricetype clears the pricetype edge to PriceType.
-func (deuo *DentalExpenseUpdateOne) ClearPricetype() *DentalExpenseUpdateOne {
-	deuo.mutation.ClearPricetype()
-	return deuo
+// ClearPricetype clears the pricetype edge to Pricetype.
+func (duo *DentalexpenseUpdateOne) ClearPricetype() *DentalexpenseUpdateOne {
+	duo.mutation.ClearPricetype()
+	return duo
 }
 
 // Save executes the query and returns the updated entity.
-func (deuo *DentalExpenseUpdateOne) Save(ctx context.Context) (*DentalExpense, error) {
-	if v, ok := deuo.mutation.Tax(); ok {
-		if err := dentalexpense.TaxValidator(v); err != nil {
-			return nil, &ValidationError{Name: "tax", err: fmt.Errorf("ent: validator failed for field \"tax\": %w", err)}
-		}
-	}
-	if v, ok := deuo.mutation.Name(); ok {
+func (duo *DentalexpenseUpdateOne) Save(ctx context.Context) (*Dentalexpense, error) {
+	if v, ok := duo.mutation.Name(); ok {
 		if err := dentalexpense.NameValidator(v); err != nil {
-			return nil, &ValidationError{Name: "name", err: fmt.Errorf("ent: validator failed for field \"name\": %w", err)}
+			return nil, &ValidationError{Name: "Name", err: fmt.Errorf("ent: validator failed for field \"Name\": %w", err)}
 		}
 	}
-	if v, ok := deuo.mutation.Rates(); ok {
-		if err := dentalexpense.RatesValidator(v); err != nil {
-			return nil, &ValidationError{Name: "rates", err: fmt.Errorf("ent: validator failed for field \"rates\": %w", err)}
-		}
-	}
-	if v, ok := deuo.mutation.Phone(); ok {
+	if v, ok := duo.mutation.Phone(); ok {
 		if err := dentalexpense.PhoneValidator(v); err != nil {
-			return nil, &ValidationError{Name: "phone", err: fmt.Errorf("ent: validator failed for field \"phone\": %w", err)}
+			return nil, &ValidationError{Name: "Phone", err: fmt.Errorf("ent: validator failed for field \"Phone\": %w", err)}
+		}
+	}
+	if v, ok := duo.mutation.Rates(); ok {
+		if err := dentalexpense.RatesValidator(v); err != nil {
+			return nil, &ValidationError{Name: "Rates", err: fmt.Errorf("ent: validator failed for field \"Rates\": %w", err)}
+		}
+	}
+	if v, ok := duo.mutation.Tax(); ok {
+		if err := dentalexpense.TaxValidator(v); err != nil {
+			return nil, &ValidationError{Name: "Tax", err: fmt.Errorf("ent: validator failed for field \"Tax\": %w", err)}
 		}
 	}
 
 	var (
 		err  error
-		node *DentalExpense
+		node *Dentalexpense
 	)
-	if len(deuo.hooks) == 0 {
-		node, err = deuo.sqlSave(ctx)
+	if len(duo.hooks) == 0 {
+		node, err = duo.sqlSave(ctx)
 	} else {
 		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-			mutation, ok := m.(*DentalExpenseMutation)
+			mutation, ok := m.(*DentalexpenseMutation)
 			if !ok {
 				return nil, fmt.Errorf("unexpected mutation type %T", m)
 			}
-			deuo.mutation = mutation
-			node, err = deuo.sqlSave(ctx)
+			duo.mutation = mutation
+			node, err = duo.sqlSave(ctx)
 			mutation.done = true
 			return node, err
 		})
-		for i := len(deuo.hooks) - 1; i >= 0; i-- {
-			mut = deuo.hooks[i](mut)
+		for i := len(duo.hooks) - 1; i >= 0; i-- {
+			mut = duo.hooks[i](mut)
 		}
-		if _, err := mut.Mutate(ctx, deuo.mutation); err != nil {
+		if _, err := mut.Mutate(ctx, duo.mutation); err != nil {
 			return nil, err
 		}
 	}
@@ -571,28 +571,28 @@ func (deuo *DentalExpenseUpdateOne) Save(ctx context.Context) (*DentalExpense, e
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (deuo *DentalExpenseUpdateOne) SaveX(ctx context.Context) *DentalExpense {
-	de, err := deuo.Save(ctx)
+func (duo *DentalexpenseUpdateOne) SaveX(ctx context.Context) *Dentalexpense {
+	d, err := duo.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
-	return de
+	return d
 }
 
 // Exec executes the query on the entity.
-func (deuo *DentalExpenseUpdateOne) Exec(ctx context.Context) error {
-	_, err := deuo.Save(ctx)
+func (duo *DentalexpenseUpdateOne) Exec(ctx context.Context) error {
+	_, err := duo.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (deuo *DentalExpenseUpdateOne) ExecX(ctx context.Context) {
-	if err := deuo.Exec(ctx); err != nil {
+func (duo *DentalexpenseUpdateOne) ExecX(ctx context.Context) {
+	if err := duo.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
-func (deuo *DentalExpenseUpdateOne) sqlSave(ctx context.Context) (de *DentalExpense, err error) {
+func (duo *DentalexpenseUpdateOne) sqlSave(ctx context.Context) (d *Dentalexpense, err error) {
 	_spec := &sqlgraph.UpdateSpec{
 		Node: &sqlgraph.NodeSpec{
 			Table:   dentalexpense.Table,
@@ -603,54 +603,54 @@ func (deuo *DentalExpenseUpdateOne) sqlSave(ctx context.Context) (de *DentalExpe
 			},
 		},
 	}
-	id, ok := deuo.mutation.ID()
+	id, ok := duo.mutation.ID()
 	if !ok {
-		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing DentalExpense.ID for update")}
+		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing Dentalexpense.ID for update")}
 	}
 	_spec.Node.ID.Value = id
-	if value, ok := deuo.mutation.Tax(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: dentalexpense.FieldTax,
-		})
-	}
-	if value, ok := deuo.mutation.Name(); ok {
+	if value, ok := duo.mutation.Name(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
 			Column: dentalexpense.FieldName,
 		})
 	}
-	if value, ok := deuo.mutation.Rates(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: dentalexpense.FieldRates,
-		})
-	}
-	if value, ok := deuo.mutation.AddedRates(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: dentalexpense.FieldRates,
-		})
-	}
-	if value, ok := deuo.mutation.Phone(); ok {
+	if value, ok := duo.mutation.Phone(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
 			Column: dentalexpense.FieldPhone,
 		})
 	}
-	if value, ok := deuo.mutation.AddedTime(); ok {
+	if value, ok := duo.mutation.AddedTime(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeTime,
 			Value:  value,
 			Column: dentalexpense.FieldAddedTime,
 		})
 	}
-	if deuo.mutation.NurseCleared() {
+	if value, ok := duo.mutation.Rates(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeFloat64,
+			Value:  value,
+			Column: dentalexpense.FieldRates,
+		})
+	}
+	if value, ok := duo.mutation.AddedRates(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeFloat64,
+			Value:  value,
+			Column: dentalexpense.FieldRates,
+		})
+	}
+	if value, ok := duo.mutation.Tax(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: dentalexpense.FieldTax,
+		})
+	}
+	if duo.mutation.NurseCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -666,7 +666,7 @@ func (deuo *DentalExpenseUpdateOne) sqlSave(ctx context.Context) (de *DentalExpe
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := deuo.mutation.NurseIDs(); len(nodes) > 0 {
+	if nodes := duo.mutation.NurseIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -685,7 +685,7 @@ func (deuo *DentalExpenseUpdateOne) sqlSave(ctx context.Context) (de *DentalExpe
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if deuo.mutation.MedicalfileCleared() {
+	if duo.mutation.MedicalfileCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -701,7 +701,7 @@ func (deuo *DentalExpenseUpdateOne) sqlSave(ctx context.Context) (de *DentalExpe
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := deuo.mutation.MedicalfileIDs(); len(nodes) > 0 {
+	if nodes := duo.mutation.MedicalfileIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -720,7 +720,7 @@ func (deuo *DentalExpenseUpdateOne) sqlSave(ctx context.Context) (de *DentalExpe
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if deuo.mutation.PricetypeCleared() {
+	if duo.mutation.PricetypeCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -736,7 +736,7 @@ func (deuo *DentalExpenseUpdateOne) sqlSave(ctx context.Context) (de *DentalExpe
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := deuo.mutation.PricetypeIDs(); len(nodes) > 0 {
+	if nodes := duo.mutation.PricetypeIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -755,10 +755,10 @@ func (deuo *DentalExpenseUpdateOne) sqlSave(ctx context.Context) (de *DentalExpe
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	de = &DentalExpense{config: deuo.config}
-	_spec.Assign = de.assignValues
-	_spec.ScanValues = de.scanValues()
-	if err = sqlgraph.UpdateNode(ctx, deuo.driver, _spec); err != nil {
+	d = &Dentalexpense{config: duo.config}
+	_spec.Assign = d.assignValues
+	_spec.ScanValues = d.scanValues()
+	if err = sqlgraph.UpdateNode(ctx, duo.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{dentalexpense.Label}
 		} else if cerr, ok := isSQLConstraintError(err); ok {
@@ -766,5 +766,5 @@ func (deuo *DentalExpenseUpdateOne) sqlSave(ctx context.Context) (de *DentalExpe
 		}
 		return nil, err
 	}
-	return de, nil
+	return d, nil
 }
