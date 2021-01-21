@@ -22,43 +22,43 @@ import {
     EntNurseFromJSON,
     EntNurseFromJSONTyped,
     EntNurseToJSON,
-    EntPriceType,
-    EntPriceTypeFromJSON,
-    EntPriceTypeFromJSONTyped,
-    EntPriceTypeToJSON,
+    EntPricetype,
+    EntPricetypeFromJSON,
+    EntPricetypeFromJSONTyped,
+    EntPricetypeToJSON,
 } from './';
 
 /**
  * 
  * @export
- * @interface EntDentalExpenseEdges
+ * @interface EntDentalexpenseEdges
  */
-export interface EntDentalExpenseEdges {
+export interface EntDentalexpenseEdges {
     /**
      * 
      * @type {EntMedicalfile}
-     * @memberof EntDentalExpenseEdges
+     * @memberof EntDentalexpenseEdges
      */
     medicalfile?: EntMedicalfile;
     /**
      * 
      * @type {EntNurse}
-     * @memberof EntDentalExpenseEdges
+     * @memberof EntDentalexpenseEdges
      */
     nurse?: EntNurse;
     /**
      * 
-     * @type {EntPriceType}
-     * @memberof EntDentalExpenseEdges
+     * @type {EntPricetype}
+     * @memberof EntDentalexpenseEdges
      */
-    pricetype?: EntPriceType;
+    pricetype?: EntPricetype;
 }
 
-export function EntDentalExpenseEdgesFromJSON(json: any): EntDentalExpenseEdges {
-    return EntDentalExpenseEdgesFromJSONTyped(json, false);
+export function EntDentalexpenseEdgesFromJSON(json: any): EntDentalexpenseEdges {
+    return EntDentalexpenseEdgesFromJSONTyped(json, false);
 }
 
-export function EntDentalExpenseEdgesFromJSONTyped(json: any, ignoreDiscriminator: boolean): EntDentalExpenseEdges {
+export function EntDentalexpenseEdgesFromJSONTyped(json: any, ignoreDiscriminator: boolean): EntDentalexpenseEdges {
     if ((json === undefined) || (json === null)) {
         return json;
     }
@@ -66,11 +66,11 @@ export function EntDentalExpenseEdgesFromJSONTyped(json: any, ignoreDiscriminato
         
         'medicalfile': !exists(json, 'medicalfile') ? undefined : EntMedicalfileFromJSON(json['medicalfile']),
         'nurse': !exists(json, 'nurse') ? undefined : EntNurseFromJSON(json['nurse']),
-        'pricetype': !exists(json, 'pricetype') ? undefined : EntPriceTypeFromJSON(json['pricetype']),
+        'pricetype': !exists(json, 'pricetype') ? undefined : EntPricetypeFromJSON(json['pricetype']),
     };
 }
 
-export function EntDentalExpenseEdgesToJSON(value?: EntDentalExpenseEdges | null): any {
+export function EntDentalexpenseEdgesToJSON(value?: EntDentalexpenseEdges | null): any {
     if (value === undefined) {
         return undefined;
     }
@@ -81,7 +81,7 @@ export function EntDentalExpenseEdgesToJSON(value?: EntDentalExpenseEdges | null
         
         'medicalfile': EntMedicalfileToJSON(value.medicalfile),
         'nurse': EntNurseToJSON(value.nurse),
-        'pricetype': EntPriceTypeToJSON(value.pricetype),
+        'pricetype': EntPricetypeToJSON(value.pricetype),
     };
 }
 

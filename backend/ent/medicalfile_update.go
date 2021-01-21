@@ -113,14 +113,14 @@ func (mu *MedicalfileUpdate) SetNurse(n *Nurse) *MedicalfileUpdate {
 	return mu.SetNurseID(n.ID)
 }
 
-// AddDentalexpenseIDs adds the dentalexpenses edge to DentalExpense by ids.
+// AddDentalexpenseIDs adds the dentalexpenses edge to Dentalexpense by ids.
 func (mu *MedicalfileUpdate) AddDentalexpenseIDs(ids ...int) *MedicalfileUpdate {
 	mu.mutation.AddDentalexpenseIDs(ids...)
 	return mu
 }
 
-// AddDentalexpenses adds the dentalexpenses edges to DentalExpense.
-func (mu *MedicalfileUpdate) AddDentalexpenses(d ...*DentalExpense) *MedicalfileUpdate {
+// AddDentalexpenses adds the dentalexpenses edges to Dentalexpense.
+func (mu *MedicalfileUpdate) AddDentalexpenses(d ...*Dentalexpense) *MedicalfileUpdate {
 	ids := make([]int, len(d))
 	for i := range d {
 		ids[i] = d[i].ID
@@ -151,14 +151,14 @@ func (mu *MedicalfileUpdate) ClearNurse() *MedicalfileUpdate {
 	return mu
 }
 
-// RemoveDentalexpenseIDs removes the dentalexpenses edge to DentalExpense by ids.
+// RemoveDentalexpenseIDs removes the dentalexpenses edge to Dentalexpense by ids.
 func (mu *MedicalfileUpdate) RemoveDentalexpenseIDs(ids ...int) *MedicalfileUpdate {
 	mu.mutation.RemoveDentalexpenseIDs(ids...)
 	return mu
 }
 
-// RemoveDentalexpenses removes dentalexpenses edges to DentalExpense.
-func (mu *MedicalfileUpdate) RemoveDentalexpenses(d ...*DentalExpense) *MedicalfileUpdate {
+// RemoveDentalexpenses removes dentalexpenses edges to Dentalexpense.
+func (mu *MedicalfileUpdate) RemoveDentalexpenses(d ...*Dentalexpense) *MedicalfileUpdate {
 	ids := make([]int, len(d))
 	for i := range d {
 		ids[i] = d[i].ID
@@ -521,14 +521,14 @@ func (muo *MedicalfileUpdateOne) SetNurse(n *Nurse) *MedicalfileUpdateOne {
 	return muo.SetNurseID(n.ID)
 }
 
-// AddDentalexpenseIDs adds the dentalexpenses edge to DentalExpense by ids.
+// AddDentalexpenseIDs adds the dentalexpenses edge to Dentalexpense by ids.
 func (muo *MedicalfileUpdateOne) AddDentalexpenseIDs(ids ...int) *MedicalfileUpdateOne {
 	muo.mutation.AddDentalexpenseIDs(ids...)
 	return muo
 }
 
-// AddDentalexpenses adds the dentalexpenses edges to DentalExpense.
-func (muo *MedicalfileUpdateOne) AddDentalexpenses(d ...*DentalExpense) *MedicalfileUpdateOne {
+// AddDentalexpenses adds the dentalexpenses edges to Dentalexpense.
+func (muo *MedicalfileUpdateOne) AddDentalexpenses(d ...*Dentalexpense) *MedicalfileUpdateOne {
 	ids := make([]int, len(d))
 	for i := range d {
 		ids[i] = d[i].ID
@@ -559,14 +559,14 @@ func (muo *MedicalfileUpdateOne) ClearNurse() *MedicalfileUpdateOne {
 	return muo
 }
 
-// RemoveDentalexpenseIDs removes the dentalexpenses edge to DentalExpense by ids.
+// RemoveDentalexpenseIDs removes the dentalexpenses edge to Dentalexpense by ids.
 func (muo *MedicalfileUpdateOne) RemoveDentalexpenseIDs(ids ...int) *MedicalfileUpdateOne {
 	muo.mutation.RemoveDentalexpenseIDs(ids...)
 	return muo
 }
 
-// RemoveDentalexpenses removes dentalexpenses edges to DentalExpense.
-func (muo *MedicalfileUpdateOne) RemoveDentalexpenses(d ...*DentalExpense) *MedicalfileUpdateOne {
+// RemoveDentalexpenses removes dentalexpenses edges to Dentalexpense.
+func (muo *MedicalfileUpdateOne) RemoveDentalexpenses(d ...*Dentalexpense) *MedicalfileUpdateOne {
 	ids := make([]int, len(d))
 	for i := range d {
 		ids[i] = d[i].ID

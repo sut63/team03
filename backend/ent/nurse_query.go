@@ -32,7 +32,7 @@ type NurseQuery struct {
 	// eager-loading edges.
 	withQueue          *QueueQuery
 	withMedicalfiles   *MedicalfileQuery
-	withDentalexpenses *DentalExpenseQuery
+	withDentalexpenses *DentalexpenseQuery
 	withPatients       *PatientQuery
 	withDentists       *DentistQuery
 	// intermediate query (i.e. traversal path).
@@ -101,8 +101,8 @@ func (nq *NurseQuery) QueryMedicalfiles() *MedicalfileQuery {
 }
 
 // QueryDentalexpenses chains the current query on the dentalexpenses edge.
-func (nq *NurseQuery) QueryDentalexpenses() *DentalExpenseQuery {
-	query := &DentalExpenseQuery{config: nq.config}
+func (nq *NurseQuery) QueryDentalexpenses() *DentalexpenseQuery {
+	query := &DentalexpenseQuery{config: nq.config}
 	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
 		if err := nq.prepareQuery(ctx); err != nil {
 			return nil, err
@@ -357,8 +357,8 @@ func (nq *NurseQuery) WithMedicalfiles(opts ...func(*MedicalfileQuery)) *NurseQu
 
 //  WithDentalexpenses tells the query-builder to eager-loads the nodes that are connected to
 // the "dentalexpenses" edge. The optional arguments used to configure the query builder of the edge.
-func (nq *NurseQuery) WithDentalexpenses(opts ...func(*DentalExpenseQuery)) *NurseQuery {
-	query := &DentalExpenseQuery{config: nq.config}
+func (nq *NurseQuery) WithDentalexpenses(opts ...func(*DentalexpenseQuery)) *NurseQuery {
+	query := &DentalexpenseQuery{config: nq.config}
 	for _, opt := range opts {
 		opt(query)
 	}
@@ -547,7 +547,7 @@ func (nq *NurseQuery) sqlAll(ctx context.Context) ([]*Nurse, error) {
 			nodeids[nodes[i].ID] = nodes[i]
 		}
 		query.withFKs = true
-		query.Where(predicate.DentalExpense(func(s *sql.Selector) {
+		query.Where(predicate.Dentalexpense(func(s *sql.Selector) {
 			s.Where(sql.InValues(nurse.DentalexpensesColumn, fks...))
 		}))
 		neighbors, err := query.All(ctx)

@@ -14,55 +14,55 @@
 
 import { exists, mapValues } from '../runtime';
 import {
-    EntPriceTypeEdges,
-    EntPriceTypeEdgesFromJSON,
-    EntPriceTypeEdgesFromJSONTyped,
-    EntPriceTypeEdgesToJSON,
+    EntPricetypeEdges,
+    EntPricetypeEdgesFromJSON,
+    EntPricetypeEdgesFromJSONTyped,
+    EntPricetypeEdgesToJSON,
 } from './';
 
 /**
  * 
  * @export
- * @interface EntPriceType
+ * @interface EntPricetype
  */
-export interface EntPriceType {
+export interface EntPricetype {
     /**
      * 
-     * @type {EntPriceTypeEdges}
-     * @memberof EntPriceType
+     * @type {EntPricetypeEdges}
+     * @memberof EntPricetype
      */
-    edges?: EntPriceTypeEdges;
+    edges?: EntPricetypeEdges;
     /**
      * ID of the ent.
      * @type {number}
-     * @memberof EntPriceType
+     * @memberof EntPricetype
      */
     id?: number;
     /**
      * Name holds the value of the "name" field.
      * @type {string}
-     * @memberof EntPriceType
+     * @memberof EntPricetype
      */
     name?: string;
 }
 
-export function EntPriceTypeFromJSON(json: any): EntPriceType {
-    return EntPriceTypeFromJSONTyped(json, false);
+export function EntPricetypeFromJSON(json: any): EntPricetype {
+    return EntPricetypeFromJSONTyped(json, false);
 }
 
-export function EntPriceTypeFromJSONTyped(json: any, ignoreDiscriminator: boolean): EntPriceType {
+export function EntPricetypeFromJSONTyped(json: any, ignoreDiscriminator: boolean): EntPricetype {
     if ((json === undefined) || (json === null)) {
         return json;
     }
     return {
         
-        'edges': !exists(json, 'edges') ? undefined : EntPriceTypeEdgesFromJSON(json['edges']),
+        'edges': !exists(json, 'edges') ? undefined : EntPricetypeEdgesFromJSON(json['edges']),
         'id': !exists(json, 'id') ? undefined : json['id'],
         'name': !exists(json, 'name') ? undefined : json['name'],
     };
 }
 
-export function EntPriceTypeToJSON(value?: EntPriceType | null): any {
+export function EntPricetypeToJSON(value?: EntPricetype | null): any {
     if (value === undefined) {
         return undefined;
     }
@@ -71,7 +71,7 @@ export function EntPriceTypeToJSON(value?: EntPriceType | null): any {
     }
     return {
         
-        'edges': EntPriceTypeEdgesToJSON(value.edges),
+        'edges': EntPricetypeEdgesToJSON(value.edges),
         'id': value.id,
         'name': value.name,
     };

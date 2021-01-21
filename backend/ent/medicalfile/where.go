@@ -627,7 +627,7 @@ func HasDentalexpenses() predicate.Medicalfile {
 }
 
 // HasDentalexpensesWith applies the HasEdge predicate on the "dentalexpenses" edge with a given conditions (other predicates).
-func HasDentalexpensesWith(preds ...predicate.DentalExpense) predicate.Medicalfile {
+func HasDentalexpensesWith(preds ...predicate.Dentalexpense) predicate.Medicalfile {
 	return predicate.Medicalfile(func(s *sql.Selector) {
 		step := sqlgraph.NewStep(
 			sqlgraph.From(Table, FieldID),

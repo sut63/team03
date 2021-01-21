@@ -16,8 +16,8 @@ type Tx struct {
 	Appointment *AppointmentClient
 	// Degree is the client for interacting with the Degree builders.
 	Degree *DegreeClient
-	// DentalExpense is the client for interacting with the DentalExpense builders.
-	DentalExpense *DentalExpenseClient
+	// Dentalexpense is the client for interacting with the Dentalexpense builders.
+	Dentalexpense *DentalexpenseClient
 	// Dentist is the client for interacting with the Dentist builders.
 	Dentist *DentistClient
 	// Disease is the client for interacting with the Disease builders.
@@ -34,8 +34,8 @@ type Tx struct {
 	Nurse *NurseClient
 	// Patient is the client for interacting with the Patient builders.
 	Patient *PatientClient
-	// PriceType is the client for interacting with the PriceType builders.
-	PriceType *PriceTypeClient
+	// Pricetype is the client for interacting with the Pricetype builders.
+	Pricetype *PricetypeClient
 	// Queue is the client for interacting with the Queue builders.
 	Queue *QueueClient
 	// Room is the client for interacting with the Room builders.
@@ -177,7 +177,7 @@ func (tx *Tx) Client() *Client {
 func (tx *Tx) init() {
 	tx.Appointment = NewAppointmentClient(tx.config)
 	tx.Degree = NewDegreeClient(tx.config)
-	tx.DentalExpense = NewDentalExpenseClient(tx.config)
+	tx.Dentalexpense = NewDentalexpenseClient(tx.config)
 	tx.Dentist = NewDentistClient(tx.config)
 	tx.Disease = NewDiseaseClient(tx.config)
 	tx.Expert = NewExpertClient(tx.config)
@@ -186,7 +186,7 @@ func (tx *Tx) init() {
 	tx.Medicalfile = NewMedicalfileClient(tx.config)
 	tx.Nurse = NewNurseClient(tx.config)
 	tx.Patient = NewPatientClient(tx.config)
-	tx.PriceType = NewPriceTypeClient(tx.config)
+	tx.Pricetype = NewPricetypeClient(tx.config)
 	tx.Queue = NewQueueClient(tx.config)
 	tx.Room = NewRoomClient(tx.config)
 }

@@ -78,14 +78,14 @@ func (nc *NurseCreate) AddMedicalfiles(m ...*Medicalfile) *NurseCreate {
 	return nc.AddMedicalfileIDs(ids...)
 }
 
-// AddDentalexpenseIDs adds the dentalexpenses edge to DentalExpense by ids.
+// AddDentalexpenseIDs adds the dentalexpenses edge to Dentalexpense by ids.
 func (nc *NurseCreate) AddDentalexpenseIDs(ids ...int) *NurseCreate {
 	nc.mutation.AddDentalexpenseIDs(ids...)
 	return nc
 }
 
-// AddDentalexpenses adds the dentalexpenses edges to DentalExpense.
-func (nc *NurseCreate) AddDentalexpenses(d ...*DentalExpense) *NurseCreate {
+// AddDentalexpenses adds the dentalexpenses edges to Dentalexpense.
+func (nc *NurseCreate) AddDentalexpenses(d ...*Dentalexpense) *NurseCreate {
 	ids := make([]int, len(d))
 	for i := range d {
 		ids[i] = d[i].ID

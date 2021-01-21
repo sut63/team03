@@ -4,19 +4,19 @@ package dentalexpense
 
 const (
 	// Label holds the string label denoting the dentalexpense type in the database.
-	Label = "dental_expense"
+	Label = "dentalexpense"
 	// FieldID holds the string denoting the id field in the database.
 	FieldID = "id"
-	// FieldTax holds the string denoting the tax field in the database.
-	FieldTax = "tax"
 	// FieldName holds the string denoting the name field in the database.
 	FieldName = "name"
-	// FieldRates holds the string denoting the rates field in the database.
-	FieldRates = "rates"
 	// FieldPhone holds the string denoting the phone field in the database.
 	FieldPhone = "phone"
-	// FieldAddedTime holds the string denoting the added_time field in the database.
+	// FieldAddedTime holds the string denoting the addedtime field in the database.
 	FieldAddedTime = "added_time"
+	// FieldRates holds the string denoting the rates field in the database.
+	FieldRates = "rates"
+	// FieldTax holds the string denoting the tax field in the database.
+	FieldTax = "tax"
 
 	// EdgeNurse holds the string denoting the nurse edge name in mutations.
 	EdgeNurse = "nurse"
@@ -26,26 +26,26 @@ const (
 	EdgePricetype = "pricetype"
 
 	// Table holds the table name of the dentalexpense in the database.
-	Table = "dental_expenses"
+	Table = "dentalexpenses"
 	// NurseTable is the table the holds the nurse relation/edge.
-	NurseTable = "dental_expenses"
+	NurseTable = "dentalexpenses"
 	// NurseInverseTable is the table name for the Nurse entity.
 	// It exists in this package in order to avoid circular dependency with the "nurse" package.
 	NurseInverseTable = "nurses"
 	// NurseColumn is the table column denoting the nurse relation/edge.
 	NurseColumn = "nurse_id"
 	// MedicalfileTable is the table the holds the medicalfile relation/edge.
-	MedicalfileTable = "dental_expenses"
+	MedicalfileTable = "dentalexpenses"
 	// MedicalfileInverseTable is the table name for the Medicalfile entity.
 	// It exists in this package in order to avoid circular dependency with the "medicalfile" package.
 	MedicalfileInverseTable = "medicalfiles"
 	// MedicalfileColumn is the table column denoting the medicalfile relation/edge.
 	MedicalfileColumn = "medicalfile_id"
 	// PricetypeTable is the table the holds the pricetype relation/edge.
-	PricetypeTable = "dental_expenses"
-	// PricetypeInverseTable is the table name for the PriceType entity.
+	PricetypeTable = "dentalexpenses"
+	// PricetypeInverseTable is the table name for the Pricetype entity.
 	// It exists in this package in order to avoid circular dependency with the "pricetype" package.
-	PricetypeInverseTable = "price_types"
+	PricetypeInverseTable = "pricetypes"
 	// PricetypeColumn is the table column denoting the pricetype relation/edge.
 	PricetypeColumn = "pricetype_id"
 )
@@ -53,14 +53,14 @@ const (
 // Columns holds all SQL columns for dentalexpense fields.
 var Columns = []string{
 	FieldID,
-	FieldTax,
 	FieldName,
-	FieldRates,
 	FieldPhone,
 	FieldAddedTime,
+	FieldRates,
+	FieldTax,
 }
 
-// ForeignKeys holds the SQL foreign-keys that are owned by the DentalExpense type.
+// ForeignKeys holds the SQL foreign-keys that are owned by the Dentalexpense type.
 var ForeignKeys = []string{
 	"medicalfile_id",
 	"nurse_id",
@@ -68,12 +68,12 @@ var ForeignKeys = []string{
 }
 
 var (
-	// TaxValidator is a validator for the "tax" field. It is called by the builders before save.
-	TaxValidator func(string) error
-	// NameValidator is a validator for the "name" field. It is called by the builders before save.
+	// NameValidator is a validator for the "Name" field. It is called by the builders before save.
 	NameValidator func(string) error
-	// RatesValidator is a validator for the "rates" field. It is called by the builders before save.
-	RatesValidator func(int) error
-	// PhoneValidator is a validator for the "phone" field. It is called by the builders before save.
+	// PhoneValidator is a validator for the "Phone" field. It is called by the builders before save.
 	PhoneValidator func(string) error
+	// RatesValidator is a validator for the "Rates" field. It is called by the builders before save.
+	RatesValidator func(float64) error
+	// TaxValidator is a validator for the "Tax" field. It is called by the builders before save.
+	TaxValidator func(string) error
 )

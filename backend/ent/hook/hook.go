@@ -35,15 +35,15 @@ func (f DegreeFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, erro
 	return f(ctx, mv)
 }
 
-// The DentalExpenseFunc type is an adapter to allow the use of ordinary
-// function as DentalExpense mutator.
-type DentalExpenseFunc func(context.Context, *ent.DentalExpenseMutation) (ent.Value, error)
+// The DentalexpenseFunc type is an adapter to allow the use of ordinary
+// function as Dentalexpense mutator.
+type DentalexpenseFunc func(context.Context, *ent.DentalexpenseMutation) (ent.Value, error)
 
 // Mutate calls f(ctx, m).
-func (f DentalExpenseFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
-	mv, ok := m.(*ent.DentalExpenseMutation)
+func (f DentalexpenseFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	mv, ok := m.(*ent.DentalexpenseMutation)
 	if !ok {
-		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.DentalExpenseMutation", m)
+		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.DentalexpenseMutation", m)
 	}
 	return f(ctx, mv)
 }
@@ -152,15 +152,15 @@ func (f PatientFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, err
 	return f(ctx, mv)
 }
 
-// The PriceTypeFunc type is an adapter to allow the use of ordinary
-// function as PriceType mutator.
-type PriceTypeFunc func(context.Context, *ent.PriceTypeMutation) (ent.Value, error)
+// The PricetypeFunc type is an adapter to allow the use of ordinary
+// function as Pricetype mutator.
+type PricetypeFunc func(context.Context, *ent.PricetypeMutation) (ent.Value, error)
 
 // Mutate calls f(ctx, m).
-func (f PriceTypeFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
-	mv, ok := m.(*ent.PriceTypeMutation)
+func (f PricetypeFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	mv, ok := m.(*ent.PricetypeMutation)
 	if !ok {
-		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.PriceTypeMutation", m)
+		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.PricetypeMutation", m)
 	}
 	return f(ctx, mv)
 }

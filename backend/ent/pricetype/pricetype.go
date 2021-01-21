@@ -4,7 +4,7 @@ package pricetype
 
 const (
 	// Label holds the string label denoting the pricetype type in the database.
-	Label = "price_type"
+	Label = "pricetype"
 	// FieldID holds the string denoting the id field in the database.
 	FieldID = "id"
 	// FieldName holds the string denoting the name field in the database.
@@ -14,12 +14,12 @@ const (
 	EdgeDentalexpenses = "dentalexpenses"
 
 	// Table holds the table name of the pricetype in the database.
-	Table = "price_types"
+	Table = "pricetypes"
 	// DentalexpensesTable is the table the holds the dentalexpenses relation/edge.
-	DentalexpensesTable = "dental_expenses"
-	// DentalexpensesInverseTable is the table name for the DentalExpense entity.
+	DentalexpensesTable = "dentalexpenses"
+	// DentalexpensesInverseTable is the table name for the Dentalexpense entity.
 	// It exists in this package in order to avoid circular dependency with the "dentalexpense" package.
-	DentalexpensesInverseTable = "dental_expenses"
+	DentalexpensesInverseTable = "dentalexpenses"
 	// DentalexpensesColumn is the table column denoting the dentalexpenses relation/edge.
 	DentalexpensesColumn = "pricetype_id"
 )

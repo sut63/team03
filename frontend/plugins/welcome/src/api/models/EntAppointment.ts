@@ -27,17 +27,29 @@ import {
  */
 export interface EntAppointment {
     /**
-     * Datetime holds the value of the "datetime" field.
+     * AppointID holds the value of the "AppointID" field.
+     * @type {string}
+     * @memberof EntAppointment
+     */
+    appointID?: string;
+    /**
+     * Datetime holds the value of the "Datetime" field.
      * @type {string}
      * @memberof EntAppointment
      */
     datetime?: string;
     /**
-     * Detail holds the value of the "detail" field.
+     * Detail holds the value of the "Detail" field.
      * @type {string}
      * @memberof EntAppointment
      */
     detail?: string;
+    /**
+     * Remark holds the value of the "Remark" field.
+     * @type {string}
+     * @memberof EntAppointment
+     */
+    remark?: string;
     /**
      * 
      * @type {EntAppointmentEdges}
@@ -62,8 +74,10 @@ export function EntAppointmentFromJSONTyped(json: any, ignoreDiscriminator: bool
     }
     return {
         
-        'datetime': !exists(json, 'datetime') ? undefined : json['datetime'],
-        'detail': !exists(json, 'detail') ? undefined : json['detail'],
+        'appointID': !exists(json, 'AppointID') ? undefined : json['AppointID'],
+        'datetime': !exists(json, 'Datetime') ? undefined : json['Datetime'],
+        'detail': !exists(json, 'Detail') ? undefined : json['Detail'],
+        'remark': !exists(json, 'Remark') ? undefined : json['Remark'],
         'edges': !exists(json, 'edges') ? undefined : EntAppointmentEdgesFromJSON(json['edges']),
         'id': !exists(json, 'id') ? undefined : json['id'],
     };
@@ -78,8 +92,10 @@ export function EntAppointmentToJSON(value?: EntAppointment | null): any {
     }
     return {
         
-        'datetime': value.datetime,
-        'detail': value.detail,
+        'AppointID': value.appointID,
+        'Datetime': value.datetime,
+        'Detail': value.detail,
+        'Remark': value.remark,
         'edges': EntAppointmentEdgesToJSON(value.edges),
         'id': value.id,
     };

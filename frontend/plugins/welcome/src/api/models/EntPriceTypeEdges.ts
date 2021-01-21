@@ -14,41 +14,41 @@
 
 import { exists, mapValues } from '../runtime';
 import {
-    EntDentalExpense,
-    EntDentalExpenseFromJSON,
-    EntDentalExpenseFromJSONTyped,
-    EntDentalExpenseToJSON,
+    EntDentalexpense,
+    EntDentalexpenseFromJSON,
+    EntDentalexpenseFromJSONTyped,
+    EntDentalexpenseToJSON,
 } from './';
 
 /**
  * 
  * @export
- * @interface EntPriceTypeEdges
+ * @interface EntPricetypeEdges
  */
-export interface EntPriceTypeEdges {
+export interface EntPricetypeEdges {
     /**
      * Dentalexpenses holds the value of the dentalexpenses edge.
-     * @type {Array<EntDentalExpense>}
-     * @memberof EntPriceTypeEdges
+     * @type {Array<EntDentalexpense>}
+     * @memberof EntPricetypeEdges
      */
-    dentalexpenses?: Array<EntDentalExpense>;
+    dentalexpenses?: Array<EntDentalexpense>;
 }
 
-export function EntPriceTypeEdgesFromJSON(json: any): EntPriceTypeEdges {
-    return EntPriceTypeEdgesFromJSONTyped(json, false);
+export function EntPricetypeEdgesFromJSON(json: any): EntPricetypeEdges {
+    return EntPricetypeEdgesFromJSONTyped(json, false);
 }
 
-export function EntPriceTypeEdgesFromJSONTyped(json: any, ignoreDiscriminator: boolean): EntPriceTypeEdges {
+export function EntPricetypeEdgesFromJSONTyped(json: any, ignoreDiscriminator: boolean): EntPricetypeEdges {
     if ((json === undefined) || (json === null)) {
         return json;
     }
     return {
         
-        'dentalexpenses': !exists(json, 'dentalexpenses') ? undefined : ((json['dentalexpenses'] as Array<any>).map(EntDentalExpenseFromJSON)),
+        'dentalexpenses': !exists(json, 'dentalexpenses') ? undefined : ((json['dentalexpenses'] as Array<any>).map(EntDentalexpenseFromJSON)),
     };
 }
 
-export function EntPriceTypeEdgesToJSON(value?: EntPriceTypeEdges | null): any {
+export function EntPricetypeEdgesToJSON(value?: EntPricetypeEdges | null): any {
     if (value === undefined) {
         return undefined;
     }
@@ -57,7 +57,7 @@ export function EntPriceTypeEdgesToJSON(value?: EntPriceTypeEdges | null): any {
     }
     return {
         
-        'dentalexpenses': value.dentalexpenses === undefined ? undefined : ((value.dentalexpenses as Array<any>).map(EntDentalExpenseToJSON)),
+        'dentalexpenses': value.dentalexpenses === undefined ? undefined : ((value.dentalexpenses as Array<any>).map(EntDentalexpenseToJSON)),
     };
 }
 

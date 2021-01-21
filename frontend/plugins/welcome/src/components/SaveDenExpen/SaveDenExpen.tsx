@@ -13,14 +13,13 @@ import {
   InputLabel,
   MenuItem,
   TextField,
-  Avatar,
   Button,
   Link,
 } from '@material-ui/core';
 import { DefaultApi } from '../../api/apis'; // Api Gennerate From Command
 import { EntMedicalfile } from '../../api/models/EntMedicalfile'; // import interface Dentist
-import { EntPriceType } from '../../api/models/EntPriceType'; // import interface Nurse
-import { EntNurse } from '../../api/models/EntNurse'; // import interface Patient
+import { EntNurse } from '../../api/models/EntNurse'; // import interface Nurse
+import { EntPricetype } from '../../api/models/EntPricetype'; // import interface Patient
 
 
 // css style
@@ -31,6 +30,7 @@ const useStyles = makeStyles(theme => ({
   paper: {
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2),
+    textAlign: 'right',
   },
   formControl: {
     width: 300,
@@ -57,10 +57,10 @@ const useStyles = makeStyles(theme => ({
 
 interface saveDenExpen {
   Medicalfile: Number;
-  PriceType: Number;
+  Pricetype: Number;
   Nurse: Number;
   Rates: Number;
-  Added: String;
+  AddedTime: String;
   Tax: String;
   Name: String;
   Phone: String;
@@ -70,61 +70,133 @@ const SaveDenExpen: FC<{}> = () => {
   const classes = useStyles();
   const http = new DefaultApi();
 
-  const [dentalexpense, setDentalExpense] = React.useState<Partial<saveDenExpen>>({});
+  const [dentalexpense, setDentalexpense] = React.useState<Partial<saveDenExpen>>({});
   const [medicalfiles, setMedicalfiles] = React.useState<EntMedicalfile[]>([]); //การประกาศตัวแปร โดยที่เราจะดึงมาใช้ แล้ว Ent ได้มาจากการเจน API
-  const [pricetypes, setPriceTypes] = React.useState<EntPriceType[]>([]);
+  const [pricetypes, setPricetypes] = React.useState<EntPricetype[]>([]);
   const [nurses, setNurses] = React.useState<EntNurse[]>([]);
+  const [TaxError, setTaxError] = React.useState('');
+  const [NameError, setNameError] = React.useState('');
+  const [PhoneError, setPhoneError] = React.useState('');
+  const [errorRates, setErrorRates] = React.useState(true);
+  const [rates, setRates] =  React.useState(Number);
 
   // alert setting
-  //const Swal = require('sweetalert2')
   const Toast = Swal.mixin({
     toast: true,
     position: 'top-end',
     showConfirmButton: false,
     timer: 3000,
     timerProgressBar: true,
+    
   });
-
-  // set data to object medicalfile
-  const handleChange = (
-    event: React.ChangeEvent<{ name?: string; value: unknown }>,
-  ) => {
-    const name = event.target.name as keyof typeof dentalexpense;
-    const { value } = event.target;
-    setDentalExpense({ ...dentalexpense, [name]: value });
-    console.log(dentalexpense);
-  };
-  
-  const getPriceType = async () => {
-    const res = await http.listPricetype({ limit: 4, offset: 0 });
-    setPriceTypes(res);
-  };
-
-  const getMedicalfile = async () => {
-    const res = await http.listMedicalfile({ limit: 4, offset: 0 });
-    setMedicalfiles(res);
-  };
-
-  const getNurse = async () => {
-    const res = await http.listNurse({ limit: 4, offset: 0 });
-    setNurses(res);
-  };
 
   // Lifecycle Hooks
   useEffect(() => {
     getMedicalfile();
-    getPriceType();
+    getPricetype();
     getNurse();
   }, []);
 
+  // set data to object medicalfile
+  const handleChange = (
+    event: React.ChangeEvent<{ name?: string; value: any }>,  ) => {
+    const name = event.target.name as keyof typeof dentalexpense;
+    const { value } = event.target;
+    setDentalexpense({ ...dentalexpense, [name]: value });
+    const validateValue = value.toString()
+    checkPattern(name, validateValue)
+    console.log(dentalexpense);
+  };
+  const Rates_handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    setRates(event.target.value as number);
+    ValidateRates(event.target.value as number)
+   };
+  
+  const getPricetype = async () => {
+    const res = await http.listPricetype({ limit: 10, offset: 0 });
+    setPricetypes(res);
+  };
+
+  const getMedicalfile = async () => {
+    const res = await http.listMedicalfile({ limit: 10, offset: 0 });
+    setMedicalfiles(res);
+  };
+
+  const getNurse = async () => {
+    const res = await http.listNurse({ limit: 10, offset: 0 });
+    setNurses(res);
+  };
+
+   
+   const validateTax = (val: string) => {
+    return val.match("[R]\\d{10}") && val.length <= 11;
+  }
+
+  
+  const validateName = (val: string) => {
+    return val.match("^[ก-๏]+$") 
+  }
+
+  
+  const validatePhone = (val: string) => {
+    return val.match("^[0-9]{10}$");
+  }
+  const ValidateRates = (value : number) => {
+    value > 0 ? setErrorRates(true) : setErrorRates(false);
+  } 
+
+  
+  const checkPattern  = (id: string, value: string) => {
+    switch(id) {
+      case 'Tax':
+        validateTax(value) ? setTaxError('') : setTaxError('รูปแบบหมายเลขกำกับภาษีไม่ถูกต้อง');
+        return;
+      case 'Name':
+        validateName(value) ? setNameError('') : setNameError('กรอกชื่อเป็นภาษาไทยเท่านั้น');
+        return;
+        case 'Phone':
+        validatePhone(value) ? setPhoneError('') : setPhoneError('กรอกเบอร์โทรศัพท์10ตัวเท่านั้น');
+        return;
+      default:
+        return;
+    }
+  }
+
+  const alertMessage = (icon: any, title: any) => {
+    Toast.fire({
+      icon: icon,
+      title: title,
+    });
+  }
+
+  //กำหนดข้อความ error
+  const checkCaseSaveError = (s: string) => {
+    switch(s) {
+      case 'Tax':
+        alertMessage("error", "รูปแบบหมายเลขกำกับภาษีไม่ถูกต้อง");
+        return;
+      case 'Name':
+        alertMessage("error", " กรอกชื่อเป็นภาษาไทยเท่านั้น");
+        return;
+      case 'Phone':
+        alertMessage("error", " กรอกเบอร์โทรศัพท์10ตัวเท่านั้น");
+        return;
+      default:
+        alertMessage("error", " บันทึกข้อมูลไม่สำเร็จ");
+        return;
+    }
+  }
+
+  
+
   // clear input form
   function clear() {
-    setDentalExpense({});
+    setDentalexpense({});
   }
 
   // function save data
   function save() {
-    dentalexpense.Added += ":00+07:00";
+    dentalexpense.AddedTime += ":00+07:00";
     const apiUrl = 'http://localhost:8080/api/v1/dentalexpenses';
     const requestOptions = {
       method: 'POST',
@@ -134,24 +206,21 @@ const SaveDenExpen: FC<{}> = () => {
 
     console.log(dentalexpense); // log ดูข้อมูล สามารถ Inspect ดูข้อมูลได้ F12 เลือก Tab Console
 
-    fetch(apiUrl, requestOptions)
+     fetch(apiUrl, requestOptions)
       .then(response => response.json())
-      .then(data => {console.log(data.save);
-        console.log(requestOptions)
-        if (data.status == true) {
+      .then(data => {
+        console.log(data);
+        if (data.status === true) {
           clear();
           Toast.fire({
             icon: 'success',
             title: 'บันทึกข้อมูลสำเร็จ',
           });
         } else {
-          Toast.fire({
-            icon: 'error',
-            title: 'บันทึกข้อมูลไม่สำเร็จ',
-          });
+          checkCaseSaveError(data.error.Name)
         }
       });
-  }
+  };
 
   return (
     <Page theme={pageTheme.service}>
@@ -163,26 +232,27 @@ const SaveDenExpen: FC<{}> = () => {
         <Container maxWidth="sm">
           <Grid container spacing={3}>
             <Grid item xs={12}></Grid>
+
             <Grid item xs={3}>
               <div className={classes.paper}>เลขที่กำกับภาษี</div>
             </Grid>
             <Grid item xs={9}>
               <FormControl variant="outlined" className={classes.formControl}>
                 <TextField 
-                
+                error = {TaxError ? true : false}
                 label="ระบุเลขที่กำกับภาษี" 
                 variant="outlined" 
                 name="Tax"
                 type="string"
+                helperText= {TaxError}
                 value={dentalexpense.Tax || ''}
                 onChange={handleChange}
                 />
-
               </FormControl>
             </Grid>
 
             <Grid item xs={3}>
-              <div className={classes.paper}>ข้อมูลการรับบริการทันตกรรม</div>
+              <div className={classes.paper}>บริการทันตกรรม</div>
             </Grid>
             <Grid item xs={9}>
               <FormControl variant="outlined" className={classes.formControl}>
@@ -195,7 +265,8 @@ const SaveDenExpen: FC<{}> = () => {
                   {medicalfiles.map(item => {
                     return (
                       <MenuItem key={item.id} value={item.id}>
-                        {item.detail}
+                        {item.id}&emsp;
+                        {item.detial}
                       </MenuItem>
                     );
                   })}
@@ -207,15 +278,19 @@ const SaveDenExpen: FC<{}> = () => {
             </Grid>
             <Grid item xs={9}>
               <FormControl variant="outlined" className={classes.formControl}>
-                <TextField 
-                
-                label="ระบุค่าบริการ" 
-                variant="outlined" 
-                name="Rates"
-                type="string"
-                value={dentalexpense.Rates || ''}
-                onChange={handleChange}
-                />
+              
+              <TextField
+              id="Rates"
+              name = "Rates"
+              label="ค่าบริการ" 
+              variant="outlined"
+              
+              value={rates}
+              helperText={errorRates? "" : "กรอกรูปแบบจำนวนเงินให้ถูกต้อง"}
+              error={errorRates? false : true}
+              onChange={Rates_handleChange}
+              style={{ width: 300 }}
+              />
 
               </FormControl>
             </Grid>
@@ -227,27 +302,29 @@ const SaveDenExpen: FC<{}> = () => {
               <FormControl variant="outlined" className={classes.formControl}>
                 <InputLabel>เลือกประเภทการชำระ</InputLabel>
                 <Select
-                  name="PriceType"
-                  value={dentalexpense.PriceType || ''} 
+                  name="Pricetype"
+                  value={dentalexpense.Pricetype || ''} 
                   onChange={handleChange}
                 >
                   {pricetypes.map(item => {
                     return (
                       <MenuItem key={item.id} value={item.id}>
-                      {item.name}
+                        {item.name}
                       </MenuItem>
                     );
                   })}
                 </Select>
               </FormControl>
             </Grid>
+
             <Grid item xs={3}>
               <div className={classes.paper}>ชื่อผู้ชำระค่าบริการ</div>
             </Grid>
             <Grid item xs={9}>
               <FormControl variant="outlined" className={classes.formControl}>
                 <TextField 
-                
+                error = {NameError ? true : false}
+                helperText={NameError}
                 label="ระบุชื่อผู้ชำระค่าบริการ" 
                 variant="outlined" 
                 name="Name"
@@ -258,13 +335,15 @@ const SaveDenExpen: FC<{}> = () => {
 
               </FormControl>
             </Grid>
+
             <Grid item xs={3}>
-              <div className={classes.paper}>เบอร์ที่สามารถติดต่อได้</div>
+              <div className={classes.paper}>เบอร์ที่ติดต่อได้</div>
             </Grid>
             <Grid item xs={9}>
               <FormControl variant="outlined" className={classes.formControl}>
                 <TextField 
-                
+                error = {PhoneError ? true : false}
+                helperText={PhoneError}
                 label="ระบุเบอร์โทรศัพท์" 
                 variant="outlined" 
                 name="Phone"
@@ -276,17 +355,21 @@ const SaveDenExpen: FC<{}> = () => {
               </FormControl>
             </Grid>
 
+           
+
+            
+
             <Grid item xs={3}>
-              <div className={classes.paper}>วันที่ชำระค่าบริการ</div>
+              <div className={classes.paper}>วันที่ทำการชำระ</div>
             </Grid>
             <Grid item xs={9}>
               <form className={classes.container} noValidate>
                 <TextField
                   
                   label="เลือกวันที่"
-                  name="Added"
+                  name="AddedTime"
                   type="datetime-local"
-                  value={dentalexpense.Added || ''} 
+                  value={dentalexpense.AddedTime || ''} 
                   className={classes.textField}
                   InputLabelProps={{
                     shrink: true,

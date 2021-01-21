@@ -17,88 +17,88 @@ import (
 	"github.com/team03/app/ent/pricetype"
 )
 
-// PriceTypeQuery is the builder for querying PriceType entities.
-type PriceTypeQuery struct {
+// PricetypeQuery is the builder for querying Pricetype entities.
+type PricetypeQuery struct {
 	config
 	limit      *int
 	offset     *int
 	order      []OrderFunc
 	unique     []string
-	predicates []predicate.PriceType
+	predicates []predicate.Pricetype
 	// eager-loading edges.
-	withDentalexpenses *DentalExpenseQuery
+	withDentalexpenses *DentalexpenseQuery
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
 }
 
 // Where adds a new predicate for the builder.
-func (ptq *PriceTypeQuery) Where(ps ...predicate.PriceType) *PriceTypeQuery {
-	ptq.predicates = append(ptq.predicates, ps...)
-	return ptq
+func (pq *PricetypeQuery) Where(ps ...predicate.Pricetype) *PricetypeQuery {
+	pq.predicates = append(pq.predicates, ps...)
+	return pq
 }
 
 // Limit adds a limit step to the query.
-func (ptq *PriceTypeQuery) Limit(limit int) *PriceTypeQuery {
-	ptq.limit = &limit
-	return ptq
+func (pq *PricetypeQuery) Limit(limit int) *PricetypeQuery {
+	pq.limit = &limit
+	return pq
 }
 
 // Offset adds an offset step to the query.
-func (ptq *PriceTypeQuery) Offset(offset int) *PriceTypeQuery {
-	ptq.offset = &offset
-	return ptq
+func (pq *PricetypeQuery) Offset(offset int) *PricetypeQuery {
+	pq.offset = &offset
+	return pq
 }
 
 // Order adds an order step to the query.
-func (ptq *PriceTypeQuery) Order(o ...OrderFunc) *PriceTypeQuery {
-	ptq.order = append(ptq.order, o...)
-	return ptq
+func (pq *PricetypeQuery) Order(o ...OrderFunc) *PricetypeQuery {
+	pq.order = append(pq.order, o...)
+	return pq
 }
 
 // QueryDentalexpenses chains the current query on the dentalexpenses edge.
-func (ptq *PriceTypeQuery) QueryDentalexpenses() *DentalExpenseQuery {
-	query := &DentalExpenseQuery{config: ptq.config}
+func (pq *PricetypeQuery) QueryDentalexpenses() *DentalexpenseQuery {
+	query := &DentalexpenseQuery{config: pq.config}
 	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
-		if err := ptq.prepareQuery(ctx); err != nil {
+		if err := pq.prepareQuery(ctx); err != nil {
 			return nil, err
 		}
 		step := sqlgraph.NewStep(
-			sqlgraph.From(pricetype.Table, pricetype.FieldID, ptq.sqlQuery()),
+			sqlgraph.From(pricetype.Table, pricetype.FieldID, pq.sqlQuery()),
 			sqlgraph.To(dentalexpense.Table, dentalexpense.FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, pricetype.DentalexpensesTable, pricetype.DentalexpensesColumn),
 		)
-		fromU = sqlgraph.SetNeighbors(ptq.driver.Dialect(), step)
+		fromU = sqlgraph.SetNeighbors(pq.driver.Dialect(), step)
 		return fromU, nil
 	}
 	return query
 }
 
-// First returns the first PriceType entity in the query. Returns *NotFoundError when no pricetype was found.
-func (ptq *PriceTypeQuery) First(ctx context.Context) (*PriceType, error) {
-	pts, err := ptq.Limit(1).All(ctx)
+// First returns the first Pricetype entity in the query. Returns *NotFoundError when no pricetype was found.
+func (pq *PricetypeQuery) First(ctx context.Context) (*Pricetype, error) {
+	prs, err := pq.Limit(1).All(ctx)
 	if err != nil {
 		return nil, err
 	}
-	if len(pts) == 0 {
+	if len(prs) == 0 {
 		return nil, &NotFoundError{pricetype.Label}
 	}
-	return pts[0], nil
+	return prs[0], nil
 }
 
 // FirstX is like First, but panics if an error occurs.
-func (ptq *PriceTypeQuery) FirstX(ctx context.Context) *PriceType {
-	pt, err := ptq.First(ctx)
+func (pq *PricetypeQuery) FirstX(ctx context.Context) *Pricetype {
+	pr, err := pq.First(ctx)
 	if err != nil && !IsNotFound(err) {
 		panic(err)
 	}
-	return pt
+	return pr
 }
 
-// FirstID returns the first PriceType id in the query. Returns *NotFoundError when no id was found.
-func (ptq *PriceTypeQuery) FirstID(ctx context.Context) (id int, err error) {
+// FirstID returns the first Pricetype id in the query. Returns *NotFoundError when no id was found.
+func (pq *PricetypeQuery) FirstID(ctx context.Context) (id int, err error) {
 	var ids []int
-	if ids, err = ptq.Limit(1).IDs(ctx); err != nil {
+	if ids, err = pq.Limit(1).IDs(ctx); err != nil {
 		return
 	}
 	if len(ids) == 0 {
@@ -109,23 +109,23 @@ func (ptq *PriceTypeQuery) FirstID(ctx context.Context) (id int, err error) {
 }
 
 // FirstXID is like FirstID, but panics if an error occurs.
-func (ptq *PriceTypeQuery) FirstXID(ctx context.Context) int {
-	id, err := ptq.FirstID(ctx)
+func (pq *PricetypeQuery) FirstXID(ctx context.Context) int {
+	id, err := pq.FirstID(ctx)
 	if err != nil && !IsNotFound(err) {
 		panic(err)
 	}
 	return id
 }
 
-// Only returns the only PriceType entity in the query, returns an error if not exactly one entity was returned.
-func (ptq *PriceTypeQuery) Only(ctx context.Context) (*PriceType, error) {
-	pts, err := ptq.Limit(2).All(ctx)
+// Only returns the only Pricetype entity in the query, returns an error if not exactly one entity was returned.
+func (pq *PricetypeQuery) Only(ctx context.Context) (*Pricetype, error) {
+	prs, err := pq.Limit(2).All(ctx)
 	if err != nil {
 		return nil, err
 	}
-	switch len(pts) {
+	switch len(prs) {
 	case 1:
-		return pts[0], nil
+		return prs[0], nil
 	case 0:
 		return nil, &NotFoundError{pricetype.Label}
 	default:
@@ -134,18 +134,18 @@ func (ptq *PriceTypeQuery) Only(ctx context.Context) (*PriceType, error) {
 }
 
 // OnlyX is like Only, but panics if an error occurs.
-func (ptq *PriceTypeQuery) OnlyX(ctx context.Context) *PriceType {
-	pt, err := ptq.Only(ctx)
+func (pq *PricetypeQuery) OnlyX(ctx context.Context) *Pricetype {
+	pr, err := pq.Only(ctx)
 	if err != nil {
 		panic(err)
 	}
-	return pt
+	return pr
 }
 
-// OnlyID returns the only PriceType id in the query, returns an error if not exactly one id was returned.
-func (ptq *PriceTypeQuery) OnlyID(ctx context.Context) (id int, err error) {
+// OnlyID returns the only Pricetype id in the query, returns an error if not exactly one id was returned.
+func (pq *PricetypeQuery) OnlyID(ctx context.Context) (id int, err error) {
 	var ids []int
-	if ids, err = ptq.Limit(2).IDs(ctx); err != nil {
+	if ids, err = pq.Limit(2).IDs(ctx); err != nil {
 		return
 	}
 	switch len(ids) {
@@ -160,43 +160,43 @@ func (ptq *PriceTypeQuery) OnlyID(ctx context.Context) (id int, err error) {
 }
 
 // OnlyIDX is like OnlyID, but panics if an error occurs.
-func (ptq *PriceTypeQuery) OnlyIDX(ctx context.Context) int {
-	id, err := ptq.OnlyID(ctx)
+func (pq *PricetypeQuery) OnlyIDX(ctx context.Context) int {
+	id, err := pq.OnlyID(ctx)
 	if err != nil {
 		panic(err)
 	}
 	return id
 }
 
-// All executes the query and returns a list of PriceTypes.
-func (ptq *PriceTypeQuery) All(ctx context.Context) ([]*PriceType, error) {
-	if err := ptq.prepareQuery(ctx); err != nil {
+// All executes the query and returns a list of Pricetypes.
+func (pq *PricetypeQuery) All(ctx context.Context) ([]*Pricetype, error) {
+	if err := pq.prepareQuery(ctx); err != nil {
 		return nil, err
 	}
-	return ptq.sqlAll(ctx)
+	return pq.sqlAll(ctx)
 }
 
 // AllX is like All, but panics if an error occurs.
-func (ptq *PriceTypeQuery) AllX(ctx context.Context) []*PriceType {
-	pts, err := ptq.All(ctx)
+func (pq *PricetypeQuery) AllX(ctx context.Context) []*Pricetype {
+	prs, err := pq.All(ctx)
 	if err != nil {
 		panic(err)
 	}
-	return pts
+	return prs
 }
 
-// IDs executes the query and returns a list of PriceType ids.
-func (ptq *PriceTypeQuery) IDs(ctx context.Context) ([]int, error) {
+// IDs executes the query and returns a list of Pricetype ids.
+func (pq *PricetypeQuery) IDs(ctx context.Context) ([]int, error) {
 	var ids []int
-	if err := ptq.Select(pricetype.FieldID).Scan(ctx, &ids); err != nil {
+	if err := pq.Select(pricetype.FieldID).Scan(ctx, &ids); err != nil {
 		return nil, err
 	}
 	return ids, nil
 }
 
 // IDsX is like IDs, but panics if an error occurs.
-func (ptq *PriceTypeQuery) IDsX(ctx context.Context) []int {
-	ids, err := ptq.IDs(ctx)
+func (pq *PricetypeQuery) IDsX(ctx context.Context) []int {
+	ids, err := pq.IDs(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -204,16 +204,16 @@ func (ptq *PriceTypeQuery) IDsX(ctx context.Context) []int {
 }
 
 // Count returns the count of the given query.
-func (ptq *PriceTypeQuery) Count(ctx context.Context) (int, error) {
-	if err := ptq.prepareQuery(ctx); err != nil {
+func (pq *PricetypeQuery) Count(ctx context.Context) (int, error) {
+	if err := pq.prepareQuery(ctx); err != nil {
 		return 0, err
 	}
-	return ptq.sqlCount(ctx)
+	return pq.sqlCount(ctx)
 }
 
 // CountX is like Count, but panics if an error occurs.
-func (ptq *PriceTypeQuery) CountX(ctx context.Context) int {
-	count, err := ptq.Count(ctx)
+func (pq *PricetypeQuery) CountX(ctx context.Context) int {
+	count, err := pq.Count(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -221,16 +221,16 @@ func (ptq *PriceTypeQuery) CountX(ctx context.Context) int {
 }
 
 // Exist returns true if the query has elements in the graph.
-func (ptq *PriceTypeQuery) Exist(ctx context.Context) (bool, error) {
-	if err := ptq.prepareQuery(ctx); err != nil {
+func (pq *PricetypeQuery) Exist(ctx context.Context) (bool, error) {
+	if err := pq.prepareQuery(ctx); err != nil {
 		return false, err
 	}
-	return ptq.sqlExist(ctx)
+	return pq.sqlExist(ctx)
 }
 
 // ExistX is like Exist, but panics if an error occurs.
-func (ptq *PriceTypeQuery) ExistX(ctx context.Context) bool {
-	exist, err := ptq.Exist(ctx)
+func (pq *PricetypeQuery) ExistX(ctx context.Context) bool {
+	exist, err := pq.Exist(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -239,29 +239,29 @@ func (ptq *PriceTypeQuery) ExistX(ctx context.Context) bool {
 
 // Clone returns a duplicate of the query builder, including all associated steps. It can be
 // used to prepare common query builders and use them differently after the clone is made.
-func (ptq *PriceTypeQuery) Clone() *PriceTypeQuery {
-	return &PriceTypeQuery{
-		config:     ptq.config,
-		limit:      ptq.limit,
-		offset:     ptq.offset,
-		order:      append([]OrderFunc{}, ptq.order...),
-		unique:     append([]string{}, ptq.unique...),
-		predicates: append([]predicate.PriceType{}, ptq.predicates...),
+func (pq *PricetypeQuery) Clone() *PricetypeQuery {
+	return &PricetypeQuery{
+		config:     pq.config,
+		limit:      pq.limit,
+		offset:     pq.offset,
+		order:      append([]OrderFunc{}, pq.order...),
+		unique:     append([]string{}, pq.unique...),
+		predicates: append([]predicate.Pricetype{}, pq.predicates...),
 		// clone intermediate query.
-		sql:  ptq.sql.Clone(),
-		path: ptq.path,
+		sql:  pq.sql.Clone(),
+		path: pq.path,
 	}
 }
 
 //  WithDentalexpenses tells the query-builder to eager-loads the nodes that are connected to
 // the "dentalexpenses" edge. The optional arguments used to configure the query builder of the edge.
-func (ptq *PriceTypeQuery) WithDentalexpenses(opts ...func(*DentalExpenseQuery)) *PriceTypeQuery {
-	query := &DentalExpenseQuery{config: ptq.config}
+func (pq *PricetypeQuery) WithDentalexpenses(opts ...func(*DentalexpenseQuery)) *PricetypeQuery {
+	query := &DentalexpenseQuery{config: pq.config}
 	for _, opt := range opts {
 		opt(query)
 	}
-	ptq.withDentalexpenses = query
-	return ptq
+	pq.withDentalexpenses = query
+	return pq
 }
 
 // GroupBy used to group vertices by one or more fields/columns.
@@ -274,19 +274,19 @@ func (ptq *PriceTypeQuery) WithDentalexpenses(opts ...func(*DentalExpenseQuery))
 //		Count int `json:"count,omitempty"`
 //	}
 //
-//	client.PriceType.Query().
+//	client.Pricetype.Query().
 //		GroupBy(pricetype.FieldName).
 //		Aggregate(ent.Count()).
 //		Scan(ctx, &v)
 //
-func (ptq *PriceTypeQuery) GroupBy(field string, fields ...string) *PriceTypeGroupBy {
-	group := &PriceTypeGroupBy{config: ptq.config}
+func (pq *PricetypeQuery) GroupBy(field string, fields ...string) *PricetypeGroupBy {
+	group := &PricetypeGroupBy{config: pq.config}
 	group.fields = append([]string{field}, fields...)
 	group.path = func(ctx context.Context) (prev *sql.Selector, err error) {
-		if err := ptq.prepareQuery(ctx); err != nil {
+		if err := pq.prepareQuery(ctx); err != nil {
 			return nil, err
 		}
-		return ptq.sqlQuery(), nil
+		return pq.sqlQuery(), nil
 	}
 	return group
 }
@@ -299,43 +299,43 @@ func (ptq *PriceTypeQuery) GroupBy(field string, fields ...string) *PriceTypeGro
 //		Name string `json:"name,omitempty"`
 //	}
 //
-//	client.PriceType.Query().
+//	client.Pricetype.Query().
 //		Select(pricetype.FieldName).
 //		Scan(ctx, &v)
 //
-func (ptq *PriceTypeQuery) Select(field string, fields ...string) *PriceTypeSelect {
-	selector := &PriceTypeSelect{config: ptq.config}
+func (pq *PricetypeQuery) Select(field string, fields ...string) *PricetypeSelect {
+	selector := &PricetypeSelect{config: pq.config}
 	selector.fields = append([]string{field}, fields...)
 	selector.path = func(ctx context.Context) (prev *sql.Selector, err error) {
-		if err := ptq.prepareQuery(ctx); err != nil {
+		if err := pq.prepareQuery(ctx); err != nil {
 			return nil, err
 		}
-		return ptq.sqlQuery(), nil
+		return pq.sqlQuery(), nil
 	}
 	return selector
 }
 
-func (ptq *PriceTypeQuery) prepareQuery(ctx context.Context) error {
-	if ptq.path != nil {
-		prev, err := ptq.path(ctx)
+func (pq *PricetypeQuery) prepareQuery(ctx context.Context) error {
+	if pq.path != nil {
+		prev, err := pq.path(ctx)
 		if err != nil {
 			return err
 		}
-		ptq.sql = prev
+		pq.sql = prev
 	}
 	return nil
 }
 
-func (ptq *PriceTypeQuery) sqlAll(ctx context.Context) ([]*PriceType, error) {
+func (pq *PricetypeQuery) sqlAll(ctx context.Context) ([]*Pricetype, error) {
 	var (
-		nodes       = []*PriceType{}
-		_spec       = ptq.querySpec()
+		nodes       = []*Pricetype{}
+		_spec       = pq.querySpec()
 		loadedTypes = [1]bool{
-			ptq.withDentalexpenses != nil,
+			pq.withDentalexpenses != nil,
 		}
 	)
 	_spec.ScanValues = func() []interface{} {
-		node := &PriceType{config: ptq.config}
+		node := &Pricetype{config: pq.config}
 		nodes = append(nodes, node)
 		values := node.scanValues()
 		return values
@@ -348,22 +348,22 @@ func (ptq *PriceTypeQuery) sqlAll(ctx context.Context) ([]*PriceType, error) {
 		node.Edges.loadedTypes = loadedTypes
 		return node.assignValues(values...)
 	}
-	if err := sqlgraph.QueryNodes(ctx, ptq.driver, _spec); err != nil {
+	if err := sqlgraph.QueryNodes(ctx, pq.driver, _spec); err != nil {
 		return nil, err
 	}
 	if len(nodes) == 0 {
 		return nodes, nil
 	}
 
-	if query := ptq.withDentalexpenses; query != nil {
+	if query := pq.withDentalexpenses; query != nil {
 		fks := make([]driver.Value, 0, len(nodes))
-		nodeids := make(map[int]*PriceType)
+		nodeids := make(map[int]*Pricetype)
 		for i := range nodes {
 			fks = append(fks, nodes[i].ID)
 			nodeids[nodes[i].ID] = nodes[i]
 		}
 		query.withFKs = true
-		query.Where(predicate.DentalExpense(func(s *sql.Selector) {
+		query.Where(predicate.Dentalexpense(func(s *sql.Selector) {
 			s.Where(sql.InValues(pricetype.DentalexpensesColumn, fks...))
 		}))
 		neighbors, err := query.All(ctx)
@@ -386,20 +386,20 @@ func (ptq *PriceTypeQuery) sqlAll(ctx context.Context) ([]*PriceType, error) {
 	return nodes, nil
 }
 
-func (ptq *PriceTypeQuery) sqlCount(ctx context.Context) (int, error) {
-	_spec := ptq.querySpec()
-	return sqlgraph.CountNodes(ctx, ptq.driver, _spec)
+func (pq *PricetypeQuery) sqlCount(ctx context.Context) (int, error) {
+	_spec := pq.querySpec()
+	return sqlgraph.CountNodes(ctx, pq.driver, _spec)
 }
 
-func (ptq *PriceTypeQuery) sqlExist(ctx context.Context) (bool, error) {
-	n, err := ptq.sqlCount(ctx)
+func (pq *PricetypeQuery) sqlExist(ctx context.Context) (bool, error) {
+	n, err := pq.sqlCount(ctx)
 	if err != nil {
 		return false, fmt.Errorf("ent: check existence: %v", err)
 	}
 	return n > 0, nil
 }
 
-func (ptq *PriceTypeQuery) querySpec() *sqlgraph.QuerySpec {
+func (pq *PricetypeQuery) querySpec() *sqlgraph.QuerySpec {
 	_spec := &sqlgraph.QuerySpec{
 		Node: &sqlgraph.NodeSpec{
 			Table:   pricetype.Table,
@@ -409,23 +409,23 @@ func (ptq *PriceTypeQuery) querySpec() *sqlgraph.QuerySpec {
 				Column: pricetype.FieldID,
 			},
 		},
-		From:   ptq.sql,
+		From:   pq.sql,
 		Unique: true,
 	}
-	if ps := ptq.predicates; len(ps) > 0 {
+	if ps := pq.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if limit := ptq.limit; limit != nil {
+	if limit := pq.limit; limit != nil {
 		_spec.Limit = *limit
 	}
-	if offset := ptq.offset; offset != nil {
+	if offset := pq.offset; offset != nil {
 		_spec.Offset = *offset
 	}
-	if ps := ptq.order; len(ps) > 0 {
+	if ps := pq.order; len(ps) > 0 {
 		_spec.Order = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
@@ -435,33 +435,33 @@ func (ptq *PriceTypeQuery) querySpec() *sqlgraph.QuerySpec {
 	return _spec
 }
 
-func (ptq *PriceTypeQuery) sqlQuery() *sql.Selector {
-	builder := sql.Dialect(ptq.driver.Dialect())
+func (pq *PricetypeQuery) sqlQuery() *sql.Selector {
+	builder := sql.Dialect(pq.driver.Dialect())
 	t1 := builder.Table(pricetype.Table)
 	selector := builder.Select(t1.Columns(pricetype.Columns...)...).From(t1)
-	if ptq.sql != nil {
-		selector = ptq.sql
+	if pq.sql != nil {
+		selector = pq.sql
 		selector.Select(selector.Columns(pricetype.Columns...)...)
 	}
-	for _, p := range ptq.predicates {
+	for _, p := range pq.predicates {
 		p(selector)
 	}
-	for _, p := range ptq.order {
+	for _, p := range pq.order {
 		p(selector)
 	}
-	if offset := ptq.offset; offset != nil {
+	if offset := pq.offset; offset != nil {
 		// limit is mandatory for offset clause. We start
 		// with default value, and override it below if needed.
 		selector.Offset(*offset).Limit(math.MaxInt32)
 	}
-	if limit := ptq.limit; limit != nil {
+	if limit := pq.limit; limit != nil {
 		selector.Limit(*limit)
 	}
 	return selector
 }
 
-// PriceTypeGroupBy is the builder for group-by PriceType entities.
-type PriceTypeGroupBy struct {
+// PricetypeGroupBy is the builder for group-by Pricetype entities.
+type PricetypeGroupBy struct {
 	config
 	fields []string
 	fns    []AggregateFunc
@@ -471,43 +471,43 @@ type PriceTypeGroupBy struct {
 }
 
 // Aggregate adds the given aggregation functions to the group-by query.
-func (ptgb *PriceTypeGroupBy) Aggregate(fns ...AggregateFunc) *PriceTypeGroupBy {
-	ptgb.fns = append(ptgb.fns, fns...)
-	return ptgb
+func (pgb *PricetypeGroupBy) Aggregate(fns ...AggregateFunc) *PricetypeGroupBy {
+	pgb.fns = append(pgb.fns, fns...)
+	return pgb
 }
 
 // Scan applies the group-by query and scan the result into the given value.
-func (ptgb *PriceTypeGroupBy) Scan(ctx context.Context, v interface{}) error {
-	query, err := ptgb.path(ctx)
+func (pgb *PricetypeGroupBy) Scan(ctx context.Context, v interface{}) error {
+	query, err := pgb.path(ctx)
 	if err != nil {
 		return err
 	}
-	ptgb.sql = query
-	return ptgb.sqlScan(ctx, v)
+	pgb.sql = query
+	return pgb.sqlScan(ctx, v)
 }
 
 // ScanX is like Scan, but panics if an error occurs.
-func (ptgb *PriceTypeGroupBy) ScanX(ctx context.Context, v interface{}) {
-	if err := ptgb.Scan(ctx, v); err != nil {
+func (pgb *PricetypeGroupBy) ScanX(ctx context.Context, v interface{}) {
+	if err := pgb.Scan(ctx, v); err != nil {
 		panic(err)
 	}
 }
 
 // Strings returns list of strings from group-by. It is only allowed when querying group-by with one field.
-func (ptgb *PriceTypeGroupBy) Strings(ctx context.Context) ([]string, error) {
-	if len(ptgb.fields) > 1 {
-		return nil, errors.New("ent: PriceTypeGroupBy.Strings is not achievable when grouping more than 1 field")
+func (pgb *PricetypeGroupBy) Strings(ctx context.Context) ([]string, error) {
+	if len(pgb.fields) > 1 {
+		return nil, errors.New("ent: PricetypeGroupBy.Strings is not achievable when grouping more than 1 field")
 	}
 	var v []string
-	if err := ptgb.Scan(ctx, &v); err != nil {
+	if err := pgb.Scan(ctx, &v); err != nil {
 		return nil, err
 	}
 	return v, nil
 }
 
 // StringsX is like Strings, but panics if an error occurs.
-func (ptgb *PriceTypeGroupBy) StringsX(ctx context.Context) []string {
-	v, err := ptgb.Strings(ctx)
+func (pgb *PricetypeGroupBy) StringsX(ctx context.Context) []string {
+	v, err := pgb.Strings(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -515,9 +515,9 @@ func (ptgb *PriceTypeGroupBy) StringsX(ctx context.Context) []string {
 }
 
 // String returns a single string from group-by. It is only allowed when querying group-by with one field.
-func (ptgb *PriceTypeGroupBy) String(ctx context.Context) (_ string, err error) {
+func (pgb *PricetypeGroupBy) String(ctx context.Context) (_ string, err error) {
 	var v []string
-	if v, err = ptgb.Strings(ctx); err != nil {
+	if v, err = pgb.Strings(ctx); err != nil {
 		return
 	}
 	switch len(v) {
@@ -526,14 +526,14 @@ func (ptgb *PriceTypeGroupBy) String(ctx context.Context) (_ string, err error) 
 	case 0:
 		err = &NotFoundError{pricetype.Label}
 	default:
-		err = fmt.Errorf("ent: PriceTypeGroupBy.Strings returned %d results when one was expected", len(v))
+		err = fmt.Errorf("ent: PricetypeGroupBy.Strings returned %d results when one was expected", len(v))
 	}
 	return
 }
 
 // StringX is like String, but panics if an error occurs.
-func (ptgb *PriceTypeGroupBy) StringX(ctx context.Context) string {
-	v, err := ptgb.String(ctx)
+func (pgb *PricetypeGroupBy) StringX(ctx context.Context) string {
+	v, err := pgb.String(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -541,20 +541,20 @@ func (ptgb *PriceTypeGroupBy) StringX(ctx context.Context) string {
 }
 
 // Ints returns list of ints from group-by. It is only allowed when querying group-by with one field.
-func (ptgb *PriceTypeGroupBy) Ints(ctx context.Context) ([]int, error) {
-	if len(ptgb.fields) > 1 {
-		return nil, errors.New("ent: PriceTypeGroupBy.Ints is not achievable when grouping more than 1 field")
+func (pgb *PricetypeGroupBy) Ints(ctx context.Context) ([]int, error) {
+	if len(pgb.fields) > 1 {
+		return nil, errors.New("ent: PricetypeGroupBy.Ints is not achievable when grouping more than 1 field")
 	}
 	var v []int
-	if err := ptgb.Scan(ctx, &v); err != nil {
+	if err := pgb.Scan(ctx, &v); err != nil {
 		return nil, err
 	}
 	return v, nil
 }
 
 // IntsX is like Ints, but panics if an error occurs.
-func (ptgb *PriceTypeGroupBy) IntsX(ctx context.Context) []int {
-	v, err := ptgb.Ints(ctx)
+func (pgb *PricetypeGroupBy) IntsX(ctx context.Context) []int {
+	v, err := pgb.Ints(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -562,9 +562,9 @@ func (ptgb *PriceTypeGroupBy) IntsX(ctx context.Context) []int {
 }
 
 // Int returns a single int from group-by. It is only allowed when querying group-by with one field.
-func (ptgb *PriceTypeGroupBy) Int(ctx context.Context) (_ int, err error) {
+func (pgb *PricetypeGroupBy) Int(ctx context.Context) (_ int, err error) {
 	var v []int
-	if v, err = ptgb.Ints(ctx); err != nil {
+	if v, err = pgb.Ints(ctx); err != nil {
 		return
 	}
 	switch len(v) {
@@ -573,14 +573,14 @@ func (ptgb *PriceTypeGroupBy) Int(ctx context.Context) (_ int, err error) {
 	case 0:
 		err = &NotFoundError{pricetype.Label}
 	default:
-		err = fmt.Errorf("ent: PriceTypeGroupBy.Ints returned %d results when one was expected", len(v))
+		err = fmt.Errorf("ent: PricetypeGroupBy.Ints returned %d results when one was expected", len(v))
 	}
 	return
 }
 
 // IntX is like Int, but panics if an error occurs.
-func (ptgb *PriceTypeGroupBy) IntX(ctx context.Context) int {
-	v, err := ptgb.Int(ctx)
+func (pgb *PricetypeGroupBy) IntX(ctx context.Context) int {
+	v, err := pgb.Int(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -588,20 +588,20 @@ func (ptgb *PriceTypeGroupBy) IntX(ctx context.Context) int {
 }
 
 // Float64s returns list of float64s from group-by. It is only allowed when querying group-by with one field.
-func (ptgb *PriceTypeGroupBy) Float64s(ctx context.Context) ([]float64, error) {
-	if len(ptgb.fields) > 1 {
-		return nil, errors.New("ent: PriceTypeGroupBy.Float64s is not achievable when grouping more than 1 field")
+func (pgb *PricetypeGroupBy) Float64s(ctx context.Context) ([]float64, error) {
+	if len(pgb.fields) > 1 {
+		return nil, errors.New("ent: PricetypeGroupBy.Float64s is not achievable when grouping more than 1 field")
 	}
 	var v []float64
-	if err := ptgb.Scan(ctx, &v); err != nil {
+	if err := pgb.Scan(ctx, &v); err != nil {
 		return nil, err
 	}
 	return v, nil
 }
 
 // Float64sX is like Float64s, but panics if an error occurs.
-func (ptgb *PriceTypeGroupBy) Float64sX(ctx context.Context) []float64 {
-	v, err := ptgb.Float64s(ctx)
+func (pgb *PricetypeGroupBy) Float64sX(ctx context.Context) []float64 {
+	v, err := pgb.Float64s(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -609,9 +609,9 @@ func (ptgb *PriceTypeGroupBy) Float64sX(ctx context.Context) []float64 {
 }
 
 // Float64 returns a single float64 from group-by. It is only allowed when querying group-by with one field.
-func (ptgb *PriceTypeGroupBy) Float64(ctx context.Context) (_ float64, err error) {
+func (pgb *PricetypeGroupBy) Float64(ctx context.Context) (_ float64, err error) {
 	var v []float64
-	if v, err = ptgb.Float64s(ctx); err != nil {
+	if v, err = pgb.Float64s(ctx); err != nil {
 		return
 	}
 	switch len(v) {
@@ -620,14 +620,14 @@ func (ptgb *PriceTypeGroupBy) Float64(ctx context.Context) (_ float64, err error
 	case 0:
 		err = &NotFoundError{pricetype.Label}
 	default:
-		err = fmt.Errorf("ent: PriceTypeGroupBy.Float64s returned %d results when one was expected", len(v))
+		err = fmt.Errorf("ent: PricetypeGroupBy.Float64s returned %d results when one was expected", len(v))
 	}
 	return
 }
 
 // Float64X is like Float64, but panics if an error occurs.
-func (ptgb *PriceTypeGroupBy) Float64X(ctx context.Context) float64 {
-	v, err := ptgb.Float64(ctx)
+func (pgb *PricetypeGroupBy) Float64X(ctx context.Context) float64 {
+	v, err := pgb.Float64(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -635,20 +635,20 @@ func (ptgb *PriceTypeGroupBy) Float64X(ctx context.Context) float64 {
 }
 
 // Bools returns list of bools from group-by. It is only allowed when querying group-by with one field.
-func (ptgb *PriceTypeGroupBy) Bools(ctx context.Context) ([]bool, error) {
-	if len(ptgb.fields) > 1 {
-		return nil, errors.New("ent: PriceTypeGroupBy.Bools is not achievable when grouping more than 1 field")
+func (pgb *PricetypeGroupBy) Bools(ctx context.Context) ([]bool, error) {
+	if len(pgb.fields) > 1 {
+		return nil, errors.New("ent: PricetypeGroupBy.Bools is not achievable when grouping more than 1 field")
 	}
 	var v []bool
-	if err := ptgb.Scan(ctx, &v); err != nil {
+	if err := pgb.Scan(ctx, &v); err != nil {
 		return nil, err
 	}
 	return v, nil
 }
 
 // BoolsX is like Bools, but panics if an error occurs.
-func (ptgb *PriceTypeGroupBy) BoolsX(ctx context.Context) []bool {
-	v, err := ptgb.Bools(ctx)
+func (pgb *PricetypeGroupBy) BoolsX(ctx context.Context) []bool {
+	v, err := pgb.Bools(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -656,9 +656,9 @@ func (ptgb *PriceTypeGroupBy) BoolsX(ctx context.Context) []bool {
 }
 
 // Bool returns a single bool from group-by. It is only allowed when querying group-by with one field.
-func (ptgb *PriceTypeGroupBy) Bool(ctx context.Context) (_ bool, err error) {
+func (pgb *PricetypeGroupBy) Bool(ctx context.Context) (_ bool, err error) {
 	var v []bool
-	if v, err = ptgb.Bools(ctx); err != nil {
+	if v, err = pgb.Bools(ctx); err != nil {
 		return
 	}
 	switch len(v) {
@@ -667,42 +667,42 @@ func (ptgb *PriceTypeGroupBy) Bool(ctx context.Context) (_ bool, err error) {
 	case 0:
 		err = &NotFoundError{pricetype.Label}
 	default:
-		err = fmt.Errorf("ent: PriceTypeGroupBy.Bools returned %d results when one was expected", len(v))
+		err = fmt.Errorf("ent: PricetypeGroupBy.Bools returned %d results when one was expected", len(v))
 	}
 	return
 }
 
 // BoolX is like Bool, but panics if an error occurs.
-func (ptgb *PriceTypeGroupBy) BoolX(ctx context.Context) bool {
-	v, err := ptgb.Bool(ctx)
+func (pgb *PricetypeGroupBy) BoolX(ctx context.Context) bool {
+	v, err := pgb.Bool(ctx)
 	if err != nil {
 		panic(err)
 	}
 	return v
 }
 
-func (ptgb *PriceTypeGroupBy) sqlScan(ctx context.Context, v interface{}) error {
+func (pgb *PricetypeGroupBy) sqlScan(ctx context.Context, v interface{}) error {
 	rows := &sql.Rows{}
-	query, args := ptgb.sqlQuery().Query()
-	if err := ptgb.driver.Query(ctx, query, args, rows); err != nil {
+	query, args := pgb.sqlQuery().Query()
+	if err := pgb.driver.Query(ctx, query, args, rows); err != nil {
 		return err
 	}
 	defer rows.Close()
 	return sql.ScanSlice(rows, v)
 }
 
-func (ptgb *PriceTypeGroupBy) sqlQuery() *sql.Selector {
-	selector := ptgb.sql
-	columns := make([]string, 0, len(ptgb.fields)+len(ptgb.fns))
-	columns = append(columns, ptgb.fields...)
-	for _, fn := range ptgb.fns {
+func (pgb *PricetypeGroupBy) sqlQuery() *sql.Selector {
+	selector := pgb.sql
+	columns := make([]string, 0, len(pgb.fields)+len(pgb.fns))
+	columns = append(columns, pgb.fields...)
+	for _, fn := range pgb.fns {
 		columns = append(columns, fn(selector))
 	}
-	return selector.Select(columns...).GroupBy(ptgb.fields...)
+	return selector.Select(columns...).GroupBy(pgb.fields...)
 }
 
-// PriceTypeSelect is the builder for select fields of PriceType entities.
-type PriceTypeSelect struct {
+// PricetypeSelect is the builder for select fields of Pricetype entities.
+type PricetypeSelect struct {
 	config
 	fields []string
 	// intermediate query (i.e. traversal path).
@@ -711,37 +711,37 @@ type PriceTypeSelect struct {
 }
 
 // Scan applies the selector query and scan the result into the given value.
-func (pts *PriceTypeSelect) Scan(ctx context.Context, v interface{}) error {
-	query, err := pts.path(ctx)
+func (ps *PricetypeSelect) Scan(ctx context.Context, v interface{}) error {
+	query, err := ps.path(ctx)
 	if err != nil {
 		return err
 	}
-	pts.sql = query
-	return pts.sqlScan(ctx, v)
+	ps.sql = query
+	return ps.sqlScan(ctx, v)
 }
 
 // ScanX is like Scan, but panics if an error occurs.
-func (pts *PriceTypeSelect) ScanX(ctx context.Context, v interface{}) {
-	if err := pts.Scan(ctx, v); err != nil {
+func (ps *PricetypeSelect) ScanX(ctx context.Context, v interface{}) {
+	if err := ps.Scan(ctx, v); err != nil {
 		panic(err)
 	}
 }
 
 // Strings returns list of strings from selector. It is only allowed when selecting one field.
-func (pts *PriceTypeSelect) Strings(ctx context.Context) ([]string, error) {
-	if len(pts.fields) > 1 {
-		return nil, errors.New("ent: PriceTypeSelect.Strings is not achievable when selecting more than 1 field")
+func (ps *PricetypeSelect) Strings(ctx context.Context) ([]string, error) {
+	if len(ps.fields) > 1 {
+		return nil, errors.New("ent: PricetypeSelect.Strings is not achievable when selecting more than 1 field")
 	}
 	var v []string
-	if err := pts.Scan(ctx, &v); err != nil {
+	if err := ps.Scan(ctx, &v); err != nil {
 		return nil, err
 	}
 	return v, nil
 }
 
 // StringsX is like Strings, but panics if an error occurs.
-func (pts *PriceTypeSelect) StringsX(ctx context.Context) []string {
-	v, err := pts.Strings(ctx)
+func (ps *PricetypeSelect) StringsX(ctx context.Context) []string {
+	v, err := ps.Strings(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -749,9 +749,9 @@ func (pts *PriceTypeSelect) StringsX(ctx context.Context) []string {
 }
 
 // String returns a single string from selector. It is only allowed when selecting one field.
-func (pts *PriceTypeSelect) String(ctx context.Context) (_ string, err error) {
+func (ps *PricetypeSelect) String(ctx context.Context) (_ string, err error) {
 	var v []string
-	if v, err = pts.Strings(ctx); err != nil {
+	if v, err = ps.Strings(ctx); err != nil {
 		return
 	}
 	switch len(v) {
@@ -760,14 +760,14 @@ func (pts *PriceTypeSelect) String(ctx context.Context) (_ string, err error) {
 	case 0:
 		err = &NotFoundError{pricetype.Label}
 	default:
-		err = fmt.Errorf("ent: PriceTypeSelect.Strings returned %d results when one was expected", len(v))
+		err = fmt.Errorf("ent: PricetypeSelect.Strings returned %d results when one was expected", len(v))
 	}
 	return
 }
 
 // StringX is like String, but panics if an error occurs.
-func (pts *PriceTypeSelect) StringX(ctx context.Context) string {
-	v, err := pts.String(ctx)
+func (ps *PricetypeSelect) StringX(ctx context.Context) string {
+	v, err := ps.String(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -775,20 +775,20 @@ func (pts *PriceTypeSelect) StringX(ctx context.Context) string {
 }
 
 // Ints returns list of ints from selector. It is only allowed when selecting one field.
-func (pts *PriceTypeSelect) Ints(ctx context.Context) ([]int, error) {
-	if len(pts.fields) > 1 {
-		return nil, errors.New("ent: PriceTypeSelect.Ints is not achievable when selecting more than 1 field")
+func (ps *PricetypeSelect) Ints(ctx context.Context) ([]int, error) {
+	if len(ps.fields) > 1 {
+		return nil, errors.New("ent: PricetypeSelect.Ints is not achievable when selecting more than 1 field")
 	}
 	var v []int
-	if err := pts.Scan(ctx, &v); err != nil {
+	if err := ps.Scan(ctx, &v); err != nil {
 		return nil, err
 	}
 	return v, nil
 }
 
 // IntsX is like Ints, but panics if an error occurs.
-func (pts *PriceTypeSelect) IntsX(ctx context.Context) []int {
-	v, err := pts.Ints(ctx)
+func (ps *PricetypeSelect) IntsX(ctx context.Context) []int {
+	v, err := ps.Ints(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -796,9 +796,9 @@ func (pts *PriceTypeSelect) IntsX(ctx context.Context) []int {
 }
 
 // Int returns a single int from selector. It is only allowed when selecting one field.
-func (pts *PriceTypeSelect) Int(ctx context.Context) (_ int, err error) {
+func (ps *PricetypeSelect) Int(ctx context.Context) (_ int, err error) {
 	var v []int
-	if v, err = pts.Ints(ctx); err != nil {
+	if v, err = ps.Ints(ctx); err != nil {
 		return
 	}
 	switch len(v) {
@@ -807,14 +807,14 @@ func (pts *PriceTypeSelect) Int(ctx context.Context) (_ int, err error) {
 	case 0:
 		err = &NotFoundError{pricetype.Label}
 	default:
-		err = fmt.Errorf("ent: PriceTypeSelect.Ints returned %d results when one was expected", len(v))
+		err = fmt.Errorf("ent: PricetypeSelect.Ints returned %d results when one was expected", len(v))
 	}
 	return
 }
 
 // IntX is like Int, but panics if an error occurs.
-func (pts *PriceTypeSelect) IntX(ctx context.Context) int {
-	v, err := pts.Int(ctx)
+func (ps *PricetypeSelect) IntX(ctx context.Context) int {
+	v, err := ps.Int(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -822,20 +822,20 @@ func (pts *PriceTypeSelect) IntX(ctx context.Context) int {
 }
 
 // Float64s returns list of float64s from selector. It is only allowed when selecting one field.
-func (pts *PriceTypeSelect) Float64s(ctx context.Context) ([]float64, error) {
-	if len(pts.fields) > 1 {
-		return nil, errors.New("ent: PriceTypeSelect.Float64s is not achievable when selecting more than 1 field")
+func (ps *PricetypeSelect) Float64s(ctx context.Context) ([]float64, error) {
+	if len(ps.fields) > 1 {
+		return nil, errors.New("ent: PricetypeSelect.Float64s is not achievable when selecting more than 1 field")
 	}
 	var v []float64
-	if err := pts.Scan(ctx, &v); err != nil {
+	if err := ps.Scan(ctx, &v); err != nil {
 		return nil, err
 	}
 	return v, nil
 }
 
 // Float64sX is like Float64s, but panics if an error occurs.
-func (pts *PriceTypeSelect) Float64sX(ctx context.Context) []float64 {
-	v, err := pts.Float64s(ctx)
+func (ps *PricetypeSelect) Float64sX(ctx context.Context) []float64 {
+	v, err := ps.Float64s(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -843,9 +843,9 @@ func (pts *PriceTypeSelect) Float64sX(ctx context.Context) []float64 {
 }
 
 // Float64 returns a single float64 from selector. It is only allowed when selecting one field.
-func (pts *PriceTypeSelect) Float64(ctx context.Context) (_ float64, err error) {
+func (ps *PricetypeSelect) Float64(ctx context.Context) (_ float64, err error) {
 	var v []float64
-	if v, err = pts.Float64s(ctx); err != nil {
+	if v, err = ps.Float64s(ctx); err != nil {
 		return
 	}
 	switch len(v) {
@@ -854,14 +854,14 @@ func (pts *PriceTypeSelect) Float64(ctx context.Context) (_ float64, err error) 
 	case 0:
 		err = &NotFoundError{pricetype.Label}
 	default:
-		err = fmt.Errorf("ent: PriceTypeSelect.Float64s returned %d results when one was expected", len(v))
+		err = fmt.Errorf("ent: PricetypeSelect.Float64s returned %d results when one was expected", len(v))
 	}
 	return
 }
 
 // Float64X is like Float64, but panics if an error occurs.
-func (pts *PriceTypeSelect) Float64X(ctx context.Context) float64 {
-	v, err := pts.Float64(ctx)
+func (ps *PricetypeSelect) Float64X(ctx context.Context) float64 {
+	v, err := ps.Float64(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -869,20 +869,20 @@ func (pts *PriceTypeSelect) Float64X(ctx context.Context) float64 {
 }
 
 // Bools returns list of bools from selector. It is only allowed when selecting one field.
-func (pts *PriceTypeSelect) Bools(ctx context.Context) ([]bool, error) {
-	if len(pts.fields) > 1 {
-		return nil, errors.New("ent: PriceTypeSelect.Bools is not achievable when selecting more than 1 field")
+func (ps *PricetypeSelect) Bools(ctx context.Context) ([]bool, error) {
+	if len(ps.fields) > 1 {
+		return nil, errors.New("ent: PricetypeSelect.Bools is not achievable when selecting more than 1 field")
 	}
 	var v []bool
-	if err := pts.Scan(ctx, &v); err != nil {
+	if err := ps.Scan(ctx, &v); err != nil {
 		return nil, err
 	}
 	return v, nil
 }
 
 // BoolsX is like Bools, but panics if an error occurs.
-func (pts *PriceTypeSelect) BoolsX(ctx context.Context) []bool {
-	v, err := pts.Bools(ctx)
+func (ps *PricetypeSelect) BoolsX(ctx context.Context) []bool {
+	v, err := ps.Bools(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -890,9 +890,9 @@ func (pts *PriceTypeSelect) BoolsX(ctx context.Context) []bool {
 }
 
 // Bool returns a single bool from selector. It is only allowed when selecting one field.
-func (pts *PriceTypeSelect) Bool(ctx context.Context) (_ bool, err error) {
+func (ps *PricetypeSelect) Bool(ctx context.Context) (_ bool, err error) {
 	var v []bool
-	if v, err = pts.Bools(ctx); err != nil {
+	if v, err = ps.Bools(ctx); err != nil {
 		return
 	}
 	switch len(v) {
@@ -901,32 +901,32 @@ func (pts *PriceTypeSelect) Bool(ctx context.Context) (_ bool, err error) {
 	case 0:
 		err = &NotFoundError{pricetype.Label}
 	default:
-		err = fmt.Errorf("ent: PriceTypeSelect.Bools returned %d results when one was expected", len(v))
+		err = fmt.Errorf("ent: PricetypeSelect.Bools returned %d results when one was expected", len(v))
 	}
 	return
 }
 
 // BoolX is like Bool, but panics if an error occurs.
-func (pts *PriceTypeSelect) BoolX(ctx context.Context) bool {
-	v, err := pts.Bool(ctx)
+func (ps *PricetypeSelect) BoolX(ctx context.Context) bool {
+	v, err := ps.Bool(ctx)
 	if err != nil {
 		panic(err)
 	}
 	return v
 }
 
-func (pts *PriceTypeSelect) sqlScan(ctx context.Context, v interface{}) error {
+func (ps *PricetypeSelect) sqlScan(ctx context.Context, v interface{}) error {
 	rows := &sql.Rows{}
-	query, args := pts.sqlQuery().Query()
-	if err := pts.driver.Query(ctx, query, args, rows); err != nil {
+	query, args := ps.sqlQuery().Query()
+	if err := ps.driver.Query(ctx, query, args, rows); err != nil {
 		return err
 	}
 	defer rows.Close()
 	return sql.ScanSlice(rows, v)
 }
 
-func (pts *PriceTypeSelect) sqlQuery() sql.Querier {
-	selector := pts.sql
-	selector.Select(selector.Columns(pts.fields...)...)
+func (ps *PricetypeSelect) sqlQuery() sql.Querier {
+	selector := ps.sql
+	selector.Select(selector.Columns(ps.fields...)...)
 	return selector
 }

@@ -60,43 +60,43 @@ var (
 		PrimaryKey:  []*schema.Column{DegreesColumns[0]},
 		ForeignKeys: []*schema.ForeignKey{},
 	}
-	// DentalExpensesColumns holds the columns for the "dental_expenses" table.
-	DentalExpensesColumns = []*schema.Column{
+	// DentalexpensesColumns holds the columns for the "dentalexpenses" table.
+	DentalexpensesColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt, Increment: true},
-		{Name: "tax", Type: field.TypeString, Unique: true},
-		{Name: "name", Type: field.TypeString},
-		{Name: "rates", Type: field.TypeInt},
-		{Name: "phone", Type: field.TypeString},
+		{Name: "name", Type: field.TypeString, Size: 30},
+		{Name: "phone", Type: field.TypeString, Size: 10},
 		{Name: "added_time", Type: field.TypeTime},
+		{Name: "rates", Type: field.TypeFloat64},
+		{Name: "tax", Type: field.TypeString},
 		{Name: "medicalfile_id", Type: field.TypeInt, Nullable: true},
 		{Name: "nurse_id", Type: field.TypeInt, Nullable: true},
 		{Name: "pricetype_id", Type: field.TypeInt, Nullable: true},
 	}
-	// DentalExpensesTable holds the schema information for the "dental_expenses" table.
-	DentalExpensesTable = &schema.Table{
-		Name:       "dental_expenses",
-		Columns:    DentalExpensesColumns,
-		PrimaryKey: []*schema.Column{DentalExpensesColumns[0]},
+	// DentalexpensesTable holds the schema information for the "dentalexpenses" table.
+	DentalexpensesTable = &schema.Table{
+		Name:       "dentalexpenses",
+		Columns:    DentalexpensesColumns,
+		PrimaryKey: []*schema.Column{DentalexpensesColumns[0]},
 		ForeignKeys: []*schema.ForeignKey{
 			{
-				Symbol:  "dental_expenses_medicalfiles_dentalexpenses",
-				Columns: []*schema.Column{DentalExpensesColumns[6]},
+				Symbol:  "dentalexpenses_medicalfiles_dentalexpenses",
+				Columns: []*schema.Column{DentalexpensesColumns[6]},
 
 				RefColumns: []*schema.Column{MedicalfilesColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
 			{
-				Symbol:  "dental_expenses_nurses_dentalexpenses",
-				Columns: []*schema.Column{DentalExpensesColumns[7]},
+				Symbol:  "dentalexpenses_nurses_dentalexpenses",
+				Columns: []*schema.Column{DentalexpensesColumns[7]},
 
 				RefColumns: []*schema.Column{NursesColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
 			{
-				Symbol:  "dental_expenses_price_types_dentalexpenses",
-				Columns: []*schema.Column{DentalExpensesColumns[8]},
+				Symbol:  "dentalexpenses_pricetypes_dentalexpenses",
+				Columns: []*schema.Column{DentalexpensesColumns[8]},
 
-				RefColumns: []*schema.Column{PriceTypesColumns[0]},
+				RefColumns: []*schema.Column{PricetypesColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
 		},
@@ -306,16 +306,16 @@ var (
 			},
 		},
 	}
-	// PriceTypesColumns holds the columns for the "price_types" table.
-	PriceTypesColumns = []*schema.Column{
+	// PricetypesColumns holds the columns for the "pricetypes" table.
+	PricetypesColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt, Increment: true},
 		{Name: "name", Type: field.TypeString},
 	}
-	// PriceTypesTable holds the schema information for the "price_types" table.
-	PriceTypesTable = &schema.Table{
-		Name:        "price_types",
-		Columns:     PriceTypesColumns,
-		PrimaryKey:  []*schema.Column{PriceTypesColumns[0]},
+	// PricetypesTable holds the schema information for the "pricetypes" table.
+	PricetypesTable = &schema.Table{
+		Name:        "pricetypes",
+		Columns:     PricetypesColumns,
+		PrimaryKey:  []*schema.Column{PricetypesColumns[0]},
 		ForeignKeys: []*schema.ForeignKey{},
 	}
 	// QueuesColumns holds the columns for the "queues" table.
@@ -372,7 +372,7 @@ var (
 	Tables = []*schema.Table{
 		AppointmentsTable,
 		DegreesTable,
-		DentalExpensesTable,
+		DentalexpensesTable,
 		DentistsTable,
 		DiseasesTable,
 		ExpertsTable,
@@ -381,7 +381,7 @@ var (
 		MedicalfilesTable,
 		NursesTable,
 		PatientsTable,
-		PriceTypesTable,
+		PricetypesTable,
 		QueuesTable,
 		RoomsTable,
 	}
@@ -391,9 +391,9 @@ func init() {
 	AppointmentsTable.ForeignKeys[0].RefTable = DentistsTable
 	AppointmentsTable.ForeignKeys[1].RefTable = PatientsTable
 	AppointmentsTable.ForeignKeys[2].RefTable = RoomsTable
-	DentalExpensesTable.ForeignKeys[0].RefTable = MedicalfilesTable
-	DentalExpensesTable.ForeignKeys[1].RefTable = NursesTable
-	DentalExpensesTable.ForeignKeys[2].RefTable = PriceTypesTable
+	DentalexpensesTable.ForeignKeys[0].RefTable = MedicalfilesTable
+	DentalexpensesTable.ForeignKeys[1].RefTable = NursesTable
+	DentalexpensesTable.ForeignKeys[2].RefTable = PricetypesTable
 	DentistsTable.ForeignKeys[0].RefTable = DegreesTable
 	DentistsTable.ForeignKeys[1].RefTable = ExpertsTable
 	DentistsTable.ForeignKeys[2].RefTable = GendersTable

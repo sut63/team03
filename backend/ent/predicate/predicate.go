@@ -12,8 +12,8 @@ type Appointment func(*sql.Selector)
 // Degree is the predicate function for degree builders.
 type Degree func(*sql.Selector)
 
-// DentalExpense is the predicate function for dentalexpense builders.
-type DentalExpense func(*sql.Selector)
+// Dentalexpense is the predicate function for dentalexpense builders.
+type Dentalexpense func(*sql.Selector)
 
 // Dentist is the predicate function for dentist builders.
 type Dentist func(*sql.Selector)
@@ -39,8 +39,8 @@ type Nurse func(*sql.Selector)
 // Patient is the predicate function for patient builders.
 type Patient func(*sql.Selector)
 
-// PriceType is the predicate function for pricetype builders.
-type PriceType func(*sql.Selector)
+// Pricetype is the predicate function for pricetype builders.
+type Pricetype func(*sql.Selector)
 
 // Queue is the predicate function for queue builders.
 type Queue func(*sql.Selector)

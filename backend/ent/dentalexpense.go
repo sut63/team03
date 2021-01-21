@@ -14,37 +14,37 @@ import (
 	"github.com/team03/app/ent/pricetype"
 )
 
-// DentalExpense is the model entity for the DentalExpense schema.
-type DentalExpense struct {
+// Dentalexpense is the model entity for the Dentalexpense schema.
+type Dentalexpense struct {
 	config `json:"-"`
 	// ID of the ent.
 	ID int `json:"id,omitempty"`
-	// Tax holds the value of the "tax" field.
-	Tax string `json:"tax,omitempty"`
-	// Name holds the value of the "name" field.
-	Name string `json:"name,omitempty"`
-	// Rates holds the value of the "rates" field.
-	Rates int `json:"rates,omitempty"`
-	// Phone holds the value of the "phone" field.
-	Phone string `json:"phone,omitempty"`
-	// AddedTime holds the value of the "added_time" field.
-	AddedTime time.Time `json:"added_time,omitempty"`
+	// Name holds the value of the "Name" field.
+	Name string `json:"Name,omitempty"`
+	// Phone holds the value of the "Phone" field.
+	Phone string `json:"Phone,omitempty"`
+	// AddedTime holds the value of the "AddedTime" field.
+	AddedTime time.Time `json:"AddedTime,omitempty"`
+	// Rates holds the value of the "Rates" field.
+	Rates float64 `json:"Rates,omitempty"`
+	// Tax holds the value of the "Tax" field.
+	Tax string `json:"Tax,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
-	// The values are being populated by the DentalExpenseQuery when eager-loading is set.
-	Edges          DentalExpenseEdges `json:"edges"`
+	// The values are being populated by the DentalexpenseQuery when eager-loading is set.
+	Edges          DentalexpenseEdges `json:"edges"`
 	medicalfile_id *int
 	nurse_id       *int
 	pricetype_id   *int
 }
 
-// DentalExpenseEdges holds the relations/edges for other nodes in the graph.
-type DentalExpenseEdges struct {
+// DentalexpenseEdges holds the relations/edges for other nodes in the graph.
+type DentalexpenseEdges struct {
 	// Nurse holds the value of the nurse edge.
 	Nurse *Nurse
 	// Medicalfile holds the value of the medicalfile edge.
 	Medicalfile *Medicalfile
 	// Pricetype holds the value of the pricetype edge.
-	Pricetype *PriceType
+	Pricetype *Pricetype
 	// loadedTypes holds the information for reporting if a
 	// type was loaded (or requested) in eager-loading or not.
 	loadedTypes [3]bool
@@ -52,7 +52,7 @@ type DentalExpenseEdges struct {
 
 // NurseOrErr returns the Nurse value or an error if the edge
 // was not loaded in eager-loading, or loaded but was not found.
-func (e DentalExpenseEdges) NurseOrErr() (*Nurse, error) {
+func (e DentalexpenseEdges) NurseOrErr() (*Nurse, error) {
 	if e.loadedTypes[0] {
 		if e.Nurse == nil {
 			// The edge nurse was loaded in eager-loading,
@@ -66,7 +66,7 @@ func (e DentalExpenseEdges) NurseOrErr() (*Nurse, error) {
 
 // MedicalfileOrErr returns the Medicalfile value or an error if the edge
 // was not loaded in eager-loading, or loaded but was not found.
-func (e DentalExpenseEdges) MedicalfileOrErr() (*Medicalfile, error) {
+func (e DentalexpenseEdges) MedicalfileOrErr() (*Medicalfile, error) {
 	if e.loadedTypes[1] {
 		if e.Medicalfile == nil {
 			// The edge medicalfile was loaded in eager-loading,
@@ -80,7 +80,7 @@ func (e DentalExpenseEdges) MedicalfileOrErr() (*Medicalfile, error) {
 
 // PricetypeOrErr returns the Pricetype value or an error if the edge
 // was not loaded in eager-loading, or loaded but was not found.
-func (e DentalExpenseEdges) PricetypeOrErr() (*PriceType, error) {
+func (e DentalexpenseEdges) PricetypeOrErr() (*Pricetype, error) {
 	if e.loadedTypes[2] {
 		if e.Pricetype == nil {
 			// The edge pricetype was loaded in eager-loading,
@@ -93,19 +93,19 @@ func (e DentalExpenseEdges) PricetypeOrErr() (*PriceType, error) {
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
-func (*DentalExpense) scanValues() []interface{} {
+func (*Dentalexpense) scanValues() []interface{} {
 	return []interface{}{
-		&sql.NullInt64{},  // id
-		&sql.NullString{}, // tax
-		&sql.NullString{}, // name
-		&sql.NullInt64{},  // rates
-		&sql.NullString{}, // phone
-		&sql.NullTime{},   // added_time
+		&sql.NullInt64{},   // id
+		&sql.NullString{},  // Name
+		&sql.NullString{},  // Phone
+		&sql.NullTime{},    // AddedTime
+		&sql.NullFloat64{}, // Rates
+		&sql.NullString{},  // Tax
 	}
 }
 
 // fkValues returns the types for scanning foreign-keys values from sql.Rows.
-func (*DentalExpense) fkValues() []interface{} {
+func (*Dentalexpense) fkValues() []interface{} {
 	return []interface{}{
 		&sql.NullInt64{}, // medicalfile_id
 		&sql.NullInt64{}, // nurse_id
@@ -114,8 +114,8 @@ func (*DentalExpense) fkValues() []interface{} {
 }
 
 // assignValues assigns the values that were returned from sql.Rows (after scanning)
-// to the DentalExpense fields.
-func (de *DentalExpense) assignValues(values ...interface{}) error {
+// to the Dentalexpense fields.
+func (d *Dentalexpense) assignValues(values ...interface{}) error {
 	if m, n := len(values), len(dentalexpense.Columns); m < n {
 		return fmt.Errorf("mismatch number of scan values: %d != %d", m, n)
 	}
@@ -123,114 +123,114 @@ func (de *DentalExpense) assignValues(values ...interface{}) error {
 	if !ok {
 		return fmt.Errorf("unexpected type %T for field id", value)
 	}
-	de.ID = int(value.Int64)
+	d.ID = int(value.Int64)
 	values = values[1:]
 	if value, ok := values[0].(*sql.NullString); !ok {
-		return fmt.Errorf("unexpected type %T for field tax", values[0])
+		return fmt.Errorf("unexpected type %T for field Name", values[0])
 	} else if value.Valid {
-		de.Tax = value.String
+		d.Name = value.String
 	}
 	if value, ok := values[1].(*sql.NullString); !ok {
-		return fmt.Errorf("unexpected type %T for field name", values[1])
+		return fmt.Errorf("unexpected type %T for field Phone", values[1])
 	} else if value.Valid {
-		de.Name = value.String
+		d.Phone = value.String
 	}
-	if value, ok := values[2].(*sql.NullInt64); !ok {
-		return fmt.Errorf("unexpected type %T for field rates", values[2])
+	if value, ok := values[2].(*sql.NullTime); !ok {
+		return fmt.Errorf("unexpected type %T for field AddedTime", values[2])
 	} else if value.Valid {
-		de.Rates = int(value.Int64)
+		d.AddedTime = value.Time
 	}
-	if value, ok := values[3].(*sql.NullString); !ok {
-		return fmt.Errorf("unexpected type %T for field phone", values[3])
+	if value, ok := values[3].(*sql.NullFloat64); !ok {
+		return fmt.Errorf("unexpected type %T for field Rates", values[3])
 	} else if value.Valid {
-		de.Phone = value.String
+		d.Rates = value.Float64
 	}
-	if value, ok := values[4].(*sql.NullTime); !ok {
-		return fmt.Errorf("unexpected type %T for field added_time", values[4])
+	if value, ok := values[4].(*sql.NullString); !ok {
+		return fmt.Errorf("unexpected type %T for field Tax", values[4])
 	} else if value.Valid {
-		de.AddedTime = value.Time
+		d.Tax = value.String
 	}
 	values = values[5:]
 	if len(values) == len(dentalexpense.ForeignKeys) {
 		if value, ok := values[0].(*sql.NullInt64); !ok {
 			return fmt.Errorf("unexpected type %T for edge-field medicalfile_id", value)
 		} else if value.Valid {
-			de.medicalfile_id = new(int)
-			*de.medicalfile_id = int(value.Int64)
+			d.medicalfile_id = new(int)
+			*d.medicalfile_id = int(value.Int64)
 		}
 		if value, ok := values[1].(*sql.NullInt64); !ok {
 			return fmt.Errorf("unexpected type %T for edge-field nurse_id", value)
 		} else if value.Valid {
-			de.nurse_id = new(int)
-			*de.nurse_id = int(value.Int64)
+			d.nurse_id = new(int)
+			*d.nurse_id = int(value.Int64)
 		}
 		if value, ok := values[2].(*sql.NullInt64); !ok {
 			return fmt.Errorf("unexpected type %T for edge-field pricetype_id", value)
 		} else if value.Valid {
-			de.pricetype_id = new(int)
-			*de.pricetype_id = int(value.Int64)
+			d.pricetype_id = new(int)
+			*d.pricetype_id = int(value.Int64)
 		}
 	}
 	return nil
 }
 
-// QueryNurse queries the nurse edge of the DentalExpense.
-func (de *DentalExpense) QueryNurse() *NurseQuery {
-	return (&DentalExpenseClient{config: de.config}).QueryNurse(de)
+// QueryNurse queries the nurse edge of the Dentalexpense.
+func (d *Dentalexpense) QueryNurse() *NurseQuery {
+	return (&DentalexpenseClient{config: d.config}).QueryNurse(d)
 }
 
-// QueryMedicalfile queries the medicalfile edge of the DentalExpense.
-func (de *DentalExpense) QueryMedicalfile() *MedicalfileQuery {
-	return (&DentalExpenseClient{config: de.config}).QueryMedicalfile(de)
+// QueryMedicalfile queries the medicalfile edge of the Dentalexpense.
+func (d *Dentalexpense) QueryMedicalfile() *MedicalfileQuery {
+	return (&DentalexpenseClient{config: d.config}).QueryMedicalfile(d)
 }
 
-// QueryPricetype queries the pricetype edge of the DentalExpense.
-func (de *DentalExpense) QueryPricetype() *PriceTypeQuery {
-	return (&DentalExpenseClient{config: de.config}).QueryPricetype(de)
+// QueryPricetype queries the pricetype edge of the Dentalexpense.
+func (d *Dentalexpense) QueryPricetype() *PricetypeQuery {
+	return (&DentalexpenseClient{config: d.config}).QueryPricetype(d)
 }
 
-// Update returns a builder for updating this DentalExpense.
-// Note that, you need to call DentalExpense.Unwrap() before calling this method, if this DentalExpense
+// Update returns a builder for updating this Dentalexpense.
+// Note that, you need to call Dentalexpense.Unwrap() before calling this method, if this Dentalexpense
 // was returned from a transaction, and the transaction was committed or rolled back.
-func (de *DentalExpense) Update() *DentalExpenseUpdateOne {
-	return (&DentalExpenseClient{config: de.config}).UpdateOne(de)
+func (d *Dentalexpense) Update() *DentalexpenseUpdateOne {
+	return (&DentalexpenseClient{config: d.config}).UpdateOne(d)
 }
 
 // Unwrap unwraps the entity that was returned from a transaction after it was closed,
 // so that all next queries will be executed through the driver which created the transaction.
-func (de *DentalExpense) Unwrap() *DentalExpense {
-	tx, ok := de.config.driver.(*txDriver)
+func (d *Dentalexpense) Unwrap() *Dentalexpense {
+	tx, ok := d.config.driver.(*txDriver)
 	if !ok {
-		panic("ent: DentalExpense is not a transactional entity")
+		panic("ent: Dentalexpense is not a transactional entity")
 	}
-	de.config.driver = tx.drv
-	return de
+	d.config.driver = tx.drv
+	return d
 }
 
 // String implements the fmt.Stringer.
-func (de *DentalExpense) String() string {
+func (d *Dentalexpense) String() string {
 	var builder strings.Builder
-	builder.WriteString("DentalExpense(")
-	builder.WriteString(fmt.Sprintf("id=%v", de.ID))
-	builder.WriteString(", tax=")
-	builder.WriteString(de.Tax)
-	builder.WriteString(", name=")
-	builder.WriteString(de.Name)
-	builder.WriteString(", rates=")
-	builder.WriteString(fmt.Sprintf("%v", de.Rates))
-	builder.WriteString(", phone=")
-	builder.WriteString(de.Phone)
-	builder.WriteString(", added_time=")
-	builder.WriteString(de.AddedTime.Format(time.ANSIC))
+	builder.WriteString("Dentalexpense(")
+	builder.WriteString(fmt.Sprintf("id=%v", d.ID))
+	builder.WriteString(", Name=")
+	builder.WriteString(d.Name)
+	builder.WriteString(", Phone=")
+	builder.WriteString(d.Phone)
+	builder.WriteString(", AddedTime=")
+	builder.WriteString(d.AddedTime.Format(time.ANSIC))
+	builder.WriteString(", Rates=")
+	builder.WriteString(fmt.Sprintf("%v", d.Rates))
+	builder.WriteString(", Tax=")
+	builder.WriteString(d.Tax)
 	builder.WriteByte(')')
 	return builder.String()
 }
 
-// DentalExpenses is a parsable slice of DentalExpense.
-type DentalExpenses []*DentalExpense
+// Dentalexpenses is a parsable slice of Dentalexpense.
+type Dentalexpenses []*Dentalexpense
 
-func (de DentalExpenses) config(cfg config) {
-	for _i := range de {
-		de[_i].config = cfg
+func (d Dentalexpenses) config(cfg config) {
+	for _i := range d {
+		d[_i].config = cfg
 	}
 }

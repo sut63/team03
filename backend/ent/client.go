@@ -38,8 +38,8 @@ type Client struct {
 	Appointment *AppointmentClient
 	// Degree is the client for interacting with the Degree builders.
 	Degree *DegreeClient
-	// DentalExpense is the client for interacting with the DentalExpense builders.
-	DentalExpense *DentalExpenseClient
+	// Dentalexpense is the client for interacting with the Dentalexpense builders.
+	Dentalexpense *DentalexpenseClient
 	// Dentist is the client for interacting with the Dentist builders.
 	Dentist *DentistClient
 	// Disease is the client for interacting with the Disease builders.
@@ -56,8 +56,8 @@ type Client struct {
 	Nurse *NurseClient
 	// Patient is the client for interacting with the Patient builders.
 	Patient *PatientClient
-	// PriceType is the client for interacting with the PriceType builders.
-	PriceType *PriceTypeClient
+	// Pricetype is the client for interacting with the Pricetype builders.
+	Pricetype *PricetypeClient
 	// Queue is the client for interacting with the Queue builders.
 	Queue *QueueClient
 	// Room is the client for interacting with the Room builders.
@@ -77,7 +77,7 @@ func (c *Client) init() {
 	c.Schema = migrate.NewSchema(c.driver)
 	c.Appointment = NewAppointmentClient(c.config)
 	c.Degree = NewDegreeClient(c.config)
-	c.DentalExpense = NewDentalExpenseClient(c.config)
+	c.Dentalexpense = NewDentalexpenseClient(c.config)
 	c.Dentist = NewDentistClient(c.config)
 	c.Disease = NewDiseaseClient(c.config)
 	c.Expert = NewExpertClient(c.config)
@@ -86,7 +86,7 @@ func (c *Client) init() {
 	c.Medicalfile = NewMedicalfileClient(c.config)
 	c.Nurse = NewNurseClient(c.config)
 	c.Patient = NewPatientClient(c.config)
-	c.PriceType = NewPriceTypeClient(c.config)
+	c.Pricetype = NewPricetypeClient(c.config)
 	c.Queue = NewQueueClient(c.config)
 	c.Room = NewRoomClient(c.config)
 }
@@ -123,7 +123,7 @@ func (c *Client) Tx(ctx context.Context) (*Tx, error) {
 		config:        cfg,
 		Appointment:   NewAppointmentClient(cfg),
 		Degree:        NewDegreeClient(cfg),
-		DentalExpense: NewDentalExpenseClient(cfg),
+		Dentalexpense: NewDentalexpenseClient(cfg),
 		Dentist:       NewDentistClient(cfg),
 		Disease:       NewDiseaseClient(cfg),
 		Expert:        NewExpertClient(cfg),
@@ -132,7 +132,7 @@ func (c *Client) Tx(ctx context.Context) (*Tx, error) {
 		Medicalfile:   NewMedicalfileClient(cfg),
 		Nurse:         NewNurseClient(cfg),
 		Patient:       NewPatientClient(cfg),
-		PriceType:     NewPriceTypeClient(cfg),
+		Pricetype:     NewPricetypeClient(cfg),
 		Queue:         NewQueueClient(cfg),
 		Room:          NewRoomClient(cfg),
 	}, nil
@@ -152,7 +152,7 @@ func (c *Client) BeginTx(ctx context.Context, opts *sql.TxOptions) (*Tx, error) 
 		config:        cfg,
 		Appointment:   NewAppointmentClient(cfg),
 		Degree:        NewDegreeClient(cfg),
-		DentalExpense: NewDentalExpenseClient(cfg),
+		Dentalexpense: NewDentalexpenseClient(cfg),
 		Dentist:       NewDentistClient(cfg),
 		Disease:       NewDiseaseClient(cfg),
 		Expert:        NewExpertClient(cfg),
@@ -161,7 +161,7 @@ func (c *Client) BeginTx(ctx context.Context, opts *sql.TxOptions) (*Tx, error) 
 		Medicalfile:   NewMedicalfileClient(cfg),
 		Nurse:         NewNurseClient(cfg),
 		Patient:       NewPatientClient(cfg),
-		PriceType:     NewPriceTypeClient(cfg),
+		Pricetype:     NewPricetypeClient(cfg),
 		Queue:         NewQueueClient(cfg),
 		Room:          NewRoomClient(cfg),
 	}, nil
@@ -194,7 +194,7 @@ func (c *Client) Close() error {
 func (c *Client) Use(hooks ...Hook) {
 	c.Appointment.Use(hooks...)
 	c.Degree.Use(hooks...)
-	c.DentalExpense.Use(hooks...)
+	c.Dentalexpense.Use(hooks...)
 	c.Dentist.Use(hooks...)
 	c.Disease.Use(hooks...)
 	c.Expert.Use(hooks...)
@@ -203,7 +203,7 @@ func (c *Client) Use(hooks ...Hook) {
 	c.Medicalfile.Use(hooks...)
 	c.Nurse.Use(hooks...)
 	c.Patient.Use(hooks...)
-	c.PriceType.Use(hooks...)
+	c.Pricetype.Use(hooks...)
 	c.Queue.Use(hooks...)
 	c.Room.Use(hooks...)
 }
@@ -438,135 +438,135 @@ func (c *DegreeClient) Hooks() []Hook {
 	return c.hooks.Degree
 }
 
-// DentalExpenseClient is a client for the DentalExpense schema.
-type DentalExpenseClient struct {
+// DentalexpenseClient is a client for the Dentalexpense schema.
+type DentalexpenseClient struct {
 	config
 }
 
-// NewDentalExpenseClient returns a client for the DentalExpense from the given config.
-func NewDentalExpenseClient(c config) *DentalExpenseClient {
-	return &DentalExpenseClient{config: c}
+// NewDentalexpenseClient returns a client for the Dentalexpense from the given config.
+func NewDentalexpenseClient(c config) *DentalexpenseClient {
+	return &DentalexpenseClient{config: c}
 }
 
 // Use adds a list of mutation hooks to the hooks stack.
 // A call to `Use(f, g, h)` equals to `dentalexpense.Hooks(f(g(h())))`.
-func (c *DentalExpenseClient) Use(hooks ...Hook) {
-	c.hooks.DentalExpense = append(c.hooks.DentalExpense, hooks...)
+func (c *DentalexpenseClient) Use(hooks ...Hook) {
+	c.hooks.Dentalexpense = append(c.hooks.Dentalexpense, hooks...)
 }
 
-// Create returns a create builder for DentalExpense.
-func (c *DentalExpenseClient) Create() *DentalExpenseCreate {
-	mutation := newDentalExpenseMutation(c.config, OpCreate)
-	return &DentalExpenseCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+// Create returns a create builder for Dentalexpense.
+func (c *DentalexpenseClient) Create() *DentalexpenseCreate {
+	mutation := newDentalexpenseMutation(c.config, OpCreate)
+	return &DentalexpenseCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
-// Update returns an update builder for DentalExpense.
-func (c *DentalExpenseClient) Update() *DentalExpenseUpdate {
-	mutation := newDentalExpenseMutation(c.config, OpUpdate)
-	return &DentalExpenseUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+// Update returns an update builder for Dentalexpense.
+func (c *DentalexpenseClient) Update() *DentalexpenseUpdate {
+	mutation := newDentalexpenseMutation(c.config, OpUpdate)
+	return &DentalexpenseUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
 // UpdateOne returns an update builder for the given entity.
-func (c *DentalExpenseClient) UpdateOne(de *DentalExpense) *DentalExpenseUpdateOne {
-	mutation := newDentalExpenseMutation(c.config, OpUpdateOne, withDentalExpense(de))
-	return &DentalExpenseUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+func (c *DentalexpenseClient) UpdateOne(d *Dentalexpense) *DentalexpenseUpdateOne {
+	mutation := newDentalexpenseMutation(c.config, OpUpdateOne, withDentalexpense(d))
+	return &DentalexpenseUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
 // UpdateOneID returns an update builder for the given id.
-func (c *DentalExpenseClient) UpdateOneID(id int) *DentalExpenseUpdateOne {
-	mutation := newDentalExpenseMutation(c.config, OpUpdateOne, withDentalExpenseID(id))
-	return &DentalExpenseUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+func (c *DentalexpenseClient) UpdateOneID(id int) *DentalexpenseUpdateOne {
+	mutation := newDentalexpenseMutation(c.config, OpUpdateOne, withDentalexpenseID(id))
+	return &DentalexpenseUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
-// Delete returns a delete builder for DentalExpense.
-func (c *DentalExpenseClient) Delete() *DentalExpenseDelete {
-	mutation := newDentalExpenseMutation(c.config, OpDelete)
-	return &DentalExpenseDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+// Delete returns a delete builder for Dentalexpense.
+func (c *DentalexpenseClient) Delete() *DentalexpenseDelete {
+	mutation := newDentalexpenseMutation(c.config, OpDelete)
+	return &DentalexpenseDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
 // DeleteOne returns a delete builder for the given entity.
-func (c *DentalExpenseClient) DeleteOne(de *DentalExpense) *DentalExpenseDeleteOne {
-	return c.DeleteOneID(de.ID)
+func (c *DentalexpenseClient) DeleteOne(d *Dentalexpense) *DentalexpenseDeleteOne {
+	return c.DeleteOneID(d.ID)
 }
 
 // DeleteOneID returns a delete builder for the given id.
-func (c *DentalExpenseClient) DeleteOneID(id int) *DentalExpenseDeleteOne {
+func (c *DentalexpenseClient) DeleteOneID(id int) *DentalexpenseDeleteOne {
 	builder := c.Delete().Where(dentalexpense.ID(id))
 	builder.mutation.id = &id
 	builder.mutation.op = OpDeleteOne
-	return &DentalExpenseDeleteOne{builder}
+	return &DentalexpenseDeleteOne{builder}
 }
 
-// Create returns a query builder for DentalExpense.
-func (c *DentalExpenseClient) Query() *DentalExpenseQuery {
-	return &DentalExpenseQuery{config: c.config}
+// Create returns a query builder for Dentalexpense.
+func (c *DentalexpenseClient) Query() *DentalexpenseQuery {
+	return &DentalexpenseQuery{config: c.config}
 }
 
-// Get returns a DentalExpense entity by its id.
-func (c *DentalExpenseClient) Get(ctx context.Context, id int) (*DentalExpense, error) {
+// Get returns a Dentalexpense entity by its id.
+func (c *DentalexpenseClient) Get(ctx context.Context, id int) (*Dentalexpense, error) {
 	return c.Query().Where(dentalexpense.ID(id)).Only(ctx)
 }
 
 // GetX is like Get, but panics if an error occurs.
-func (c *DentalExpenseClient) GetX(ctx context.Context, id int) *DentalExpense {
-	de, err := c.Get(ctx, id)
+func (c *DentalexpenseClient) GetX(ctx context.Context, id int) *Dentalexpense {
+	d, err := c.Get(ctx, id)
 	if err != nil {
 		panic(err)
 	}
-	return de
+	return d
 }
 
-// QueryNurse queries the nurse edge of a DentalExpense.
-func (c *DentalExpenseClient) QueryNurse(de *DentalExpense) *NurseQuery {
+// QueryNurse queries the nurse edge of a Dentalexpense.
+func (c *DentalexpenseClient) QueryNurse(d *Dentalexpense) *NurseQuery {
 	query := &NurseQuery{config: c.config}
 	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
-		id := de.ID
+		id := d.ID
 		step := sqlgraph.NewStep(
 			sqlgraph.From(dentalexpense.Table, dentalexpense.FieldID, id),
 			sqlgraph.To(nurse.Table, nurse.FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, dentalexpense.NurseTable, dentalexpense.NurseColumn),
 		)
-		fromV = sqlgraph.Neighbors(de.driver.Dialect(), step)
+		fromV = sqlgraph.Neighbors(d.driver.Dialect(), step)
 		return fromV, nil
 	}
 	return query
 }
 
-// QueryMedicalfile queries the medicalfile edge of a DentalExpense.
-func (c *DentalExpenseClient) QueryMedicalfile(de *DentalExpense) *MedicalfileQuery {
+// QueryMedicalfile queries the medicalfile edge of a Dentalexpense.
+func (c *DentalexpenseClient) QueryMedicalfile(d *Dentalexpense) *MedicalfileQuery {
 	query := &MedicalfileQuery{config: c.config}
 	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
-		id := de.ID
+		id := d.ID
 		step := sqlgraph.NewStep(
 			sqlgraph.From(dentalexpense.Table, dentalexpense.FieldID, id),
 			sqlgraph.To(medicalfile.Table, medicalfile.FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, dentalexpense.MedicalfileTable, dentalexpense.MedicalfileColumn),
 		)
-		fromV = sqlgraph.Neighbors(de.driver.Dialect(), step)
+		fromV = sqlgraph.Neighbors(d.driver.Dialect(), step)
 		return fromV, nil
 	}
 	return query
 }
 
-// QueryPricetype queries the pricetype edge of a DentalExpense.
-func (c *DentalExpenseClient) QueryPricetype(de *DentalExpense) *PriceTypeQuery {
-	query := &PriceTypeQuery{config: c.config}
+// QueryPricetype queries the pricetype edge of a Dentalexpense.
+func (c *DentalexpenseClient) QueryPricetype(d *Dentalexpense) *PricetypeQuery {
+	query := &PricetypeQuery{config: c.config}
 	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
-		id := de.ID
+		id := d.ID
 		step := sqlgraph.NewStep(
 			sqlgraph.From(dentalexpense.Table, dentalexpense.FieldID, id),
 			sqlgraph.To(pricetype.Table, pricetype.FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, dentalexpense.PricetypeTable, dentalexpense.PricetypeColumn),
 		)
-		fromV = sqlgraph.Neighbors(de.driver.Dialect(), step)
+		fromV = sqlgraph.Neighbors(d.driver.Dialect(), step)
 		return fromV, nil
 	}
 	return query
 }
 
 // Hooks returns the client hooks.
-func (c *DentalExpenseClient) Hooks() []Hook {
-	return c.hooks.DentalExpense
+func (c *DentalexpenseClient) Hooks() []Hook {
+	return c.hooks.Dentalexpense
 }
 
 // DentistClient is a client for the Dentist schema.
@@ -1303,8 +1303,8 @@ func (c *MedicalfileClient) QueryNurse(m *Medicalfile) *NurseQuery {
 }
 
 // QueryDentalexpenses queries the dentalexpenses edge of a Medicalfile.
-func (c *MedicalfileClient) QueryDentalexpenses(m *Medicalfile) *DentalExpenseQuery {
-	query := &DentalExpenseQuery{config: c.config}
+func (c *MedicalfileClient) QueryDentalexpenses(m *Medicalfile) *DentalexpenseQuery {
+	query := &DentalexpenseQuery{config: c.config}
 	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
 		id := m.ID
 		step := sqlgraph.NewStep(
@@ -1434,8 +1434,8 @@ func (c *NurseClient) QueryMedicalfiles(n *Nurse) *MedicalfileQuery {
 }
 
 // QueryDentalexpenses queries the dentalexpenses edge of a Nurse.
-func (c *NurseClient) QueryDentalexpenses(n *Nurse) *DentalExpenseQuery {
-	query := &DentalExpenseQuery{config: c.config}
+func (c *NurseClient) QueryDentalexpenses(n *Nurse) *DentalexpenseQuery {
+	query := &DentalexpenseQuery{config: c.config}
 	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
 		id := n.ID
 		step := sqlgraph.NewStep(
@@ -1681,103 +1681,103 @@ func (c *PatientClient) Hooks() []Hook {
 	return c.hooks.Patient
 }
 
-// PriceTypeClient is a client for the PriceType schema.
-type PriceTypeClient struct {
+// PricetypeClient is a client for the Pricetype schema.
+type PricetypeClient struct {
 	config
 }
 
-// NewPriceTypeClient returns a client for the PriceType from the given config.
-func NewPriceTypeClient(c config) *PriceTypeClient {
-	return &PriceTypeClient{config: c}
+// NewPricetypeClient returns a client for the Pricetype from the given config.
+func NewPricetypeClient(c config) *PricetypeClient {
+	return &PricetypeClient{config: c}
 }
 
 // Use adds a list of mutation hooks to the hooks stack.
 // A call to `Use(f, g, h)` equals to `pricetype.Hooks(f(g(h())))`.
-func (c *PriceTypeClient) Use(hooks ...Hook) {
-	c.hooks.PriceType = append(c.hooks.PriceType, hooks...)
+func (c *PricetypeClient) Use(hooks ...Hook) {
+	c.hooks.Pricetype = append(c.hooks.Pricetype, hooks...)
 }
 
-// Create returns a create builder for PriceType.
-func (c *PriceTypeClient) Create() *PriceTypeCreate {
-	mutation := newPriceTypeMutation(c.config, OpCreate)
-	return &PriceTypeCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+// Create returns a create builder for Pricetype.
+func (c *PricetypeClient) Create() *PricetypeCreate {
+	mutation := newPricetypeMutation(c.config, OpCreate)
+	return &PricetypeCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
-// Update returns an update builder for PriceType.
-func (c *PriceTypeClient) Update() *PriceTypeUpdate {
-	mutation := newPriceTypeMutation(c.config, OpUpdate)
-	return &PriceTypeUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+// Update returns an update builder for Pricetype.
+func (c *PricetypeClient) Update() *PricetypeUpdate {
+	mutation := newPricetypeMutation(c.config, OpUpdate)
+	return &PricetypeUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
 // UpdateOne returns an update builder for the given entity.
-func (c *PriceTypeClient) UpdateOne(pt *PriceType) *PriceTypeUpdateOne {
-	mutation := newPriceTypeMutation(c.config, OpUpdateOne, withPriceType(pt))
-	return &PriceTypeUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+func (c *PricetypeClient) UpdateOne(pr *Pricetype) *PricetypeUpdateOne {
+	mutation := newPricetypeMutation(c.config, OpUpdateOne, withPricetype(pr))
+	return &PricetypeUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
 // UpdateOneID returns an update builder for the given id.
-func (c *PriceTypeClient) UpdateOneID(id int) *PriceTypeUpdateOne {
-	mutation := newPriceTypeMutation(c.config, OpUpdateOne, withPriceTypeID(id))
-	return &PriceTypeUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+func (c *PricetypeClient) UpdateOneID(id int) *PricetypeUpdateOne {
+	mutation := newPricetypeMutation(c.config, OpUpdateOne, withPricetypeID(id))
+	return &PricetypeUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
-// Delete returns a delete builder for PriceType.
-func (c *PriceTypeClient) Delete() *PriceTypeDelete {
-	mutation := newPriceTypeMutation(c.config, OpDelete)
-	return &PriceTypeDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+// Delete returns a delete builder for Pricetype.
+func (c *PricetypeClient) Delete() *PricetypeDelete {
+	mutation := newPricetypeMutation(c.config, OpDelete)
+	return &PricetypeDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
 // DeleteOne returns a delete builder for the given entity.
-func (c *PriceTypeClient) DeleteOne(pt *PriceType) *PriceTypeDeleteOne {
-	return c.DeleteOneID(pt.ID)
+func (c *PricetypeClient) DeleteOne(pr *Pricetype) *PricetypeDeleteOne {
+	return c.DeleteOneID(pr.ID)
 }
 
 // DeleteOneID returns a delete builder for the given id.
-func (c *PriceTypeClient) DeleteOneID(id int) *PriceTypeDeleteOne {
+func (c *PricetypeClient) DeleteOneID(id int) *PricetypeDeleteOne {
 	builder := c.Delete().Where(pricetype.ID(id))
 	builder.mutation.id = &id
 	builder.mutation.op = OpDeleteOne
-	return &PriceTypeDeleteOne{builder}
+	return &PricetypeDeleteOne{builder}
 }
 
-// Create returns a query builder for PriceType.
-func (c *PriceTypeClient) Query() *PriceTypeQuery {
-	return &PriceTypeQuery{config: c.config}
+// Create returns a query builder for Pricetype.
+func (c *PricetypeClient) Query() *PricetypeQuery {
+	return &PricetypeQuery{config: c.config}
 }
 
-// Get returns a PriceType entity by its id.
-func (c *PriceTypeClient) Get(ctx context.Context, id int) (*PriceType, error) {
+// Get returns a Pricetype entity by its id.
+func (c *PricetypeClient) Get(ctx context.Context, id int) (*Pricetype, error) {
 	return c.Query().Where(pricetype.ID(id)).Only(ctx)
 }
 
 // GetX is like Get, but panics if an error occurs.
-func (c *PriceTypeClient) GetX(ctx context.Context, id int) *PriceType {
-	pt, err := c.Get(ctx, id)
+func (c *PricetypeClient) GetX(ctx context.Context, id int) *Pricetype {
+	pr, err := c.Get(ctx, id)
 	if err != nil {
 		panic(err)
 	}
-	return pt
+	return pr
 }
 
-// QueryDentalexpenses queries the dentalexpenses edge of a PriceType.
-func (c *PriceTypeClient) QueryDentalexpenses(pt *PriceType) *DentalExpenseQuery {
-	query := &DentalExpenseQuery{config: c.config}
+// QueryDentalexpenses queries the dentalexpenses edge of a Pricetype.
+func (c *PricetypeClient) QueryDentalexpenses(pr *Pricetype) *DentalexpenseQuery {
+	query := &DentalexpenseQuery{config: c.config}
 	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
-		id := pt.ID
+		id := pr.ID
 		step := sqlgraph.NewStep(
 			sqlgraph.From(pricetype.Table, pricetype.FieldID, id),
 			sqlgraph.To(dentalexpense.Table, dentalexpense.FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, pricetype.DentalexpensesTable, pricetype.DentalexpensesColumn),
 		)
-		fromV = sqlgraph.Neighbors(pt.driver.Dialect(), step)
+		fromV = sqlgraph.Neighbors(pr.driver.Dialect(), step)
 		return fromV, nil
 	}
 	return query
 }
 
 // Hooks returns the client hooks.
-func (c *PriceTypeClient) Hooks() []Hook {
-	return c.hooks.PriceType
+func (c *PricetypeClient) Hooks() []Hook {
+	return c.hooks.Pricetype
 }
 
 // QueueClient is a client for the Queue schema.

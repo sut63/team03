@@ -16,163 +16,163 @@ import (
 	"github.com/team03/app/ent/pricetype"
 )
 
-// DentalExpenseCreate is the builder for creating a DentalExpense entity.
-type DentalExpenseCreate struct {
+// DentalexpenseCreate is the builder for creating a Dentalexpense entity.
+type DentalexpenseCreate struct {
 	config
-	mutation *DentalExpenseMutation
+	mutation *DentalexpenseMutation
 	hooks    []Hook
 }
 
-// SetTax sets the tax field.
-func (dec *DentalExpenseCreate) SetTax(s string) *DentalExpenseCreate {
-	dec.mutation.SetTax(s)
-	return dec
+// SetName sets the Name field.
+func (dc *DentalexpenseCreate) SetName(s string) *DentalexpenseCreate {
+	dc.mutation.SetName(s)
+	return dc
 }
 
-// SetName sets the name field.
-func (dec *DentalExpenseCreate) SetName(s string) *DentalExpenseCreate {
-	dec.mutation.SetName(s)
-	return dec
+// SetPhone sets the Phone field.
+func (dc *DentalexpenseCreate) SetPhone(s string) *DentalexpenseCreate {
+	dc.mutation.SetPhone(s)
+	return dc
 }
 
-// SetRates sets the rates field.
-func (dec *DentalExpenseCreate) SetRates(i int) *DentalExpenseCreate {
-	dec.mutation.SetRates(i)
-	return dec
+// SetAddedTime sets the AddedTime field.
+func (dc *DentalexpenseCreate) SetAddedTime(t time.Time) *DentalexpenseCreate {
+	dc.mutation.SetAddedTime(t)
+	return dc
 }
 
-// SetPhone sets the phone field.
-func (dec *DentalExpenseCreate) SetPhone(s string) *DentalExpenseCreate {
-	dec.mutation.SetPhone(s)
-	return dec
+// SetRates sets the Rates field.
+func (dc *DentalexpenseCreate) SetRates(f float64) *DentalexpenseCreate {
+	dc.mutation.SetRates(f)
+	return dc
 }
 
-// SetAddedTime sets the added_time field.
-func (dec *DentalExpenseCreate) SetAddedTime(t time.Time) *DentalExpenseCreate {
-	dec.mutation.SetAddedTime(t)
-	return dec
+// SetTax sets the Tax field.
+func (dc *DentalexpenseCreate) SetTax(s string) *DentalexpenseCreate {
+	dc.mutation.SetTax(s)
+	return dc
 }
 
 // SetNurseID sets the nurse edge to Nurse by id.
-func (dec *DentalExpenseCreate) SetNurseID(id int) *DentalExpenseCreate {
-	dec.mutation.SetNurseID(id)
-	return dec
+func (dc *DentalexpenseCreate) SetNurseID(id int) *DentalexpenseCreate {
+	dc.mutation.SetNurseID(id)
+	return dc
 }
 
 // SetNillableNurseID sets the nurse edge to Nurse by id if the given value is not nil.
-func (dec *DentalExpenseCreate) SetNillableNurseID(id *int) *DentalExpenseCreate {
+func (dc *DentalexpenseCreate) SetNillableNurseID(id *int) *DentalexpenseCreate {
 	if id != nil {
-		dec = dec.SetNurseID(*id)
+		dc = dc.SetNurseID(*id)
 	}
-	return dec
+	return dc
 }
 
 // SetNurse sets the nurse edge to Nurse.
-func (dec *DentalExpenseCreate) SetNurse(n *Nurse) *DentalExpenseCreate {
-	return dec.SetNurseID(n.ID)
+func (dc *DentalexpenseCreate) SetNurse(n *Nurse) *DentalexpenseCreate {
+	return dc.SetNurseID(n.ID)
 }
 
 // SetMedicalfileID sets the medicalfile edge to Medicalfile by id.
-func (dec *DentalExpenseCreate) SetMedicalfileID(id int) *DentalExpenseCreate {
-	dec.mutation.SetMedicalfileID(id)
-	return dec
+func (dc *DentalexpenseCreate) SetMedicalfileID(id int) *DentalexpenseCreate {
+	dc.mutation.SetMedicalfileID(id)
+	return dc
 }
 
 // SetNillableMedicalfileID sets the medicalfile edge to Medicalfile by id if the given value is not nil.
-func (dec *DentalExpenseCreate) SetNillableMedicalfileID(id *int) *DentalExpenseCreate {
+func (dc *DentalexpenseCreate) SetNillableMedicalfileID(id *int) *DentalexpenseCreate {
 	if id != nil {
-		dec = dec.SetMedicalfileID(*id)
+		dc = dc.SetMedicalfileID(*id)
 	}
-	return dec
+	return dc
 }
 
 // SetMedicalfile sets the medicalfile edge to Medicalfile.
-func (dec *DentalExpenseCreate) SetMedicalfile(m *Medicalfile) *DentalExpenseCreate {
-	return dec.SetMedicalfileID(m.ID)
+func (dc *DentalexpenseCreate) SetMedicalfile(m *Medicalfile) *DentalexpenseCreate {
+	return dc.SetMedicalfileID(m.ID)
 }
 
-// SetPricetypeID sets the pricetype edge to PriceType by id.
-func (dec *DentalExpenseCreate) SetPricetypeID(id int) *DentalExpenseCreate {
-	dec.mutation.SetPricetypeID(id)
-	return dec
+// SetPricetypeID sets the pricetype edge to Pricetype by id.
+func (dc *DentalexpenseCreate) SetPricetypeID(id int) *DentalexpenseCreate {
+	dc.mutation.SetPricetypeID(id)
+	return dc
 }
 
-// SetNillablePricetypeID sets the pricetype edge to PriceType by id if the given value is not nil.
-func (dec *DentalExpenseCreate) SetNillablePricetypeID(id *int) *DentalExpenseCreate {
+// SetNillablePricetypeID sets the pricetype edge to Pricetype by id if the given value is not nil.
+func (dc *DentalexpenseCreate) SetNillablePricetypeID(id *int) *DentalexpenseCreate {
 	if id != nil {
-		dec = dec.SetPricetypeID(*id)
+		dc = dc.SetPricetypeID(*id)
 	}
-	return dec
+	return dc
 }
 
-// SetPricetype sets the pricetype edge to PriceType.
-func (dec *DentalExpenseCreate) SetPricetype(p *PriceType) *DentalExpenseCreate {
-	return dec.SetPricetypeID(p.ID)
+// SetPricetype sets the pricetype edge to Pricetype.
+func (dc *DentalexpenseCreate) SetPricetype(p *Pricetype) *DentalexpenseCreate {
+	return dc.SetPricetypeID(p.ID)
 }
 
-// Mutation returns the DentalExpenseMutation object of the builder.
-func (dec *DentalExpenseCreate) Mutation() *DentalExpenseMutation {
-	return dec.mutation
+// Mutation returns the DentalexpenseMutation object of the builder.
+func (dc *DentalexpenseCreate) Mutation() *DentalexpenseMutation {
+	return dc.mutation
 }
 
-// Save creates the DentalExpense in the database.
-func (dec *DentalExpenseCreate) Save(ctx context.Context) (*DentalExpense, error) {
-	if _, ok := dec.mutation.Tax(); !ok {
-		return nil, &ValidationError{Name: "tax", err: errors.New("ent: missing required field \"tax\"")}
+// Save creates the Dentalexpense in the database.
+func (dc *DentalexpenseCreate) Save(ctx context.Context) (*Dentalexpense, error) {
+	if _, ok := dc.mutation.Name(); !ok {
+		return nil, &ValidationError{Name: "Name", err: errors.New("ent: missing required field \"Name\"")}
 	}
-	if v, ok := dec.mutation.Tax(); ok {
-		if err := dentalexpense.TaxValidator(v); err != nil {
-			return nil, &ValidationError{Name: "tax", err: fmt.Errorf("ent: validator failed for field \"tax\": %w", err)}
-		}
-	}
-	if _, ok := dec.mutation.Name(); !ok {
-		return nil, &ValidationError{Name: "name", err: errors.New("ent: missing required field \"name\"")}
-	}
-	if v, ok := dec.mutation.Name(); ok {
+	if v, ok := dc.mutation.Name(); ok {
 		if err := dentalexpense.NameValidator(v); err != nil {
-			return nil, &ValidationError{Name: "name", err: fmt.Errorf("ent: validator failed for field \"name\": %w", err)}
+			return nil, &ValidationError{Name: "Name", err: fmt.Errorf("ent: validator failed for field \"Name\": %w", err)}
 		}
 	}
-	if _, ok := dec.mutation.Rates(); !ok {
-		return nil, &ValidationError{Name: "rates", err: errors.New("ent: missing required field \"rates\"")}
+	if _, ok := dc.mutation.Phone(); !ok {
+		return nil, &ValidationError{Name: "Phone", err: errors.New("ent: missing required field \"Phone\"")}
 	}
-	if v, ok := dec.mutation.Rates(); ok {
-		if err := dentalexpense.RatesValidator(v); err != nil {
-			return nil, &ValidationError{Name: "rates", err: fmt.Errorf("ent: validator failed for field \"rates\": %w", err)}
-		}
-	}
-	if _, ok := dec.mutation.Phone(); !ok {
-		return nil, &ValidationError{Name: "phone", err: errors.New("ent: missing required field \"phone\"")}
-	}
-	if v, ok := dec.mutation.Phone(); ok {
+	if v, ok := dc.mutation.Phone(); ok {
 		if err := dentalexpense.PhoneValidator(v); err != nil {
-			return nil, &ValidationError{Name: "phone", err: fmt.Errorf("ent: validator failed for field \"phone\": %w", err)}
+			return nil, &ValidationError{Name: "Phone", err: fmt.Errorf("ent: validator failed for field \"Phone\": %w", err)}
 		}
 	}
-	if _, ok := dec.mutation.AddedTime(); !ok {
-		return nil, &ValidationError{Name: "added_time", err: errors.New("ent: missing required field \"added_time\"")}
+	if _, ok := dc.mutation.AddedTime(); !ok {
+		return nil, &ValidationError{Name: "AddedTime", err: errors.New("ent: missing required field \"AddedTime\"")}
+	}
+	if _, ok := dc.mutation.Rates(); !ok {
+		return nil, &ValidationError{Name: "Rates", err: errors.New("ent: missing required field \"Rates\"")}
+	}
+	if v, ok := dc.mutation.Rates(); ok {
+		if err := dentalexpense.RatesValidator(v); err != nil {
+			return nil, &ValidationError{Name: "Rates", err: fmt.Errorf("ent: validator failed for field \"Rates\": %w", err)}
+		}
+	}
+	if _, ok := dc.mutation.Tax(); !ok {
+		return nil, &ValidationError{Name: "Tax", err: errors.New("ent: missing required field \"Tax\"")}
+	}
+	if v, ok := dc.mutation.Tax(); ok {
+		if err := dentalexpense.TaxValidator(v); err != nil {
+			return nil, &ValidationError{Name: "Tax", err: fmt.Errorf("ent: validator failed for field \"Tax\": %w", err)}
+		}
 	}
 	var (
 		err  error
-		node *DentalExpense
+		node *Dentalexpense
 	)
-	if len(dec.hooks) == 0 {
-		node, err = dec.sqlSave(ctx)
+	if len(dc.hooks) == 0 {
+		node, err = dc.sqlSave(ctx)
 	} else {
 		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-			mutation, ok := m.(*DentalExpenseMutation)
+			mutation, ok := m.(*DentalexpenseMutation)
 			if !ok {
 				return nil, fmt.Errorf("unexpected mutation type %T", m)
 			}
-			dec.mutation = mutation
-			node, err = dec.sqlSave(ctx)
+			dc.mutation = mutation
+			node, err = dc.sqlSave(ctx)
 			mutation.done = true
 			return node, err
 		})
-		for i := len(dec.hooks) - 1; i >= 0; i-- {
-			mut = dec.hooks[i](mut)
+		for i := len(dc.hooks) - 1; i >= 0; i-- {
+			mut = dc.hooks[i](mut)
 		}
-		if _, err := mut.Mutate(ctx, dec.mutation); err != nil {
+		if _, err := mut.Mutate(ctx, dc.mutation); err != nil {
 			return nil, err
 		}
 	}
@@ -180,30 +180,30 @@ func (dec *DentalExpenseCreate) Save(ctx context.Context) (*DentalExpense, error
 }
 
 // SaveX calls Save and panics if Save returns an error.
-func (dec *DentalExpenseCreate) SaveX(ctx context.Context) *DentalExpense {
-	v, err := dec.Save(ctx)
+func (dc *DentalexpenseCreate) SaveX(ctx context.Context) *Dentalexpense {
+	v, err := dc.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
 	return v
 }
 
-func (dec *DentalExpenseCreate) sqlSave(ctx context.Context) (*DentalExpense, error) {
-	de, _spec := dec.createSpec()
-	if err := sqlgraph.CreateNode(ctx, dec.driver, _spec); err != nil {
+func (dc *DentalexpenseCreate) sqlSave(ctx context.Context) (*Dentalexpense, error) {
+	d, _spec := dc.createSpec()
+	if err := sqlgraph.CreateNode(ctx, dc.driver, _spec); err != nil {
 		if cerr, ok := isSQLConstraintError(err); ok {
 			err = cerr
 		}
 		return nil, err
 	}
 	id := _spec.ID.Value.(int64)
-	de.ID = int(id)
-	return de, nil
+	d.ID = int(id)
+	return d, nil
 }
 
-func (dec *DentalExpenseCreate) createSpec() (*DentalExpense, *sqlgraph.CreateSpec) {
+func (dc *DentalexpenseCreate) createSpec() (*Dentalexpense, *sqlgraph.CreateSpec) {
 	var (
-		de    = &DentalExpense{config: dec.config}
+		d     = &Dentalexpense{config: dc.config}
 		_spec = &sqlgraph.CreateSpec{
 			Table: dentalexpense.Table,
 			ID: &sqlgraph.FieldSpec{
@@ -212,47 +212,47 @@ func (dec *DentalExpenseCreate) createSpec() (*DentalExpense, *sqlgraph.CreateSp
 			},
 		}
 	)
-	if value, ok := dec.mutation.Tax(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: dentalexpense.FieldTax,
-		})
-		de.Tax = value
-	}
-	if value, ok := dec.mutation.Name(); ok {
+	if value, ok := dc.mutation.Name(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
 			Column: dentalexpense.FieldName,
 		})
-		de.Name = value
+		d.Name = value
 	}
-	if value, ok := dec.mutation.Rates(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: dentalexpense.FieldRates,
-		})
-		de.Rates = value
-	}
-	if value, ok := dec.mutation.Phone(); ok {
+	if value, ok := dc.mutation.Phone(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
 			Column: dentalexpense.FieldPhone,
 		})
-		de.Phone = value
+		d.Phone = value
 	}
-	if value, ok := dec.mutation.AddedTime(); ok {
+	if value, ok := dc.mutation.AddedTime(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeTime,
 			Value:  value,
 			Column: dentalexpense.FieldAddedTime,
 		})
-		de.AddedTime = value
+		d.AddedTime = value
 	}
-	if nodes := dec.mutation.NurseIDs(); len(nodes) > 0 {
+	if value, ok := dc.mutation.Rates(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeFloat64,
+			Value:  value,
+			Column: dentalexpense.FieldRates,
+		})
+		d.Rates = value
+	}
+	if value, ok := dc.mutation.Tax(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: dentalexpense.FieldTax,
+		})
+		d.Tax = value
+	}
+	if nodes := dc.mutation.NurseIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -271,7 +271,7 @@ func (dec *DentalExpenseCreate) createSpec() (*DentalExpense, *sqlgraph.CreateSp
 		}
 		_spec.Edges = append(_spec.Edges, edge)
 	}
-	if nodes := dec.mutation.MedicalfileIDs(); len(nodes) > 0 {
+	if nodes := dc.mutation.MedicalfileIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -290,7 +290,7 @@ func (dec *DentalExpenseCreate) createSpec() (*DentalExpense, *sqlgraph.CreateSp
 		}
 		_spec.Edges = append(_spec.Edges, edge)
 	}
-	if nodes := dec.mutation.PricetypeIDs(); len(nodes) > 0 {
+	if nodes := dc.mutation.PricetypeIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -309,5 +309,5 @@ func (dec *DentalExpenseCreate) createSpec() (*DentalExpense, *sqlgraph.CreateSp
 		}
 		_spec.Edges = append(_spec.Edges, edge)
 	}
-	return de, _spec
+	return d, _spec
 }

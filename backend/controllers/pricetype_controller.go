@@ -7,25 +7,25 @@ import (
     "github.com/gin-gonic/gin"
 	"github.com/team03/app/ent"
 )
-// PriceTypeController defines the struct for the pricetype controller
-type PriceTypeController struct {
+// PricetypeController defines the struct for the pricetype controller
+type PricetypeController struct {
 	client *ent.Client
 	router gin.IRouter
 }
 
-// PriceTypeCreate handles POST requests for adding pricetype entities
+// PricetypeCreate handles POST requests for adding pricetype entities
 // @Summary Create pricetype
 // @Description Create pricetype
 // @ID create-pricetype
 // @Accept   json
 // @Produce  json
-// @Param pricetype body ent.PriceType true "PriceType entity"
-// @Success 200 {object} ent.PriceType
+// @Param pricetype body ent.Pricetype true "Pricetype entity"
+// @Success 200 {object} ent.Pricetype
 // @Failure 400 {object} gin.H
 // @Failure 500 {object} gin.H
 // @Router /pricetypes [post]
-func (ctl *PriceTypeController) PriceTypeCreate(c *gin.Context) {
-	obj := ent.PriceType{}
+func (ctl *PricetypeController) PricetypeCreate(c *gin.Context) {
+	obj := ent.Pricetype{}
 	if err := c.ShouldBind(&obj); err != nil {
 		c.JSON(400, gin.H{
 			"error": "pricetype binding failed",
@@ -33,7 +33,7 @@ func (ctl *PriceTypeController) PriceTypeCreate(c *gin.Context) {
 		return
 	}
 
-	pt, err := ctl.client.PriceType.
+	pt, err := ctl.client.Pricetype.
 		Create().
 		SetName(obj.Name).
 		Save(context.Background())
@@ -48,18 +48,18 @@ func (ctl *PriceTypeController) PriceTypeCreate(c *gin.Context) {
 	c.JSON(200, pt)
 }
 
-// GetPriceType handles GET requests to retrieve a pricetype entity
+// GetPricetype handles GET requests to retrieve a pricetype entity
 // @Summary Get a pricetype entity by ID
 // @Description get pricetype by ID
 // @ID get-pricetype
 // @Produce  json
-// @Param id path int true "PriceType ID"
-// @Success 200 {object} ent.PriceType
+// @Param id path int true "Pricetype ID"
+// @Success 200 {object} ent.Pricetype
 // @Failure 400 {object} gin.H
 // @Failure 404 {object} gin.H
 // @Failure 500 {object} gin.H
 // @Router /pricetypes/{id} [get]
-func (ctl *PriceTypeController) GetPriceType(c *gin.Context) {
+func (ctl *PricetypeController) GetPriceType(c *gin.Context) {
 	id, err := strconv.ParseInt(c.Param("id"), 10, 64)
 	if err != nil {
 		c.JSON(400, gin.H{
@@ -67,7 +67,7 @@ func (ctl *PriceTypeController) GetPriceType(c *gin.Context) {
 		})
 		return
 	}
-	pt, err := ctl.client.PriceType.
+	pt, err := ctl.client.Pricetype.
 		Query().
 		Where(pricetype.IDEQ(int(id))).
 		Only(context.Background())
@@ -82,18 +82,18 @@ func (ctl *PriceTypeController) GetPriceType(c *gin.Context) {
 	c.JSON(200, pt)
 }
 
-// ListPriceType handles request to get a list of pricetype entities
+// ListPricetype handles request to get a list of pricetype entities
 // @Summary List pricetype entities
 // @Description list pricetype entities
 // @ID list-pricetype
 // @Produce json
 // @Param limit  query int false "Limit"
 // @Param offset query int false "Offset"
-// @Success 200 {array} ent.PriceType
+// @Success 200 {array} ent.Pricetype
 // @Failure 400 {object} gin.H
 // @Failure 500 {object} gin.H
 // @Router /pricetypes [get]
-func (ctl *PriceTypeController) ListPriceType(c *gin.Context) {
+func (ctl *PricetypeController) ListPricetype(c *gin.Context) {
 	limitQuery := c.Query("limit")
 	limit := 10
 	if limitQuery != "" {
@@ -112,7 +112,7 @@ func (ctl *PriceTypeController) ListPriceType(c *gin.Context) {
 		}
 	}
 
-	pricetypes, err := ctl.client.PriceType.
+	pricetypes, err := ctl.client.Pricetype.
 		Query().
 		Limit(limit).
 		Offset(offset).
@@ -130,9 +130,9 @@ func (ctl *PriceTypeController) ListPriceType(c *gin.Context) {
 
 
 
-// NewPriceTypeController creates and registers handles for the pricetype controller
-func NewPriceTypeController(router gin.IRouter, client *ent.Client) *PriceTypeController {
-	ptc := &PriceTypeController{
+// NewPricetypeController creates and registers handles for the pricetype controller
+func NewPricetypeController(router gin.IRouter, client *ent.Client) *PricetypeController {
+	ptc := &PricetypeController{
 		client: client,
 		router: router,
 	}
@@ -143,13 +143,13 @@ func NewPriceTypeController(router gin.IRouter, client *ent.Client) *PriceTypeCo
 
 }
 
-func (ctl *PriceTypeController) register() {
+func (ctl *PricetypeController) register() {
 	pricetypes := ctl.router.Group("/pricetypes")
 
-	pricetypes.GET("", ctl.ListPriceType)
+	pricetypes.GET("", ctl.ListPricetype)
 
 	// CRUD
-	pricetypes.POST("", ctl.PriceTypeCreate)
+	pricetypes.POST("", ctl.PricetypeCreate)
 	pricetypes.GET(":id", ctl.GetPriceType)
 	
 }
