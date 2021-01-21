@@ -143,7 +143,7 @@ const checkPattern  = (id: string, value: string) => {
       return;
 
     case 'Remark':
-      validateRemark(value) ? setRemarkError('') : setRemarkError('รูปแบบหมายเหตุไม่ถูกต้อง');
+      validateRemark(value) ? setRemarkError('') : setRemarkError('ห้ามต่ำกว่า 1 ตัวอักษร');
       return;
 
     default:
@@ -168,7 +168,7 @@ const alertMessage = (icon: any, title: any) => {
       alertMessage("error", " ห้ามต่ำกว่า 5 ตัวอักษร");
       return;
     case 'Remark':
-      alertMessage("error", " รูปแบบหมายเหตุไม่ถูกต้อง");
+      alertMessage("error", " ห้ามต่ำกว่า 1 ตัวอักษร");
       return;
     default:
       alertMessage("error", " บันทึกข้อมูลไม่สำเร็จ");
