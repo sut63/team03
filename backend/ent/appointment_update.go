@@ -31,15 +31,27 @@ func (au *AppointmentUpdate) Where(ps ...predicate.Appointment) *AppointmentUpda
 	return au
 }
 
-// SetDetail sets the detail field.
+// SetAppointID sets the AppointID field.
+func (au *AppointmentUpdate) SetAppointID(s string) *AppointmentUpdate {
+	au.mutation.SetAppointID(s)
+	return au
+}
+
+// SetDetail sets the Detail field.
 func (au *AppointmentUpdate) SetDetail(s string) *AppointmentUpdate {
 	au.mutation.SetDetail(s)
 	return au
 }
 
-// SetDatetime sets the datetime field.
+// SetDatetime sets the Datetime field.
 func (au *AppointmentUpdate) SetDatetime(t time.Time) *AppointmentUpdate {
 	au.mutation.SetDatetime(t)
+	return au
+}
+
+// SetRemark sets the Remark field.
+func (au *AppointmentUpdate) SetRemark(s string) *AppointmentUpdate {
+	au.mutation.SetRemark(s)
 	return au
 }
 
@@ -125,9 +137,19 @@ func (au *AppointmentUpdate) ClearDentist() *AppointmentUpdate {
 
 // Save executes the query and returns the number of rows/vertices matched by this operation.
 func (au *AppointmentUpdate) Save(ctx context.Context) (int, error) {
+	if v, ok := au.mutation.AppointID(); ok {
+		if err := appointment.AppointIDValidator(v); err != nil {
+			return 0, &ValidationError{Name: "AppointID", err: fmt.Errorf("ent: validator failed for field \"AppointID\": %w", err)}
+		}
+	}
 	if v, ok := au.mutation.Detail(); ok {
 		if err := appointment.DetailValidator(v); err != nil {
-			return 0, &ValidationError{Name: "detail", err: fmt.Errorf("ent: validator failed for field \"detail\": %w", err)}
+			return 0, &ValidationError{Name: "Detail", err: fmt.Errorf("ent: validator failed for field \"Detail\": %w", err)}
+		}
+	}
+	if v, ok := au.mutation.Remark(); ok {
+		if err := appointment.RemarkValidator(v); err != nil {
+			return 0, &ValidationError{Name: "Remark", err: fmt.Errorf("ent: validator failed for field \"Remark\": %w", err)}
 		}
 	}
 
@@ -198,6 +220,13 @@ func (au *AppointmentUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			}
 		}
 	}
+	if value, ok := au.mutation.AppointID(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: appointment.FieldAppointID,
+		})
+	}
 	if value, ok := au.mutation.Detail(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
@@ -210,6 +239,13 @@ func (au *AppointmentUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Type:   field.TypeTime,
 			Value:  value,
 			Column: appointment.FieldDatetime,
+		})
+	}
+	if value, ok := au.mutation.Remark(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: appointment.FieldRemark,
 		})
 	}
 	if au.mutation.PatientCleared() {
@@ -335,15 +371,27 @@ type AppointmentUpdateOne struct {
 	mutation *AppointmentMutation
 }
 
-// SetDetail sets the detail field.
+// SetAppointID sets the AppointID field.
+func (auo *AppointmentUpdateOne) SetAppointID(s string) *AppointmentUpdateOne {
+	auo.mutation.SetAppointID(s)
+	return auo
+}
+
+// SetDetail sets the Detail field.
 func (auo *AppointmentUpdateOne) SetDetail(s string) *AppointmentUpdateOne {
 	auo.mutation.SetDetail(s)
 	return auo
 }
 
-// SetDatetime sets the datetime field.
+// SetDatetime sets the Datetime field.
 func (auo *AppointmentUpdateOne) SetDatetime(t time.Time) *AppointmentUpdateOne {
 	auo.mutation.SetDatetime(t)
+	return auo
+}
+
+// SetRemark sets the Remark field.
+func (auo *AppointmentUpdateOne) SetRemark(s string) *AppointmentUpdateOne {
+	auo.mutation.SetRemark(s)
 	return auo
 }
 
@@ -429,9 +477,19 @@ func (auo *AppointmentUpdateOne) ClearDentist() *AppointmentUpdateOne {
 
 // Save executes the query and returns the updated entity.
 func (auo *AppointmentUpdateOne) Save(ctx context.Context) (*Appointment, error) {
+	if v, ok := auo.mutation.AppointID(); ok {
+		if err := appointment.AppointIDValidator(v); err != nil {
+			return nil, &ValidationError{Name: "AppointID", err: fmt.Errorf("ent: validator failed for field \"AppointID\": %w", err)}
+		}
+	}
 	if v, ok := auo.mutation.Detail(); ok {
 		if err := appointment.DetailValidator(v); err != nil {
-			return nil, &ValidationError{Name: "detail", err: fmt.Errorf("ent: validator failed for field \"detail\": %w", err)}
+			return nil, &ValidationError{Name: "Detail", err: fmt.Errorf("ent: validator failed for field \"Detail\": %w", err)}
+		}
+	}
+	if v, ok := auo.mutation.Remark(); ok {
+		if err := appointment.RemarkValidator(v); err != nil {
+			return nil, &ValidationError{Name: "Remark", err: fmt.Errorf("ent: validator failed for field \"Remark\": %w", err)}
 		}
 	}
 
@@ -500,6 +558,13 @@ func (auo *AppointmentUpdateOne) sqlSave(ctx context.Context) (a *Appointment, e
 		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing Appointment.ID for update")}
 	}
 	_spec.Node.ID.Value = id
+	if value, ok := auo.mutation.AppointID(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: appointment.FieldAppointID,
+		})
+	}
 	if value, ok := auo.mutation.Detail(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
@@ -512,6 +577,13 @@ func (auo *AppointmentUpdateOne) sqlSave(ctx context.Context) (a *Appointment, e
 			Type:   field.TypeTime,
 			Value:  value,
 			Column: appointment.FieldDatetime,
+		})
+	}
+	if value, ok := auo.mutation.Remark(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: appointment.FieldRemark,
 		})
 	}
 	if auo.mutation.PatientCleared() {

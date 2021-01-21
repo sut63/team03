@@ -24,10 +24,18 @@ import (
 func init() {
 	appointmentFields := schema.Appointment{}.Fields()
 	_ = appointmentFields
-	// appointmentDescDetail is the schema descriptor for detail field.
-	appointmentDescDetail := appointmentFields[0].Descriptor()
-	// appointment.DetailValidator is a validator for the "detail" field. It is called by the builders before save.
+	// appointmentDescAppointID is the schema descriptor for AppointID field.
+	appointmentDescAppointID := appointmentFields[0].Descriptor()
+	// appointment.AppointIDValidator is a validator for the "AppointID" field. It is called by the builders before save.
+	appointment.AppointIDValidator = appointmentDescAppointID.Validators[0].(func(string) error)
+	// appointmentDescDetail is the schema descriptor for Detail field.
+	appointmentDescDetail := appointmentFields[1].Descriptor()
+	// appointment.DetailValidator is a validator for the "Detail" field. It is called by the builders before save.
 	appointment.DetailValidator = appointmentDescDetail.Validators[0].(func(string) error)
+	// appointmentDescRemark is the schema descriptor for Remark field.
+	appointmentDescRemark := appointmentFields[3].Descriptor()
+	// appointment.RemarkValidator is a validator for the "Remark" field. It is called by the builders before save.
+	appointment.RemarkValidator = appointmentDescRemark.Validators[0].(func(string) error)
 	degreeFields := schema.Degree{}.Fields()
 	_ = degreeFields
 	// degreeDescName is the schema descriptor for name field.

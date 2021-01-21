@@ -52,11 +52,13 @@ const useStyles = makeStyles(theme => ({
   }));
 
 interface appointment {
-    patient: number;
-    dentist: number;
-    datetime: String;
-    detail: String;
-    room: number;
+    AppointID: String;
+    Patient: Number;
+    Dentist: Number;
+    Datetime: String;
+    Detail: String;
+    Room: Number;
+    Remark: String;
 
 }
 
@@ -68,6 +70,9 @@ const Appointment: FC<{}> = () => {
     const [patients, setPatients] = React.useState<EntPatient[]>([]);
     const [dentists, setDentists] = React.useState<EntDentist[]>([]);
     const [rooms, setRooms] = React.useState<EntRoom[]>([]);
+    const [DetailError, setDetailError] = React.useState('');
+    const [AppointIDError, setAppointIDError] = React.useState('');
+    const [RemarkError, setRemarkError] = React.useState('');
 
 // alert setting
 const Toast = Swal.mixin({
@@ -102,13 +107,75 @@ useEffect(() => {
 
 // set data to object appointment
 const handleChange = (
-    event: React.ChangeEvent<{ name?: string; value: unknown }>,
-  ) => {
-    const name = event.target.name as keyof typeof Appointment;
+    event: React.ChangeEvent<{ name?: string; value: any }>, ) => {
+    const name = event.target.name as keyof typeof appointment;
     const { value } = event.target;
     setAppointment({ ...appointment, [name]: value });
+    const validateValue = value.toString()
+    checkPattern(name, validateValue)
     console.log(appointment);
 };
+
+ // ฟังก์ชั่นสำหรับ validate รหัสการนัดหมาย
+ const validateAppointID = (val: string) => {
+  return val.match("[A]\\d{5}")
+}
+
+// ฟังก์ชั่นสำหรับ validate สาเหตุการนัดหมาย
+const validateDetail = (val: string) => {
+  return val.length < 5 ?  false : true;
+}
+
+// ฟังก์ชั่นสำหรับ validate หมายเหตุ
+const validateRemark = (val: string) => {
+  return val.length < 1 ?  false : true;
+}
+
+// สำหรับตรวจสอบรูปแบบข้อมูลที่กรอก ว่าเป็นไปตามที่กำหนดหรือไม่
+const checkPattern  = (id: string, value: string) => {
+  switch(id) {
+    case 'AppointID':
+      validateAppointID(value) ? setAppointIDError('') : setAppointIDError('รหัสการนัดหมายขึ้นต้นด้วย N ตามด้วยตัวเลข 5 ตัว');
+      return;
+
+    case 'Detail':
+      validateDetail(value) ? setDetailError('') : setDetailError('ห้ามต่ำกว่า 5 ตัวอักษร');
+      return;
+
+    case 'Remark':
+      validateRemark(value) ? setRemarkError('') : setRemarkError('รูปแบบหมายเหตุไม่ถูกต้อง');
+      return;
+
+    default:
+      return;
+  }
+}
+
+const alertMessage = (icon: any, title: any) => {
+  Toast.fire({
+    icon: icon,
+    title: title,
+  });
+}
+
+ //กำหนดข้อความ error
+ const checkCaseSaveError = (s: string) => {
+  switch(s) {
+    case 'AppointID':
+      alertMessage("error", "รหัสการนัดหมายขึ้นต้นด้วย N ตามด้วยตัวเลข 5 ตัว");
+      return;
+    case 'Detail':
+      alertMessage("error", " ห้ามต่ำกว่า 5 ตัวอักษร");
+      return;
+    case 'Remark':
+      alertMessage("error", " รูปแบบหมายเหตุไม่ถูกต้อง");
+      return;
+    default:
+      alertMessage("error", " บันทึกข้อมูลไม่สำเร็จ");
+      return;
+  }
+}
+
 
 // clear input form
 function clear() {
@@ -117,7 +184,7 @@ function clear() {
 
 // function save data
 function save() {
-    appointment.datetime += ":00+07:00";
+    appointment.Datetime += ":00+07:00";
     const apiUrl = 'http://localhost:8080/api/v1/appointments';
     const requestOptions = {
       method: 'POST',
@@ -130,22 +197,19 @@ function save() {
 
     fetch(apiUrl, requestOptions)
       .then(response => response.json())
-      .then(data => {console.log(data.save);
-        console.log(requestOptions)
-        if (data.status == true) {
+      .then(data => {
+        console.log(data);
+        if (data.status === true) {
           clear();
           Toast.fire({
             icon: 'success',
             title: 'บันทึกข้อมูลสำเร็จ',
           });
         } else {
-          Toast.fire({
-            icon: 'error',
-            title: 'บันทึกข้อมูลไม่สำเร็จ',
-          });
+          checkCaseSaveError(data.error.Name)
         }
       });
-}
+  };
 
   return (
     <Page theme={pageTheme.service}>
@@ -159,6 +223,27 @@ function save() {
           <Grid container spacing={3}>
             <Grid item xs={12}></Grid>
 
+
+            <Grid item xs={3}>
+              <div className={classes.paper}>รหัสการนัดหมาย</div>
+            </Grid>
+            <Grid item xs={9}>
+              <FormControl variant="outlined" className={classes.formControl}>
+                <TextField 
+                error = {AppointIDError ? true : false}
+                helperText={AppointIDError}
+                label="รหัสการนัดหมาย" 
+                variant="outlined" 
+                name="AppointID"
+                type="string"
+                value={appointment.AppointID || ''}
+                onChange={handleChange}
+                />
+
+              </FormControl>
+            </Grid>
+
+
             <Grid item xs={3}>
               <div className={classes.paper}>ผู้ป่วย</div>
             </Grid>
@@ -166,9 +251,9 @@ function save() {
               <FormControl variant="outlined" className={classes.formControl}>
                 <InputLabel>เลือกรายชื่อผู้ป่วย</InputLabel>
                 <Select
-                  name="patient"
+                  name="Patient"
                   label = "เลือกรายชื่อผู้ป่วย"
-                  value={appointment.patient || ''}
+                  value={appointment.Patient || ''}
                   onChange={handleChange}
                 >
                   {patients.map(item => {
@@ -188,18 +273,17 @@ function save() {
             </Grid>
             <Grid item xs={9}>
               <FormControl variant="outlined" className={classes.formControl}>
-                <TextField
-                    id="detail"
-                    label="กรอกสาเหตุการนัดหมาย"
-                    name="detail"
-                    variant="outlined"
-                    multiline
-                    rows={4}
-                    type="string"
-                    size="medium"
-                    value={appointment.detail}
-                    onChange={handleChange}
-              />
+                <TextField 
+                error = {DetailError ? true : false}
+                helperText={DetailError}
+                label="สาเหตุการนัดหมาย" 
+                variant="outlined" 
+                name="Detail"
+                type="string"
+                value={appointment.Detail || ''}
+                onChange={handleChange}
+                />
+
               </FormControl>
             </Grid>
 
@@ -211,9 +295,9 @@ function save() {
                 <TextField
                   
                   label="เลือกวันที่"
-                  name="datetime"
+                  name="Datetime"
                   type="datetime-local"
-                  value={appointment.datetime || ''} 
+                  value={appointment.Datetime || ''} 
                   className={classes.formControl}
                   InputLabelProps={{
                     shrink: true,
@@ -231,9 +315,9 @@ function save() {
               <FormControl variant="outlined" className={classes.formControl}>
                 <InputLabel>เลือกห้องตรวจ</InputLabel>
                 <Select
-                  name="room"
+                  name="Room"
                   label="เลือกห้องตรวจ"
-                  value={appointment.room || ''}
+                  value={appointment.Room || ''}
                   onChange={handleChange}
                 >
                   {rooms.map(item => {
@@ -246,6 +330,24 @@ function save() {
                 </Select>
               </FormControl>
             </Grid>
+
+            <Grid item xs={3}>
+              <div className={classes.paper}>หมายเหตุ</div>
+            </Grid>
+            <Grid item xs={9}>
+              <TextField
+                error = {RemarkError ? true : false}
+                className={classes.formControl}
+                id="Remark"
+                name="Remark"
+                label="หมายเหตุ"
+                helperText= {RemarkError}
+                value={appointment.Remark || ''}
+                variant="outlined"
+                onChange={handleChange}
+              />
+            </Grid>
+
 
             <Grid item xs={3}></Grid>
             <Grid item xs={9}>
