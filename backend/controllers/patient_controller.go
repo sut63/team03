@@ -9,7 +9,7 @@ import (
 	"github.com/team03/app/ent/gender"
 	"github.com/team03/app/ent/medicalcare"
 	"github.com/team03/app/ent/patient"
-	//  "fmt"
+	"fmt"
 	"github.com/team03/app/ent"
 	"github.com/gin-gonic/gin"
 )
@@ -103,9 +103,12 @@ func (ctl *PatientController) PatientCreate(c *gin.Context) {
 		SetDisease(ds).
 		SetMedicalcare(mc).
 		Save(context.Background())
+	
 	if err != nil {
+		fmt.Println(err)
 		c.JSON(400, gin.H{
-			"error": "saving failed",
+			"status": false,
+			"error": err,
 		})
 		return
 	}
