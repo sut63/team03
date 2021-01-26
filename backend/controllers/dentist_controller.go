@@ -2,7 +2,7 @@ package controllers
 
 import (
 	"context"
-
+	"fmt"
 	"strconv"
 	"time"
 
@@ -106,8 +106,10 @@ func (ctl *DentistController) CreateDentist(c *gin.Context) {
 		SetBirthday(times).
 		Save(context.Background())
 	if err != nil {
+		fmt.Println(err)
 		c.JSON(400, gin.H{
-			"error": "saving failed",
+			"status": false,
+			"error": err ,
 		})
 		return
 	}
