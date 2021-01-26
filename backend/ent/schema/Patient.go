@@ -4,6 +4,8 @@ import (
 	"github.com/facebookincubator/ent"
 	"github.com/facebookincubator/ent/schema/edge"
 	"github.com/facebookincubator/ent/schema/field"
+	//"errors"
+	//"regexp"
 )
 
 // Patient holds the schema definition for the Patient entity.
@@ -14,12 +16,12 @@ type Patient struct {
 // Fields of the Patient.
 func (Patient) Fields() []ent.Field {
 	return []ent.Field{
-		field.String("patient_ID").NotEmpty().Unique(),
-		field.String("name").NotEmpty(),
-		field.String("cardID").NotEmpty(),
-		field.String("tel").NotEmpty(),
-		field.Int("age").Positive(),
-		field.Time("birthday"),
+		field.String("PatientID").Unique().MaxLen(6).MinLen(6),
+		field.String("Name").NotEmpty(),
+		field.String("CardID").Unique().MaxLen(13).MinLen(13),
+		field.String("Tel").Unique().MaxLen(10).MinLen(10),
+		field.Int("Age").Min(0),
+		field.Time("Birthday"),
 	}
 }
 

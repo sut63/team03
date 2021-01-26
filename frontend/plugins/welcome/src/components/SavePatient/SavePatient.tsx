@@ -20,7 +20,6 @@ import {
 import { DefaultApi } from '../../api/apis'; // Api Gennerate From Command
 import { EntGender } from '../../api/models/EntGender'; // import interface Gender
 import { EntMedicalCare } from '../../api/models/EntMedicalCare'; // import interface MedicalCare
-//import { EntNurse } from '../../api/models/EntNurse'; // import interface Nurse
 import { EntDisease } from '../../api/models/EntDisease'; // import interface Disease
 
 // header css
@@ -70,6 +69,11 @@ const SavePatient: FC<{}> = () => {
   const http = new DefaultApi();
 
   const [patient, setPatient] = React.useState<Partial<savePatient>>({});
+  const [patientIDError, setPatientIDError] = React.useState('');
+  //const [nameError, setnameError] = React.useState('');
+  const [cardIDError, setCardIDError] = React.useState('');
+  const [telError, setTelError] = React.useState('');
+  const [ageError, setAgeError] = React.useState('');
   const [genders, setGenders] = React.useState<EntGender[]>([]);
   const [medicalcares, setMedicalcares] = React.useState<EntMedicalCare[]>([]);
   const [diseases, setDiseases] = React.useState<EntDisease[]>([]);
@@ -79,7 +83,7 @@ const SavePatient: FC<{}> = () => {
     toast: true,
     position: 'top-end',
     showConfirmButton: false,
-    timer: 6000,
+    timer: 5000,
     timerProgressBar: true,
   });
 
@@ -107,28 +111,104 @@ const SavePatient: FC<{}> = () => {
 
   // set data to object patient
   const handleChange = (
-    event: React.ChangeEvent<{ name?: string; value: unknown }>,) => {
+    event: React.ChangeEvent<{ name?: string; value: any }>,) => {
     const name = event.target.name as keyof typeof patient;
     const { value } = event.target;
     setPatient({ ...patient, [name]: value });
+    const validateValue = value.toString()
+    checkPattern(name, validateValue)
     console.log(patient);
-  };
+  }; 
 
   const handleNumberChange = (
-    event: React.ChangeEvent<{ name?: string; value: unknown }>,) => {
+    event: React.ChangeEvent<{ name: string; value: number }>,) => {
     const name = event.target.name as keyof typeof patient;
     const { value } = event.target;
     setPatient({ ...patient, [name]: + value });
-    console.log(patient);
-  };
+   // console.log(patient);
+  }; 
+
+  //ฟังก์ชั่นสำหรับ validate เลขประจำตัวผู้ป่วย
+  const validatepatientID = (val: string) => {
+    return val.match("^[0-9]{6}$");
+  }
+  
+  //ฟังก์ชั่นสำหรับ validate ชื่อ
+ /* const Validatename = (val: string) => {
+    return val.match("^[ก-๏]+$");
+  } */
+
+  // ฟังก์ชั่นสำหรับ validate เลขประจำตัวประชาชน
+  const validatecardID = (val: string) => {
+    return val.match("^[0-9]{13}$");
+  }
+
+  // ฟังก์ชั่นสำหรับ validate เบอร์โทรศัพท์
+  const validatetTel = (val: string) => {
+    return val.match("^[0-9]{10}$");
+  }
+
+  // สำหรับตรวจสอบรูปแบบข้อมูลที่กรอก ว่าเป็นไปตามที่กำหนดหรือไม่
+  const checkPattern = (id: string, value: string) => {
+    switch(id) {
+      case 'PatientID':
+        validatepatientID(value) ? setPatientIDError('') : setPatientIDError('กรุณากรอกเลขประจำตัวผู้ป่วย 6 หลักเท่านั้น');
+        return;
+     /* case 'name' :    
+        Validatename(value) ? setnameError('') : setnameError("กรุณากรอกชื่อเป็นภาษาไทยเท่านั้น");
+        return; */
+      case 'CardID':
+        validatecardID(value) ? setCardIDError('') : setCardIDError('กรุณากรอกเลขประจำตัวประชาชน 13 หลัก');
+        return;
+      case 'Tel':
+        validatetTel(value) ? setTelError('') : setTelError('กรุณากรอกเบอร์โทรศัพท์ 10 หลัก');
+        return;
+      default:
+        return;
+    }
+  }
+
+  const alertMessage = (icon: any, title: any) => {
+    Toast.fire({
+      icon: icon,
+      title: title,
+    });
+  }
 
   // clear input form
   function clear() {
     setPatient({});
   }
 
+  const checkCaseSaveError = (field: string) => {
+    switch(field) {
+      case 'PatientID':
+        alertMessage("error","กรุณากรอกเลขประจำตัวผู้ป่วย 6 หลัก");
+        return;
+      case 'Name':
+        alertMessage("error","กรุณากรอกชื่อเป็นภาษาไทยเท่านั้น");
+        return;
+      case 'CardID':
+        alertMessage("error","กรุณากรอกเลขประจำตัวประชาชน 13 หลัก");
+        return; 
+      case 'Tel':
+        alertMessage("error","กรุณากรอกเบอร์โทรศัพท์ 10 หลักเท่านั้น");
+        return; 
+      case 'Age':
+        alertMessage("error","กรุณากรอกอายุเป็นจำนวนเต็มบวกเท่านั้น");
+        return;
+      default:
+        alertMessage("error","บันทึกข้อมูลไม่สำเร็จ");
+        return;
+    }
+  }
+
   // function save data
   function save() {
+    if (patient.Age) {
+      var age: number = +patient.Age;
+      patient.Age = age;
+    }
     const apiUrl = 'http://localhost:8080/api/v1/patients';
     const requestOptions = {
       method: 'POST',
@@ -149,10 +229,7 @@ const SavePatient: FC<{}> = () => {
             title: 'บันทึกข้อมูลสำเร็จ',
           });
         } else {
-          Toast.fire({
-            icon: 'error',
-            title: 'บันทึกข้อมูลไม่สำเร็จ',
-          });
+          checkCaseSaveError(data.error.Name)
         }
       });
   }
@@ -175,9 +252,11 @@ const SavePatient: FC<{}> = () => {
                   className={classes.formControl}
                   variant="outlined">
                   <TextField
+                    error={patientIDError ? true : false}
                     label="เลขประจำตัวผู้ป่วย"
                     name="PatientID"
                     variant="outlined"
+                    helperText= {patientIDError}
                     size="medium"
                     value={patient.PatientID || ''}
                     onChange={handleChange}
@@ -192,12 +271,13 @@ const SavePatient: FC<{}> = () => {
             <Grid item xs={6}>
             <FormControl
                   fullWidth
-                  className={classes.formControl}
                   variant="outlined">
                   <TextField
+                 // error={nameError ? true : false}
                     label="กรอกชื่อ - นามสกุล"
                     name="Name"
                     variant="outlined"
+                   // helperText= {nameError}
                     size="medium"
                     value={patient.Name || ''}
                     onChange={handleChange}
@@ -215,9 +295,11 @@ const SavePatient: FC<{}> = () => {
                   className={classes.formControl}
                   variant="outlined">
                   <TextField
+                    error={cardIDError ? true : false}
                     label="กรอกเลขบัตรประจำตัวประชาชน"
                     name="CardID"
                     variant="outlined"
+                    helperText= {cardIDError}
                     size="medium"
                     value={patient.CardID || ''}
                     onChange={handleChange}
@@ -259,9 +341,11 @@ const SavePatient: FC<{}> = () => {
                   className={classes.formControl}
                   variant="outlined">
                   <TextField
+                    error={telError ? true : false}
                     label="กรอกเบอร์โทรศัพท์"
                     name="Tel"
                     variant="outlined"
+                    helperText= {telError}
                     size="medium"
                     value={patient.Tel || ''}
                     onChange={handleChange}
@@ -299,10 +383,13 @@ const SavePatient: FC<{}> = () => {
                   className={classes.formControl}
                   variant="outlined">
                   <TextField
+                    error={ageError ? true : false}
                     label="กรอกอายุ"
                     name="Age"
                     type="Number"
+                    InputProps={{ inputProps: { min: 0 } }}
                     variant="outlined"
+                    helperText={ageError}
                     size="medium"
                     value={patient.Age || ''}
                     onChange={handleNumberChange}
