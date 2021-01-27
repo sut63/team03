@@ -56,11 +56,11 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 const Toast = Swal.mixin({
-  // toast: true,
+  
   position: 'center',
   showConfirmButton: false,
-  //timer: 3000,
-  //timerProgressBar: true,
+  
+  
   showCloseButton: true,
 
 });
@@ -73,11 +73,11 @@ export default function ComponentsTable() {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState(false);
 
-  //---------------------------
+  
   const [checktax, setcheckTaxs] = useState(false);
   const [dentalexpense, setDentalexpense] = useState<EntDentalexpense[]>([])
 
-  //--------------------------
+  
   const [tax, setTaxs] = useState(String);
   const profile = { givenName: 'ระบบค้นหารายการค่ารักษา' };
   const alertMessage = (icon: any, title: any) => {
@@ -138,7 +138,7 @@ export default function ComponentsTable() {
     <Page theme={pageTheme.service}>
       <Header
         title={`Dental System`}
-        subtitle = "ค้นหารายการค่ารักษา">
+        subtitle = "ระบบค้นหารายการค่ารักษา">
       
         <table>
           <tr>
@@ -189,7 +189,7 @@ export default function ComponentsTable() {
                     className={classes.margin}
                     variant="outlined"
                   >
-                    <div className={classes.paper}><strong>เลขที่กำกับภาษี</strong></div>
+                    <div className={classes.paper}><strong>เลขที่กำกับภาษี(TAX NO.)</strong></div>
                     <TextField
                       id="tax"
                       value={tax}
