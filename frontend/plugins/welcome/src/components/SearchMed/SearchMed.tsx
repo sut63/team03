@@ -8,16 +8,15 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { DefaultApi } from '../../api/apis';
-
 import { EntMedicalfile } from '../../api/models/EntMedicalfile';
-
-
 import Swal from 'sweetalert2'
 import { Link as RouterLink } from 'react-router-dom';
 import moment from 'moment';
 import { Page, pageTheme, Header, Content, Link } from '@backstage/core';
 import { Grid, Button, TextField, Typography, FormControl } from '@material-ui/core';
 import SearchTwoToneIcon from '@material-ui/icons/SearchTwoTone';
+
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -56,18 +55,17 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 const Toast = Swal.mixin({
-  // toast: true,
-  position: 'center',
+  
+  position: 'top-end',
   showConfirmButton: false,
-  //timer: 3000,
-  //timerProgressBar: true,
+  
+  
   showCloseButton: true,
 
 });
+
+
 export default function ComponentsTable() {
-
- 
-
   const classes = useStyles();
   const api = new DefaultApi();
   const [loading, setLoading] = useState(true);
@@ -75,8 +73,7 @@ export default function ComponentsTable() {
 
   //---------------------------
   const [checkmedno, setcheckMednos] = useState(false);
-  const [medicalfile, setMedicalfiles] = useState<EntMedicalfile[]>([])
-
+  const [medicalfile, setMedicalfile] = useState<EntMedicalfile[]>([]);
   //--------------------------
   const [medno, setMednos] = useState(String);
   const profile = { givenName: 'ระบบค้นหาประวัติทันตกรรม' };
@@ -89,12 +86,12 @@ export default function ComponentsTable() {
   }
 
   useEffect(() => {
-    const setMedicalfile = async () => {
+    const getMedicalfile = async () => {
       const res = await api.listMedicalfile({ offset: 0 });
       setLoading(false);
-      setMedicalfiles(res);
+      setMedicalfile(res);
     };
-    setMedicalfile();
+    getMedicalfile();
   }, [loading]);
 
   //-------------------
@@ -129,33 +126,33 @@ export default function ComponentsTable() {
     }
     console.log(checkmedno)
     if (medno == "") {
-      alertMessage("info", "แสดงข้อมูลรายการค่ารักษาในระบบ");
+      alertMessage("info", "แสดงข้อมูลประวัติทันตกรรม");
     }
   };
 
   return (
 
-    <Page theme={pageTheme.home}>
+    <Page theme={pageTheme.service}>
       <Header
-        title={`${profile.givenName}`}
-      >
+        title={`Dental System`}
+        subtitle="ค้นหาประวัติทันตกรรมของผู้ป่วย">
         <table>
           <tr>
-            
+           
             <th>
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <Link component={RouterLink} to="/Menu">
-                <Button variant="contained" style={{ background: 'linear-gradient(45deg, #3399FF 15%, #9900FF 120%)', height: 36 }}>
+                <Button variant="contained" style={{ height: 40 }}>
                   <h3
                     style={
                       {
-                        color: "#FFFAF0",
+                        color: "#000000",
                         borderRadius: 10,
                         height: 25,
                         padding: '0 20px',
                       }
                     }>
-                    กลับหน้าหลัก
+                    Back
             </h3>
                 </Button>
               </Link>
@@ -170,14 +167,14 @@ export default function ComponentsTable() {
             <Paper>
 
               <Typography align="center" >
-                <div style={{ background: 'linear-gradient(45deg, #00FFCC 15%, #9900FF 120%)', height: 55 }}>
+                <div style={{ background: "#3366CC", height: 60 }}>
                   <h1 style={
                     {
-                      color: "#000000",
+                      color: "#FFFFFF",
                       borderRadius: 5,
                       height: 18,
                       padding: '0 30px',
-                      fontSize: '40px',
+                      fontSize: '30px',
                     }}>
                     ค้นหาประวัติทันตกรรม
             </h1>
@@ -210,7 +207,7 @@ export default function ComponentsTable() {
                   endIcon={<SearchTwoToneIcon />}
                   className={classes.margins}
                   variant="contained"
-                  style={{ background: "#9900FF", height: 40 }}>
+                  style={{ background: "#333399", height: 40 }}>
                   <h3
                     style={
                       {
@@ -229,11 +226,11 @@ export default function ComponentsTable() {
                   }}
                   className={classes.margins}
                   variant="contained"
-                  style={{ background: "#9900FF", height: 40 }}>
+                  style={{ background: "#FFFFE0", height: 40 }}>
                   <h3
                     style={
                       {
-                        color: "#FFFFFF",
+                        color: "#000000",
                         padding: '0 25px',
 
                       }
@@ -256,26 +253,26 @@ export default function ComponentsTable() {
                     <TableContainer component={Paper}>
                       <Table className={classes.table} aria-label="simple table">
                         <TableHead>
-                        <TableRow>
-                              <TableCell align="center">Medicalfile_ID</TableCell>
-                              <TableCell align="center">Medicalfile_No</TableCell>
-                              <TableCell align="center">Patient</TableCell>
-                              <TableCell align="center">Detail</TableCell>
-                              <TableCell align="center">Dentist</TableCell>
-                              <TableCell align="center">Date</TableCell>
-                              </TableRow>
+                          <TableRow>
+                          <TableCell align="center">Medicalfile_ID</TableCell>
+                          <TableCell align="center">Medicalfile_No</TableCell>
+                          <TableCell align="center">Patient</TableCell>
+                          <TableCell align="center">Detail</TableCell>
+                          <TableCell align="center">Dentist</TableCell>
+                          <TableCell align="center">Date</TableCell>
+                          </TableRow>
                         </TableHead>
                         <TableBody>
 
                           {medicalfile.filter((filter: any) => filter.medno.includes(medno)).map((item: any) => (
                             <TableRow key={item.id}>
-                            <TableCell align="center">{item.id}</TableCell>
-                            <TableCell align="center">{item.medno}</TableCell>
-                            <TableCell align="center">{item.edges?.patient?.name}</TableCell>
-                            <TableCell align="center">{item.detial}</TableCell>
-                            <TableCell align="center">{item.edges?.dentist?.name}</TableCell>
-                            <TableCell align="center">{moment(item.addedTime).format('DD/MM/YYYY HH:mm')}</TableCell>
-                          </TableRow>
+                              <TableCell align="center">{item.id}</TableCell>
+                              <TableCell align="center">{item.medno}</TableCell>
+                              <TableCell align="center">{item.edges?.patient?.name}</TableCell>
+                              <TableCell align="center">{item.detial}</TableCell>
+                              <TableCell align="center">{item.edges?.dentist?.name}</TableCell>
+                              <TableCell align="center">{moment(item.addedTime).format('DD/MM/YYYY HH:mm')}</TableCell>
+                            </TableRow>
                           ))}
                         </TableBody>
                       </Table>
@@ -286,7 +283,7 @@ export default function ComponentsTable() {
                         <TableContainer component={Paper}>
                           <Table className={classes.table} aria-label="simple table">
                             <TableHead>
-                            <TableRow>
+                              <TableRow>
                               <TableCell align="center">Medicalfile_ID</TableCell>
                               <TableCell align="center">Medicalfile_No</TableCell>
                               <TableCell align="center">Patient</TableCell>
@@ -323,4 +320,3 @@ export default function ComponentsTable() {
   );
 
 }
-
