@@ -1839,6 +1839,12 @@ var doc = `{
                 "patient": {
                     "type": "integer"
                 },
+                "phone": {
+                    "type": "string"
+                },
+                "queueID": {
+                    "type": "string"
+                },
                 "queueTime": {
                     "type": "string"
                 }
@@ -2327,16 +2333,28 @@ var doc = `{
         "ent.Patient": {
             "type": "object",
             "properties": {
-                "age": {
-                    "description": "Age holds the value of the \"age\" field.",
+                "Age": {
+                    "description": "Age holds the value of the \"Age\" field.",
                     "type": "integer"
                 },
-                "birthday": {
-                    "description": "Birthday holds the value of the \"birthday\" field.",
+                "Birthday": {
+                    "description": "Birthday holds the value of the \"Birthday\" field.",
                     "type": "string"
                 },
-                "cardID": {
-                    "description": "CardID holds the value of the \"cardID\" field.",
+                "CardID": {
+                    "description": "CardID holds the value of the \"CardID\" field.",
+                    "type": "string"
+                },
+                "Name": {
+                    "description": "Name holds the value of the \"Name\" field.",
+                    "type": "string"
+                },
+                "PatientID": {
+                    "description": "PatientID holds the value of the \"PatientID\" field.",
+                    "type": "string"
+                },
+                "Tel": {
+                    "description": "Tel holds the value of the \"Tel\" field.",
                     "type": "string"
                 },
                 "edges": {
@@ -2347,18 +2365,6 @@ var doc = `{
                 "id": {
                     "description": "ID of the ent.",
                     "type": "integer"
-                },
-                "name": {
-                    "description": "Name holds the value of the \"name\" field.",
-                    "type": "string"
-                },
-                "patient_ID": {
-                    "description": "PatientID holds the value of the \"patient_ID\" field.",
-                    "type": "string"
-                },
-                "tel": {
-                    "description": "Tel holds the value of the \"tel\" field.",
-                    "type": "string"
                 }
             }
         },
@@ -2441,8 +2447,20 @@ var doc = `{
         "ent.Queue": {
             "type": "object",
             "properties": {
-                "dental": {
-                    "description": "Dental holds the value of the \"dental\" field.",
+                "Dental": {
+                    "description": "Dental holds the value of the \"Dental\" field.",
+                    "type": "string"
+                },
+                "Phone": {
+                    "description": "Phone holds the value of the \"Phone\" field.",
+                    "type": "string"
+                },
+                "QueueID": {
+                    "description": "QueueID holds the value of the \"QueueID\" field.",
+                    "type": "string"
+                },
+                "QueueTime": {
+                    "description": "QueueTime holds the value of the \"QueueTime\" field.",
                     "type": "string"
                 },
                 "edges": {
@@ -2453,10 +2471,6 @@ var doc = `{
                 "id": {
                     "description": "ID of the ent.",
                     "type": "integer"
-                },
-                "queue_time": {
-                    "description": "QueueTime holds the value of the \"queue_time\" field.",
-                    "type": "string"
                 }
             }
         },

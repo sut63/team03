@@ -93,35 +93,271 @@ func IDLTE(id int) predicate.Queue {
 	})
 }
 
-// Dental applies equality check predicate on the "dental" field. It's identical to DentalEQ.
+// QueueID applies equality check predicate on the "QueueID" field. It's identical to QueueIDEQ.
+func QueueID(v string) predicate.Queue {
+	return predicate.Queue(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldQueueID), v))
+	})
+}
+
+// Phone applies equality check predicate on the "Phone" field. It's identical to PhoneEQ.
+func Phone(v string) predicate.Queue {
+	return predicate.Queue(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldPhone), v))
+	})
+}
+
+// Dental applies equality check predicate on the "Dental" field. It's identical to DentalEQ.
 func Dental(v string) predicate.Queue {
 	return predicate.Queue(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldDental), v))
 	})
 }
 
-// QueueTime applies equality check predicate on the "queue_time" field. It's identical to QueueTimeEQ.
+// QueueTime applies equality check predicate on the "QueueTime" field. It's identical to QueueTimeEQ.
 func QueueTime(v time.Time) predicate.Queue {
 	return predicate.Queue(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldQueueTime), v))
 	})
 }
 
-// DentalEQ applies the EQ predicate on the "dental" field.
+// QueueIDEQ applies the EQ predicate on the "QueueID" field.
+func QueueIDEQ(v string) predicate.Queue {
+	return predicate.Queue(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldQueueID), v))
+	})
+}
+
+// QueueIDNEQ applies the NEQ predicate on the "QueueID" field.
+func QueueIDNEQ(v string) predicate.Queue {
+	return predicate.Queue(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldQueueID), v))
+	})
+}
+
+// QueueIDIn applies the In predicate on the "QueueID" field.
+func QueueIDIn(vs ...string) predicate.Queue {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Queue(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldQueueID), v...))
+	})
+}
+
+// QueueIDNotIn applies the NotIn predicate on the "QueueID" field.
+func QueueIDNotIn(vs ...string) predicate.Queue {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Queue(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldQueueID), v...))
+	})
+}
+
+// QueueIDGT applies the GT predicate on the "QueueID" field.
+func QueueIDGT(v string) predicate.Queue {
+	return predicate.Queue(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldQueueID), v))
+	})
+}
+
+// QueueIDGTE applies the GTE predicate on the "QueueID" field.
+func QueueIDGTE(v string) predicate.Queue {
+	return predicate.Queue(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldQueueID), v))
+	})
+}
+
+// QueueIDLT applies the LT predicate on the "QueueID" field.
+func QueueIDLT(v string) predicate.Queue {
+	return predicate.Queue(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldQueueID), v))
+	})
+}
+
+// QueueIDLTE applies the LTE predicate on the "QueueID" field.
+func QueueIDLTE(v string) predicate.Queue {
+	return predicate.Queue(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldQueueID), v))
+	})
+}
+
+// QueueIDContains applies the Contains predicate on the "QueueID" field.
+func QueueIDContains(v string) predicate.Queue {
+	return predicate.Queue(func(s *sql.Selector) {
+		s.Where(sql.Contains(s.C(FieldQueueID), v))
+	})
+}
+
+// QueueIDHasPrefix applies the HasPrefix predicate on the "QueueID" field.
+func QueueIDHasPrefix(v string) predicate.Queue {
+	return predicate.Queue(func(s *sql.Selector) {
+		s.Where(sql.HasPrefix(s.C(FieldQueueID), v))
+	})
+}
+
+// QueueIDHasSuffix applies the HasSuffix predicate on the "QueueID" field.
+func QueueIDHasSuffix(v string) predicate.Queue {
+	return predicate.Queue(func(s *sql.Selector) {
+		s.Where(sql.HasSuffix(s.C(FieldQueueID), v))
+	})
+}
+
+// QueueIDEqualFold applies the EqualFold predicate on the "QueueID" field.
+func QueueIDEqualFold(v string) predicate.Queue {
+	return predicate.Queue(func(s *sql.Selector) {
+		s.Where(sql.EqualFold(s.C(FieldQueueID), v))
+	})
+}
+
+// QueueIDContainsFold applies the ContainsFold predicate on the "QueueID" field.
+func QueueIDContainsFold(v string) predicate.Queue {
+	return predicate.Queue(func(s *sql.Selector) {
+		s.Where(sql.ContainsFold(s.C(FieldQueueID), v))
+	})
+}
+
+// PhoneEQ applies the EQ predicate on the "Phone" field.
+func PhoneEQ(v string) predicate.Queue {
+	return predicate.Queue(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldPhone), v))
+	})
+}
+
+// PhoneNEQ applies the NEQ predicate on the "Phone" field.
+func PhoneNEQ(v string) predicate.Queue {
+	return predicate.Queue(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldPhone), v))
+	})
+}
+
+// PhoneIn applies the In predicate on the "Phone" field.
+func PhoneIn(vs ...string) predicate.Queue {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Queue(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldPhone), v...))
+	})
+}
+
+// PhoneNotIn applies the NotIn predicate on the "Phone" field.
+func PhoneNotIn(vs ...string) predicate.Queue {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Queue(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldPhone), v...))
+	})
+}
+
+// PhoneGT applies the GT predicate on the "Phone" field.
+func PhoneGT(v string) predicate.Queue {
+	return predicate.Queue(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldPhone), v))
+	})
+}
+
+// PhoneGTE applies the GTE predicate on the "Phone" field.
+func PhoneGTE(v string) predicate.Queue {
+	return predicate.Queue(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldPhone), v))
+	})
+}
+
+// PhoneLT applies the LT predicate on the "Phone" field.
+func PhoneLT(v string) predicate.Queue {
+	return predicate.Queue(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldPhone), v))
+	})
+}
+
+// PhoneLTE applies the LTE predicate on the "Phone" field.
+func PhoneLTE(v string) predicate.Queue {
+	return predicate.Queue(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldPhone), v))
+	})
+}
+
+// PhoneContains applies the Contains predicate on the "Phone" field.
+func PhoneContains(v string) predicate.Queue {
+	return predicate.Queue(func(s *sql.Selector) {
+		s.Where(sql.Contains(s.C(FieldPhone), v))
+	})
+}
+
+// PhoneHasPrefix applies the HasPrefix predicate on the "Phone" field.
+func PhoneHasPrefix(v string) predicate.Queue {
+	return predicate.Queue(func(s *sql.Selector) {
+		s.Where(sql.HasPrefix(s.C(FieldPhone), v))
+	})
+}
+
+// PhoneHasSuffix applies the HasSuffix predicate on the "Phone" field.
+func PhoneHasSuffix(v string) predicate.Queue {
+	return predicate.Queue(func(s *sql.Selector) {
+		s.Where(sql.HasSuffix(s.C(FieldPhone), v))
+	})
+}
+
+// PhoneEqualFold applies the EqualFold predicate on the "Phone" field.
+func PhoneEqualFold(v string) predicate.Queue {
+	return predicate.Queue(func(s *sql.Selector) {
+		s.Where(sql.EqualFold(s.C(FieldPhone), v))
+	})
+}
+
+// PhoneContainsFold applies the ContainsFold predicate on the "Phone" field.
+func PhoneContainsFold(v string) predicate.Queue {
+	return predicate.Queue(func(s *sql.Selector) {
+		s.Where(sql.ContainsFold(s.C(FieldPhone), v))
+	})
+}
+
+// DentalEQ applies the EQ predicate on the "Dental" field.
 func DentalEQ(v string) predicate.Queue {
 	return predicate.Queue(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldDental), v))
 	})
 }
 
-// DentalNEQ applies the NEQ predicate on the "dental" field.
+// DentalNEQ applies the NEQ predicate on the "Dental" field.
 func DentalNEQ(v string) predicate.Queue {
 	return predicate.Queue(func(s *sql.Selector) {
 		s.Where(sql.NEQ(s.C(FieldDental), v))
 	})
 }
 
-// DentalIn applies the In predicate on the "dental" field.
+// DentalIn applies the In predicate on the "Dental" field.
 func DentalIn(vs ...string) predicate.Queue {
 	v := make([]interface{}, len(vs))
 	for i := range v {
@@ -138,7 +374,7 @@ func DentalIn(vs ...string) predicate.Queue {
 	})
 }
 
-// DentalNotIn applies the NotIn predicate on the "dental" field.
+// DentalNotIn applies the NotIn predicate on the "Dental" field.
 func DentalNotIn(vs ...string) predicate.Queue {
 	v := make([]interface{}, len(vs))
 	for i := range v {
@@ -155,84 +391,84 @@ func DentalNotIn(vs ...string) predicate.Queue {
 	})
 }
 
-// DentalGT applies the GT predicate on the "dental" field.
+// DentalGT applies the GT predicate on the "Dental" field.
 func DentalGT(v string) predicate.Queue {
 	return predicate.Queue(func(s *sql.Selector) {
 		s.Where(sql.GT(s.C(FieldDental), v))
 	})
 }
 
-// DentalGTE applies the GTE predicate on the "dental" field.
+// DentalGTE applies the GTE predicate on the "Dental" field.
 func DentalGTE(v string) predicate.Queue {
 	return predicate.Queue(func(s *sql.Selector) {
 		s.Where(sql.GTE(s.C(FieldDental), v))
 	})
 }
 
-// DentalLT applies the LT predicate on the "dental" field.
+// DentalLT applies the LT predicate on the "Dental" field.
 func DentalLT(v string) predicate.Queue {
 	return predicate.Queue(func(s *sql.Selector) {
 		s.Where(sql.LT(s.C(FieldDental), v))
 	})
 }
 
-// DentalLTE applies the LTE predicate on the "dental" field.
+// DentalLTE applies the LTE predicate on the "Dental" field.
 func DentalLTE(v string) predicate.Queue {
 	return predicate.Queue(func(s *sql.Selector) {
 		s.Where(sql.LTE(s.C(FieldDental), v))
 	})
 }
 
-// DentalContains applies the Contains predicate on the "dental" field.
+// DentalContains applies the Contains predicate on the "Dental" field.
 func DentalContains(v string) predicate.Queue {
 	return predicate.Queue(func(s *sql.Selector) {
 		s.Where(sql.Contains(s.C(FieldDental), v))
 	})
 }
 
-// DentalHasPrefix applies the HasPrefix predicate on the "dental" field.
+// DentalHasPrefix applies the HasPrefix predicate on the "Dental" field.
 func DentalHasPrefix(v string) predicate.Queue {
 	return predicate.Queue(func(s *sql.Selector) {
 		s.Where(sql.HasPrefix(s.C(FieldDental), v))
 	})
 }
 
-// DentalHasSuffix applies the HasSuffix predicate on the "dental" field.
+// DentalHasSuffix applies the HasSuffix predicate on the "Dental" field.
 func DentalHasSuffix(v string) predicate.Queue {
 	return predicate.Queue(func(s *sql.Selector) {
 		s.Where(sql.HasSuffix(s.C(FieldDental), v))
 	})
 }
 
-// DentalEqualFold applies the EqualFold predicate on the "dental" field.
+// DentalEqualFold applies the EqualFold predicate on the "Dental" field.
 func DentalEqualFold(v string) predicate.Queue {
 	return predicate.Queue(func(s *sql.Selector) {
 		s.Where(sql.EqualFold(s.C(FieldDental), v))
 	})
 }
 
-// DentalContainsFold applies the ContainsFold predicate on the "dental" field.
+// DentalContainsFold applies the ContainsFold predicate on the "Dental" field.
 func DentalContainsFold(v string) predicate.Queue {
 	return predicate.Queue(func(s *sql.Selector) {
 		s.Where(sql.ContainsFold(s.C(FieldDental), v))
 	})
 }
 
-// QueueTimeEQ applies the EQ predicate on the "queue_time" field.
+// QueueTimeEQ applies the EQ predicate on the "QueueTime" field.
 func QueueTimeEQ(v time.Time) predicate.Queue {
 	return predicate.Queue(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldQueueTime), v))
 	})
 }
 
-// QueueTimeNEQ applies the NEQ predicate on the "queue_time" field.
+// QueueTimeNEQ applies the NEQ predicate on the "QueueTime" field.
 func QueueTimeNEQ(v time.Time) predicate.Queue {
 	return predicate.Queue(func(s *sql.Selector) {
 		s.Where(sql.NEQ(s.C(FieldQueueTime), v))
 	})
 }
 
-// QueueTimeIn applies the In predicate on the "queue_time" field.
+// QueueTimeIn applies the In predicate on the "QueueTime" field.
 func QueueTimeIn(vs ...time.Time) predicate.Queue {
 	v := make([]interface{}, len(vs))
 	for i := range v {
@@ -249,7 +485,7 @@ func QueueTimeIn(vs ...time.Time) predicate.Queue {
 	})
 }
 
-// QueueTimeNotIn applies the NotIn predicate on the "queue_time" field.
+// QueueTimeNotIn applies the NotIn predicate on the "QueueTime" field.
 func QueueTimeNotIn(vs ...time.Time) predicate.Queue {
 	v := make([]interface{}, len(vs))
 	for i := range v {
@@ -266,28 +502,28 @@ func QueueTimeNotIn(vs ...time.Time) predicate.Queue {
 	})
 }
 
-// QueueTimeGT applies the GT predicate on the "queue_time" field.
+// QueueTimeGT applies the GT predicate on the "QueueTime" field.
 func QueueTimeGT(v time.Time) predicate.Queue {
 	return predicate.Queue(func(s *sql.Selector) {
 		s.Where(sql.GT(s.C(FieldQueueTime), v))
 	})
 }
 
-// QueueTimeGTE applies the GTE predicate on the "queue_time" field.
+// QueueTimeGTE applies the GTE predicate on the "QueueTime" field.
 func QueueTimeGTE(v time.Time) predicate.Queue {
 	return predicate.Queue(func(s *sql.Selector) {
 		s.Where(sql.GTE(s.C(FieldQueueTime), v))
 	})
 }
 
-// QueueTimeLT applies the LT predicate on the "queue_time" field.
+// QueueTimeLT applies the LT predicate on the "QueueTime" field.
 func QueueTimeLT(v time.Time) predicate.Queue {
 	return predicate.Queue(func(s *sql.Selector) {
 		s.Where(sql.LT(s.C(FieldQueueTime), v))
 	})
 }
 
-// QueueTimeLTE applies the LTE predicate on the "queue_time" field.
+// QueueTimeLTE applies the LTE predicate on the "QueueTime" field.
 func QueueTimeLTE(v time.Time) predicate.Queue {
 	return predicate.Queue(func(s *sql.Selector) {
 		s.Where(sql.LTE(s.C(FieldQueueTime), v))

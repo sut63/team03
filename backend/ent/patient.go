@@ -20,18 +20,18 @@ type Patient struct {
 	config `json:"-"`
 	// ID of the ent.
 	ID int `json:"id,omitempty"`
-	// PatientID holds the value of the "patient_ID" field.
-	PatientID string `json:"patient_ID,omitempty"`
-	// Name holds the value of the "name" field.
-	Name string `json:"name,omitempty"`
-	// CardID holds the value of the "cardID" field.
-	CardID string `json:"cardID,omitempty"`
-	// Tel holds the value of the "tel" field.
-	Tel string `json:"tel,omitempty"`
-	// Age holds the value of the "age" field.
-	Age int `json:"age,omitempty"`
-	// Birthday holds the value of the "birthday" field.
-	Birthday time.Time `json:"birthday,omitempty"`
+	// PatientID holds the value of the "PatientID" field.
+	PatientID string `json:"PatientID,omitempty"`
+	// Name holds the value of the "Name" field.
+	Name string `json:"Name,omitempty"`
+	// CardID holds the value of the "CardID" field.
+	CardID string `json:"CardID,omitempty"`
+	// Tel holds the value of the "Tel" field.
+	Tel string `json:"Tel,omitempty"`
+	// Age holds the value of the "Age" field.
+	Age int `json:"Age,omitempty"`
+	// Birthday holds the value of the "Birthday" field.
+	Birthday time.Time `json:"Birthday,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the PatientQuery when eager-loading is set.
 	Edges          PatientEdges `json:"edges"`
@@ -149,12 +149,12 @@ func (e PatientEdges) AppointmentOrErr() ([]*Appointment, error) {
 func (*Patient) scanValues() []interface{} {
 	return []interface{}{
 		&sql.NullInt64{},  // id
-		&sql.NullString{}, // patient_ID
-		&sql.NullString{}, // name
-		&sql.NullString{}, // cardID
-		&sql.NullString{}, // tel
-		&sql.NullInt64{},  // age
-		&sql.NullTime{},   // birthday
+		&sql.NullString{}, // PatientID
+		&sql.NullString{}, // Name
+		&sql.NullString{}, // CardID
+		&sql.NullString{}, // Tel
+		&sql.NullInt64{},  // Age
+		&sql.NullTime{},   // Birthday
 	}
 }
 
@@ -181,32 +181,32 @@ func (pa *Patient) assignValues(values ...interface{}) error {
 	pa.ID = int(value.Int64)
 	values = values[1:]
 	if value, ok := values[0].(*sql.NullString); !ok {
-		return fmt.Errorf("unexpected type %T for field patient_ID", values[0])
+		return fmt.Errorf("unexpected type %T for field PatientID", values[0])
 	} else if value.Valid {
 		pa.PatientID = value.String
 	}
 	if value, ok := values[1].(*sql.NullString); !ok {
-		return fmt.Errorf("unexpected type %T for field name", values[1])
+		return fmt.Errorf("unexpected type %T for field Name", values[1])
 	} else if value.Valid {
 		pa.Name = value.String
 	}
 	if value, ok := values[2].(*sql.NullString); !ok {
-		return fmt.Errorf("unexpected type %T for field cardID", values[2])
+		return fmt.Errorf("unexpected type %T for field CardID", values[2])
 	} else if value.Valid {
 		pa.CardID = value.String
 	}
 	if value, ok := values[3].(*sql.NullString); !ok {
-		return fmt.Errorf("unexpected type %T for field tel", values[3])
+		return fmt.Errorf("unexpected type %T for field Tel", values[3])
 	} else if value.Valid {
 		pa.Tel = value.String
 	}
 	if value, ok := values[4].(*sql.NullInt64); !ok {
-		return fmt.Errorf("unexpected type %T for field age", values[4])
+		return fmt.Errorf("unexpected type %T for field Age", values[4])
 	} else if value.Valid {
 		pa.Age = int(value.Int64)
 	}
 	if value, ok := values[5].(*sql.NullTime); !ok {
-		return fmt.Errorf("unexpected type %T for field birthday", values[5])
+		return fmt.Errorf("unexpected type %T for field Birthday", values[5])
 	} else if value.Valid {
 		pa.Birthday = value.Time
 	}
@@ -298,17 +298,17 @@ func (pa *Patient) String() string {
 	var builder strings.Builder
 	builder.WriteString("Patient(")
 	builder.WriteString(fmt.Sprintf("id=%v", pa.ID))
-	builder.WriteString(", patient_ID=")
+	builder.WriteString(", PatientID=")
 	builder.WriteString(pa.PatientID)
-	builder.WriteString(", name=")
+	builder.WriteString(", Name=")
 	builder.WriteString(pa.Name)
-	builder.WriteString(", cardID=")
+	builder.WriteString(", CardID=")
 	builder.WriteString(pa.CardID)
-	builder.WriteString(", tel=")
+	builder.WriteString(", Tel=")
 	builder.WriteString(pa.Tel)
-	builder.WriteString(", age=")
+	builder.WriteString(", Age=")
 	builder.WriteString(fmt.Sprintf("%v", pa.Age))
-	builder.WriteString(", birthday=")
+	builder.WriteString(", Birthday=")
 	builder.WriteString(pa.Birthday.Format(time.ANSIC))
 	builder.WriteByte(')')
 	return builder.String()

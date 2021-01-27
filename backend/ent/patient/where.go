@@ -93,63 +93,63 @@ func IDLTE(id int) predicate.Patient {
 	})
 }
 
-// PatientID applies equality check predicate on the "patient_ID" field. It's identical to PatientIDEQ.
+// PatientID applies equality check predicate on the "PatientID" field. It's identical to PatientIDEQ.
 func PatientID(v string) predicate.Patient {
 	return predicate.Patient(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldPatientID), v))
 	})
 }
 
-// Name applies equality check predicate on the "name" field. It's identical to NameEQ.
+// Name applies equality check predicate on the "Name" field. It's identical to NameEQ.
 func Name(v string) predicate.Patient {
 	return predicate.Patient(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldName), v))
 	})
 }
 
-// CardID applies equality check predicate on the "cardID" field. It's identical to CardIDEQ.
+// CardID applies equality check predicate on the "CardID" field. It's identical to CardIDEQ.
 func CardID(v string) predicate.Patient {
 	return predicate.Patient(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldCardID), v))
 	})
 }
 
-// Tel applies equality check predicate on the "tel" field. It's identical to TelEQ.
+// Tel applies equality check predicate on the "Tel" field. It's identical to TelEQ.
 func Tel(v string) predicate.Patient {
 	return predicate.Patient(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldTel), v))
 	})
 }
 
-// Age applies equality check predicate on the "age" field. It's identical to AgeEQ.
+// Age applies equality check predicate on the "Age" field. It's identical to AgeEQ.
 func Age(v int) predicate.Patient {
 	return predicate.Patient(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldAge), v))
 	})
 }
 
-// Birthday applies equality check predicate on the "birthday" field. It's identical to BirthdayEQ.
+// Birthday applies equality check predicate on the "Birthday" field. It's identical to BirthdayEQ.
 func Birthday(v time.Time) predicate.Patient {
 	return predicate.Patient(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldBirthday), v))
 	})
 }
 
-// PatientIDEQ applies the EQ predicate on the "patient_ID" field.
+// PatientIDEQ applies the EQ predicate on the "PatientID" field.
 func PatientIDEQ(v string) predicate.Patient {
 	return predicate.Patient(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldPatientID), v))
 	})
 }
 
-// PatientIDNEQ applies the NEQ predicate on the "patient_ID" field.
+// PatientIDNEQ applies the NEQ predicate on the "PatientID" field.
 func PatientIDNEQ(v string) predicate.Patient {
 	return predicate.Patient(func(s *sql.Selector) {
 		s.Where(sql.NEQ(s.C(FieldPatientID), v))
 	})
 }
 
-// PatientIDIn applies the In predicate on the "patient_ID" field.
+// PatientIDIn applies the In predicate on the "PatientID" field.
 func PatientIDIn(vs ...string) predicate.Patient {
 	v := make([]interface{}, len(vs))
 	for i := range v {
@@ -166,7 +166,7 @@ func PatientIDIn(vs ...string) predicate.Patient {
 	})
 }
 
-// PatientIDNotIn applies the NotIn predicate on the "patient_ID" field.
+// PatientIDNotIn applies the NotIn predicate on the "PatientID" field.
 func PatientIDNotIn(vs ...string) predicate.Patient {
 	v := make([]interface{}, len(vs))
 	for i := range v {
@@ -183,84 +183,84 @@ func PatientIDNotIn(vs ...string) predicate.Patient {
 	})
 }
 
-// PatientIDGT applies the GT predicate on the "patient_ID" field.
+// PatientIDGT applies the GT predicate on the "PatientID" field.
 func PatientIDGT(v string) predicate.Patient {
 	return predicate.Patient(func(s *sql.Selector) {
 		s.Where(sql.GT(s.C(FieldPatientID), v))
 	})
 }
 
-// PatientIDGTE applies the GTE predicate on the "patient_ID" field.
+// PatientIDGTE applies the GTE predicate on the "PatientID" field.
 func PatientIDGTE(v string) predicate.Patient {
 	return predicate.Patient(func(s *sql.Selector) {
 		s.Where(sql.GTE(s.C(FieldPatientID), v))
 	})
 }
 
-// PatientIDLT applies the LT predicate on the "patient_ID" field.
+// PatientIDLT applies the LT predicate on the "PatientID" field.
 func PatientIDLT(v string) predicate.Patient {
 	return predicate.Patient(func(s *sql.Selector) {
 		s.Where(sql.LT(s.C(FieldPatientID), v))
 	})
 }
 
-// PatientIDLTE applies the LTE predicate on the "patient_ID" field.
+// PatientIDLTE applies the LTE predicate on the "PatientID" field.
 func PatientIDLTE(v string) predicate.Patient {
 	return predicate.Patient(func(s *sql.Selector) {
 		s.Where(sql.LTE(s.C(FieldPatientID), v))
 	})
 }
 
-// PatientIDContains applies the Contains predicate on the "patient_ID" field.
+// PatientIDContains applies the Contains predicate on the "PatientID" field.
 func PatientIDContains(v string) predicate.Patient {
 	return predicate.Patient(func(s *sql.Selector) {
 		s.Where(sql.Contains(s.C(FieldPatientID), v))
 	})
 }
 
-// PatientIDHasPrefix applies the HasPrefix predicate on the "patient_ID" field.
+// PatientIDHasPrefix applies the HasPrefix predicate on the "PatientID" field.
 func PatientIDHasPrefix(v string) predicate.Patient {
 	return predicate.Patient(func(s *sql.Selector) {
 		s.Where(sql.HasPrefix(s.C(FieldPatientID), v))
 	})
 }
 
-// PatientIDHasSuffix applies the HasSuffix predicate on the "patient_ID" field.
+// PatientIDHasSuffix applies the HasSuffix predicate on the "PatientID" field.
 func PatientIDHasSuffix(v string) predicate.Patient {
 	return predicate.Patient(func(s *sql.Selector) {
 		s.Where(sql.HasSuffix(s.C(FieldPatientID), v))
 	})
 }
 
-// PatientIDEqualFold applies the EqualFold predicate on the "patient_ID" field.
+// PatientIDEqualFold applies the EqualFold predicate on the "PatientID" field.
 func PatientIDEqualFold(v string) predicate.Patient {
 	return predicate.Patient(func(s *sql.Selector) {
 		s.Where(sql.EqualFold(s.C(FieldPatientID), v))
 	})
 }
 
-// PatientIDContainsFold applies the ContainsFold predicate on the "patient_ID" field.
+// PatientIDContainsFold applies the ContainsFold predicate on the "PatientID" field.
 func PatientIDContainsFold(v string) predicate.Patient {
 	return predicate.Patient(func(s *sql.Selector) {
 		s.Where(sql.ContainsFold(s.C(FieldPatientID), v))
 	})
 }
 
-// NameEQ applies the EQ predicate on the "name" field.
+// NameEQ applies the EQ predicate on the "Name" field.
 func NameEQ(v string) predicate.Patient {
 	return predicate.Patient(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldName), v))
 	})
 }
 
-// NameNEQ applies the NEQ predicate on the "name" field.
+// NameNEQ applies the NEQ predicate on the "Name" field.
 func NameNEQ(v string) predicate.Patient {
 	return predicate.Patient(func(s *sql.Selector) {
 		s.Where(sql.NEQ(s.C(FieldName), v))
 	})
 }
 
-// NameIn applies the In predicate on the "name" field.
+// NameIn applies the In predicate on the "Name" field.
 func NameIn(vs ...string) predicate.Patient {
 	v := make([]interface{}, len(vs))
 	for i := range v {
@@ -277,7 +277,7 @@ func NameIn(vs ...string) predicate.Patient {
 	})
 }
 
-// NameNotIn applies the NotIn predicate on the "name" field.
+// NameNotIn applies the NotIn predicate on the "Name" field.
 func NameNotIn(vs ...string) predicate.Patient {
 	v := make([]interface{}, len(vs))
 	for i := range v {
@@ -294,84 +294,84 @@ func NameNotIn(vs ...string) predicate.Patient {
 	})
 }
 
-// NameGT applies the GT predicate on the "name" field.
+// NameGT applies the GT predicate on the "Name" field.
 func NameGT(v string) predicate.Patient {
 	return predicate.Patient(func(s *sql.Selector) {
 		s.Where(sql.GT(s.C(FieldName), v))
 	})
 }
 
-// NameGTE applies the GTE predicate on the "name" field.
+// NameGTE applies the GTE predicate on the "Name" field.
 func NameGTE(v string) predicate.Patient {
 	return predicate.Patient(func(s *sql.Selector) {
 		s.Where(sql.GTE(s.C(FieldName), v))
 	})
 }
 
-// NameLT applies the LT predicate on the "name" field.
+// NameLT applies the LT predicate on the "Name" field.
 func NameLT(v string) predicate.Patient {
 	return predicate.Patient(func(s *sql.Selector) {
 		s.Where(sql.LT(s.C(FieldName), v))
 	})
 }
 
-// NameLTE applies the LTE predicate on the "name" field.
+// NameLTE applies the LTE predicate on the "Name" field.
 func NameLTE(v string) predicate.Patient {
 	return predicate.Patient(func(s *sql.Selector) {
 		s.Where(sql.LTE(s.C(FieldName), v))
 	})
 }
 
-// NameContains applies the Contains predicate on the "name" field.
+// NameContains applies the Contains predicate on the "Name" field.
 func NameContains(v string) predicate.Patient {
 	return predicate.Patient(func(s *sql.Selector) {
 		s.Where(sql.Contains(s.C(FieldName), v))
 	})
 }
 
-// NameHasPrefix applies the HasPrefix predicate on the "name" field.
+// NameHasPrefix applies the HasPrefix predicate on the "Name" field.
 func NameHasPrefix(v string) predicate.Patient {
 	return predicate.Patient(func(s *sql.Selector) {
 		s.Where(sql.HasPrefix(s.C(FieldName), v))
 	})
 }
 
-// NameHasSuffix applies the HasSuffix predicate on the "name" field.
+// NameHasSuffix applies the HasSuffix predicate on the "Name" field.
 func NameHasSuffix(v string) predicate.Patient {
 	return predicate.Patient(func(s *sql.Selector) {
 		s.Where(sql.HasSuffix(s.C(FieldName), v))
 	})
 }
 
-// NameEqualFold applies the EqualFold predicate on the "name" field.
+// NameEqualFold applies the EqualFold predicate on the "Name" field.
 func NameEqualFold(v string) predicate.Patient {
 	return predicate.Patient(func(s *sql.Selector) {
 		s.Where(sql.EqualFold(s.C(FieldName), v))
 	})
 }
 
-// NameContainsFold applies the ContainsFold predicate on the "name" field.
+// NameContainsFold applies the ContainsFold predicate on the "Name" field.
 func NameContainsFold(v string) predicate.Patient {
 	return predicate.Patient(func(s *sql.Selector) {
 		s.Where(sql.ContainsFold(s.C(FieldName), v))
 	})
 }
 
-// CardIDEQ applies the EQ predicate on the "cardID" field.
+// CardIDEQ applies the EQ predicate on the "CardID" field.
 func CardIDEQ(v string) predicate.Patient {
 	return predicate.Patient(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldCardID), v))
 	})
 }
 
-// CardIDNEQ applies the NEQ predicate on the "cardID" field.
+// CardIDNEQ applies the NEQ predicate on the "CardID" field.
 func CardIDNEQ(v string) predicate.Patient {
 	return predicate.Patient(func(s *sql.Selector) {
 		s.Where(sql.NEQ(s.C(FieldCardID), v))
 	})
 }
 
-// CardIDIn applies the In predicate on the "cardID" field.
+// CardIDIn applies the In predicate on the "CardID" field.
 func CardIDIn(vs ...string) predicate.Patient {
 	v := make([]interface{}, len(vs))
 	for i := range v {
@@ -388,7 +388,7 @@ func CardIDIn(vs ...string) predicate.Patient {
 	})
 }
 
-// CardIDNotIn applies the NotIn predicate on the "cardID" field.
+// CardIDNotIn applies the NotIn predicate on the "CardID" field.
 func CardIDNotIn(vs ...string) predicate.Patient {
 	v := make([]interface{}, len(vs))
 	for i := range v {
@@ -405,84 +405,84 @@ func CardIDNotIn(vs ...string) predicate.Patient {
 	})
 }
 
-// CardIDGT applies the GT predicate on the "cardID" field.
+// CardIDGT applies the GT predicate on the "CardID" field.
 func CardIDGT(v string) predicate.Patient {
 	return predicate.Patient(func(s *sql.Selector) {
 		s.Where(sql.GT(s.C(FieldCardID), v))
 	})
 }
 
-// CardIDGTE applies the GTE predicate on the "cardID" field.
+// CardIDGTE applies the GTE predicate on the "CardID" field.
 func CardIDGTE(v string) predicate.Patient {
 	return predicate.Patient(func(s *sql.Selector) {
 		s.Where(sql.GTE(s.C(FieldCardID), v))
 	})
 }
 
-// CardIDLT applies the LT predicate on the "cardID" field.
+// CardIDLT applies the LT predicate on the "CardID" field.
 func CardIDLT(v string) predicate.Patient {
 	return predicate.Patient(func(s *sql.Selector) {
 		s.Where(sql.LT(s.C(FieldCardID), v))
 	})
 }
 
-// CardIDLTE applies the LTE predicate on the "cardID" field.
+// CardIDLTE applies the LTE predicate on the "CardID" field.
 func CardIDLTE(v string) predicate.Patient {
 	return predicate.Patient(func(s *sql.Selector) {
 		s.Where(sql.LTE(s.C(FieldCardID), v))
 	})
 }
 
-// CardIDContains applies the Contains predicate on the "cardID" field.
+// CardIDContains applies the Contains predicate on the "CardID" field.
 func CardIDContains(v string) predicate.Patient {
 	return predicate.Patient(func(s *sql.Selector) {
 		s.Where(sql.Contains(s.C(FieldCardID), v))
 	})
 }
 
-// CardIDHasPrefix applies the HasPrefix predicate on the "cardID" field.
+// CardIDHasPrefix applies the HasPrefix predicate on the "CardID" field.
 func CardIDHasPrefix(v string) predicate.Patient {
 	return predicate.Patient(func(s *sql.Selector) {
 		s.Where(sql.HasPrefix(s.C(FieldCardID), v))
 	})
 }
 
-// CardIDHasSuffix applies the HasSuffix predicate on the "cardID" field.
+// CardIDHasSuffix applies the HasSuffix predicate on the "CardID" field.
 func CardIDHasSuffix(v string) predicate.Patient {
 	return predicate.Patient(func(s *sql.Selector) {
 		s.Where(sql.HasSuffix(s.C(FieldCardID), v))
 	})
 }
 
-// CardIDEqualFold applies the EqualFold predicate on the "cardID" field.
+// CardIDEqualFold applies the EqualFold predicate on the "CardID" field.
 func CardIDEqualFold(v string) predicate.Patient {
 	return predicate.Patient(func(s *sql.Selector) {
 		s.Where(sql.EqualFold(s.C(FieldCardID), v))
 	})
 }
 
-// CardIDContainsFold applies the ContainsFold predicate on the "cardID" field.
+// CardIDContainsFold applies the ContainsFold predicate on the "CardID" field.
 func CardIDContainsFold(v string) predicate.Patient {
 	return predicate.Patient(func(s *sql.Selector) {
 		s.Where(sql.ContainsFold(s.C(FieldCardID), v))
 	})
 }
 
-// TelEQ applies the EQ predicate on the "tel" field.
+// TelEQ applies the EQ predicate on the "Tel" field.
 func TelEQ(v string) predicate.Patient {
 	return predicate.Patient(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldTel), v))
 	})
 }
 
-// TelNEQ applies the NEQ predicate on the "tel" field.
+// TelNEQ applies the NEQ predicate on the "Tel" field.
 func TelNEQ(v string) predicate.Patient {
 	return predicate.Patient(func(s *sql.Selector) {
 		s.Where(sql.NEQ(s.C(FieldTel), v))
 	})
 }
 
-// TelIn applies the In predicate on the "tel" field.
+// TelIn applies the In predicate on the "Tel" field.
 func TelIn(vs ...string) predicate.Patient {
 	v := make([]interface{}, len(vs))
 	for i := range v {
@@ -499,7 +499,7 @@ func TelIn(vs ...string) predicate.Patient {
 	})
 }
 
-// TelNotIn applies the NotIn predicate on the "tel" field.
+// TelNotIn applies the NotIn predicate on the "Tel" field.
 func TelNotIn(vs ...string) predicate.Patient {
 	v := make([]interface{}, len(vs))
 	for i := range v {
@@ -516,84 +516,84 @@ func TelNotIn(vs ...string) predicate.Patient {
 	})
 }
 
-// TelGT applies the GT predicate on the "tel" field.
+// TelGT applies the GT predicate on the "Tel" field.
 func TelGT(v string) predicate.Patient {
 	return predicate.Patient(func(s *sql.Selector) {
 		s.Where(sql.GT(s.C(FieldTel), v))
 	})
 }
 
-// TelGTE applies the GTE predicate on the "tel" field.
+// TelGTE applies the GTE predicate on the "Tel" field.
 func TelGTE(v string) predicate.Patient {
 	return predicate.Patient(func(s *sql.Selector) {
 		s.Where(sql.GTE(s.C(FieldTel), v))
 	})
 }
 
-// TelLT applies the LT predicate on the "tel" field.
+// TelLT applies the LT predicate on the "Tel" field.
 func TelLT(v string) predicate.Patient {
 	return predicate.Patient(func(s *sql.Selector) {
 		s.Where(sql.LT(s.C(FieldTel), v))
 	})
 }
 
-// TelLTE applies the LTE predicate on the "tel" field.
+// TelLTE applies the LTE predicate on the "Tel" field.
 func TelLTE(v string) predicate.Patient {
 	return predicate.Patient(func(s *sql.Selector) {
 		s.Where(sql.LTE(s.C(FieldTel), v))
 	})
 }
 
-// TelContains applies the Contains predicate on the "tel" field.
+// TelContains applies the Contains predicate on the "Tel" field.
 func TelContains(v string) predicate.Patient {
 	return predicate.Patient(func(s *sql.Selector) {
 		s.Where(sql.Contains(s.C(FieldTel), v))
 	})
 }
 
-// TelHasPrefix applies the HasPrefix predicate on the "tel" field.
+// TelHasPrefix applies the HasPrefix predicate on the "Tel" field.
 func TelHasPrefix(v string) predicate.Patient {
 	return predicate.Patient(func(s *sql.Selector) {
 		s.Where(sql.HasPrefix(s.C(FieldTel), v))
 	})
 }
 
-// TelHasSuffix applies the HasSuffix predicate on the "tel" field.
+// TelHasSuffix applies the HasSuffix predicate on the "Tel" field.
 func TelHasSuffix(v string) predicate.Patient {
 	return predicate.Patient(func(s *sql.Selector) {
 		s.Where(sql.HasSuffix(s.C(FieldTel), v))
 	})
 }
 
-// TelEqualFold applies the EqualFold predicate on the "tel" field.
+// TelEqualFold applies the EqualFold predicate on the "Tel" field.
 func TelEqualFold(v string) predicate.Patient {
 	return predicate.Patient(func(s *sql.Selector) {
 		s.Where(sql.EqualFold(s.C(FieldTel), v))
 	})
 }
 
-// TelContainsFold applies the ContainsFold predicate on the "tel" field.
+// TelContainsFold applies the ContainsFold predicate on the "Tel" field.
 func TelContainsFold(v string) predicate.Patient {
 	return predicate.Patient(func(s *sql.Selector) {
 		s.Where(sql.ContainsFold(s.C(FieldTel), v))
 	})
 }
 
-// AgeEQ applies the EQ predicate on the "age" field.
+// AgeEQ applies the EQ predicate on the "Age" field.
 func AgeEQ(v int) predicate.Patient {
 	return predicate.Patient(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldAge), v))
 	})
 }
 
-// AgeNEQ applies the NEQ predicate on the "age" field.
+// AgeNEQ applies the NEQ predicate on the "Age" field.
 func AgeNEQ(v int) predicate.Patient {
 	return predicate.Patient(func(s *sql.Selector) {
 		s.Where(sql.NEQ(s.C(FieldAge), v))
 	})
 }
 
-// AgeIn applies the In predicate on the "age" field.
+// AgeIn applies the In predicate on the "Age" field.
 func AgeIn(vs ...int) predicate.Patient {
 	v := make([]interface{}, len(vs))
 	for i := range v {
@@ -610,7 +610,7 @@ func AgeIn(vs ...int) predicate.Patient {
 	})
 }
 
-// AgeNotIn applies the NotIn predicate on the "age" field.
+// AgeNotIn applies the NotIn predicate on the "Age" field.
 func AgeNotIn(vs ...int) predicate.Patient {
 	v := make([]interface{}, len(vs))
 	for i := range v {
@@ -627,49 +627,49 @@ func AgeNotIn(vs ...int) predicate.Patient {
 	})
 }
 
-// AgeGT applies the GT predicate on the "age" field.
+// AgeGT applies the GT predicate on the "Age" field.
 func AgeGT(v int) predicate.Patient {
 	return predicate.Patient(func(s *sql.Selector) {
 		s.Where(sql.GT(s.C(FieldAge), v))
 	})
 }
 
-// AgeGTE applies the GTE predicate on the "age" field.
+// AgeGTE applies the GTE predicate on the "Age" field.
 func AgeGTE(v int) predicate.Patient {
 	return predicate.Patient(func(s *sql.Selector) {
 		s.Where(sql.GTE(s.C(FieldAge), v))
 	})
 }
 
-// AgeLT applies the LT predicate on the "age" field.
+// AgeLT applies the LT predicate on the "Age" field.
 func AgeLT(v int) predicate.Patient {
 	return predicate.Patient(func(s *sql.Selector) {
 		s.Where(sql.LT(s.C(FieldAge), v))
 	})
 }
 
-// AgeLTE applies the LTE predicate on the "age" field.
+// AgeLTE applies the LTE predicate on the "Age" field.
 func AgeLTE(v int) predicate.Patient {
 	return predicate.Patient(func(s *sql.Selector) {
 		s.Where(sql.LTE(s.C(FieldAge), v))
 	})
 }
 
-// BirthdayEQ applies the EQ predicate on the "birthday" field.
+// BirthdayEQ applies the EQ predicate on the "Birthday" field.
 func BirthdayEQ(v time.Time) predicate.Patient {
 	return predicate.Patient(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldBirthday), v))
 	})
 }
 
-// BirthdayNEQ applies the NEQ predicate on the "birthday" field.
+// BirthdayNEQ applies the NEQ predicate on the "Birthday" field.
 func BirthdayNEQ(v time.Time) predicate.Patient {
 	return predicate.Patient(func(s *sql.Selector) {
 		s.Where(sql.NEQ(s.C(FieldBirthday), v))
 	})
 }
 
-// BirthdayIn applies the In predicate on the "birthday" field.
+// BirthdayIn applies the In predicate on the "Birthday" field.
 func BirthdayIn(vs ...time.Time) predicate.Patient {
 	v := make([]interface{}, len(vs))
 	for i := range v {
@@ -686,7 +686,7 @@ func BirthdayIn(vs ...time.Time) predicate.Patient {
 	})
 }
 
-// BirthdayNotIn applies the NotIn predicate on the "birthday" field.
+// BirthdayNotIn applies the NotIn predicate on the "Birthday" field.
 func BirthdayNotIn(vs ...time.Time) predicate.Patient {
 	v := make([]interface{}, len(vs))
 	for i := range v {
@@ -703,28 +703,28 @@ func BirthdayNotIn(vs ...time.Time) predicate.Patient {
 	})
 }
 
-// BirthdayGT applies the GT predicate on the "birthday" field.
+// BirthdayGT applies the GT predicate on the "Birthday" field.
 func BirthdayGT(v time.Time) predicate.Patient {
 	return predicate.Patient(func(s *sql.Selector) {
 		s.Where(sql.GT(s.C(FieldBirthday), v))
 	})
 }
 
-// BirthdayGTE applies the GTE predicate on the "birthday" field.
+// BirthdayGTE applies the GTE predicate on the "Birthday" field.
 func BirthdayGTE(v time.Time) predicate.Patient {
 	return predicate.Patient(func(s *sql.Selector) {
 		s.Where(sql.GTE(s.C(FieldBirthday), v))
 	})
 }
 
-// BirthdayLT applies the LT predicate on the "birthday" field.
+// BirthdayLT applies the LT predicate on the "Birthday" field.
 func BirthdayLT(v time.Time) predicate.Patient {
 	return predicate.Patient(func(s *sql.Selector) {
 		s.Where(sql.LT(s.C(FieldBirthday), v))
 	})
 }
 
-// BirthdayLTE applies the LTE predicate on the "birthday" field.
+// BirthdayLTE applies the LTE predicate on the "Birthday" field.
 func BirthdayLTE(v time.Time) predicate.Patient {
 	return predicate.Patient(func(s *sql.Selector) {
 		s.Where(sql.LTE(s.C(FieldBirthday), v))

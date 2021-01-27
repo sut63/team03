@@ -23,13 +23,25 @@ type QueueCreate struct {
 	hooks    []Hook
 }
 
-// SetDental sets the dental field.
+// SetQueueID sets the QueueID field.
+func (qc *QueueCreate) SetQueueID(s string) *QueueCreate {
+	qc.mutation.SetQueueID(s)
+	return qc
+}
+
+// SetPhone sets the Phone field.
+func (qc *QueueCreate) SetPhone(s string) *QueueCreate {
+	qc.mutation.SetPhone(s)
+	return qc
+}
+
+// SetDental sets the Dental field.
 func (qc *QueueCreate) SetDental(s string) *QueueCreate {
 	qc.mutation.SetDental(s)
 	return qc
 }
 
-// SetQueueTime sets the queue_time field.
+// SetQueueTime sets the QueueTime field.
 func (qc *QueueCreate) SetQueueTime(t time.Time) *QueueCreate {
 	qc.mutation.SetQueueTime(t)
 	return qc
@@ -99,11 +111,32 @@ func (qc *QueueCreate) Mutation() *QueueMutation {
 
 // Save creates the Queue in the database.
 func (qc *QueueCreate) Save(ctx context.Context) (*Queue, error) {
+	if _, ok := qc.mutation.QueueID(); !ok {
+		return nil, &ValidationError{Name: "QueueID", err: errors.New("ent: missing required field \"QueueID\"")}
+	}
+	if v, ok := qc.mutation.QueueID(); ok {
+		if err := queue.QueueIDValidator(v); err != nil {
+			return nil, &ValidationError{Name: "QueueID", err: fmt.Errorf("ent: validator failed for field \"QueueID\": %w", err)}
+		}
+	}
+	if _, ok := qc.mutation.Phone(); !ok {
+		return nil, &ValidationError{Name: "Phone", err: errors.New("ent: missing required field \"Phone\"")}
+	}
+	if v, ok := qc.mutation.Phone(); ok {
+		if err := queue.PhoneValidator(v); err != nil {
+			return nil, &ValidationError{Name: "Phone", err: fmt.Errorf("ent: validator failed for field \"Phone\": %w", err)}
+		}
+	}
 	if _, ok := qc.mutation.Dental(); !ok {
-		return nil, &ValidationError{Name: "dental", err: errors.New("ent: missing required field \"dental\"")}
+		return nil, &ValidationError{Name: "Dental", err: errors.New("ent: missing required field \"Dental\"")}
+	}
+	if v, ok := qc.mutation.Dental(); ok {
+		if err := queue.DentalValidator(v); err != nil {
+			return nil, &ValidationError{Name: "Dental", err: fmt.Errorf("ent: validator failed for field \"Dental\": %w", err)}
+		}
 	}
 	if _, ok := qc.mutation.QueueTime(); !ok {
-		return nil, &ValidationError{Name: "queue_time", err: errors.New("ent: missing required field \"queue_time\"")}
+		return nil, &ValidationError{Name: "QueueTime", err: errors.New("ent: missing required field \"QueueTime\"")}
 	}
 	var (
 		err  error
@@ -165,6 +198,22 @@ func (qc *QueueCreate) createSpec() (*Queue, *sqlgraph.CreateSpec) {
 			},
 		}
 	)
+	if value, ok := qc.mutation.QueueID(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: queue.FieldQueueID,
+		})
+		q.QueueID = value
+	}
+	if value, ok := qc.mutation.Phone(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: queue.FieldPhone,
+		})
+		q.Phone = value
+	}
 	if value, ok := qc.mutation.Dental(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,

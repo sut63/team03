@@ -27,23 +27,41 @@ import {
  */
 export interface EntPatient {
     /**
-     * Age holds the value of the "age" field.
+     * Age holds the value of the "Age" field.
      * @type {number}
      * @memberof EntPatient
      */
     age?: number;
     /**
-     * Birthday holds the value of the "birthday" field.
+     * Birthday holds the value of the "Birthday" field.
      * @type {string}
      * @memberof EntPatient
      */
     birthday?: string;
     /**
-     * CardID holds the value of the "cardID" field.
+     * CardID holds the value of the "CardID" field.
      * @type {string}
      * @memberof EntPatient
      */
     cardID?: string;
+    /**
+     * Name holds the value of the "Name" field.
+     * @type {string}
+     * @memberof EntPatient
+     */
+    name?: string;
+    /**
+     * PatientID holds the value of the "PatientID" field.
+     * @type {string}
+     * @memberof EntPatient
+     */
+    patientID?: string;
+    /**
+     * Tel holds the value of the "Tel" field.
+     * @type {string}
+     * @memberof EntPatient
+     */
+    tel?: string;
     /**
      * 
      * @type {EntPatientEdges}
@@ -56,24 +74,6 @@ export interface EntPatient {
      * @memberof EntPatient
      */
     id?: number;
-    /**
-     * Name holds the value of the "name" field.
-     * @type {string}
-     * @memberof EntPatient
-     */
-    name?: string;
-    /**
-     * PatientID holds the value of the "patient_ID" field.
-     * @type {string}
-     * @memberof EntPatient
-     */
-    patientID?: string;
-    /**
-     * Tel holds the value of the "tel" field.
-     * @type {string}
-     * @memberof EntPatient
-     */
-    tel?: string;
 }
 
 export function EntPatientFromJSON(json: any): EntPatient {
@@ -86,14 +86,14 @@ export function EntPatientFromJSONTyped(json: any, ignoreDiscriminator: boolean)
     }
     return {
         
-        'age': !exists(json, 'age') ? undefined : json['age'],
-        'birthday': !exists(json, 'birthday') ? undefined : json['birthday'],
-        'cardID': !exists(json, 'cardID') ? undefined : json['cardID'],
+        'age': !exists(json, 'Age') ? undefined : json['Age'],
+        'birthday': !exists(json, 'Birthday') ? undefined : json['Birthday'],
+        'cardID': !exists(json, 'CardID') ? undefined : json['CardID'],
+        'name': !exists(json, 'Name') ? undefined : json['Name'],
+        'patientID': !exists(json, 'PatientID') ? undefined : json['PatientID'],
+        'tel': !exists(json, 'Tel') ? undefined : json['Tel'],
         'edges': !exists(json, 'edges') ? undefined : EntPatientEdgesFromJSON(json['edges']),
         'id': !exists(json, 'id') ? undefined : json['id'],
-        'name': !exists(json, 'name') ? undefined : json['name'],
-        'patientID': !exists(json, 'patient_ID') ? undefined : json['patient_ID'],
-        'tel': !exists(json, 'tel') ? undefined : json['tel'],
     };
 }
 
@@ -106,14 +106,14 @@ export function EntPatientToJSON(value?: EntPatient | null): any {
     }
     return {
         
-        'age': value.age,
-        'birthday': value.birthday,
-        'cardID': value.cardID,
+        'Age': value.age,
+        'Birthday': value.birthday,
+        'CardID': value.cardID,
+        'Name': value.name,
+        'PatientID': value.patientID,
+        'Tel': value.tel,
         'edges': EntPatientEdgesToJSON(value.edges),
         'id': value.id,
-        'name': value.name,
-        'patient_ID': value.patientID,
-        'tel': value.tel,
     };
 }
 

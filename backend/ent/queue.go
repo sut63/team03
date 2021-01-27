@@ -19,10 +19,14 @@ type Queue struct {
 	config `json:"-"`
 	// ID of the ent.
 	ID int `json:"id,omitempty"`
-	// Dental holds the value of the "dental" field.
-	Dental string `json:"dental,omitempty"`
-	// QueueTime holds the value of the "queue_time" field.
-	QueueTime time.Time `json:"queue_time,omitempty"`
+	// QueueID holds the value of the "QueueID" field.
+	QueueID string `json:"QueueID,omitempty"`
+	// Phone holds the value of the "Phone" field.
+	Phone string `json:"Phone,omitempty"`
+	// Dental holds the value of the "Dental" field.
+	Dental string `json:"Dental,omitempty"`
+	// QueueTime holds the value of the "QueueTime" field.
+	QueueTime time.Time `json:"QueueTime,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the QueueQuery when eager-loading is set.
 	Edges      QueueEdges `json:"edges"`
@@ -90,8 +94,10 @@ func (e QueueEdges) PatientOrErr() (*Patient, error) {
 func (*Queue) scanValues() []interface{} {
 	return []interface{}{
 		&sql.NullInt64{},  // id
-		&sql.NullString{}, // dental
-		&sql.NullTime{},   // queue_time
+		&sql.NullString{}, // QueueID
+		&sql.NullString{}, // Phone
+		&sql.NullString{}, // Dental
+		&sql.NullTime{},   // QueueTime
 	}
 }
 
@@ -117,16 +123,26 @@ func (q *Queue) assignValues(values ...interface{}) error {
 	q.ID = int(value.Int64)
 	values = values[1:]
 	if value, ok := values[0].(*sql.NullString); !ok {
-		return fmt.Errorf("unexpected type %T for field dental", values[0])
+		return fmt.Errorf("unexpected type %T for field QueueID", values[0])
+	} else if value.Valid {
+		q.QueueID = value.String
+	}
+	if value, ok := values[1].(*sql.NullString); !ok {
+		return fmt.Errorf("unexpected type %T for field Phone", values[1])
+	} else if value.Valid {
+		q.Phone = value.String
+	}
+	if value, ok := values[2].(*sql.NullString); !ok {
+		return fmt.Errorf("unexpected type %T for field Dental", values[2])
 	} else if value.Valid {
 		q.Dental = value.String
 	}
-	if value, ok := values[1].(*sql.NullTime); !ok {
-		return fmt.Errorf("unexpected type %T for field queue_time", values[1])
+	if value, ok := values[3].(*sql.NullTime); !ok {
+		return fmt.Errorf("unexpected type %T for field QueueTime", values[3])
 	} else if value.Valid {
 		q.QueueTime = value.Time
 	}
-	values = values[2:]
+	values = values[4:]
 	if len(values) == len(queue.ForeignKeys) {
 		if value, ok := values[0].(*sql.NullInt64); !ok {
 			return fmt.Errorf("unexpected type %T for edge-field dentist_id", value)
@@ -188,9 +204,13 @@ func (q *Queue) String() string {
 	var builder strings.Builder
 	builder.WriteString("Queue(")
 	builder.WriteString(fmt.Sprintf("id=%v", q.ID))
-	builder.WriteString(", dental=")
+	builder.WriteString(", QueueID=")
+	builder.WriteString(q.QueueID)
+	builder.WriteString(", Phone=")
+	builder.WriteString(q.Phone)
+	builder.WriteString(", Dental=")
 	builder.WriteString(q.Dental)
-	builder.WriteString(", queue_time=")
+	builder.WriteString(", QueueTime=")
 	builder.WriteString(q.QueueTime.Format(time.ANSIC))
 	builder.WriteByte(')')
 	return builder.String()

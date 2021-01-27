@@ -259,10 +259,10 @@ var (
 	// PatientsColumns holds the columns for the "patients" table.
 	PatientsColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt, Increment: true},
-		{Name: "patient_id", Type: field.TypeString, Unique: true},
+		{Name: "patient_id", Type: field.TypeString, Unique: true, Size: 6},
 		{Name: "name", Type: field.TypeString},
-		{Name: "card_id", Type: field.TypeString},
-		{Name: "tel", Type: field.TypeString},
+		{Name: "card_id", Type: field.TypeString, Unique: true, Size: 13},
+		{Name: "tel", Type: field.TypeString, Unique: true, Size: 10},
 		{Name: "age", Type: field.TypeInt},
 		{Name: "birthday", Type: field.TypeTime},
 		{Name: "disease_id", Type: field.TypeInt, Nullable: true},
@@ -321,7 +321,9 @@ var (
 	// QueuesColumns holds the columns for the "queues" table.
 	QueuesColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt, Increment: true},
-		{Name: "dental", Type: field.TypeString},
+		{Name: "queue_id", Type: field.TypeString},
+		{Name: "phone", Type: field.TypeString, Size: 10},
+		{Name: "dental", Type: field.TypeString, Size: 30},
 		{Name: "queue_time", Type: field.TypeTime},
 		{Name: "dentist_id", Type: field.TypeInt, Nullable: true},
 		{Name: "nurse_id", Type: field.TypeInt, Nullable: true},
@@ -335,21 +337,21 @@ var (
 		ForeignKeys: []*schema.ForeignKey{
 			{
 				Symbol:  "queues_dentists_queue",
-				Columns: []*schema.Column{QueuesColumns[3]},
+				Columns: []*schema.Column{QueuesColumns[5]},
 
 				RefColumns: []*schema.Column{DentistsColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
 			{
 				Symbol:  "queues_nurses_queue",
-				Columns: []*schema.Column{QueuesColumns[4]},
+				Columns: []*schema.Column{QueuesColumns[6]},
 
 				RefColumns: []*schema.Column{NursesColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
 			{
 				Symbol:  "queues_patients_queue",
-				Columns: []*schema.Column{QueuesColumns[5]},
+				Columns: []*schema.Column{QueuesColumns[7]},
 
 				RefColumns: []*schema.Column{PatientsColumns[0]},
 				OnDelete:   schema.SetNull,

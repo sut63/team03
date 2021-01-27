@@ -7,7 +7,7 @@ const (
 	Label = "patient"
 	// FieldID holds the string denoting the id field in the database.
 	FieldID = "id"
-	// FieldPatientID holds the string denoting the patient_id field in the database.
+	// FieldPatientID holds the string denoting the patientid field in the database.
 	FieldPatientID = "patient_id"
 	// FieldName holds the string denoting the name field in the database.
 	FieldName = "name"
@@ -108,14 +108,14 @@ var ForeignKeys = []string{
 }
 
 var (
-	// PatientIDValidator is a validator for the "patient_ID" field. It is called by the builders before save.
+	// PatientIDValidator is a validator for the "PatientID" field. It is called by the builders before save.
 	PatientIDValidator func(string) error
-	// NameValidator is a validator for the "name" field. It is called by the builders before save.
+	// NameValidator is a validator for the "Name" field. It is called by the builders before save.
 	NameValidator func(string) error
-	// CardIDValidator is a validator for the "cardID" field. It is called by the builders before save.
+	// CardIDValidator is a validator for the "CardID" field. It is called by the builders before save.
 	CardIDValidator func(string) error
-	// TelValidator is a validator for the "tel" field. It is called by the builders before save.
+	// TelValidator is a validator for the "Tel" field. It is called by the builders before save.
 	TelValidator func(string) error
-	// AgeValidator is a validator for the "age" field. It is called by the builders before save.
+	// AgeValidator is a validator for the "Age" field. It is called by the builders before save.
 	AgeValidator func(int) error
 )

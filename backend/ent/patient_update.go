@@ -35,44 +35,44 @@ func (pu *PatientUpdate) Where(ps ...predicate.Patient) *PatientUpdate {
 	return pu
 }
 
-// SetPatientID sets the patient_ID field.
+// SetPatientID sets the PatientID field.
 func (pu *PatientUpdate) SetPatientID(s string) *PatientUpdate {
 	pu.mutation.SetPatientID(s)
 	return pu
 }
 
-// SetName sets the name field.
+// SetName sets the Name field.
 func (pu *PatientUpdate) SetName(s string) *PatientUpdate {
 	pu.mutation.SetName(s)
 	return pu
 }
 
-// SetCardID sets the cardID field.
+// SetCardID sets the CardID field.
 func (pu *PatientUpdate) SetCardID(s string) *PatientUpdate {
 	pu.mutation.SetCardID(s)
 	return pu
 }
 
-// SetTel sets the tel field.
+// SetTel sets the Tel field.
 func (pu *PatientUpdate) SetTel(s string) *PatientUpdate {
 	pu.mutation.SetTel(s)
 	return pu
 }
 
-// SetAge sets the age field.
+// SetAge sets the Age field.
 func (pu *PatientUpdate) SetAge(i int) *PatientUpdate {
 	pu.mutation.ResetAge()
 	pu.mutation.SetAge(i)
 	return pu
 }
 
-// AddAge adds i to age.
+// AddAge adds i to Age.
 func (pu *PatientUpdate) AddAge(i int) *PatientUpdate {
 	pu.mutation.AddAge(i)
 	return pu
 }
 
-// SetBirthday sets the birthday field.
+// SetBirthday sets the Birthday field.
 func (pu *PatientUpdate) SetBirthday(t time.Time) *PatientUpdate {
 	pu.mutation.SetBirthday(t)
 	return pu
@@ -277,27 +277,27 @@ func (pu *PatientUpdate) RemoveAppointment(a ...*Appointment) *PatientUpdate {
 func (pu *PatientUpdate) Save(ctx context.Context) (int, error) {
 	if v, ok := pu.mutation.PatientID(); ok {
 		if err := patient.PatientIDValidator(v); err != nil {
-			return 0, &ValidationError{Name: "patient_ID", err: fmt.Errorf("ent: validator failed for field \"patient_ID\": %w", err)}
+			return 0, &ValidationError{Name: "PatientID", err: fmt.Errorf("ent: validator failed for field \"PatientID\": %w", err)}
 		}
 	}
 	if v, ok := pu.mutation.Name(); ok {
 		if err := patient.NameValidator(v); err != nil {
-			return 0, &ValidationError{Name: "name", err: fmt.Errorf("ent: validator failed for field \"name\": %w", err)}
+			return 0, &ValidationError{Name: "Name", err: fmt.Errorf("ent: validator failed for field \"Name\": %w", err)}
 		}
 	}
 	if v, ok := pu.mutation.CardID(); ok {
 		if err := patient.CardIDValidator(v); err != nil {
-			return 0, &ValidationError{Name: "cardID", err: fmt.Errorf("ent: validator failed for field \"cardID\": %w", err)}
+			return 0, &ValidationError{Name: "CardID", err: fmt.Errorf("ent: validator failed for field \"CardID\": %w", err)}
 		}
 	}
 	if v, ok := pu.mutation.Tel(); ok {
 		if err := patient.TelValidator(v); err != nil {
-			return 0, &ValidationError{Name: "tel", err: fmt.Errorf("ent: validator failed for field \"tel\": %w", err)}
+			return 0, &ValidationError{Name: "Tel", err: fmt.Errorf("ent: validator failed for field \"Tel\": %w", err)}
 		}
 	}
 	if v, ok := pu.mutation.Age(); ok {
 		if err := patient.AgeValidator(v); err != nil {
-			return 0, &ValidationError{Name: "age", err: fmt.Errorf("ent: validator failed for field \"age\": %w", err)}
+			return 0, &ValidationError{Name: "Age", err: fmt.Errorf("ent: validator failed for field \"Age\": %w", err)}
 		}
 	}
 
@@ -689,44 +689,44 @@ type PatientUpdateOne struct {
 	mutation *PatientMutation
 }
 
-// SetPatientID sets the patient_ID field.
+// SetPatientID sets the PatientID field.
 func (puo *PatientUpdateOne) SetPatientID(s string) *PatientUpdateOne {
 	puo.mutation.SetPatientID(s)
 	return puo
 }
 
-// SetName sets the name field.
+// SetName sets the Name field.
 func (puo *PatientUpdateOne) SetName(s string) *PatientUpdateOne {
 	puo.mutation.SetName(s)
 	return puo
 }
 
-// SetCardID sets the cardID field.
+// SetCardID sets the CardID field.
 func (puo *PatientUpdateOne) SetCardID(s string) *PatientUpdateOne {
 	puo.mutation.SetCardID(s)
 	return puo
 }
 
-// SetTel sets the tel field.
+// SetTel sets the Tel field.
 func (puo *PatientUpdateOne) SetTel(s string) *PatientUpdateOne {
 	puo.mutation.SetTel(s)
 	return puo
 }
 
-// SetAge sets the age field.
+// SetAge sets the Age field.
 func (puo *PatientUpdateOne) SetAge(i int) *PatientUpdateOne {
 	puo.mutation.ResetAge()
 	puo.mutation.SetAge(i)
 	return puo
 }
 
-// AddAge adds i to age.
+// AddAge adds i to Age.
 func (puo *PatientUpdateOne) AddAge(i int) *PatientUpdateOne {
 	puo.mutation.AddAge(i)
 	return puo
 }
 
-// SetBirthday sets the birthday field.
+// SetBirthday sets the Birthday field.
 func (puo *PatientUpdateOne) SetBirthday(t time.Time) *PatientUpdateOne {
 	puo.mutation.SetBirthday(t)
 	return puo
@@ -931,27 +931,27 @@ func (puo *PatientUpdateOne) RemoveAppointment(a ...*Appointment) *PatientUpdate
 func (puo *PatientUpdateOne) Save(ctx context.Context) (*Patient, error) {
 	if v, ok := puo.mutation.PatientID(); ok {
 		if err := patient.PatientIDValidator(v); err != nil {
-			return nil, &ValidationError{Name: "patient_ID", err: fmt.Errorf("ent: validator failed for field \"patient_ID\": %w", err)}
+			return nil, &ValidationError{Name: "PatientID", err: fmt.Errorf("ent: validator failed for field \"PatientID\": %w", err)}
 		}
 	}
 	if v, ok := puo.mutation.Name(); ok {
 		if err := patient.NameValidator(v); err != nil {
-			return nil, &ValidationError{Name: "name", err: fmt.Errorf("ent: validator failed for field \"name\": %w", err)}
+			return nil, &ValidationError{Name: "Name", err: fmt.Errorf("ent: validator failed for field \"Name\": %w", err)}
 		}
 	}
 	if v, ok := puo.mutation.CardID(); ok {
 		if err := patient.CardIDValidator(v); err != nil {
-			return nil, &ValidationError{Name: "cardID", err: fmt.Errorf("ent: validator failed for field \"cardID\": %w", err)}
+			return nil, &ValidationError{Name: "CardID", err: fmt.Errorf("ent: validator failed for field \"CardID\": %w", err)}
 		}
 	}
 	if v, ok := puo.mutation.Tel(); ok {
 		if err := patient.TelValidator(v); err != nil {
-			return nil, &ValidationError{Name: "tel", err: fmt.Errorf("ent: validator failed for field \"tel\": %w", err)}
+			return nil, &ValidationError{Name: "Tel", err: fmt.Errorf("ent: validator failed for field \"Tel\": %w", err)}
 		}
 	}
 	if v, ok := puo.mutation.Age(); ok {
 		if err := patient.AgeValidator(v); err != nil {
-			return nil, &ValidationError{Name: "age", err: fmt.Errorf("ent: validator failed for field \"age\": %w", err)}
+			return nil, &ValidationError{Name: "Age", err: fmt.Errorf("ent: validator failed for field \"Age\": %w", err)}
 		}
 	}
 

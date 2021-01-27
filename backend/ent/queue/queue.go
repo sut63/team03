@@ -7,9 +7,13 @@ const (
 	Label = "queue"
 	// FieldID holds the string denoting the id field in the database.
 	FieldID = "id"
+	// FieldQueueID holds the string denoting the queueid field in the database.
+	FieldQueueID = "queue_id"
+	// FieldPhone holds the string denoting the phone field in the database.
+	FieldPhone = "phone"
 	// FieldDental holds the string denoting the dental field in the database.
 	FieldDental = "dental"
-	// FieldQueueTime holds the string denoting the queue_time field in the database.
+	// FieldQueueTime holds the string denoting the queuetime field in the database.
 	FieldQueueTime = "queue_time"
 
 	// EdgeDentist holds the string denoting the dentist edge name in mutations.
@@ -47,6 +51,8 @@ const (
 // Columns holds all SQL columns for queue fields.
 var Columns = []string{
 	FieldID,
+	FieldQueueID,
+	FieldPhone,
 	FieldDental,
 	FieldQueueTime,
 }
@@ -57,3 +63,12 @@ var ForeignKeys = []string{
 	"nurse_id",
 	"patient_id",
 }
+
+var (
+	// QueueIDValidator is a validator for the "QueueID" field. It is called by the builders before save.
+	QueueIDValidator func(string) error
+	// PhoneValidator is a validator for the "Phone" field. It is called by the builders before save.
+	PhoneValidator func(string) error
+	// DentalValidator is a validator for the "Dental" field. It is called by the builders before save.
+	DentalValidator func(string) error
+)

@@ -332,12 +332,12 @@ func (qq *QueueQuery) WithPatient(opts ...func(*PatientQuery)) *QueueQuery {
 // Example:
 //
 //	var v []struct {
-//		Dental string `json:"dental,omitempty"`
+//		QueueID string `json:"QueueID,omitempty"`
 //		Count int `json:"count,omitempty"`
 //	}
 //
 //	client.Queue.Query().
-//		GroupBy(queue.FieldDental).
+//		GroupBy(queue.FieldQueueID).
 //		Aggregate(ent.Count()).
 //		Scan(ctx, &v)
 //
@@ -358,11 +358,11 @@ func (qq *QueueQuery) GroupBy(field string, fields ...string) *QueueGroupBy {
 // Example:
 //
 //	var v []struct {
-//		Dental string `json:"dental,omitempty"`
+//		QueueID string `json:"QueueID,omitempty"`
 //	}
 //
 //	client.Queue.Query().
-//		Select(queue.FieldDental).
+//		Select(queue.FieldQueueID).
 //		Scan(ctx, &v)
 //
 func (qq *QueueQuery) Select(field string, fields ...string) *QueueSelect {

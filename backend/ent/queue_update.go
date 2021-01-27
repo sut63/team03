@@ -31,13 +31,25 @@ func (qu *QueueUpdate) Where(ps ...predicate.Queue) *QueueUpdate {
 	return qu
 }
 
-// SetDental sets the dental field.
+// SetQueueID sets the QueueID field.
+func (qu *QueueUpdate) SetQueueID(s string) *QueueUpdate {
+	qu.mutation.SetQueueID(s)
+	return qu
+}
+
+// SetPhone sets the Phone field.
+func (qu *QueueUpdate) SetPhone(s string) *QueueUpdate {
+	qu.mutation.SetPhone(s)
+	return qu
+}
+
+// SetDental sets the Dental field.
 func (qu *QueueUpdate) SetDental(s string) *QueueUpdate {
 	qu.mutation.SetDental(s)
 	return qu
 }
 
-// SetQueueTime sets the queue_time field.
+// SetQueueTime sets the QueueTime field.
 func (qu *QueueUpdate) SetQueueTime(t time.Time) *QueueUpdate {
 	qu.mutation.SetQueueTime(t)
 	return qu
@@ -125,6 +137,21 @@ func (qu *QueueUpdate) ClearPatient() *QueueUpdate {
 
 // Save executes the query and returns the number of rows/vertices matched by this operation.
 func (qu *QueueUpdate) Save(ctx context.Context) (int, error) {
+	if v, ok := qu.mutation.QueueID(); ok {
+		if err := queue.QueueIDValidator(v); err != nil {
+			return 0, &ValidationError{Name: "QueueID", err: fmt.Errorf("ent: validator failed for field \"QueueID\": %w", err)}
+		}
+	}
+	if v, ok := qu.mutation.Phone(); ok {
+		if err := queue.PhoneValidator(v); err != nil {
+			return 0, &ValidationError{Name: "Phone", err: fmt.Errorf("ent: validator failed for field \"Phone\": %w", err)}
+		}
+	}
+	if v, ok := qu.mutation.Dental(); ok {
+		if err := queue.DentalValidator(v); err != nil {
+			return 0, &ValidationError{Name: "Dental", err: fmt.Errorf("ent: validator failed for field \"Dental\": %w", err)}
+		}
+	}
 
 	var (
 		err      error
@@ -192,6 +219,20 @@ func (qu *QueueUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				ps[i](selector)
 			}
 		}
+	}
+	if value, ok := qu.mutation.QueueID(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: queue.FieldQueueID,
+		})
+	}
+	if value, ok := qu.mutation.Phone(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: queue.FieldPhone,
+		})
 	}
 	if value, ok := qu.mutation.Dental(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
@@ -330,13 +371,25 @@ type QueueUpdateOne struct {
 	mutation *QueueMutation
 }
 
-// SetDental sets the dental field.
+// SetQueueID sets the QueueID field.
+func (quo *QueueUpdateOne) SetQueueID(s string) *QueueUpdateOne {
+	quo.mutation.SetQueueID(s)
+	return quo
+}
+
+// SetPhone sets the Phone field.
+func (quo *QueueUpdateOne) SetPhone(s string) *QueueUpdateOne {
+	quo.mutation.SetPhone(s)
+	return quo
+}
+
+// SetDental sets the Dental field.
 func (quo *QueueUpdateOne) SetDental(s string) *QueueUpdateOne {
 	quo.mutation.SetDental(s)
 	return quo
 }
 
-// SetQueueTime sets the queue_time field.
+// SetQueueTime sets the QueueTime field.
 func (quo *QueueUpdateOne) SetQueueTime(t time.Time) *QueueUpdateOne {
 	quo.mutation.SetQueueTime(t)
 	return quo
@@ -424,6 +477,21 @@ func (quo *QueueUpdateOne) ClearPatient() *QueueUpdateOne {
 
 // Save executes the query and returns the updated entity.
 func (quo *QueueUpdateOne) Save(ctx context.Context) (*Queue, error) {
+	if v, ok := quo.mutation.QueueID(); ok {
+		if err := queue.QueueIDValidator(v); err != nil {
+			return nil, &ValidationError{Name: "QueueID", err: fmt.Errorf("ent: validator failed for field \"QueueID\": %w", err)}
+		}
+	}
+	if v, ok := quo.mutation.Phone(); ok {
+		if err := queue.PhoneValidator(v); err != nil {
+			return nil, &ValidationError{Name: "Phone", err: fmt.Errorf("ent: validator failed for field \"Phone\": %w", err)}
+		}
+	}
+	if v, ok := quo.mutation.Dental(); ok {
+		if err := queue.DentalValidator(v); err != nil {
+			return nil, &ValidationError{Name: "Dental", err: fmt.Errorf("ent: validator failed for field \"Dental\": %w", err)}
+		}
+	}
 
 	var (
 		err  error
@@ -490,6 +558,20 @@ func (quo *QueueUpdateOne) sqlSave(ctx context.Context) (q *Queue, err error) {
 		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing Queue.ID for update")}
 	}
 	_spec.Node.ID.Value = id
+	if value, ok := quo.mutation.QueueID(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: queue.FieldQueueID,
+		})
+	}
+	if value, ok := quo.mutation.Phone(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: queue.FieldPhone,
+		})
+	}
 	if value, ok := quo.mutation.Dental(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
