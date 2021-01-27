@@ -104,13 +104,13 @@ export function EntDentistEdgesFromJSONTyped(json: any, ignoreDiscriminator: boo
     }
     return {
         
-        'appointment': !exists(json, 'appointment') ? undefined : ((json['appointment'] as Array<any>).map(EntAppointmentFromJSON)),
-        'degree': !exists(json, 'degree') ? undefined : EntDegreeFromJSON(json['degree']),
-        'expert': !exists(json, 'expert') ? undefined : EntExpertFromJSON(json['expert']),
-        'gender': !exists(json, 'gender') ? undefined : EntGenderFromJSON(json['gender']),
-        'medicalfiles': !exists(json, 'medicalfiles') ? undefined : ((json['medicalfiles'] as Array<any>).map(EntMedicalfileFromJSON)),
-        'nurse': !exists(json, 'nurse') ? undefined : EntNurseFromJSON(json['nurse']),
-        'queue': !exists(json, 'queue') ? undefined : ((json['queue'] as Array<any>).map(EntQueueFromJSON)),
+        'appointment': !exists(json, 'Appointment') ? undefined : ((json['Appointment'] as Array<any>).map(EntAppointmentFromJSON)),
+        'degree': !exists(json, 'Degree') ? undefined : EntDegreeFromJSON(json['Degree']),
+        'expert': !exists(json, 'Expert') ? undefined : EntExpertFromJSON(json['Expert']),
+        'gender': !exists(json, 'Gender') ? undefined : EntGenderFromJSON(json['Gender']),
+        'medicalfiles': !exists(json, 'Medicalfiles') ? undefined : ((json['Medicalfiles'] as Array<any>).map(EntMedicalfileFromJSON)),
+        'nurse': !exists(json, 'Nurse') ? undefined : EntNurseFromJSON(json['Nurse']),
+        'queue': !exists(json, 'Queue') ? undefined : ((json['Queue'] as Array<any>).map(EntQueueFromJSON)),
     };
 }
 

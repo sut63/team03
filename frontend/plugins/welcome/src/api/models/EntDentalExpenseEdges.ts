@@ -64,9 +64,9 @@ export function EntDentalexpenseEdgesFromJSONTyped(json: any, ignoreDiscriminato
     }
     return {
         
-        'medicalfile': !exists(json, 'medicalfile') ? undefined : EntMedicalfileFromJSON(json['medicalfile']),
-        'nurse': !exists(json, 'nurse') ? undefined : EntNurseFromJSON(json['nurse']),
-        'pricetype': !exists(json, 'pricetype') ? undefined : EntPricetypeFromJSON(json['pricetype']),
+        'medicalfile': !exists(json, 'Medicalfile') ? undefined : EntMedicalfileFromJSON(json['Medicalfile']),
+        'nurse': !exists(json, 'Nurse') ? undefined : EntNurseFromJSON(json['Nurse']),
+        'pricetype': !exists(json, 'Pricetype') ? undefined : EntPricetypeFromJSON(json['Pricetype']),
     };
 }
 

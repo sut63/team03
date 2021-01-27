@@ -9,7 +9,8 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { DefaultApi } from '../../api/apis';
 
-import { EntDentalexpense } from '../../api/models/EntDentalExpense';
+import { EntDentalexpense } from '../../api/models/EntDentalexpense';
+
 
 import Swal from 'sweetalert2'
 import { Link as RouterLink } from 'react-router-dom';
@@ -17,8 +18,6 @@ import moment from 'moment';
 import { Page, pageTheme, Header, Content, Link } from '@backstage/core';
 import { Grid, Button, TextField, Typography, FormControl } from '@material-ui/core';
 import SearchTwoToneIcon from '@material-ui/icons/SearchTwoTone';
-
-
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -65,11 +64,10 @@ const Toast = Swal.mixin({
   showCloseButton: true,
 
 });
-
-
 export default function ComponentsTable() {
 
-  
+ 
+
   const classes = useStyles();
   const api = new DefaultApi();
   const [loading, setLoading] = useState(true);
@@ -120,18 +118,18 @@ export default function ComponentsTable() {
     dentalexpense.map(item => {
       if (tax != "") {
         if (item.tax?.includes(tax)) {
-          setTaxs(true);
-          alertMessage("success", "พบข้อมูลที่ค้นหา");
+          setcheckTaxs(true);
+          alertMessage("success", "พบข้อมูล");
           check = true;
         }
       }
     })
     if (!check) {
-      alertMessage("error", "ไม่พบข้อมูลที่ค้นหา");
+      alertMessage("error", "ไม่พบข้อมูล");
     }
     console.log(checktax)
     if (tax == "") {
-      alertMessage("info", "แสดงข้อมูลงานวิจัยทั้งหมดในระบบ");
+      alertMessage("info", "แสดงข้อมูลรายการค่ารักษาในระบบ");
     }
   };
 
@@ -143,7 +141,7 @@ export default function ComponentsTable() {
       >
         <table>
           <tr>
-           
+            
             <th>
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <Link component={RouterLink} to="/Menu">
@@ -190,7 +188,7 @@ export default function ComponentsTable() {
                     className={classes.margin}
                     variant="outlined"
                   >
-                    <div className={classes.paper}><strong>เลขกำกับภาษี</strong></div>
+                    <div className={classes.paper}><strong>เลขที่กำกับภาษี</strong></div>
                     <TextField
                       id="tax"
                       value={tax}
@@ -221,7 +219,7 @@ export default function ComponentsTable() {
 
                       }
                     }>
-                    ค้นหาข้อมูล
+                    ค้นหา
             </h3>
                 </Button>
                 <Button
@@ -258,28 +256,28 @@ export default function ComponentsTable() {
                     <TableContainer component={Paper}>
                       <Table className={classes.table} aria-label="simple table">
                         <TableHead>
-                          <TableRow>
-                            <TableCell align="center">ลำดับที่</TableCell>
-                            <TableCell align="center">ชื่องานวิจัย</TableCell>
-                            <TableCell align="center">จำนวนหน้า</TableCell>
-                            <TableCell align="center">ปีที่พิมพ์</TableCell>
-                            <TableCell align="center">ชื่อผู้แต่ง</TableCell>
-                            <TableCell align="center">ประเภทงานวิจัย</TableCell>
-                            <TableCell align="center">วันที่</TableCell>
-                          </TableRow>
+                        <TableRow>
+                                <TableCell align="center">ลำดับที่</TableCell>
+                                <TableCell align="center">เลขที่กำกับภาษี</TableCell>
+                                <TableCell align="center">ชื่อผู้ชำระค่าบริการ</TableCell>
+                                <TableCell align="center">บริการทันตกรรม</TableCell>
+                                
+                                <TableCell align="center">ประเภทการชำระ</TableCell>
+                                <TableCell align="center">วันที่</TableCell>
+                              </TableRow>
                         </TableHead>
                         <TableBody>
 
                           {dentalexpense.filter((filter: any) => filter.tax.includes(tax)).map((item: any) => (
                             <TableRow key={item.id}>
-                              <TableCell align="center">{item.id}</TableCell>
-                              <TableCell align="center">{item.tax}</TableCell>
-                              <TableCell align="center">{item.rates}</TableCell>
-                              <TableCell align="center">{item.name}</TableCell>
-                              <TableCell align="center">{item.edges?.medicalfile?.edges?.Patient?.name}</TableCell>
-                              <TableCell align="center">{item.edges?.pricetypes?.name}</TableCell>
-                              <TableCell align="center">{moment(item.AddedTime).format('DD/MM/YYYY HH.mm น.')}</TableCell>
-                            </TableRow>
+                            <TableCell align="center">{item.id}</TableCell>
+                            <TableCell align="center">{item.tax}</TableCell>
+                            <TableCell align="center">{item.name}</TableCell>
+                            <TableCell align="center">{item.edges?.medicalfile?.detial}</TableCell>
+                            
+                            <TableCell align="center">{item.edges?.pricetype?.name}</TableCell>
+                            <TableCell align="center">{moment(item.AddedTime).format('DD/MM/YYYY HH.mm น.')}</TableCell>
+                          </TableRow>
                           ))}
                         </TableBody>
                       </Table>
@@ -290,12 +288,12 @@ export default function ComponentsTable() {
                         <TableContainer component={Paper}>
                           <Table className={classes.table} aria-label="simple table">
                             <TableHead>
-                              <TableRow>
+                            <TableRow>
                                 <TableCell align="center">ลำดับที่</TableCell>
                                 <TableCell align="center">เลขที่กำกับภาษี</TableCell>
-                                
                                 <TableCell align="center">ชื่อผู้ชำระค่าบริการ</TableCell>
-                                <TableCell align="center">ชื่อผู้ป่วย</TableCell>
+                                <TableCell align="center">บริการทันตกรรม</TableCell>
+                                
                                 <TableCell align="center">ประเภทการชำระ</TableCell>
                                 <TableCell align="center">วันที่</TableCell>
                               </TableRow>
@@ -303,15 +301,15 @@ export default function ComponentsTable() {
                             <TableBody>
 
                               {dentalexpense.map((item: any) => (
-                                <TableRow key={item.id}>
-                                  <TableCell align="center">{item.id}</TableCell>
-                              <TableCell align="center">{item.tax}</TableCell>
-                              
-                              <TableCell align="center">{item.name}</TableCell>
-                              <TableCell align="center">{item.edges?.medicalfile?.edges?.patient?.name}</TableCell>
-                              <TableCell align="center">{item.edges?.pricetypes?.id}</TableCell>
-                              <TableCell align="center">{moment(item.AddedTime).format('DD/MM/YYYY HH.mm น.')}</TableCell>
-                                </TableRow>
+                                 <TableRow key={item.id}>
+                                 <TableCell align="center">{item.id}</TableCell>
+                                 <TableCell align="center">{item.tax}</TableCell>
+                                 <TableCell align="center">{item.name}</TableCell>
+                                 <TableCell align="center">{item.edges?.medicalfile?.detial}</TableCell>
+                                 
+                                 <TableCell align="center">{item.edges?.pricetype?.name}</TableCell>
+                                 <TableCell align="center">{moment(item.AddedTime).format('DD/MM/YYYY HH.mm น.')}</TableCell>
+                               </TableRow>
                               ))}
                             </TableBody>
                           </Table>
@@ -329,3 +327,4 @@ export default function ComponentsTable() {
   );
 
 }
+
