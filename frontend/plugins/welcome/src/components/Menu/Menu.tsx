@@ -54,6 +54,13 @@ const Homepage: FC<{}> = () => {
         </ButtonGroup>
         </center>
 
+        <center>
+        <ButtonGroup size="small" aria-label="small outlined button group">
+        <Button><Link color="textPrimary" href="/SearchMed" > ค้นหาประวัติทันตกรรม </Link></Button>
+        <Button><Link color="textPrimary" href="/SearchDenExpen" > ค้นหารายการค่ารักษา </Link></Button>
+        </ButtonGroup>
+        </center>
+
         <Grid container className={classes.root} spacing={2}>
       <Grid item xs={12}>
         <Grid container justify="center" >
