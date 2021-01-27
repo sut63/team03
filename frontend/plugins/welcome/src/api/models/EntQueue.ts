@@ -27,11 +27,29 @@ import {
  */
 export interface EntQueue {
     /**
-     * Dental holds the value of the "dental" field.
+     * Dental holds the value of the "Dental" field.
      * @type {string}
      * @memberof EntQueue
      */
     dental?: string;
+    /**
+     * Phone holds the value of the "Phone" field.
+     * @type {string}
+     * @memberof EntQueue
+     */
+    phone?: string;
+    /**
+     * QueueID holds the value of the "QueueID" field.
+     * @type {string}
+     * @memberof EntQueue
+     */
+    queueID?: string;
+    /**
+     * QueueTime holds the value of the "QueueTime" field.
+     * @type {string}
+     * @memberof EntQueue
+     */
+    queueTime?: string;
     /**
      * 
      * @type {EntQueueEdges}
@@ -44,12 +62,6 @@ export interface EntQueue {
      * @memberof EntQueue
      */
     id?: number;
-    /**
-     * QueueTime holds the value of the "queue_time" field.
-     * @type {string}
-     * @memberof EntQueue
-     */
-    queueTime?: string;
 }
 
 export function EntQueueFromJSON(json: any): EntQueue {
@@ -62,10 +74,12 @@ export function EntQueueFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
     }
     return {
         
-        'dental': !exists(json, 'dental') ? undefined : json['dental'],
+        'dental': !exists(json, 'Dental') ? undefined : json['Dental'],
+        'phone': !exists(json, 'Phone') ? undefined : json['Phone'],
+        'queueID': !exists(json, 'QueueID') ? undefined : json['QueueID'],
+        'queueTime': !exists(json, 'QueueTime') ? undefined : json['QueueTime'],
         'edges': !exists(json, 'edges') ? undefined : EntQueueEdgesFromJSON(json['edges']),
         'id': !exists(json, 'id') ? undefined : json['id'],
-        'queueTime': !exists(json, 'queue_time') ? undefined : json['queue_time'],
     };
 }
 
@@ -78,10 +92,12 @@ export function EntQueueToJSON(value?: EntQueue | null): any {
     }
     return {
         
-        'dental': value.dental,
+        'Dental': value.dental,
+        'Phone': value.phone,
+        'QueueID': value.queueID,
+        'QueueTime': value.queueTime,
         'edges': EntQueueEdgesToJSON(value.edges),
         'id': value.id,
-        'queue_time': value.queueTime,
     };
 }
 

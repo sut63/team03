@@ -1,6 +1,8 @@
 package schema
 
 import (
+	"errors"
+	"regexp"
 	"github.com/facebookincubator/ent"
 	"github.com/facebookincubator/ent/schema/edge"
 	"github.com/facebookincubator/ent/schema/field"
@@ -14,8 +16,16 @@ type Queue struct {
 // Fields of the Queue.
 func (Queue) Fields() []ent.Field {
 	return []ent.Field{
-		field.String("dental"),
-		field.Time("queue_time"),
+        field.String("QueueID").Validate(func(s string) error {
+			match, _ := regexp.MatchString("[Q]\\d{3}", s)
+			if !match {
+				return errors.New("รูปแบบรหัสคิวไม่ถูกต้อง")
+			}
+			return nil
+		}),
+		field.String("Phone").MaxLen(10).MinLen(10),
+		field.String("Dental").NotEmpty().MaxLen(30),
+		field.Time("QueueTime"),
 	}
 }
 

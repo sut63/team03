@@ -6038,13 +6038,13 @@ type PatientMutation struct {
 	op                  Op
 	typ                 string
 	id                  *int
-	patient_ID          *string
-	name                *string
-	cardID              *string
-	tel                 *string
-	age                 *int
-	addage              *int
-	birthday            *time.Time
+	_PatientID          *string
+	_Name               *string
+	_CardID             *string
+	_Tel                *string
+	_Age                *int
+	add_Age             *int
+	_Birthday           *time.Time
 	clearedFields       map[string]struct{}
 	gender              *int
 	clearedgender       bool
@@ -6143,21 +6143,21 @@ func (m *PatientMutation) ID() (id int, exists bool) {
 	return *m.id, true
 }
 
-// SetPatientID sets the patient_ID field.
+// SetPatientID sets the PatientID field.
 func (m *PatientMutation) SetPatientID(s string) {
-	m.patient_ID = &s
+	m._PatientID = &s
 }
 
-// PatientID returns the patient_ID value in the mutation.
+// PatientID returns the PatientID value in the mutation.
 func (m *PatientMutation) PatientID() (r string, exists bool) {
-	v := m.patient_ID
+	v := m._PatientID
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// OldPatientID returns the old patient_ID value of the Patient.
+// OldPatientID returns the old PatientID value of the Patient.
 // If the Patient object wasn't provided to the builder, the object is fetched
 // from the database.
 // An error is returned if the mutation operation is not UpdateOne, or database query fails.
@@ -6175,26 +6175,26 @@ func (m *PatientMutation) OldPatientID(ctx context.Context) (v string, err error
 	return oldValue.PatientID, nil
 }
 
-// ResetPatientID reset all changes of the "patient_ID" field.
+// ResetPatientID reset all changes of the "PatientID" field.
 func (m *PatientMutation) ResetPatientID() {
-	m.patient_ID = nil
+	m._PatientID = nil
 }
 
-// SetName sets the name field.
+// SetName sets the Name field.
 func (m *PatientMutation) SetName(s string) {
-	m.name = &s
+	m._Name = &s
 }
 
-// Name returns the name value in the mutation.
+// Name returns the Name value in the mutation.
 func (m *PatientMutation) Name() (r string, exists bool) {
-	v := m.name
+	v := m._Name
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// OldName returns the old name value of the Patient.
+// OldName returns the old Name value of the Patient.
 // If the Patient object wasn't provided to the builder, the object is fetched
 // from the database.
 // An error is returned if the mutation operation is not UpdateOne, or database query fails.
@@ -6212,26 +6212,26 @@ func (m *PatientMutation) OldName(ctx context.Context) (v string, err error) {
 	return oldValue.Name, nil
 }
 
-// ResetName reset all changes of the "name" field.
+// ResetName reset all changes of the "Name" field.
 func (m *PatientMutation) ResetName() {
-	m.name = nil
+	m._Name = nil
 }
 
-// SetCardID sets the cardID field.
+// SetCardID sets the CardID field.
 func (m *PatientMutation) SetCardID(s string) {
-	m.cardID = &s
+	m._CardID = &s
 }
 
-// CardID returns the cardID value in the mutation.
+// CardID returns the CardID value in the mutation.
 func (m *PatientMutation) CardID() (r string, exists bool) {
-	v := m.cardID
+	v := m._CardID
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// OldCardID returns the old cardID value of the Patient.
+// OldCardID returns the old CardID value of the Patient.
 // If the Patient object wasn't provided to the builder, the object is fetched
 // from the database.
 // An error is returned if the mutation operation is not UpdateOne, or database query fails.
@@ -6249,26 +6249,26 @@ func (m *PatientMutation) OldCardID(ctx context.Context) (v string, err error) {
 	return oldValue.CardID, nil
 }
 
-// ResetCardID reset all changes of the "cardID" field.
+// ResetCardID reset all changes of the "CardID" field.
 func (m *PatientMutation) ResetCardID() {
-	m.cardID = nil
+	m._CardID = nil
 }
 
-// SetTel sets the tel field.
+// SetTel sets the Tel field.
 func (m *PatientMutation) SetTel(s string) {
-	m.tel = &s
+	m._Tel = &s
 }
 
-// Tel returns the tel value in the mutation.
+// Tel returns the Tel value in the mutation.
 func (m *PatientMutation) Tel() (r string, exists bool) {
-	v := m.tel
+	v := m._Tel
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// OldTel returns the old tel value of the Patient.
+// OldTel returns the old Tel value of the Patient.
 // If the Patient object wasn't provided to the builder, the object is fetched
 // from the database.
 // An error is returned if the mutation operation is not UpdateOne, or database query fails.
@@ -6286,27 +6286,27 @@ func (m *PatientMutation) OldTel(ctx context.Context) (v string, err error) {
 	return oldValue.Tel, nil
 }
 
-// ResetTel reset all changes of the "tel" field.
+// ResetTel reset all changes of the "Tel" field.
 func (m *PatientMutation) ResetTel() {
-	m.tel = nil
+	m._Tel = nil
 }
 
-// SetAge sets the age field.
+// SetAge sets the Age field.
 func (m *PatientMutation) SetAge(i int) {
-	m.age = &i
-	m.addage = nil
+	m._Age = &i
+	m.add_Age = nil
 }
 
-// Age returns the age value in the mutation.
+// Age returns the Age value in the mutation.
 func (m *PatientMutation) Age() (r int, exists bool) {
-	v := m.age
+	v := m._Age
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// OldAge returns the old age value of the Patient.
+// OldAge returns the old Age value of the Patient.
 // If the Patient object wasn't provided to the builder, the object is fetched
 // from the database.
 // An error is returned if the mutation operation is not UpdateOne, or database query fails.
@@ -6324,45 +6324,45 @@ func (m *PatientMutation) OldAge(ctx context.Context) (v int, err error) {
 	return oldValue.Age, nil
 }
 
-// AddAge adds i to age.
+// AddAge adds i to Age.
 func (m *PatientMutation) AddAge(i int) {
-	if m.addage != nil {
-		*m.addage += i
+	if m.add_Age != nil {
+		*m.add_Age += i
 	} else {
-		m.addage = &i
+		m.add_Age = &i
 	}
 }
 
-// AddedAge returns the value that was added to the age field in this mutation.
+// AddedAge returns the value that was added to the Age field in this mutation.
 func (m *PatientMutation) AddedAge() (r int, exists bool) {
-	v := m.addage
+	v := m.add_Age
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// ResetAge reset all changes of the "age" field.
+// ResetAge reset all changes of the "Age" field.
 func (m *PatientMutation) ResetAge() {
-	m.age = nil
-	m.addage = nil
+	m._Age = nil
+	m.add_Age = nil
 }
 
-// SetBirthday sets the birthday field.
+// SetBirthday sets the Birthday field.
 func (m *PatientMutation) SetBirthday(t time.Time) {
-	m.birthday = &t
+	m._Birthday = &t
 }
 
-// Birthday returns the birthday value in the mutation.
+// Birthday returns the Birthday value in the mutation.
 func (m *PatientMutation) Birthday() (r time.Time, exists bool) {
-	v := m.birthday
+	v := m._Birthday
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// OldBirthday returns the old birthday value of the Patient.
+// OldBirthday returns the old Birthday value of the Patient.
 // If the Patient object wasn't provided to the builder, the object is fetched
 // from the database.
 // An error is returned if the mutation operation is not UpdateOne, or database query fails.
@@ -6380,9 +6380,9 @@ func (m *PatientMutation) OldBirthday(ctx context.Context) (v time.Time, err err
 	return oldValue.Birthday, nil
 }
 
-// ResetBirthday reset all changes of the "birthday" field.
+// ResetBirthday reset all changes of the "Birthday" field.
 func (m *PatientMutation) ResetBirthday() {
-	m.birthday = nil
+	m._Birthday = nil
 }
 
 // SetGenderID sets the gender edge to Gender by id.
@@ -6682,22 +6682,22 @@ func (m *PatientMutation) Type() string {
 // fields that were in/decremented, call AddedFields().
 func (m *PatientMutation) Fields() []string {
 	fields := make([]string, 0, 6)
-	if m.patient_ID != nil {
+	if m._PatientID != nil {
 		fields = append(fields, patient.FieldPatientID)
 	}
-	if m.name != nil {
+	if m._Name != nil {
 		fields = append(fields, patient.FieldName)
 	}
-	if m.cardID != nil {
+	if m._CardID != nil {
 		fields = append(fields, patient.FieldCardID)
 	}
-	if m.tel != nil {
+	if m._Tel != nil {
 		fields = append(fields, patient.FieldTel)
 	}
-	if m.age != nil {
+	if m._Age != nil {
 		fields = append(fields, patient.FieldAge)
 	}
-	if m.birthday != nil {
+	if m._Birthday != nil {
 		fields = append(fields, patient.FieldBirthday)
 	}
 	return fields
@@ -6800,7 +6800,7 @@ func (m *PatientMutation) SetField(name string, value ent.Value) error {
 // or decremented during this mutation.
 func (m *PatientMutation) AddedFields() []string {
 	var fields []string
-	if m.addage != nil {
+	if m.add_Age != nil {
 		fields = append(fields, patient.FieldAge)
 	}
 	return fields
@@ -7451,8 +7451,10 @@ type QueueMutation struct {
 	op             Op
 	typ            string
 	id             *int
-	dental         *string
-	queue_time     *time.Time
+	_QueueID       *string
+	_Phone         *string
+	_Dental        *string
+	_QueueTime     *time.Time
 	clearedFields  map[string]struct{}
 	dentist        *int
 	cleareddentist bool
@@ -7543,21 +7545,95 @@ func (m *QueueMutation) ID() (id int, exists bool) {
 	return *m.id, true
 }
 
-// SetDental sets the dental field.
-func (m *QueueMutation) SetDental(s string) {
-	m.dental = &s
+// SetQueueID sets the QueueID field.
+func (m *QueueMutation) SetQueueID(s string) {
+	m._QueueID = &s
 }
 
-// Dental returns the dental value in the mutation.
-func (m *QueueMutation) Dental() (r string, exists bool) {
-	v := m.dental
+// QueueID returns the QueueID value in the mutation.
+func (m *QueueMutation) QueueID() (r string, exists bool) {
+	v := m._QueueID
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// OldDental returns the old dental value of the Queue.
+// OldQueueID returns the old QueueID value of the Queue.
+// If the Queue object wasn't provided to the builder, the object is fetched
+// from the database.
+// An error is returned if the mutation operation is not UpdateOne, or database query fails.
+func (m *QueueMutation) OldQueueID(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldQueueID is allowed only on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldQueueID requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldQueueID: %w", err)
+	}
+	return oldValue.QueueID, nil
+}
+
+// ResetQueueID reset all changes of the "QueueID" field.
+func (m *QueueMutation) ResetQueueID() {
+	m._QueueID = nil
+}
+
+// SetPhone sets the Phone field.
+func (m *QueueMutation) SetPhone(s string) {
+	m._Phone = &s
+}
+
+// Phone returns the Phone value in the mutation.
+func (m *QueueMutation) Phone() (r string, exists bool) {
+	v := m._Phone
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldPhone returns the old Phone value of the Queue.
+// If the Queue object wasn't provided to the builder, the object is fetched
+// from the database.
+// An error is returned if the mutation operation is not UpdateOne, or database query fails.
+func (m *QueueMutation) OldPhone(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldPhone is allowed only on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldPhone requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldPhone: %w", err)
+	}
+	return oldValue.Phone, nil
+}
+
+// ResetPhone reset all changes of the "Phone" field.
+func (m *QueueMutation) ResetPhone() {
+	m._Phone = nil
+}
+
+// SetDental sets the Dental field.
+func (m *QueueMutation) SetDental(s string) {
+	m._Dental = &s
+}
+
+// Dental returns the Dental value in the mutation.
+func (m *QueueMutation) Dental() (r string, exists bool) {
+	v := m._Dental
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldDental returns the old Dental value of the Queue.
 // If the Queue object wasn't provided to the builder, the object is fetched
 // from the database.
 // An error is returned if the mutation operation is not UpdateOne, or database query fails.
@@ -7575,26 +7651,26 @@ func (m *QueueMutation) OldDental(ctx context.Context) (v string, err error) {
 	return oldValue.Dental, nil
 }
 
-// ResetDental reset all changes of the "dental" field.
+// ResetDental reset all changes of the "Dental" field.
 func (m *QueueMutation) ResetDental() {
-	m.dental = nil
+	m._Dental = nil
 }
 
-// SetQueueTime sets the queue_time field.
+// SetQueueTime sets the QueueTime field.
 func (m *QueueMutation) SetQueueTime(t time.Time) {
-	m.queue_time = &t
+	m._QueueTime = &t
 }
 
-// QueueTime returns the queue_time value in the mutation.
+// QueueTime returns the QueueTime value in the mutation.
 func (m *QueueMutation) QueueTime() (r time.Time, exists bool) {
-	v := m.queue_time
+	v := m._QueueTime
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// OldQueueTime returns the old queue_time value of the Queue.
+// OldQueueTime returns the old QueueTime value of the Queue.
 // If the Queue object wasn't provided to the builder, the object is fetched
 // from the database.
 // An error is returned if the mutation operation is not UpdateOne, or database query fails.
@@ -7612,9 +7688,9 @@ func (m *QueueMutation) OldQueueTime(ctx context.Context) (v time.Time, err erro
 	return oldValue.QueueTime, nil
 }
 
-// ResetQueueTime reset all changes of the "queue_time" field.
+// ResetQueueTime reset all changes of the "QueueTime" field.
 func (m *QueueMutation) ResetQueueTime() {
-	m.queue_time = nil
+	m._QueueTime = nil
 }
 
 // SetDentistID sets the dentist edge to Dentist by id.
@@ -7748,11 +7824,17 @@ func (m *QueueMutation) Type() string {
 // this mutation. Note that, in order to get all numeric
 // fields that were in/decremented, call AddedFields().
 func (m *QueueMutation) Fields() []string {
-	fields := make([]string, 0, 2)
-	if m.dental != nil {
+	fields := make([]string, 0, 4)
+	if m._QueueID != nil {
+		fields = append(fields, queue.FieldQueueID)
+	}
+	if m._Phone != nil {
+		fields = append(fields, queue.FieldPhone)
+	}
+	if m._Dental != nil {
 		fields = append(fields, queue.FieldDental)
 	}
-	if m.queue_time != nil {
+	if m._QueueTime != nil {
 		fields = append(fields, queue.FieldQueueTime)
 	}
 	return fields
@@ -7763,6 +7845,10 @@ func (m *QueueMutation) Fields() []string {
 // not set, or was not define in the schema.
 func (m *QueueMutation) Field(name string) (ent.Value, bool) {
 	switch name {
+	case queue.FieldQueueID:
+		return m.QueueID()
+	case queue.FieldPhone:
+		return m.Phone()
 	case queue.FieldDental:
 		return m.Dental()
 	case queue.FieldQueueTime:
@@ -7776,6 +7862,10 @@ func (m *QueueMutation) Field(name string) (ent.Value, bool) {
 // or the query to the database was failed.
 func (m *QueueMutation) OldField(ctx context.Context, name string) (ent.Value, error) {
 	switch name {
+	case queue.FieldQueueID:
+		return m.OldQueueID(ctx)
+	case queue.FieldPhone:
+		return m.OldPhone(ctx)
 	case queue.FieldDental:
 		return m.OldDental(ctx)
 	case queue.FieldQueueTime:
@@ -7789,6 +7879,20 @@ func (m *QueueMutation) OldField(ctx context.Context, name string) (ent.Value, e
 // type mismatch the field type.
 func (m *QueueMutation) SetField(name string, value ent.Value) error {
 	switch name {
+	case queue.FieldQueueID:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetQueueID(v)
+		return nil
+	case queue.FieldPhone:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetPhone(v)
+		return nil
 	case queue.FieldDental:
 		v, ok := value.(string)
 		if !ok {
@@ -7853,6 +7957,12 @@ func (m *QueueMutation) ClearField(name string) error {
 // defined in the schema.
 func (m *QueueMutation) ResetField(name string) error {
 	switch name {
+	case queue.FieldQueueID:
+		m.ResetQueueID()
+		return nil
+	case queue.FieldPhone:
+		m.ResetPhone()
+		return nil
 	case queue.FieldDental:
 		m.ResetDental()
 		return nil

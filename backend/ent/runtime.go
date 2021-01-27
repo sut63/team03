@@ -14,6 +14,7 @@ import (
 	"github.com/team03/app/ent/medicalfile"
 	"github.com/team03/app/ent/nurse"
 	"github.com/team03/app/ent/patient"
+	"github.com/team03/app/ent/queue"
 	"github.com/team03/app/ent/room"
 	"github.com/team03/app/ent/schema"
 )
@@ -192,26 +193,110 @@ func init() {
 	nurse.NurseNameValidator = nurseDescNurseName.Validators[0].(func(string) error)
 	patientFields := schema.Patient{}.Fields()
 	_ = patientFields
-	// patientDescPatientID is the schema descriptor for patient_ID field.
+	// patientDescPatientID is the schema descriptor for PatientID field.
 	patientDescPatientID := patientFields[0].Descriptor()
-	// patient.PatientIDValidator is a validator for the "patient_ID" field. It is called by the builders before save.
-	patient.PatientIDValidator = patientDescPatientID.Validators[0].(func(string) error)
-	// patientDescName is the schema descriptor for name field.
+	// patient.PatientIDValidator is a validator for the "PatientID" field. It is called by the builders before save.
+	patient.PatientIDValidator = func() func(string) error {
+		validators := patientDescPatientID.Validators
+		fns := [...]func(string) error{
+			validators[0].(func(string) error),
+			validators[1].(func(string) error),
+		}
+		return func(_PatientID string) error {
+			for _, fn := range fns {
+				if err := fn(_PatientID); err != nil {
+					return err
+				}
+			}
+			return nil
+		}
+	}()
+	// patientDescName is the schema descriptor for Name field.
 	patientDescName := patientFields[1].Descriptor()
-	// patient.NameValidator is a validator for the "name" field. It is called by the builders before save.
+	// patient.NameValidator is a validator for the "Name" field. It is called by the builders before save.
 	patient.NameValidator = patientDescName.Validators[0].(func(string) error)
-	// patientDescCardID is the schema descriptor for cardID field.
+	// patientDescCardID is the schema descriptor for CardID field.
 	patientDescCardID := patientFields[2].Descriptor()
-	// patient.CardIDValidator is a validator for the "cardID" field. It is called by the builders before save.
-	patient.CardIDValidator = patientDescCardID.Validators[0].(func(string) error)
-	// patientDescTel is the schema descriptor for tel field.
+	// patient.CardIDValidator is a validator for the "CardID" field. It is called by the builders before save.
+	patient.CardIDValidator = func() func(string) error {
+		validators := patientDescCardID.Validators
+		fns := [...]func(string) error{
+			validators[0].(func(string) error),
+			validators[1].(func(string) error),
+		}
+		return func(_CardID string) error {
+			for _, fn := range fns {
+				if err := fn(_CardID); err != nil {
+					return err
+				}
+			}
+			return nil
+		}
+	}()
+	// patientDescTel is the schema descriptor for Tel field.
 	patientDescTel := patientFields[3].Descriptor()
-	// patient.TelValidator is a validator for the "tel" field. It is called by the builders before save.
-	patient.TelValidator = patientDescTel.Validators[0].(func(string) error)
-	// patientDescAge is the schema descriptor for age field.
+	// patient.TelValidator is a validator for the "Tel" field. It is called by the builders before save.
+	patient.TelValidator = func() func(string) error {
+		validators := patientDescTel.Validators
+		fns := [...]func(string) error{
+			validators[0].(func(string) error),
+			validators[1].(func(string) error),
+		}
+		return func(_Tel string) error {
+			for _, fn := range fns {
+				if err := fn(_Tel); err != nil {
+					return err
+				}
+			}
+			return nil
+		}
+	}()
+	// patientDescAge is the schema descriptor for Age field.
 	patientDescAge := patientFields[4].Descriptor()
-	// patient.AgeValidator is a validator for the "age" field. It is called by the builders before save.
+	// patient.AgeValidator is a validator for the "Age" field. It is called by the builders before save.
 	patient.AgeValidator = patientDescAge.Validators[0].(func(int) error)
+	queueFields := schema.Queue{}.Fields()
+	_ = queueFields
+	// queueDescQueueID is the schema descriptor for QueueID field.
+	queueDescQueueID := queueFields[0].Descriptor()
+	// queue.QueueIDValidator is a validator for the "QueueID" field. It is called by the builders before save.
+	queue.QueueIDValidator = queueDescQueueID.Validators[0].(func(string) error)
+	// queueDescPhone is the schema descriptor for Phone field.
+	queueDescPhone := queueFields[1].Descriptor()
+	// queue.PhoneValidator is a validator for the "Phone" field. It is called by the builders before save.
+	queue.PhoneValidator = func() func(string) error {
+		validators := queueDescPhone.Validators
+		fns := [...]func(string) error{
+			validators[0].(func(string) error),
+			validators[1].(func(string) error),
+		}
+		return func(_Phone string) error {
+			for _, fn := range fns {
+				if err := fn(_Phone); err != nil {
+					return err
+				}
+			}
+			return nil
+		}
+	}()
+	// queueDescDental is the schema descriptor for Dental field.
+	queueDescDental := queueFields[2].Descriptor()
+	// queue.DentalValidator is a validator for the "Dental" field. It is called by the builders before save.
+	queue.DentalValidator = func() func(string) error {
+		validators := queueDescDental.Validators
+		fns := [...]func(string) error{
+			validators[0].(func(string) error),
+			validators[1].(func(string) error),
+		}
+		return func(_Dental string) error {
+			for _, fn := range fns {
+				if err := fn(_Dental); err != nil {
+					return err
+				}
+			}
+			return nil
+		}
+	}()
 	roomFields := schema.Room{}.Fields()
 	_ = roomFields
 	// roomDescName is the schema descriptor for name field.

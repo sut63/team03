@@ -11,6 +11,7 @@ import {
   MenuItem,
   TextField,
   Button,
+  Avatar,
   
 } from '@material-ui/core';
 import { Link as RouterLink } from 'react-router-dom';
@@ -58,9 +59,11 @@ const useStyles = makeStyles(theme => ({
 }));
 
 interface Queue {
-  Patient: Number;
-  Dentist: Number;
-  Dental: String;
+  QueueID:   String;
+	Patient:   Number;
+	Phone:     String;
+  Dentist:   Number;
+  Dental:    String;
   QueueTime: String;
 
 }
@@ -72,6 +75,10 @@ const SaveQueue: FC<{}> = () => {
   const [queue, setQueue] = React.useState<Partial<Queue>>({});
   const [dentists, setDentists] = React.useState<EntDentist[]>([]);
   const [patients, setPatients] = React.useState<EntPatient[]>([]);
+  
+  const [QueueIDError, setQueueIDError] = React.useState('');
+  const [PhoneError, setPhoneError] = React.useState('');
+  const [DentalError, setDentalError] = React.useState('');
   
 
   // alert setting
@@ -86,11 +93,12 @@ const SaveQueue: FC<{}> = () => {
 
   // set data to object queue
   const handleChange = (
-    event: React.ChangeEvent<{ name?: string; value: unknown }>,
-  ) => {
+    event: React.ChangeEvent<{ name?: string; value: any }>,  ) => {
     const name = event.target.name as keyof typeof queue;
     const { value } = event.target;
     setQueue({ ...queue, [name]: value });
+    const validateValue = value.toString()
+    checkPattern(name, validateValue)
     console.log(queue);
   };
   
@@ -112,6 +120,66 @@ const SaveQueue: FC<{}> = () => {
     getDentist();
   }, []);
 
+  
+  // ฟังก์ชั่นสำหรับ validate รหัสคิว
+  const validateQueueID = (val: string) => {
+    return val.match("[Q]\\d{3}") && val.length <= 4;
+  }
+
+  // ฟังก์ชั่นสำหรับ validate โทรศัพท์
+  const validatePhone = (val: string) => {
+    return val.length == 10 ? true : false;
+  }
+ 
+  // ฟังก์ชั่นสำหรับ validate ทันตกรรม
+  const validateDental = (val: string) => {
+    return val.length > 30 ? false : true;
+  }
+
+  // สำหรับตรวจสอบรูปแบบข้อมูลที่กรอก ว่าเป็นไปตามที่กำหนดหรือไม่
+  const checkPattern  = (id: string, value: string) => {
+    switch(id) {
+      case 'QueueID':
+        validateQueueID(value) ? setQueueIDError('') : setQueueIDError('รหัสคิวขึ้นต้นด้วย Q ตามด้วยตัวเลข 3 ตัว');
+        return;
+      case 'Phone':
+        validatePhone(value) ? setPhoneError('') : setPhoneError('หมายเลขโทรศัพท์ต้องมี 10 หลัก');
+        return;
+        case 'Dental':
+        validateDental(value) ? setDentalError('') : setDentalError('มีตัวอักษรเกิน 30 ตัวอักษร');
+        return;
+      default:
+        return;
+    }
+  }
+
+  const alertMessage = (icon: any, title: any) => {
+    Toast.fire({
+      icon: icon,
+      title: title,
+    });
+  }
+
+  //กำหนดข้อความ error
+  const checkCaseSaveError = (s: string) => {
+    switch(s) {
+      case 'QueueID':
+        alertMessage("error", "รหัสคิวขึ้นต้นด้วย Q ตามด้วยตัวเลข 3 ตัว");
+        return;
+      case 'Phone':
+        alertMessage("error", "หมายเลขโทรศัพท์ต้องมี 10 หลัก");
+        return;
+      case 'Dental':
+        alertMessage("error", "มีตัวอักษรเกิน 30 ตัวอักษร");
+        return;
+      default:
+        alertMessage("error", " บันทึกข้อมูลไม่สำเร็จ");
+        return;
+    }
+  }
+
+  
+
   // clear input form
   function clear() {
     setQueue({});
@@ -129,25 +197,21 @@ const SaveQueue: FC<{}> = () => {
 
     console.log(queue); // log ดูข้อมูล สามารถ Inspect ดูข้อมูลได้ F12 เลือก Tab Console
 
-    fetch(apiUrl, requestOptions)
+     fetch(apiUrl, requestOptions)
       .then(response => response.json())
-      .then(data => {console.log(data.save);
-        console.log(requestOptions)
-        if (data.status == true) {
+      .then(data => {
+        console.log(data);
+        if (data.status === true) {
           clear();
           Toast.fire({
             icon: 'success',
             title: 'บันทึกข้อมูลสำเร็จ',
           });
         } else {
-          Toast.fire({
-            icon: 'error',
-            title: 'บันทึกข้อมูลไม่สำเร็จ',
-          });
+          checkCaseSaveError(data.error.Name)
         }
       });
-
-  }
+  };
 
   return (
     <Page theme={pageTheme.service}>
@@ -164,9 +228,29 @@ const SaveQueue: FC<{}> = () => {
         </ContentHeader>
 
         <Container maxWidth="sm">
-        
+
+            
           <Grid container spacing={3}>
             <Grid item xs={12}></Grid>
+
+            <Grid item xs={4}>
+              <div className={classes.paper}>รหัสคิว</div>
+            </Grid>
+            <Grid item xs={8}>
+              <FormControl variant="outlined" className={classes.formControl}>
+                <TextField 
+                error = {QueueIDError ? true : false}
+                label="รหัสคิว"
+                variant="outlined"
+                name="QueueID"
+                type="string" 
+                helperText={QueueIDError}
+                value={queue.QueueID || ''}
+                onChange={handleChange}
+                />
+              </FormControl>
+            </Grid>
+
             <Grid item xs={4}>
               <div className={classes.paper}>ผู้ป่วยที่ต้องการจองคิว</div>
             </Grid>
@@ -186,6 +270,25 @@ const SaveQueue: FC<{}> = () => {
                     );
                   })}
                 </Select>
+              </FormControl>
+            </Grid>
+
+            <Grid item xs={4}>
+              <div className={classes.paper}>หมายเลขโทรศัพท์ติดต่อฉุกเฉิน</div>
+            </Grid>
+            <Grid item xs={8}>
+              <FormControl variant="outlined" className={classes.formControl}>
+                <TextField 
+                error = {PhoneError ? true : false}
+                name="Phone"
+                label="หมายเลขโทรศัพท์ติดต่อฉุกเฉิน" 
+                helperText={PhoneError}
+                variant="outlined"
+                type="string"
+                value={queue.Phone || ''}
+                onChange={handleChange}
+                />
+
               </FormControl>
             </Grid>
 
@@ -218,10 +321,11 @@ const SaveQueue: FC<{}> = () => {
             <Grid item xs={8}>
               <FormControl variant="outlined" className={classes.formControl}>
                 <TextField 
-                
-                label="ทันตกรรม" 
-                variant="outlined" 
+                error = {DentalError ? true : false}
                 name="Dental"
+                label="ทันตกรรม" 
+                helperText={DentalError}
+                variant="outlined"
                 type="string"
                 value={queue.Dental || ''}
                 onChange={handleChange}

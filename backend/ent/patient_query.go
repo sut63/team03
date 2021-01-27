@@ -457,7 +457,7 @@ func (pq *PatientQuery) WithAppointment(opts ...func(*AppointmentQuery)) *Patien
 // Example:
 //
 //	var v []struct {
-//		PatientID string `json:"patient_ID,omitempty"`
+//		PatientID string `json:"PatientID,omitempty"`
 //		Count int `json:"count,omitempty"`
 //	}
 //
@@ -483,7 +483,7 @@ func (pq *PatientQuery) GroupBy(field string, fields ...string) *PatientGroupBy 
 // Example:
 //
 //	var v []struct {
-//		PatientID string `json:"patient_ID,omitempty"`
+//		PatientID string `json:"PatientID,omitempty"`
 //	}
 //
 //	client.Patient.Query().

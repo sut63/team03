@@ -42,6 +42,18 @@ export interface ControllersQueue {
      * @type {string}
      * @memberof ControllersQueue
      */
+    phone?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ControllersQueue
+     */
+    queueID?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ControllersQueue
+     */
     queueTime?: string;
 }
 
@@ -58,6 +70,8 @@ export function ControllersQueueFromJSONTyped(json: any, ignoreDiscriminator: bo
         'dental': !exists(json, 'dental') ? undefined : json['dental'],
         'dentist': !exists(json, 'dentist') ? undefined : json['dentist'],
         'patient': !exists(json, 'patient') ? undefined : json['patient'],
+        'phone': !exists(json, 'phone') ? undefined : json['phone'],
+        'queueID': !exists(json, 'queueID') ? undefined : json['queueID'],
         'queueTime': !exists(json, 'queueTime') ? undefined : json['queueTime'],
     };
 }
@@ -74,6 +88,8 @@ export function ControllersQueueToJSON(value?: ControllersQueue | null): any {
         'dental': value.dental,
         'dentist': value.dentist,
         'patient': value.patient,
+        'phone': value.phone,
+        'queueID': value.queueID,
         'queueTime': value.queueTime,
     };
 }

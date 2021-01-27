@@ -4,6 +4,7 @@ import (
 	"context"
 	"strconv"
 	"time"
+	"fmt"
 
 	"github.com/team03/app/ent"
 	"github.com/team03/app/ent/dentist"
@@ -18,7 +19,9 @@ type QueueController struct {
 }
 
 type Queue struct {
+	QueueID   string
 	Patient   int
+	Phone     string
 	Dentist   int
 	Dental    string
 	QueueTime string
@@ -68,22 +71,26 @@ func (ctl *QueueController) QueueCreate(c *gin.Context) {
 		return
 	}
 
-	times, err := time.Parse(time.RFC3339, obj.QueueTime)
+	time, err := time.Parse(time.RFC3339, obj.QueueTime)
 
 	q, err := ctl.client.Queue.
 		Create().
+		SetQueueID(obj.QueueID).
 		SetPatient(p).
+		SetPhone(obj.Phone).
 		SetDentist(d).
 		SetDental(obj.Dental).
-		SetQueueTime(times).
+		SetQueueTime(time).
 		Save(context.Background())
+
 	if err != nil {
+		fmt.Println(err)
 		c.JSON(400, gin.H{
-			"error": "saving failed",
+			"status": false,
+			"error":  err,
 		})
 		return
 	}
-
 	c.JSON(200, gin.H{
 		"status": true,
 		"data":   q,
