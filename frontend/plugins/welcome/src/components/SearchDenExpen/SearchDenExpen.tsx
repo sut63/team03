@@ -135,17 +135,18 @@ export default function ComponentsTable() {
 
   return (
 
-    <Page theme={pageTheme.home}>
+    <Page theme={pageTheme.service}>
       <Header
-        title={`${profile.givenName}`}
-      >
+        title={`Dental System`}
+        subtitle = "ค้นหารายการค่ารักษา">
+      
         <table>
           <tr>
             
             <th>
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <Link component={RouterLink} to="/Menu">
-                <Button variant="contained" style={{ background: 'linear-gradient(45deg, #3399FF 15%, #9900FF 120%)', height: 36 }}>
+                <Button variant="contained" style={{  height: 40 }}>
                   <h3
                     style={
                       {
@@ -155,14 +156,14 @@ export default function ComponentsTable() {
                         padding: '0 20px',
                       }
                     }>
-                    กลับหน้าหลัก
+                    Back
             </h3>
                 </Button>
               </Link>
             </th>
           </tr>
         </table>
-
+      
       </Header>
       <Content>
         <Grid container item xs={12} justify="center">
