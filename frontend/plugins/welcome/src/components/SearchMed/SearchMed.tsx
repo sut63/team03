@@ -55,12 +55,12 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 const Toast = Swal.mixin({
-  
+  toast: true,
   position: 'top-end',
   showConfirmButton: false,
-  
-  
-  showCloseButton: true,
+  timer: 3000,
+  timerProgressBar: true,
+  //showCloseButton: true,
 
 });
 
@@ -207,7 +207,7 @@ export default function ComponentsTable() {
                   endIcon={<SearchTwoToneIcon />}
                   className={classes.margins}
                   variant="contained"
-                  style={{ background: "#333399", height: 40 }}>
+                  style={{ background: "#3399CC", height: 40 }}>
                   <h3
                     style={
                       {
