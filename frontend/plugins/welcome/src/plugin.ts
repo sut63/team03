@@ -12,6 +12,7 @@ import Nurse from './components/SaveNurse';
 import Welcome from './components/Welcome';
 import SearchDenExpen from './components/SearchDenExpen';
 import SearchMed from './components/SearchMed';
+import SearchAppoint from './components/SearchAppoint';
 
 export const plugin = createPlugin({
   id: 'welcome',
@@ -27,6 +28,8 @@ export const plugin = createPlugin({
     router.registerRoute('/SaveDentist', Dentist);
     router.registerRoute('/SaveQueue', Queue);
     router.registerRoute('/SaveNurse', Nurse);
+
+    router.registerRoute('/SearchAppoint', SearchAppoint);
     router.registerRoute('/SearchDenExpen', SearchDenExpen);
     router.registerRoute('/SearchMed', SearchMed);
   }
