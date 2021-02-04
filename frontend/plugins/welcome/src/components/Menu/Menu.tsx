@@ -11,28 +11,41 @@ import {
 import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
-import ButtonGroup from '@material-ui/core/ButtonGroup';
-
+import MenuList from '@material-ui/core/MenuList';
+import MenuItem from '@material-ui/core/MenuItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import Grid, { GridSpacing } from '@material-ui/core/Grid';
+import SearchIcon from '@material-ui/icons/Search';
+import SaveIcon from '@material-ui/icons/Save';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     justifyContent: 'center'
   },
   paper: {
-    height: 440,
-    width: 1250,
-    backgroundImage: 'url(https://image.freepik.com/free-vector/healthy-kawaii-tooth-with-dental-braces-cute-cartoon-character_74565-467.jpg)',
+    height: 530,
+    width: 800,
+    backgroundImage: 'url(https://www.nicepng.com/png/detail/38-387168_kids-transparent-dentist-clip-art-free-dentist-png.png)',
   },
   control: {
     padding: theme.spacing(2),
   },
- 
+  posi: {
+      width: '100%',
+      height: '6%',
+      justifyContent: 'left',
+      alignItems: 'center'
+  },
+  menu_root: {
+    width: 300,
+  },
+
 })
 );
 
 const Homepage: FC<{}> = () => {
   const classes = useStyles();
+  const [spacing] = React.useState<GridSpacing>(2);
   return (
     <Page theme={pageTheme.service}>
       <Header
@@ -43,37 +56,86 @@ const Homepage: FC<{}> = () => {
       </Header>
       <Content>
 
-        <center>
-        <ContentHeader title="Menu"> </ContentHeader>
-        <ButtonGroup size="small" aria-label="small outlined button group">
-        <Button><Link color="textPrimary" href="/SavePatient" > บันทึกประวัติผู้ป่วย </Link></Button>
-        <Button><Link color="textPrimary" href="/SaveDentist" > บันทึกข้อมูลทันตแพทย์ </Link></Button>
-        <Button><Link color="textPrimary" href="/SaveMed" > บันทึกประวัติทันตกรรม </Link></Button>
-        <Button><Link color="textPrimary" href="/SaveDenExpen" > บันทึกค่ารักษา </Link></Button>
-        <Button><Link color="textPrimary" href="/SaveQueue" > บันทึกการจองคิว </Link></Button>
-        </ButtonGroup>
-        </center>
+      <ContentHeader title="Menu (เมนู)"> </ContentHeader>
+        
+      <Grid container justify="space-around" alignItems="stretch" spacing={spacing}>
+          
+            <MenuList className={classes.menu_root}>
+              <MenuItem>
+                  <ListItemIcon>
+                    <SaveIcon color="primary" fontSize="small" />
+                  </ListItemIcon>
+                    <Link color="textPrimary" href="/SavePatient" >บันทึกประวัติผู้ป่วย</Link></MenuItem>
 
-        <center>
-        <ButtonGroup size="small" aria-label="small outlined button group">
-        <Button><Link color="textPrimary" href="/SearchMed" > ค้นหาประวัติทันตกรรม </Link></Button>
-        <Button><Link color="textPrimary" href="/SearchDenExpen" > ค้นหารายการค่ารักษา </Link></Button>
-        </ButtonGroup>
-        </center>
+              <MenuItem>
+                  <ListItemIcon>
+                    <SaveIcon color="primary" fontSize="small" />
+                  </ListItemIcon>
+                    <Link color="textPrimary" href="/SaveDentist" >บันทึกข้อมูลทันตแพทย์</Link></MenuItem>
+              
+              <MenuItem>
+                  <ListItemIcon>
+                    <SaveIcon color="primary" fontSize="small" />
+                  </ListItemIcon>
+                    <Link color="textPrimary" href="/SaveMed" >บันทึกประวัติทันตกรรม</Link></MenuItem>
 
-        <Grid container className={classes.root} spacing={2}>
-      <Grid item xs={12}>
-        <Grid container justify="center" >
+              <MenuItem>
+                  <ListItemIcon>
+                    <SaveIcon color="primary" fontSize="small" />
+                  </ListItemIcon>
+                    <Link color="textPrimary" href="/SaveDenExpen" >บันทึกค่ารักษา</Link></MenuItem>
+
+              <MenuItem>
+                  <ListItemIcon>
+                    <SaveIcon color="primary" fontSize="small" />
+                  </ListItemIcon>
+                    <Link color="textPrimary" href="/SaveQueue" >บันทึกการจองคิว</Link></MenuItem>
+
+
+              <MenuItem>
+                  <ListItemIcon>
+                    <SearchIcon color="primary" fontSize="small" />
+                  </ListItemIcon>
+                    <Link color="textPrimary" href="/" >ค้นหาประวัติผู้ป่วย</Link></MenuItem>
+
+              <MenuItem>
+                  <ListItemIcon>
+                    <SearchIcon color="primary" fontSize="small" />
+                  </ListItemIcon>
+                    <Link color="textPrimary" href="/SearchMed" >ค้นหาประวัติทันตกรรม</Link></MenuItem>
+
+              <MenuItem>
+                  <ListItemIcon>
+                    <SearchIcon color="primary" fontSize="small" />
+                  </ListItemIcon>
+                    <Link color="textPrimary" href="/SavePatient" >ค้นหาการข้อมูลทันตแพทย์</Link></MenuItem>          
+
+              <MenuItem>
+                  <ListItemIcon>
+                    <SearchIcon color="primary" fontSize="small" />
+                  </ListItemIcon>
+                    <Link color="textPrimary" href="/SearchDenExpen" >ค้นหารายการค่ารักษา</Link></MenuItem>
+
+              <MenuItem>
+                  <ListItemIcon>
+                    <SearchIcon color="primary" fontSize="small" />
+                  </ListItemIcon>
+                    <Link color="textPrimary" href="/" >ค้นหาการจองคิว</Link></MenuItem>
+
+              <MenuItem>
+                  <ListItemIcon>
+                    <SearchIcon color="primary" fontSize="small" />
+                  </ListItemIcon>
+                    <Link color="textPrimary" href="/SearchAppoint" >ค้นหาการนัดหมายผู้ป่วย</Link></MenuItem>
+            </MenuList>
+         
           {[0].map((value) => (
             <Grid key={value} item>
               <Paper className={classes.paper} />
             </Grid>
           ))}
-        </Grid>
       </Grid>
-      <Grid item xs={12}>
-      </Grid>
-    </Grid>
+    
       </Content>
     </Page>
   );
