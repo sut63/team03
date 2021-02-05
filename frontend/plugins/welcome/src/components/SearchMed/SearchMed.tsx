@@ -167,7 +167,7 @@ export default function ComponentsTable() {
             <Paper>
 
               <Typography align="center" >
-                <div style={{ background: "#3366CC", height: 60 }}>
+                <div style={{ background: "#3366CC", height: 50 }}>
                   <h1 style={
                     {
                       color: "#FFFFFF",
@@ -185,7 +185,7 @@ export default function ComponentsTable() {
                     className={classes.margin}
                     variant="outlined"
                   >
-                    <div className={classes.paper}><strong>หมายเลขทันตกรรม ex.M001</strong></div>
+                    <div className={classes.paper}>หมายเลขทันตกรรม ex.M001</div>
                     <TextField
                       id="medno"
                       value={medno}
@@ -226,11 +226,11 @@ export default function ComponentsTable() {
                   }}
                   className={classes.margins}
                   variant="contained"
-                  style={{ background: "#FFFFE0", height: 40 }}>
+                  style={{ background: "#3399CC", height: 40 }}>
                   <h3
                     style={
                       {
-                        color: "#000000",
+                        color: "#FFFFFF",
                         padding: '0 25px',
 
                       }
