@@ -60,7 +60,6 @@ const Toast = Swal.mixin({
   showConfirmButton: false,
   timer: 3000,
   timerProgressBar: true,
-  //showCloseButton: true,
 
 });
 
@@ -136,16 +135,12 @@ export default function ComponentsTable() {
         title={`Dental System`}
         subtitle="ค้นหาการนัดหมายผู้ป่วย">
         <table>
-          <tr>
-           
-            <th>
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <Link component={RouterLink} to="/Menu">
                 <Button variant="contained" style={{ height: 40 }}>
                   <h3
                     style={
                       {
-                        color: "#000000",
+                        color: "#1167b1",
                         borderRadius: 10,
                         height: 25,
                         padding: '0 20px',
@@ -155,8 +150,6 @@ export default function ComponentsTable() {
             </h3>
                 </Button>
               </Link>
-            </th>
-          </tr>
         </table>
 
       </Header>
@@ -166,7 +159,7 @@ export default function ComponentsTable() {
             <Paper>
 
               <Typography align="center" >
-                <div style={{ background: "#3366CC", height: 50 }}>
+                <div style={{ background: "#3792cb", height: 50 }}>
                   <h1 style={
                     {
                       color: "#FFFFFF",
@@ -184,7 +177,7 @@ export default function ComponentsTable() {
                     className={classes.margin}
                     variant="outlined"
                   >
-                    <div className={classes.paper}>หมายเลขการนัดหมายผู้ป่วย ex.A00001</div>
+                    <div className={classes.paper}>รหัสการนัดหมายผู้ป่วย ex.A00001</div>
                     <TextField
                       id="appointID"
                       value={appointID}
@@ -208,7 +201,7 @@ export default function ComponentsTable() {
                   endIcon={<SearchTwoToneIcon />}
                   className={classes.margins}
                   variant="contained"
-                  style={{ background: "#3399CC", height: 40 }}>
+                  style={{ background: "#3792cb", height: 40 }}>
                   <h3
                     style={
                       {
@@ -227,11 +220,11 @@ export default function ComponentsTable() {
                   }}
                   className={classes.margins}
                   variant="contained"
-                  style={{ background: "#FFFFE0", height: 40 }}>
+                  style={{ background: "#3792cb", height: 40 }}>
                   <h3
                     style={
                       {
-                        color: "#000000",
+                        color: "#FFFFFF",
                         padding: '0 25px',
 
                       }
