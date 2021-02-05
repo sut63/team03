@@ -120,7 +120,7 @@ const Homepage: FC<{}> = () => {
                   <ListItemIcon>
                     <SearchIcon color="primary" fontSize="small" />
                   </ListItemIcon>
-                    <Link color="textPrimary" href="/" >ค้นหาการจองคิว</Link></MenuItem>
+                    <Link color="textPrimary" href="/SearchQueue" >ค้นหาใบจองคิวผู้ป่วย</Link></MenuItem>
 
               <MenuItem>
                   <ListItemIcon>
