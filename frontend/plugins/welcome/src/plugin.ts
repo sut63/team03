@@ -13,6 +13,7 @@ import Welcome from './components/Welcome';
 import SearchDenExpen from './components/SearchDenExpen';
 import SearchMed from './components/SearchMed';
 import SearchAppoint from './components/SearchAppoint';
+import SearchQueue from './components/SearchQueue';
 
 export const plugin = createPlugin({
   id: 'welcome',
@@ -32,5 +33,6 @@ export const plugin = createPlugin({
     router.registerRoute('/SearchAppoint', SearchAppoint);
     router.registerRoute('/SearchDenExpen', SearchDenExpen);
     router.registerRoute('/SearchMed', SearchMed);
+    router.registerRoute('/SearchQueue', SearchQueue);
   }
 });
