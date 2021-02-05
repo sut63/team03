@@ -26,7 +26,7 @@ func (Appointment) Fields() []ent.Field {
 		}),
 		field.String("Detail").MinLen(5),
 		field.Time("Datetime"),
-		field.String("Remark").MinLen(1),
+		field.String("Remark").MaxLen(10),
 	}
 }
 
@@ -36,5 +36,6 @@ func (Appointment) Edges() []ent.Edge {
 		edge.From("patient", Patient.Type).Ref("appointment").Unique(),
 		edge.From("room", Room.Type).Ref("appointment").Unique(),
 		edge.From("dentist", Dentist.Type).Ref("appointment").Unique(),
+		edge.From("nurse", Nurse.Type).Ref("appointment").Unique(),
 	}
 }

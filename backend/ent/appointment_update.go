@@ -12,6 +12,7 @@ import (
 	"github.com/facebookincubator/ent/schema/field"
 	"github.com/team03/app/ent/appointment"
 	"github.com/team03/app/ent/dentist"
+	"github.com/team03/app/ent/nurse"
 	"github.com/team03/app/ent/patient"
 	"github.com/team03/app/ent/predicate"
 	"github.com/team03/app/ent/room"
@@ -112,6 +113,25 @@ func (au *AppointmentUpdate) SetDentist(d *Dentist) *AppointmentUpdate {
 	return au.SetDentistID(d.ID)
 }
 
+// SetNurseID sets the nurse edge to Nurse by id.
+func (au *AppointmentUpdate) SetNurseID(id int) *AppointmentUpdate {
+	au.mutation.SetNurseID(id)
+	return au
+}
+
+// SetNillableNurseID sets the nurse edge to Nurse by id if the given value is not nil.
+func (au *AppointmentUpdate) SetNillableNurseID(id *int) *AppointmentUpdate {
+	if id != nil {
+		au = au.SetNurseID(*id)
+	}
+	return au
+}
+
+// SetNurse sets the nurse edge to Nurse.
+func (au *AppointmentUpdate) SetNurse(n *Nurse) *AppointmentUpdate {
+	return au.SetNurseID(n.ID)
+}
+
 // Mutation returns the AppointmentMutation object of the builder.
 func (au *AppointmentUpdate) Mutation() *AppointmentMutation {
 	return au.mutation
@@ -132,6 +152,12 @@ func (au *AppointmentUpdate) ClearRoom() *AppointmentUpdate {
 // ClearDentist clears the dentist edge to Dentist.
 func (au *AppointmentUpdate) ClearDentist() *AppointmentUpdate {
 	au.mutation.ClearDentist()
+	return au
+}
+
+// ClearNurse clears the nurse edge to Nurse.
+func (au *AppointmentUpdate) ClearNurse() *AppointmentUpdate {
+	au.mutation.ClearNurse()
 	return au
 }
 
@@ -353,6 +379,41 @@ func (au *AppointmentUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
+	if au.mutation.NurseCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   appointment.NurseTable,
+			Columns: []string{appointment.NurseColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: nurse.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := au.mutation.NurseIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   appointment.NurseTable,
+			Columns: []string{appointment.NurseColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: nurse.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
 	if n, err = sqlgraph.UpdateNodes(ctx, au.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{appointment.Label}
@@ -452,6 +513,25 @@ func (auo *AppointmentUpdateOne) SetDentist(d *Dentist) *AppointmentUpdateOne {
 	return auo.SetDentistID(d.ID)
 }
 
+// SetNurseID sets the nurse edge to Nurse by id.
+func (auo *AppointmentUpdateOne) SetNurseID(id int) *AppointmentUpdateOne {
+	auo.mutation.SetNurseID(id)
+	return auo
+}
+
+// SetNillableNurseID sets the nurse edge to Nurse by id if the given value is not nil.
+func (auo *AppointmentUpdateOne) SetNillableNurseID(id *int) *AppointmentUpdateOne {
+	if id != nil {
+		auo = auo.SetNurseID(*id)
+	}
+	return auo
+}
+
+// SetNurse sets the nurse edge to Nurse.
+func (auo *AppointmentUpdateOne) SetNurse(n *Nurse) *AppointmentUpdateOne {
+	return auo.SetNurseID(n.ID)
+}
+
 // Mutation returns the AppointmentMutation object of the builder.
 func (auo *AppointmentUpdateOne) Mutation() *AppointmentMutation {
 	return auo.mutation
@@ -472,6 +552,12 @@ func (auo *AppointmentUpdateOne) ClearRoom() *AppointmentUpdateOne {
 // ClearDentist clears the dentist edge to Dentist.
 func (auo *AppointmentUpdateOne) ClearDentist() *AppointmentUpdateOne {
 	auo.mutation.ClearDentist()
+	return auo
+}
+
+// ClearNurse clears the nurse edge to Nurse.
+func (auo *AppointmentUpdateOne) ClearNurse() *AppointmentUpdateOne {
+	auo.mutation.ClearNurse()
 	return auo
 }
 
@@ -683,6 +769,41 @@ func (auo *AppointmentUpdateOne) sqlSave(ctx context.Context) (a *Appointment, e
 				IDSpec: &sqlgraph.FieldSpec{
 					Type:   field.TypeInt,
 					Column: dentist.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if auo.mutation.NurseCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   appointment.NurseTable,
+			Columns: []string{appointment.NurseColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: nurse.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := auo.mutation.NurseIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   appointment.NurseTable,
+			Columns: []string{appointment.NurseColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: nurse.FieldID,
 				},
 			},
 		}

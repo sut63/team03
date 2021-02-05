@@ -9,6 +9,7 @@ import (
 
 	"github.com/facebookincubator/ent/dialect/sql/sqlgraph"
 	"github.com/facebookincubator/ent/schema/field"
+	"github.com/team03/app/ent/appointment"
 	"github.com/team03/app/ent/dentalexpense"
 	"github.com/team03/app/ent/dentist"
 	"github.com/team03/app/ent/medicalfile"
@@ -121,6 +122,21 @@ func (nc *NurseCreate) AddDentists(d ...*Dentist) *NurseCreate {
 		ids[i] = d[i].ID
 	}
 	return nc.AddDentistIDs(ids...)
+}
+
+// AddAppointmentIDs adds the appointment edge to Appointment by ids.
+func (nc *NurseCreate) AddAppointmentIDs(ids ...int) *NurseCreate {
+	nc.mutation.AddAppointmentIDs(ids...)
+	return nc
+}
+
+// AddAppointment adds the appointment edges to Appointment.
+func (nc *NurseCreate) AddAppointment(a ...*Appointment) *NurseCreate {
+	ids := make([]int, len(a))
+	for i := range a {
+		ids[i] = a[i].ID
+	}
+	return nc.AddAppointmentIDs(ids...)
 }
 
 // Mutation returns the NurseMutation object of the builder.
@@ -326,6 +342,25 @@ func (nc *NurseCreate) createSpec() (*Nurse, *sqlgraph.CreateSpec) {
 				IDSpec: &sqlgraph.FieldSpec{
 					Type:   field.TypeInt,
 					Column: dentist.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges = append(_spec.Edges, edge)
+	}
+	if nodes := nc.mutation.AppointmentIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   nurse.AppointmentTable,
+			Columns: []string{nurse.AppointmentColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: appointment.FieldID,
 				},
 			},
 		}

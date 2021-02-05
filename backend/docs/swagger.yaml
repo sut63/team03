@@ -45,6 +45,10 @@ definitions:
         $ref: '#/definitions/ent.Dentist'
         description: Dentist holds the value of the dentist edge.
         type: object
+      nurse:
+        $ref: '#/definitions/ent.Nurse'
+        description: Nurse holds the value of the nurse edge.
+        type: object
       patient:
         $ref: '#/definitions/ent.Patient'
         description: Patient holds the value of the patient edge.
@@ -356,6 +360,11 @@ definitions:
     type: object
   ent.NurseEdges:
     properties:
+      appointment:
+        description: Appointment holds the value of the appointment edge.
+        items:
+          $ref: '#/definitions/ent.Appointment'
+        type: array
       dentalexpenses:
         description: Dentalexpenses holds the value of the dentalexpenses edge.
         items:

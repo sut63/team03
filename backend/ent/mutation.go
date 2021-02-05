@@ -69,6 +69,8 @@ type AppointmentMutation struct {
 	clearedroom    bool
 	dentist        *int
 	cleareddentist bool
+	nurse          *int
+	clearednurse   bool
 	done           bool
 	oldValue       func(context.Context) (*Appointment, error)
 }
@@ -417,6 +419,45 @@ func (m *AppointmentMutation) ResetDentist() {
 	m.cleareddentist = false
 }
 
+// SetNurseID sets the nurse edge to Nurse by id.
+func (m *AppointmentMutation) SetNurseID(id int) {
+	m.nurse = &id
+}
+
+// ClearNurse clears the nurse edge to Nurse.
+func (m *AppointmentMutation) ClearNurse() {
+	m.clearednurse = true
+}
+
+// NurseCleared returns if the edge nurse was cleared.
+func (m *AppointmentMutation) NurseCleared() bool {
+	return m.clearednurse
+}
+
+// NurseID returns the nurse id in the mutation.
+func (m *AppointmentMutation) NurseID() (id int, exists bool) {
+	if m.nurse != nil {
+		return *m.nurse, true
+	}
+	return
+}
+
+// NurseIDs returns the nurse ids in the mutation.
+// Note that ids always returns len(ids) <= 1 for unique edges, and you should use
+// NurseID instead. It exists only for internal usage by the builders.
+func (m *AppointmentMutation) NurseIDs() (ids []int) {
+	if id := m.nurse; id != nil {
+		ids = append(ids, *id)
+	}
+	return
+}
+
+// ResetNurse reset all changes of the "nurse" edge.
+func (m *AppointmentMutation) ResetNurse() {
+	m.nurse = nil
+	m.clearednurse = false
+}
+
 // Op returns the operation name.
 func (m *AppointmentMutation) Op() Op {
 	return m.op
@@ -583,7 +624,7 @@ func (m *AppointmentMutation) ResetField(name string) error {
 // AddedEdges returns all edge names that were set/added in this
 // mutation.
 func (m *AppointmentMutation) AddedEdges() []string {
-	edges := make([]string, 0, 3)
+	edges := make([]string, 0, 4)
 	if m.patient != nil {
 		edges = append(edges, appointment.EdgePatient)
 	}
@@ -592,6 +633,9 @@ func (m *AppointmentMutation) AddedEdges() []string {
 	}
 	if m.dentist != nil {
 		edges = append(edges, appointment.EdgeDentist)
+	}
+	if m.nurse != nil {
+		edges = append(edges, appointment.EdgeNurse)
 	}
 	return edges
 }
@@ -612,6 +656,10 @@ func (m *AppointmentMutation) AddedIDs(name string) []ent.Value {
 		if id := m.dentist; id != nil {
 			return []ent.Value{*id}
 		}
+	case appointment.EdgeNurse:
+		if id := m.nurse; id != nil {
+			return []ent.Value{*id}
+		}
 	}
 	return nil
 }
@@ -619,7 +667,7 @@ func (m *AppointmentMutation) AddedIDs(name string) []ent.Value {
 // RemovedEdges returns all edge names that were removed in this
 // mutation.
 func (m *AppointmentMutation) RemovedEdges() []string {
-	edges := make([]string, 0, 3)
+	edges := make([]string, 0, 4)
 	return edges
 }
 
@@ -634,7 +682,7 @@ func (m *AppointmentMutation) RemovedIDs(name string) []ent.Value {
 // ClearedEdges returns all edge names that were cleared in this
 // mutation.
 func (m *AppointmentMutation) ClearedEdges() []string {
-	edges := make([]string, 0, 3)
+	edges := make([]string, 0, 4)
 	if m.clearedpatient {
 		edges = append(edges, appointment.EdgePatient)
 	}
@@ -643,6 +691,9 @@ func (m *AppointmentMutation) ClearedEdges() []string {
 	}
 	if m.cleareddentist {
 		edges = append(edges, appointment.EdgeDentist)
+	}
+	if m.clearednurse {
+		edges = append(edges, appointment.EdgeNurse)
 	}
 	return edges
 }
@@ -657,6 +708,8 @@ func (m *AppointmentMutation) EdgeCleared(name string) bool {
 		return m.clearedroom
 	case appointment.EdgeDentist:
 		return m.cleareddentist
+	case appointment.EdgeNurse:
+		return m.clearednurse
 	}
 	return false
 }
@@ -673,6 +726,9 @@ func (m *AppointmentMutation) ClearEdge(name string) error {
 		return nil
 	case appointment.EdgeDentist:
 		m.ClearDentist()
+		return nil
+	case appointment.EdgeNurse:
+		m.ClearNurse()
 		return nil
 	}
 	return fmt.Errorf("unknown Appointment unique edge %s", name)
@@ -691,6 +747,9 @@ func (m *AppointmentMutation) ResetEdge(name string) error {
 		return nil
 	case appointment.EdgeDentist:
 		m.ResetDentist()
+		return nil
+	case appointment.EdgeNurse:
+		m.ResetNurse()
 		return nil
 	}
 	return fmt.Errorf("unknown Appointment edge %s", name)
@@ -5225,6 +5284,8 @@ type NurseMutation struct {
 	removedpatients       map[int]struct{}
 	dentists              map[int]struct{}
 	removeddentists       map[int]struct{}
+	appointment           map[int]struct{}
+	removedappointment    map[int]struct{}
 	done                  bool
 	oldValue              func(context.Context) (*Nurse, error)
 }
@@ -5686,6 +5747,48 @@ func (m *NurseMutation) ResetDentists() {
 	m.removeddentists = nil
 }
 
+// AddAppointmentIDs adds the appointment edge to Appointment by ids.
+func (m *NurseMutation) AddAppointmentIDs(ids ...int) {
+	if m.appointment == nil {
+		m.appointment = make(map[int]struct{})
+	}
+	for i := range ids {
+		m.appointment[ids[i]] = struct{}{}
+	}
+}
+
+// RemoveAppointmentIDs removes the appointment edge to Appointment by ids.
+func (m *NurseMutation) RemoveAppointmentIDs(ids ...int) {
+	if m.removedappointment == nil {
+		m.removedappointment = make(map[int]struct{})
+	}
+	for i := range ids {
+		m.removedappointment[ids[i]] = struct{}{}
+	}
+}
+
+// RemovedAppointment returns the removed ids of appointment.
+func (m *NurseMutation) RemovedAppointmentIDs() (ids []int) {
+	for id := range m.removedappointment {
+		ids = append(ids, id)
+	}
+	return
+}
+
+// AppointmentIDs returns the appointment ids in the mutation.
+func (m *NurseMutation) AppointmentIDs() (ids []int) {
+	for id := range m.appointment {
+		ids = append(ids, id)
+	}
+	return
+}
+
+// ResetAppointment reset all changes of the "appointment" edge.
+func (m *NurseMutation) ResetAppointment() {
+	m.appointment = nil
+	m.removedappointment = nil
+}
+
 // Op returns the operation name.
 func (m *NurseMutation) Op() Op {
 	return m.op
@@ -5867,7 +5970,7 @@ func (m *NurseMutation) ResetField(name string) error {
 // AddedEdges returns all edge names that were set/added in this
 // mutation.
 func (m *NurseMutation) AddedEdges() []string {
-	edges := make([]string, 0, 5)
+	edges := make([]string, 0, 6)
 	if m.queue != nil {
 		edges = append(edges, nurse.EdgeQueue)
 	}
@@ -5882,6 +5985,9 @@ func (m *NurseMutation) AddedEdges() []string {
 	}
 	if m.dentists != nil {
 		edges = append(edges, nurse.EdgeDentists)
+	}
+	if m.appointment != nil {
+		edges = append(edges, nurse.EdgeAppointment)
 	}
 	return edges
 }
@@ -5920,6 +6026,12 @@ func (m *NurseMutation) AddedIDs(name string) []ent.Value {
 			ids = append(ids, id)
 		}
 		return ids
+	case nurse.EdgeAppointment:
+		ids := make([]ent.Value, 0, len(m.appointment))
+		for id := range m.appointment {
+			ids = append(ids, id)
+		}
+		return ids
 	}
 	return nil
 }
@@ -5927,7 +6039,7 @@ func (m *NurseMutation) AddedIDs(name string) []ent.Value {
 // RemovedEdges returns all edge names that were removed in this
 // mutation.
 func (m *NurseMutation) RemovedEdges() []string {
-	edges := make([]string, 0, 5)
+	edges := make([]string, 0, 6)
 	if m.removedqueue != nil {
 		edges = append(edges, nurse.EdgeQueue)
 	}
@@ -5942,6 +6054,9 @@ func (m *NurseMutation) RemovedEdges() []string {
 	}
 	if m.removeddentists != nil {
 		edges = append(edges, nurse.EdgeDentists)
+	}
+	if m.removedappointment != nil {
+		edges = append(edges, nurse.EdgeAppointment)
 	}
 	return edges
 }
@@ -5980,6 +6095,12 @@ func (m *NurseMutation) RemovedIDs(name string) []ent.Value {
 			ids = append(ids, id)
 		}
 		return ids
+	case nurse.EdgeAppointment:
+		ids := make([]ent.Value, 0, len(m.removedappointment))
+		for id := range m.removedappointment {
+			ids = append(ids, id)
+		}
+		return ids
 	}
 	return nil
 }
@@ -5987,7 +6108,7 @@ func (m *NurseMutation) RemovedIDs(name string) []ent.Value {
 // ClearedEdges returns all edge names that were cleared in this
 // mutation.
 func (m *NurseMutation) ClearedEdges() []string {
-	edges := make([]string, 0, 5)
+	edges := make([]string, 0, 6)
 	return edges
 }
 
@@ -6026,6 +6147,9 @@ func (m *NurseMutation) ResetEdge(name string) error {
 		return nil
 	case nurse.EdgeDentists:
 		m.ResetDentists()
+		return nil
+	case nurse.EdgeAppointment:
+		m.ResetAppointment()
 		return nil
 	}
 	return fmt.Errorf("unknown Nurse edge %s", name)

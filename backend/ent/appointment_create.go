@@ -12,6 +12,7 @@ import (
 	"github.com/facebookincubator/ent/schema/field"
 	"github.com/team03/app/ent/appointment"
 	"github.com/team03/app/ent/dentist"
+	"github.com/team03/app/ent/nurse"
 	"github.com/team03/app/ent/patient"
 	"github.com/team03/app/ent/room"
 )
@@ -102,6 +103,25 @@ func (ac *AppointmentCreate) SetNillableDentistID(id *int) *AppointmentCreate {
 // SetDentist sets the dentist edge to Dentist.
 func (ac *AppointmentCreate) SetDentist(d *Dentist) *AppointmentCreate {
 	return ac.SetDentistID(d.ID)
+}
+
+// SetNurseID sets the nurse edge to Nurse by id.
+func (ac *AppointmentCreate) SetNurseID(id int) *AppointmentCreate {
+	ac.mutation.SetNurseID(id)
+	return ac
+}
+
+// SetNillableNurseID sets the nurse edge to Nurse by id if the given value is not nil.
+func (ac *AppointmentCreate) SetNillableNurseID(id *int) *AppointmentCreate {
+	if id != nil {
+		ac = ac.SetNurseID(*id)
+	}
+	return ac
+}
+
+// SetNurse sets the nurse edge to Nurse.
+func (ac *AppointmentCreate) SetNurse(n *Nurse) *AppointmentCreate {
+	return ac.SetNurseID(n.ID)
 }
 
 // Mutation returns the AppointmentMutation object of the builder.
@@ -279,6 +299,25 @@ func (ac *AppointmentCreate) createSpec() (*Appointment, *sqlgraph.CreateSpec) {
 				IDSpec: &sqlgraph.FieldSpec{
 					Type:   field.TypeInt,
 					Column: dentist.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges = append(_spec.Edges, edge)
+	}
+	if nodes := ac.mutation.NurseIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   appointment.NurseTable,
+			Columns: []string{appointment.NurseColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: nurse.FieldID,
 				},
 			},
 		}

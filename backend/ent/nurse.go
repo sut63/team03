@@ -40,9 +40,11 @@ type NurseEdges struct {
 	Patients []*Patient
 	// Dentists holds the value of the dentists edge.
 	Dentists []*Dentist
+	// Appointment holds the value of the appointment edge.
+	Appointment []*Appointment
 	// loadedTypes holds the information for reporting if a
 	// type was loaded (or requested) in eager-loading or not.
-	loadedTypes [5]bool
+	loadedTypes [6]bool
 }
 
 // QueueOrErr returns the Queue value or an error if the edge
@@ -88,6 +90,15 @@ func (e NurseEdges) DentistsOrErr() ([]*Dentist, error) {
 		return e.Dentists, nil
 	}
 	return nil, &NotLoadedError{edge: "dentists"}
+}
+
+// AppointmentOrErr returns the Appointment value or an error if the edge
+// was not loaded in eager-loading.
+func (e NurseEdges) AppointmentOrErr() ([]*Appointment, error) {
+	if e.loadedTypes[5] {
+		return e.Appointment, nil
+	}
+	return nil, &NotLoadedError{edge: "appointment"}
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -159,6 +170,11 @@ func (n *Nurse) QueryPatients() *PatientQuery {
 // QueryDentists queries the dentists edge of the Nurse.
 func (n *Nurse) QueryDentists() *DentistQuery {
 	return (&NurseClient{config: n.config}).QueryDentists(n)
+}
+
+// QueryAppointment queries the appointment edge of the Nurse.
+func (n *Nurse) QueryAppointment() *AppointmentQuery {
+	return (&NurseClient{config: n.config}).QueryAppointment(n)
 }
 
 // Update returns a builder for updating this Nurse.

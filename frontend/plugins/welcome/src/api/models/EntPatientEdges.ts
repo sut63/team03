@@ -108,7 +108,7 @@ export function EntPatientEdgesFromJSONTyped(json: any, ignoreDiscriminator: boo
         'disease': !exists(json, 'Disease') ? undefined : EntDiseaseFromJSON(json['Disease']),
         'gender': !exists(json, 'Gender') ? undefined : EntGenderFromJSON(json['Gender']),
         'medicalcare': !exists(json, 'Medicalcare') ? undefined : EntMedicalCareFromJSON(json['Medicalcare']),
-        'medicalfiles': !exists(json, 'Medicalfiles') ? undefined : ((json['medicalfiles'] as Array<any>).map(EntMedicalfileFromJSON)),
+        'medicalfiles': !exists(json, 'Medicalfiles') ? undefined : ((json['Medicalfiles'] as Array<any>).map(EntMedicalfileFromJSON)),
         'nurse': !exists(json, 'Nurse') ? undefined : EntNurseFromJSON(json['Nurse']),
         'queue': !exists(json, 'Queue') ? undefined : ((json['Queue'] as Array<any>).map(EntQueueFromJSON)),
     };

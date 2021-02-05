@@ -9,6 +9,7 @@ import (
 	"github.com/facebookincubator/ent/dialect/sql"
 	"github.com/facebookincubator/ent/dialect/sql/sqlgraph"
 	"github.com/facebookincubator/ent/schema/field"
+	"github.com/team03/app/ent/appointment"
 	"github.com/team03/app/ent/dentalexpense"
 	"github.com/team03/app/ent/dentist"
 	"github.com/team03/app/ent/medicalfile"
@@ -138,6 +139,21 @@ func (nu *NurseUpdate) AddDentists(d ...*Dentist) *NurseUpdate {
 	return nu.AddDentistIDs(ids...)
 }
 
+// AddAppointmentIDs adds the appointment edge to Appointment by ids.
+func (nu *NurseUpdate) AddAppointmentIDs(ids ...int) *NurseUpdate {
+	nu.mutation.AddAppointmentIDs(ids...)
+	return nu
+}
+
+// AddAppointment adds the appointment edges to Appointment.
+func (nu *NurseUpdate) AddAppointment(a ...*Appointment) *NurseUpdate {
+	ids := make([]int, len(a))
+	for i := range a {
+		ids[i] = a[i].ID
+	}
+	return nu.AddAppointmentIDs(ids...)
+}
+
 // Mutation returns the NurseMutation object of the builder.
 func (nu *NurseUpdate) Mutation() *NurseMutation {
 	return nu.mutation
@@ -216,6 +232,21 @@ func (nu *NurseUpdate) RemoveDentists(d ...*Dentist) *NurseUpdate {
 		ids[i] = d[i].ID
 	}
 	return nu.RemoveDentistIDs(ids...)
+}
+
+// RemoveAppointmentIDs removes the appointment edge to Appointment by ids.
+func (nu *NurseUpdate) RemoveAppointmentIDs(ids ...int) *NurseUpdate {
+	nu.mutation.RemoveAppointmentIDs(ids...)
+	return nu
+}
+
+// RemoveAppointment removes appointment edges to Appointment.
+func (nu *NurseUpdate) RemoveAppointment(a ...*Appointment) *NurseUpdate {
+	ids := make([]int, len(a))
+	for i := range a {
+		ids[i] = a[i].ID
+	}
+	return nu.RemoveAppointmentIDs(ids...)
 }
 
 // Save executes the query and returns the number of rows/vertices matched by this operation.
@@ -518,6 +549,44 @@ func (nu *NurseUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
+	if nodes := nu.mutation.RemovedAppointmentIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   nurse.AppointmentTable,
+			Columns: []string{nurse.AppointmentColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: appointment.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := nu.mutation.AppointmentIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   nurse.AppointmentTable,
+			Columns: []string{nurse.AppointmentColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: appointment.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
 	if n, err = sqlgraph.UpdateNodes(ctx, nu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{nurse.Label}
@@ -642,6 +711,21 @@ func (nuo *NurseUpdateOne) AddDentists(d ...*Dentist) *NurseUpdateOne {
 	return nuo.AddDentistIDs(ids...)
 }
 
+// AddAppointmentIDs adds the appointment edge to Appointment by ids.
+func (nuo *NurseUpdateOne) AddAppointmentIDs(ids ...int) *NurseUpdateOne {
+	nuo.mutation.AddAppointmentIDs(ids...)
+	return nuo
+}
+
+// AddAppointment adds the appointment edges to Appointment.
+func (nuo *NurseUpdateOne) AddAppointment(a ...*Appointment) *NurseUpdateOne {
+	ids := make([]int, len(a))
+	for i := range a {
+		ids[i] = a[i].ID
+	}
+	return nuo.AddAppointmentIDs(ids...)
+}
+
 // Mutation returns the NurseMutation object of the builder.
 func (nuo *NurseUpdateOne) Mutation() *NurseMutation {
 	return nuo.mutation
@@ -720,6 +804,21 @@ func (nuo *NurseUpdateOne) RemoveDentists(d ...*Dentist) *NurseUpdateOne {
 		ids[i] = d[i].ID
 	}
 	return nuo.RemoveDentistIDs(ids...)
+}
+
+// RemoveAppointmentIDs removes the appointment edge to Appointment by ids.
+func (nuo *NurseUpdateOne) RemoveAppointmentIDs(ids ...int) *NurseUpdateOne {
+	nuo.mutation.RemoveAppointmentIDs(ids...)
+	return nuo
+}
+
+// RemoveAppointment removes appointment edges to Appointment.
+func (nuo *NurseUpdateOne) RemoveAppointment(a ...*Appointment) *NurseUpdateOne {
+	ids := make([]int, len(a))
+	for i := range a {
+		ids[i] = a[i].ID
+	}
+	return nuo.RemoveAppointmentIDs(ids...)
 }
 
 // Save executes the query and returns the updated entity.
@@ -1012,6 +1111,44 @@ func (nuo *NurseUpdateOne) sqlSave(ctx context.Context) (n *Nurse, err error) {
 				IDSpec: &sqlgraph.FieldSpec{
 					Type:   field.TypeInt,
 					Column: dentist.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if nodes := nuo.mutation.RemovedAppointmentIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   nurse.AppointmentTable,
+			Columns: []string{nurse.AppointmentColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: appointment.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := nuo.mutation.AppointmentIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   nurse.AppointmentTable,
+			Columns: []string{nurse.AppointmentColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: appointment.FieldID,
 				},
 			},
 		}

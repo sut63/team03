@@ -1888,6 +1888,11 @@ var doc = `{
                     "type": "object",
                     "$ref": "#/definitions/ent.Dentist"
                 },
+                "nurse": {
+                    "description": "Nurse holds the value of the nurse edge.",
+                    "type": "object",
+                    "$ref": "#/definitions/ent.Nurse"
+                },
                 "patient": {
                     "description": "Patient holds the value of the patient edge.",
                     "type": "object",
@@ -2293,6 +2298,13 @@ var doc = `{
         "ent.NurseEdges": {
             "type": "object",
             "properties": {
+                "appointment": {
+                    "description": "Appointment holds the value of the appointment edge.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ent.Appointment"
+                    }
+                },
                 "dentalexpenses": {
                     "description": "Dentalexpenses holds the value of the dentalexpenses edge.",
                     "type": "array",

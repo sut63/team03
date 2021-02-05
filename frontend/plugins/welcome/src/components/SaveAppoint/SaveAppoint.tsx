@@ -19,7 +19,6 @@ import {
 import ExitToAppRoundedIcon from '@material-ui/icons/ExitToAppRounded';
 import { DefaultApi } from '../../api/apis'; // Api Gennerate From Command
 import { EntPatient } from '../../api/models/EntPatient'; // import interface Patient
-import { EntDentist } from '../../api/models/EntDentist'; // import interface Dentist
 import { EntRoom } from '../../api/models/EntRoom'; // import interface Room
 
 // header css
@@ -68,7 +67,6 @@ const Appointment: FC<{}> = () => {
     const [appointment, setAppointment] = React.useState<Partial<appointment>>({});
   
     const [patients, setPatients] = React.useState<EntPatient[]>([]);
-    const [dentists, setDentists] = React.useState<EntDentist[]>([]);
     const [rooms, setRooms] = React.useState<EntRoom[]>([]);
     const [DetailError, setDetailError] = React.useState('');
     const [AppointIDError, setAppointIDError] = React.useState('');
@@ -87,12 +85,7 @@ const Toast = Swal.mixin({
       const res = await http.listPatient({ limit: 10, offset: 0 });
       setPatients(res);
     };
-  
-    const getDentists = async () => {
-      const res = await http.listDentist({ limit: 10, offset: 0 });
-      setDentists(res);
-    };
-  
+
     const getRooms = async () => {
       const res = await http.listRoom({ limit: 10, offset: 0 });
       setRooms(res);
@@ -101,7 +94,6 @@ const Toast = Swal.mixin({
 // Lifecycle Hooks
 useEffect(() => {
     getPatients();
-    getDentists();
     getRooms();
   }, []);
 
@@ -128,7 +120,7 @@ const validateDetail = (val: string) => {
 
 // ฟังก์ชั่นสำหรับ validate หมายเหตุ
 const validateRemark = (val: string) => {
-  return val.length < 1 ?  false : true;
+  return val.length > 10 ?  false : true;
 }
 
 // สำหรับตรวจสอบรูปแบบข้อมูลที่กรอก ว่าเป็นไปตามที่กำหนดหรือไม่
@@ -143,7 +135,7 @@ const checkPattern  = (id: string, value: string) => {
       return;
 
     case 'Remark':
-      validateRemark(value) ? setRemarkError('') : setRemarkError('ห้ามต่ำกว่า 1 ตัวอักษร');
+      validateRemark(value) ? setRemarkError('') : setRemarkError('ห้ามมากกว่า 10 ตัวอักษร');
       return;
 
     default:
@@ -165,10 +157,10 @@ const alertMessage = (icon: any, title: any) => {
       alertMessage("error", "รหัสการนัดหมายขึ้นต้นด้วย N ตามด้วยตัวเลข 5 ตัว");
       return;
     case 'Detail':
-      alertMessage("error", " ห้ามต่ำกว่า 5 ตัวอักษร");
+      alertMessage("error", " จำนวนตัวอักษรต่ำกว่า 5 ตัวอักษร");
       return;
     case 'Remark':
-      alertMessage("error", " ห้ามต่ำกว่า 1 ตัวอักษร");
+      alertMessage("error", " จำนวนตัวอักษรมากกว่า 10 ตัวอักษร");
       return;
     default:
       alertMessage("error", " บันทึกข้อมูลไม่สำเร็จ");

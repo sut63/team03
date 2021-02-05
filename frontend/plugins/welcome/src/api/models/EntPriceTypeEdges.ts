@@ -44,7 +44,7 @@ export function EntPricetypeEdgesFromJSONTyped(json: any, ignoreDiscriminator: b
     }
     return {
         
-        'dentalexpenses': !exists(json, 'Dentalexpenses') ? undefined : ((json['Dentalexpenses'] as Array<any>).map(EntDentalexpenseFromJSON)),
+        'dentalexpenses': !exists(json, 'dentalexpenses') ? undefined : ((json['dentalexpenses'] as Array<any>).map(EntDentalexpenseFromJSON)),
     };
 }
 
