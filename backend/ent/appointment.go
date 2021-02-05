@@ -10,6 +10,7 @@ import (
 	"github.com/facebookincubator/ent/dialect/sql"
 	"github.com/team03/app/ent/appointment"
 	"github.com/team03/app/ent/dentist"
+	"github.com/team03/app/ent/nurse"
 	"github.com/team03/app/ent/patient"
 	"github.com/team03/app/ent/room"
 )
@@ -29,10 +30,11 @@ type Appointment struct {
 	Remark string `json:"Remark,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the AppointmentQuery when eager-loading is set.
-	Edges      AppointmentEdges `json:"edges"`
-	dentist_id *int
-	patient_id *int
-	room_id    *int
+	Edges             AppointmentEdges `json:"edges"`
+	dentist_id        *int
+	nurse_appointment *int
+	patient_id        *int
+	room_id           *int
 }
 
 // AppointmentEdges holds the relations/edges for other nodes in the graph.
@@ -43,9 +45,11 @@ type AppointmentEdges struct {
 	Room *Room
 	// Dentist holds the value of the dentist edge.
 	Dentist *Dentist
+	// Nurse holds the value of the nurse edge.
+	Nurse *Nurse
 	// loadedTypes holds the information for reporting if a
 	// type was loaded (or requested) in eager-loading or not.
-	loadedTypes [3]bool
+	loadedTypes [4]bool
 }
 
 // PatientOrErr returns the Patient value or an error if the edge
@@ -90,6 +94,20 @@ func (e AppointmentEdges) DentistOrErr() (*Dentist, error) {
 	return nil, &NotLoadedError{edge: "dentist"}
 }
 
+// NurseOrErr returns the Nurse value or an error if the edge
+// was not loaded in eager-loading, or loaded but was not found.
+func (e AppointmentEdges) NurseOrErr() (*Nurse, error) {
+	if e.loadedTypes[3] {
+		if e.Nurse == nil {
+			// The edge nurse was loaded in eager-loading,
+			// but was not found.
+			return nil, &NotFoundError{label: nurse.Label}
+		}
+		return e.Nurse, nil
+	}
+	return nil, &NotLoadedError{edge: "nurse"}
+}
+
 // scanValues returns the types for scanning values from sql.Rows.
 func (*Appointment) scanValues() []interface{} {
 	return []interface{}{
@@ -105,6 +123,7 @@ func (*Appointment) scanValues() []interface{} {
 func (*Appointment) fkValues() []interface{} {
 	return []interface{}{
 		&sql.NullInt64{}, // dentist_id
+		&sql.NullInt64{}, // nurse_appointment
 		&sql.NullInt64{}, // patient_id
 		&sql.NullInt64{}, // room_id
 	}
@@ -151,12 +170,18 @@ func (a *Appointment) assignValues(values ...interface{}) error {
 			*a.dentist_id = int(value.Int64)
 		}
 		if value, ok := values[1].(*sql.NullInt64); !ok {
+			return fmt.Errorf("unexpected type %T for edge-field nurse_appointment", value)
+		} else if value.Valid {
+			a.nurse_appointment = new(int)
+			*a.nurse_appointment = int(value.Int64)
+		}
+		if value, ok := values[2].(*sql.NullInt64); !ok {
 			return fmt.Errorf("unexpected type %T for edge-field patient_id", value)
 		} else if value.Valid {
 			a.patient_id = new(int)
 			*a.patient_id = int(value.Int64)
 		}
-		if value, ok := values[2].(*sql.NullInt64); !ok {
+		if value, ok := values[3].(*sql.NullInt64); !ok {
 			return fmt.Errorf("unexpected type %T for edge-field room_id", value)
 		} else if value.Valid {
 			a.room_id = new(int)
@@ -179,6 +204,11 @@ func (a *Appointment) QueryRoom() *RoomQuery {
 // QueryDentist queries the dentist edge of the Appointment.
 func (a *Appointment) QueryDentist() *DentistQuery {
 	return (&AppointmentClient{config: a.config}).QueryDentist(a)
+}
+
+// QueryNurse queries the nurse edge of the Appointment.
+func (a *Appointment) QueryNurse() *NurseQuery {
+	return (&AppointmentClient{config: a.config}).QueryNurse(a)
 }
 
 // Update returns a builder for updating this Appointment.

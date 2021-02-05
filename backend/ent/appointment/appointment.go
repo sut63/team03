@@ -22,6 +22,8 @@ const (
 	EdgeRoom = "room"
 	// EdgeDentist holds the string denoting the dentist edge name in mutations.
 	EdgeDentist = "dentist"
+	// EdgeNurse holds the string denoting the nurse edge name in mutations.
+	EdgeNurse = "nurse"
 
 	// Table holds the table name of the appointment in the database.
 	Table = "appointments"
@@ -46,6 +48,13 @@ const (
 	DentistInverseTable = "dentists"
 	// DentistColumn is the table column denoting the dentist relation/edge.
 	DentistColumn = "dentist_id"
+	// NurseTable is the table the holds the nurse relation/edge.
+	NurseTable = "appointments"
+	// NurseInverseTable is the table name for the Nurse entity.
+	// It exists in this package in order to avoid circular dependency with the "nurse" package.
+	NurseInverseTable = "nurses"
+	// NurseColumn is the table column denoting the nurse relation/edge.
+	NurseColumn = "nurse_appointment"
 )
 
 // Columns holds all SQL columns for appointment fields.
@@ -60,6 +69,7 @@ var Columns = []string{
 // ForeignKeys holds the SQL foreign-keys that are owned by the Appointment type.
 var ForeignKeys = []string{
 	"dentist_id",
+	"nurse_appointment",
 	"patient_id",
 	"room_id",
 }

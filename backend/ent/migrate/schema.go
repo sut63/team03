@@ -14,8 +14,9 @@ var (
 		{Name: "appoint_id", Type: field.TypeString},
 		{Name: "detail", Type: field.TypeString},
 		{Name: "datetime", Type: field.TypeTime},
-		{Name: "remark", Type: field.TypeString},
+		{Name: "remark", Type: field.TypeString, Size: 10},
 		{Name: "dentist_id", Type: field.TypeInt, Nullable: true},
+		{Name: "nurse_appointment", Type: field.TypeInt, Nullable: true},
 		{Name: "patient_id", Type: field.TypeInt, Nullable: true},
 		{Name: "room_id", Type: field.TypeInt, Nullable: true},
 	}
@@ -33,15 +34,22 @@ var (
 				OnDelete:   schema.SetNull,
 			},
 			{
-				Symbol:  "appointments_patients_appointment",
+				Symbol:  "appointments_nurses_appointment",
 				Columns: []*schema.Column{AppointmentsColumns[6]},
+
+				RefColumns: []*schema.Column{NursesColumns[0]},
+				OnDelete:   schema.SetNull,
+			},
+			{
+				Symbol:  "appointments_patients_appointment",
+				Columns: []*schema.Column{AppointmentsColumns[7]},
 
 				RefColumns: []*schema.Column{PatientsColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
 			{
 				Symbol:  "appointments_rooms_appointment",
-				Columns: []*schema.Column{AppointmentsColumns[7]},
+				Columns: []*schema.Column{AppointmentsColumns[8]},
 
 				RefColumns: []*schema.Column{RoomsColumns[0]},
 				OnDelete:   schema.SetNull,
@@ -391,8 +399,9 @@ var (
 
 func init() {
 	AppointmentsTable.ForeignKeys[0].RefTable = DentistsTable
-	AppointmentsTable.ForeignKeys[1].RefTable = PatientsTable
-	AppointmentsTable.ForeignKeys[2].RefTable = RoomsTable
+	AppointmentsTable.ForeignKeys[1].RefTable = NursesTable
+	AppointmentsTable.ForeignKeys[2].RefTable = PatientsTable
+	AppointmentsTable.ForeignKeys[3].RefTable = RoomsTable
 	DentalexpensesTable.ForeignKeys[0].RefTable = MedicalfilesTable
 	DentalexpensesTable.ForeignKeys[1].RefTable = NursesTable
 	DentalexpensesTable.ForeignKeys[2].RefTable = PricetypesTable

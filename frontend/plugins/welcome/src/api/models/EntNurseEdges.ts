@@ -14,6 +14,10 @@
 
 import { exists, mapValues } from '../runtime';
 import {
+    EntAppointment,
+    EntAppointmentFromJSON,
+    EntAppointmentFromJSONTyped,
+    EntAppointmentToJSON,
     EntDentalexpense,
     EntDentalexpenseFromJSON,
     EntDentalexpenseFromJSONTyped,
@@ -42,6 +46,12 @@ import {
  * @interface EntNurseEdges
  */
 export interface EntNurseEdges {
+    /**
+     * Appointment holds the value of the appointment edge.
+     * @type {Array<EntAppointment>}
+     * @memberof EntNurseEdges
+     */
+    appointment?: Array<EntAppointment>;
     /**
      * Dentalexpenses holds the value of the dentalexpenses edge.
      * @type {Array<EntDentalexpense>}
@@ -84,11 +94,12 @@ export function EntNurseEdgesFromJSONTyped(json: any, ignoreDiscriminator: boole
     }
     return {
         
-        'dentalexpenses': !exists(json, 'Dentalexpenses') ? undefined : ((json['Dentalexpenses'] as Array<any>).map(EntDentalexpenseFromJSON)),
-        'dentists': !exists(json, 'Dentists') ? undefined : ((json['Dentists'] as Array<any>).map(EntDentistFromJSON)),
-        'medicalfiles': !exists(json, 'Medicalfiles') ? undefined : ((json['Medicalfiles'] as Array<any>).map(EntMedicalfileFromJSON)),
-        'patients': !exists(json, 'Patients') ? undefined : ((json['Patients'] as Array<any>).map(EntPatientFromJSON)),
-        'queue': !exists(json, 'Queue') ? undefined : ((json['Queue'] as Array<any>).map(EntQueueFromJSON)),
+        'appointment': !exists(json, 'appointment') ? undefined : ((json['appointment'] as Array<any>).map(EntAppointmentFromJSON)),
+        'dentalexpenses': !exists(json, 'dentalexpenses') ? undefined : ((json['dentalexpenses'] as Array<any>).map(EntDentalexpenseFromJSON)),
+        'dentists': !exists(json, 'dentists') ? undefined : ((json['dentists'] as Array<any>).map(EntDentistFromJSON)),
+        'medicalfiles': !exists(json, 'medicalfiles') ? undefined : ((json['medicalfiles'] as Array<any>).map(EntMedicalfileFromJSON)),
+        'patients': !exists(json, 'patients') ? undefined : ((json['patients'] as Array<any>).map(EntPatientFromJSON)),
+        'queue': !exists(json, 'queue') ? undefined : ((json['queue'] as Array<any>).map(EntQueueFromJSON)),
     };
 }
 
@@ -101,6 +112,7 @@ export function EntNurseEdgesToJSON(value?: EntNurseEdges | null): any {
     }
     return {
         
+        'appointment': value.appointment === undefined ? undefined : ((value.appointment as Array<any>).map(EntAppointmentToJSON)),
         'dentalexpenses': value.dentalexpenses === undefined ? undefined : ((value.dentalexpenses as Array<any>).map(EntDentalexpenseToJSON)),
         'dentists': value.dentists === undefined ? undefined : ((value.dentists as Array<any>).map(EntDentistToJSON)),
         'medicalfiles': value.medicalfiles === undefined ? undefined : ((value.medicalfiles as Array<any>).map(EntMedicalfileToJSON)),

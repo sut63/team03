@@ -334,6 +334,22 @@ func (c *AppointmentClient) QueryDentist(a *Appointment) *DentistQuery {
 	return query
 }
 
+// QueryNurse queries the nurse edge of a Appointment.
+func (c *AppointmentClient) QueryNurse(a *Appointment) *NurseQuery {
+	query := &NurseQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := a.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(appointment.Table, appointment.FieldID, id),
+			sqlgraph.To(nurse.Table, nurse.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, appointment.NurseTable, appointment.NurseColumn),
+		)
+		fromV = sqlgraph.Neighbors(a.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
 // Hooks returns the client hooks.
 func (c *AppointmentClient) Hooks() []Hook {
 	return c.hooks.Appointment
@@ -1474,6 +1490,22 @@ func (c *NurseClient) QueryDentists(n *Nurse) *DentistQuery {
 			sqlgraph.From(nurse.Table, nurse.FieldID, id),
 			sqlgraph.To(dentist.Table, dentist.FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, nurse.DentistsTable, nurse.DentistsColumn),
+		)
+		fromV = sqlgraph.Neighbors(n.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryAppointment queries the appointment edge of a Nurse.
+func (c *NurseClient) QueryAppointment(n *Nurse) *AppointmentQuery {
+	query := &AppointmentQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := n.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(nurse.Table, nurse.FieldID, id),
+			sqlgraph.To(appointment.Table, appointment.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, nurse.AppointmentTable, nurse.AppointmentColumn),
 		)
 		fromV = sqlgraph.Neighbors(n.driver.Dialect(), step)
 		return fromV, nil

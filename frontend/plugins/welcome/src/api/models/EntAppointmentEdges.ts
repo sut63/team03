@@ -18,6 +18,10 @@ import {
     EntDentistFromJSON,
     EntDentistFromJSONTyped,
     EntDentistToJSON,
+    EntNurse,
+    EntNurseFromJSON,
+    EntNurseFromJSONTyped,
+    EntNurseToJSON,
     EntPatient,
     EntPatientFromJSON,
     EntPatientFromJSONTyped,
@@ -40,6 +44,12 @@ export interface EntAppointmentEdges {
      * @memberof EntAppointmentEdges
      */
     dentist?: EntDentist;
+    /**
+     * 
+     * @type {EntNurse}
+     * @memberof EntAppointmentEdges
+     */
+    nurse?: EntNurse;
     /**
      * 
      * @type {EntPatient}
@@ -65,6 +75,7 @@ export function EntAppointmentEdgesFromJSONTyped(json: any, ignoreDiscriminator:
     return {
         
         'dentist': !exists(json, 'Dentist') ? undefined : EntDentistFromJSON(json['Dentist']),
+        'nurse': !exists(json, 'Nurse') ? undefined : EntNurseFromJSON(json['Nurse']),
         'patient': !exists(json, 'Patient') ? undefined : EntPatientFromJSON(json['Patient']),
         'room': !exists(json, 'Room') ? undefined : EntRoomFromJSON(json['Room']),
     };
@@ -80,6 +91,7 @@ export function EntAppointmentEdgesToJSON(value?: EntAppointmentEdges | null): a
     return {
         
         'dentist': EntDentistToJSON(value.dentist),
+        'nurse': EntNurseToJSON(value.nurse),
         'patient': EntPatientToJSON(value.patient),
         'room': EntRoomToJSON(value.room),
     };
