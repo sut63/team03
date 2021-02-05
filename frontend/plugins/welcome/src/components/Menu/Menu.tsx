@@ -96,7 +96,7 @@ const Homepage: FC<{}> = () => {
                   <ListItemIcon>
                     <SearchIcon color="primary" fontSize="small" />
                   </ListItemIcon>
-                    <Link color="textPrimary" href="/" >ค้นหาประวัติผู้ป่วย</Link></MenuItem>
+                    <Link color="textPrimary" href="/SearchPatient" >ค้นหาประวัติผู้ป่วย</Link></MenuItem>
 
               <MenuItem>
                   <ListItemIcon>
