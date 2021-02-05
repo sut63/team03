@@ -14,7 +14,7 @@ import SearchDenExpen from './components/SearchDenExpen';
 import SearchMed from './components/SearchMed';
 import SearchAppoint from './components/SearchAppoint';
 import SearchQueue from './components/SearchQueue';
-
+import SearchDentist from './components/SearchDentist';
 export const plugin = createPlugin({
   id: 'welcome',
   register({ router }) {
@@ -34,5 +34,6 @@ export const plugin = createPlugin({
     router.registerRoute('/SearchDenExpen', SearchDenExpen);
     router.registerRoute('/SearchMed', SearchMed);
     router.registerRoute('/SearchQueue', SearchQueue);
+    router.registerRoute('/SearchDentist', SearchDentist);
   }
 });
