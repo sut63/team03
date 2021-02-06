@@ -75,7 +75,9 @@ const SaveDentist: FC<{}> = () => {
     const [degrees, setDegrees] = React.useState<EntDegree[]>([]);
   const [genders, setGenders] = React.useState<EntGender[]>([]);
   const [experts, setExperts] = React.useState<EntExpert[]>([]);
-
+  const [cardiderr, setCarderr] =React.useState('');
+  const [telErr, setTel] = React.useState('');
+  const [emailErr, setEmailerr] = React.useState('');
   // alert setting
   const Toast = Swal.mixin({
     toast: true,
@@ -107,6 +109,17 @@ const SaveDentist: FC<{}> = () => {
     getExperts();
   }, []);
 
+  const validateCardid = (val: string) => {
+    return val.match("[0123456789]\\d{12}") && val.length <= 13;
+  }
+
+  const varlidateTel =  (val: string) => {
+    return val.match("[0]\\d{9}") && val.length <= 10;
+  }
+
+  const varlidateEmail =  (email: string) => {
+    return email.match("^[a-zA-Z0-9.!#$%&'*+\\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$");
+  }
 
   // set data to object dentist
   const handleChange = (
@@ -114,9 +127,42 @@ const SaveDentist: FC<{}> = () => {
     const name = event.target.name as keyof typeof dentist;
     const { value } = event.target;
     setDentist({ ...dentist, [name]: value });
-    
+    const validateValue = value.toString()
+    checkPattern(name, validateValue)
     console.log(dentist);
   };
+
+  const checkPattern  = (s: string, value: string) => {
+    switch(s) {
+      case 'cardid':
+        validateCardid(value) ? setCarderr('') : setCarderr('กรอกเลขบัตรประชาชน 13 หลัก');
+        return;
+      case 'tel':
+        varlidateTel(value) ? setTel('') : setTel('กรอกหมายเลขโทรศัพท์');
+        return;
+      case 'email':
+      varlidateEmail(value) ? setEmailerr('') : setEmailerr('กรอกอีเมลให้ถูกต้อง');
+        return;
+      default:
+        return;
+    }
+  }
+   const checkCaseSaveError = (field: string) => {
+     switch(field){
+       case 'cardid':
+        alertMessage("error","กรอกเลขบัตรประชาชน 13 หลัก ผิดพลาด");
+         return;
+         case 'tel':
+          alertMessage("error","กรอกหมายเลขโทรศัพท์ ผิดพลาด");
+           return;
+        case 'email':
+             alertMessage("error","รูปแบบอีเมลผิดพลาด กรอกอีเมลให้ถูกต้อง");
+           return;
+      default:
+       alertMessage("error", " บันทึกข้อมูลไม่สำเร็จ");
+          return;
+     }
+   }
 
   const handleNumberChange = (
     event: React.ChangeEvent<{ name?: string; value: unknown }>,) => {
@@ -152,11 +198,15 @@ const SaveDentist: FC<{}> = () => {
           title: 'บันทึกข้อมูลสำเร็จ',
         });
       } else {
-        Toast.fire({
-          icon: 'error',
-          title: 'บันทึกข้อมูลไม่สำเร็จ',
-        });
+        checkCaseSaveError(data.error.Name)
       }
+    });
+   }
+   
+  const alertMessage = (icon: any, title: any) => {
+    Toast.fire({
+      icon: icon,
+      title: title,
     });
    }
 
@@ -239,10 +289,12 @@ const SaveDentist: FC<{}> = () => {
      <Grid item xs={9}>
      <FormControl  fullWidth variant="outlined" className={classes.formControl}>
               <TextField 
+              error = {cardiderr ? true : false}
               label="หมายเลขบัตรประชาชน" 
               variant="outlined" 
               name="cardid"
               type="string"
+              helperText= {cardiderr}
               value={dentist.cardid|| ''}
               onChange={handleChange}
               />
@@ -349,10 +401,12 @@ const SaveDentist: FC<{}> = () => {
      <Grid item xs={9}>
      <FormControl variant="outlined" className={classes.formControl}>
               <TextField 
+              error = {telErr ? true : false}
               label="เบอร์โทรศัพท์" 
               variant="outlined" 
               name="tel"
               type="string"
+              helperText= {telErr}
               value={dentist.tel || ''}
               onChange={handleChange}
               />
@@ -366,10 +420,12 @@ const SaveDentist: FC<{}> = () => {
      <Grid item xs={9}>
      <FormControl variant="outlined" className={classes.formControl}>
              <TextField 
+              error = {emailErr ? true : false}
               label="Email" 
               variant="outlined" 
               name="email"
               type="string"
+              helperText= {emailErr}
               value={dentist.email|| ''}
               onChange={handleChange}
               />
