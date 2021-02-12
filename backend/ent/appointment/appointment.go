@@ -54,7 +54,7 @@ const (
 	// It exists in this package in order to avoid circular dependency with the "nurse" package.
 	NurseInverseTable = "nurses"
 	// NurseColumn is the table column denoting the nurse relation/edge.
-	NurseColumn = "nurse_appointment"
+	NurseColumn = "nurse_id"
 )
 
 // Columns holds all SQL columns for appointment fields.
@@ -69,7 +69,7 @@ var Columns = []string{
 // ForeignKeys holds the SQL foreign-keys that are owned by the Appointment type.
 var ForeignKeys = []string{
 	"dentist_id",
-	"nurse_appointment",
+	"nurse_id",
 	"patient_id",
 	"room_id",
 }

@@ -30,11 +30,11 @@ type Appointment struct {
 	Remark string `json:"Remark,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the AppointmentQuery when eager-loading is set.
-	Edges             AppointmentEdges `json:"edges"`
-	dentist_id        *int
-	nurse_appointment *int
-	patient_id        *int
-	room_id           *int
+	Edges      AppointmentEdges `json:"edges"`
+	dentist_id *int
+	nurse_id   *int
+	patient_id *int
+	room_id    *int
 }
 
 // AppointmentEdges holds the relations/edges for other nodes in the graph.
@@ -123,7 +123,7 @@ func (*Appointment) scanValues() []interface{} {
 func (*Appointment) fkValues() []interface{} {
 	return []interface{}{
 		&sql.NullInt64{}, // dentist_id
-		&sql.NullInt64{}, // nurse_appointment
+		&sql.NullInt64{}, // nurse_id
 		&sql.NullInt64{}, // patient_id
 		&sql.NullInt64{}, // room_id
 	}
@@ -170,10 +170,10 @@ func (a *Appointment) assignValues(values ...interface{}) error {
 			*a.dentist_id = int(value.Int64)
 		}
 		if value, ok := values[1].(*sql.NullInt64); !ok {
-			return fmt.Errorf("unexpected type %T for edge-field nurse_appointment", value)
+			return fmt.Errorf("unexpected type %T for edge-field nurse_id", value)
 		} else if value.Valid {
-			a.nurse_appointment = new(int)
-			*a.nurse_appointment = int(value.Int64)
+			a.nurse_id = new(int)
+			*a.nurse_id = int(value.Int64)
 		}
 		if value, ok := values[2].(*sql.NullInt64); !ok {
 			return fmt.Errorf("unexpected type %T for edge-field patient_id", value)

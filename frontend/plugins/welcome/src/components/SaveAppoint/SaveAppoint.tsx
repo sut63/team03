@@ -120,22 +120,22 @@ const validateDetail = (val: string) => {
 
 // ฟังก์ชั่นสำหรับ validate หมายเหตุ
 const validateRemark = (val: string) => {
-  return val.length > 10 ?  false : true;
+  return val.length > 30 ?  false : true;
 }
 
 // สำหรับตรวจสอบรูปแบบข้อมูลที่กรอก ว่าเป็นไปตามที่กำหนดหรือไม่
 const checkPattern  = (id: string, value: string) => {
   switch(id) {
     case 'AppointID':
-      validateAppointID(value) ? setAppointIDError('') : setAppointIDError('รหัสการนัดหมายขึ้นต้นด้วย N ตามด้วยตัวเลข 5 ตัว');
+      validateAppointID(value) ? setAppointIDError('') : setAppointIDError('รหัสการนัดหมายขึ้นต้นด้วย A ตามด้วยตัวเลข 5 ตัว');
       return;
 
     case 'Detail':
-      validateDetail(value) ? setDetailError('') : setDetailError('ห้ามต่ำกว่า 5 ตัวอักษร');
+      validateDetail(value) ? setDetailError('') : setDetailError('สาเหตุการนัดหมายจำนวนตัวอักษรต่ำกว่า 5 ตัวอักษร');
       return;
 
     case 'Remark':
-      validateRemark(value) ? setRemarkError('') : setRemarkError('ห้ามมากกว่า 10 ตัวอักษร');
+      validateRemark(value) ? setRemarkError('') : setRemarkError('หมายเหตุจำนวนตัวอักษรมากกว่า 30 ตัวอักษร');
       return;
 
     default:
@@ -154,13 +154,13 @@ const alertMessage = (icon: any, title: any) => {
  const checkCaseSaveError = (s: string) => {
   switch(s) {
     case 'AppointID':
-      alertMessage("error", "รหัสการนัดหมายขึ้นต้นด้วย N ตามด้วยตัวเลข 5 ตัว");
+      alertMessage("error", "รหัสการนัดหมายขึ้นต้นด้วย A ตามด้วยตัวเลข 5 ตัว");
       return;
     case 'Detail':
-      alertMessage("error", " จำนวนตัวอักษรต่ำกว่า 5 ตัวอักษร");
+      alertMessage("error", " สาเหตุการนัดหมายจำนวนตัวอักษรต่ำกว่า 5 ตัวอักษร");
       return;
     case 'Remark':
-      alertMessage("error", " จำนวนตัวอักษรมากกว่า 10 ตัวอักษร");
+      alertMessage("error", " หมายเหตุจำนวนตัวอักษรมากกว่า 30 ตัวอักษร");
       return;
     default:
       alertMessage("error", " บันทึกข้อมูลไม่สำเร็จ");
@@ -235,13 +235,12 @@ function save() {
               </FormControl>
             </Grid>
 
-
             <Grid item xs={3}>
-              <div className={classes.paper}>ผู้ป่วย</div>
+              <div className={classes.paper}>รหัสผู้ป่วย</div>
             </Grid>
             <Grid item xs={9}>
               <FormControl variant="outlined" className={classes.formControl}>
-                <InputLabel>เลือกรายชื่อผู้ป่วย</InputLabel>
+                <InputLabel>เลือกรหัสผู้ป่วย</InputLabel>
                 <Select
                   name="Patient"
                   label = "เลือกรายชื่อผู้ป่วย"
@@ -251,7 +250,30 @@ function save() {
                   {patients.map(item => {
                     return (
                       <MenuItem key={item.id} value={item.id}>
-                        {item.id}&emsp;
+                        {item.patientID}
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+              </FormControl>
+            </Grid>
+
+
+            <Grid item xs={3}>
+              <div className={classes.paper}>ผู้ป่วย</div>
+            </Grid>
+            <Grid item xs={9}>
+              <FormControl variant="outlined" className={classes.formControl}>
+                <InputLabel>รายชื่อผู้ป่วย</InputLabel>
+                <Select
+                  name="Patient"
+                  label = "รายชื่อผู้ป่วย"
+                  value={appointment.Patient || ''}
+                  onChange={handleChange}
+                >
+                  {patients.map(item => {
+                    return (
+                      <MenuItem key={item.id} value={item.id}>
                         {item.name}
                       </MenuItem>
                     );
