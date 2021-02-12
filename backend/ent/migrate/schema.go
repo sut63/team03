@@ -14,9 +14,9 @@ var (
 		{Name: "appoint_id", Type: field.TypeString},
 		{Name: "detail", Type: field.TypeString},
 		{Name: "datetime", Type: field.TypeTime},
-		{Name: "remark", Type: field.TypeString, Size: 10},
+		{Name: "remark", Type: field.TypeString, Size: 30},
 		{Name: "dentist_id", Type: field.TypeInt, Nullable: true},
-		{Name: "nurse_appointment", Type: field.TypeInt, Nullable: true},
+		{Name: "nurse_id", Type: field.TypeInt, Nullable: true},
 		{Name: "patient_id", Type: field.TypeInt, Nullable: true},
 		{Name: "room_id", Type: field.TypeInt, Nullable: true},
 	}

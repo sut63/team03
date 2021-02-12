@@ -26,7 +26,7 @@ func (Appointment) Fields() []ent.Field {
 		}),
 		field.String("Detail").MinLen(5),
 		field.Time("Datetime"),
-		field.String("Remark").MaxLen(10),
+		field.String("Remark").MaxLen(30),
 	}
 }
 

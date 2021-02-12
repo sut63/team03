@@ -540,7 +540,7 @@ func (aq *AppointmentQuery) sqlAll(ctx context.Context) ([]*Appointment, error) 
 		ids := make([]int, 0, len(nodes))
 		nodeids := make(map[int][]*Appointment)
 		for i := range nodes {
-			if fk := nodes[i].nurse_appointment; fk != nil {
+			if fk := nodes[i].nurse_id; fk != nil {
 				ids = append(ids, *fk)
 				nodeids[*fk] = append(nodeids[*fk], nodes[i])
 			}
@@ -553,7 +553,7 @@ func (aq *AppointmentQuery) sqlAll(ctx context.Context) ([]*Appointment, error) 
 		for _, n := range neighbors {
 			nodes, ok := nodeids[n.ID]
 			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "nurse_appointment" returned %v`, n.ID)
+				return nil, fmt.Errorf(`unexpected foreign-key "nurse_id" returned %v`, n.ID)
 			}
 			for i := range nodes {
 				nodes[i].Edges.Nurse = n

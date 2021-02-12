@@ -31,7 +31,7 @@ func (Nurse) Edges() []ent.Edge {
 		edge.To("dentalexpenses", Dentalexpense.Type).StorageKey(edge.Column("nurse_id")),
 		edge.To("patients", Patient.Type).StorageKey(edge.Column("nurse_id")),
 		edge.To("dentists", Dentist.Type).StorageKey(edge.Column("nurse_id")),
-		edge.To("appointment", Appointment.Type),
+		edge.To("appointment", Appointment.Type).StorageKey(edge.Column("nurse_id")),
 		
 	}
 }

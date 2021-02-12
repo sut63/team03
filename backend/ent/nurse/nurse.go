@@ -72,7 +72,7 @@ const (
 	// It exists in this package in order to avoid circular dependency with the "appointment" package.
 	AppointmentInverseTable = "appointments"
 	// AppointmentColumn is the table column denoting the appointment relation/edge.
-	AppointmentColumn = "nurse_appointment"
+	AppointmentColumn = "nurse_id"
 )
 
 // Columns holds all SQL columns for nurse fields.
