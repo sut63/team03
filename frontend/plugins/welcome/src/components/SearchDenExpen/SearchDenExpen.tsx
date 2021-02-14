@@ -56,12 +56,12 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 const Toast = Swal.mixin({
-  
-  position: 'center',
+  toast: true,
+  position: 'top-end',
   showConfirmButton: false,
-  
-  
-  showCloseButton: true,
+  timer: 3000,
+  timerProgressBar: true,
+  //showCloseButton: true,
 
 });
 export default function ComponentsTable() {
@@ -129,7 +129,7 @@ export default function ComponentsTable() {
     }
     console.log(checktax)
     if (tax == "") {
-      alertMessage("info", "แสดงข้อมูลรายการค่ารักษาในระบบ");
+      alertMessage("info", "แสดงข้อมูลรายการค่ารักษา");
     }
   };
 
@@ -262,9 +262,9 @@ export default function ComponentsTable() {
                                 <TableCell align="center">เลขที่กำกับภาษี</TableCell>
                                 <TableCell align="center">ชื่อผู้ชำระค่าบริการ</TableCell>
                                 <TableCell align="center">บริการทันตกรรม</TableCell>
-                                
+                                <TableCell align="center">ค่าบริการ</TableCell>
                                 <TableCell align="center">ประเภทการชำระ</TableCell>
-                                <TableCell align="center">วันที่</TableCell>
+                                <TableCell align="center">วันที่ชำระ</TableCell>
                               </TableRow>
                         </TableHead>
                         <TableBody>
@@ -275,7 +275,7 @@ export default function ComponentsTable() {
                             <TableCell align="center">{item.tax}</TableCell>
                             <TableCell align="center">{item.name}</TableCell>
                             <TableCell align="center">{item.edges?.medicalfile?.detial}</TableCell>
-                            
+                            <TableCell align="center">{item.amount}</TableCell>
                             <TableCell align="center">{item.edges?.pricetype?.name}</TableCell>
                             <TableCell align="center">{moment(item.AddedTime).format('DD/MM/YYYY HH.mm น.')}</TableCell>
                           </TableRow>
@@ -294,9 +294,9 @@ export default function ComponentsTable() {
                                 <TableCell align="center">เลขที่กำกับภาษี</TableCell>
                                 <TableCell align="center">ชื่อผู้ชำระค่าบริการ</TableCell>
                                 <TableCell align="center">บริการทันตกรรม</TableCell>
-                                
+                                <TableCell align="center">ค่าบริการ</TableCell>
                                 <TableCell align="center">ประเภทการชำระ</TableCell>
-                                <TableCell align="center">วันที่</TableCell>
+                                <TableCell align="center">วันที่ชำระ</TableCell>
                               </TableRow>
                             </TableHead>
                             <TableBody>
@@ -307,7 +307,7 @@ export default function ComponentsTable() {
                                  <TableCell align="center">{item.tax}</TableCell>
                                  <TableCell align="center">{item.name}</TableCell>
                                  <TableCell align="center">{item.edges?.medicalfile?.detial}</TableCell>
-                                 
+                                 <TableCell align="center">{item.amount}</TableCell>
                                  <TableCell align="center">{item.edges?.pricetype?.name}</TableCell>
                                  <TableCell align="center">{moment(item.AddedTime).format('DD/MM/YYYY HH.mm น.')}</TableCell>
                                </TableRow>
