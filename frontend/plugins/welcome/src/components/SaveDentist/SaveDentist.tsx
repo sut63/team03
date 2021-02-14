@@ -110,11 +110,11 @@ const SaveDentist: FC<{}> = () => {
   }, []);
 
   const validateCardid = (val: string) => {
-    return val.match("[0123456789]\\d{12}") && val.length <= 13;
+    return val.match("^[0-9]{13}") && val.length <= 13;
   }
 
   const varlidateTel =  (val: string) => {
-    return val.match("[0]\\d{9}") && val.length <= 10;
+    return val.match("^[0]\\d{9}")&& val.length <= 10 ;
   }
 
   const varlidateEmail =  (email: string) => {
@@ -291,6 +291,7 @@ const SaveDentist: FC<{}> = () => {
               <TextField 
               error = {cardiderr ? true : false}
               label="หมายเลขบัตรประชาชน" 
+              inputProps={{ maxLength: 13 }}
               variant="outlined" 
               name="cardid"
               type="string"
@@ -403,6 +404,7 @@ const SaveDentist: FC<{}> = () => {
               <TextField 
               error = {telErr ? true : false}
               label="เบอร์โทรศัพท์" 
+              inputProps={{ maxLength: 10 }}
               variant="outlined" 
               name="tel"
               type="string"
