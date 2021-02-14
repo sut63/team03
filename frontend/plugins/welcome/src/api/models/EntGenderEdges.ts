@@ -54,8 +54,8 @@ export function EntGenderEdgesFromJSONTyped(json: any, ignoreDiscriminator: bool
     }
     return {
         
-        'dentists': !exists(json, 'dentists') ? undefined : ((json['dentists'] as Array<any>).map(EntDentistFromJSON)),
-        'patients': !exists(json, 'patients') ? undefined : ((json['patients'] as Array<any>).map(EntPatientFromJSON)),
+        'dentists': !exists(json, 'Dentists') ? undefined : ((json['Dentists'] as Array<any>).map(EntDentistFromJSON)),
+        'patients': !exists(json, 'Patients') ? undefined : ((json['Patients'] as Array<any>).map(EntPatientFromJSON)),
     };
 }
 

@@ -1133,8 +1133,8 @@ type DentalexpenseMutation struct {
 	_Name              *string
 	_Phone             *string
 	_AddedTime         *time.Time
-	_Rates             *float64
-	add_Rates          *float64
+	_Amount            *int
+	add_Amount         *int
 	_Tax               *string
 	clearedFields      map[string]struct{}
 	nurse              *int
@@ -1337,61 +1337,61 @@ func (m *DentalexpenseMutation) ResetAddedTime() {
 	m._AddedTime = nil
 }
 
-// SetRates sets the Rates field.
-func (m *DentalexpenseMutation) SetRates(f float64) {
-	m._Rates = &f
-	m.add_Rates = nil
+// SetAmount sets the Amount field.
+func (m *DentalexpenseMutation) SetAmount(i int) {
+	m._Amount = &i
+	m.add_Amount = nil
 }
 
-// Rates returns the Rates value in the mutation.
-func (m *DentalexpenseMutation) Rates() (r float64, exists bool) {
-	v := m._Rates
+// Amount returns the Amount value in the mutation.
+func (m *DentalexpenseMutation) Amount() (r int, exists bool) {
+	v := m._Amount
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// OldRates returns the old Rates value of the Dentalexpense.
+// OldAmount returns the old Amount value of the Dentalexpense.
 // If the Dentalexpense object wasn't provided to the builder, the object is fetched
 // from the database.
 // An error is returned if the mutation operation is not UpdateOne, or database query fails.
-func (m *DentalexpenseMutation) OldRates(ctx context.Context) (v float64, err error) {
+func (m *DentalexpenseMutation) OldAmount(ctx context.Context) (v int, err error) {
 	if !m.op.Is(OpUpdateOne) {
-		return v, fmt.Errorf("OldRates is allowed only on UpdateOne operations")
+		return v, fmt.Errorf("OldAmount is allowed only on UpdateOne operations")
 	}
 	if m.id == nil || m.oldValue == nil {
-		return v, fmt.Errorf("OldRates requires an ID field in the mutation")
+		return v, fmt.Errorf("OldAmount requires an ID field in the mutation")
 	}
 	oldValue, err := m.oldValue(ctx)
 	if err != nil {
-		return v, fmt.Errorf("querying old value for OldRates: %w", err)
+		return v, fmt.Errorf("querying old value for OldAmount: %w", err)
 	}
-	return oldValue.Rates, nil
+	return oldValue.Amount, nil
 }
 
-// AddRates adds f to Rates.
-func (m *DentalexpenseMutation) AddRates(f float64) {
-	if m.add_Rates != nil {
-		*m.add_Rates += f
+// AddAmount adds i to Amount.
+func (m *DentalexpenseMutation) AddAmount(i int) {
+	if m.add_Amount != nil {
+		*m.add_Amount += i
 	} else {
-		m.add_Rates = &f
+		m.add_Amount = &i
 	}
 }
 
-// AddedRates returns the value that was added to the Rates field in this mutation.
-func (m *DentalexpenseMutation) AddedRates() (r float64, exists bool) {
-	v := m.add_Rates
+// AddedAmount returns the value that was added to the Amount field in this mutation.
+func (m *DentalexpenseMutation) AddedAmount() (r int, exists bool) {
+	v := m.add_Amount
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// ResetRates reset all changes of the "Rates" field.
-func (m *DentalexpenseMutation) ResetRates() {
-	m._Rates = nil
-	m.add_Rates = nil
+// ResetAmount reset all changes of the "Amount" field.
+func (m *DentalexpenseMutation) ResetAmount() {
+	m._Amount = nil
+	m.add_Amount = nil
 }
 
 // SetTax sets the Tax field.
@@ -1572,8 +1572,8 @@ func (m *DentalexpenseMutation) Fields() []string {
 	if m._AddedTime != nil {
 		fields = append(fields, dentalexpense.FieldAddedTime)
 	}
-	if m._Rates != nil {
-		fields = append(fields, dentalexpense.FieldRates)
+	if m._Amount != nil {
+		fields = append(fields, dentalexpense.FieldAmount)
 	}
 	if m._Tax != nil {
 		fields = append(fields, dentalexpense.FieldTax)
@@ -1592,8 +1592,8 @@ func (m *DentalexpenseMutation) Field(name string) (ent.Value, bool) {
 		return m.Phone()
 	case dentalexpense.FieldAddedTime:
 		return m.AddedTime()
-	case dentalexpense.FieldRates:
-		return m.Rates()
+	case dentalexpense.FieldAmount:
+		return m.Amount()
 	case dentalexpense.FieldTax:
 		return m.Tax()
 	}
@@ -1611,8 +1611,8 @@ func (m *DentalexpenseMutation) OldField(ctx context.Context, name string) (ent.
 		return m.OldPhone(ctx)
 	case dentalexpense.FieldAddedTime:
 		return m.OldAddedTime(ctx)
-	case dentalexpense.FieldRates:
-		return m.OldRates(ctx)
+	case dentalexpense.FieldAmount:
+		return m.OldAmount(ctx)
 	case dentalexpense.FieldTax:
 		return m.OldTax(ctx)
 	}
@@ -1645,12 +1645,12 @@ func (m *DentalexpenseMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetAddedTime(v)
 		return nil
-	case dentalexpense.FieldRates:
-		v, ok := value.(float64)
+	case dentalexpense.FieldAmount:
+		v, ok := value.(int)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
-		m.SetRates(v)
+		m.SetAmount(v)
 		return nil
 	case dentalexpense.FieldTax:
 		v, ok := value.(string)
@@ -1667,8 +1667,8 @@ func (m *DentalexpenseMutation) SetField(name string, value ent.Value) error {
 // or decremented during this mutation.
 func (m *DentalexpenseMutation) AddedFields() []string {
 	var fields []string
-	if m.add_Rates != nil {
-		fields = append(fields, dentalexpense.FieldRates)
+	if m.add_Amount != nil {
+		fields = append(fields, dentalexpense.FieldAmount)
 	}
 	return fields
 }
@@ -1678,8 +1678,8 @@ func (m *DentalexpenseMutation) AddedFields() []string {
 // that this field was not set, or was not define in the schema.
 func (m *DentalexpenseMutation) AddedField(name string) (ent.Value, bool) {
 	switch name {
-	case dentalexpense.FieldRates:
-		return m.AddedRates()
+	case dentalexpense.FieldAmount:
+		return m.AddedAmount()
 	}
 	return nil, false
 }
@@ -1689,12 +1689,12 @@ func (m *DentalexpenseMutation) AddedField(name string) (ent.Value, bool) {
 // type mismatch the field type.
 func (m *DentalexpenseMutation) AddField(name string, value ent.Value) error {
 	switch name {
-	case dentalexpense.FieldRates:
-		v, ok := value.(float64)
+	case dentalexpense.FieldAmount:
+		v, ok := value.(int)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
-		m.AddRates(v)
+		m.AddAmount(v)
 		return nil
 	}
 	return fmt.Errorf("unknown Dentalexpense numeric field %s", name)
@@ -1733,8 +1733,8 @@ func (m *DentalexpenseMutation) ResetField(name string) error {
 	case dentalexpense.FieldAddedTime:
 		m.ResetAddedTime()
 		return nil
-	case dentalexpense.FieldRates:
-		m.ResetRates()
+	case dentalexpense.FieldAmount:
+		m.ResetAmount()
 		return nil
 	case dentalexpense.FieldTax:
 		m.ResetTax()

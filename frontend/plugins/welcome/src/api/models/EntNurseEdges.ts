@@ -94,12 +94,12 @@ export function EntNurseEdgesFromJSONTyped(json: any, ignoreDiscriminator: boole
     }
     return {
         
-        'appointment': !exists(json, 'appointment') ? undefined : ((json['appointment'] as Array<any>).map(EntAppointmentFromJSON)),
-        'dentalexpenses': !exists(json, 'dentalexpenses') ? undefined : ((json['dentalexpenses'] as Array<any>).map(EntDentalexpenseFromJSON)),
-        'dentists': !exists(json, 'dentists') ? undefined : ((json['dentists'] as Array<any>).map(EntDentistFromJSON)),
-        'medicalfiles': !exists(json, 'medicalfiles') ? undefined : ((json['medicalfiles'] as Array<any>).map(EntMedicalfileFromJSON)),
-        'patients': !exists(json, 'patients') ? undefined : ((json['patients'] as Array<any>).map(EntPatientFromJSON)),
-        'queue': !exists(json, 'queue') ? undefined : ((json['queue'] as Array<any>).map(EntQueueFromJSON)),
+        'appointment': !exists(json, 'Appointment') ? undefined : ((json['Appointment'] as Array<any>).map(EntAppointmentFromJSON)),
+        'dentalexpenses': !exists(json, 'Dentalexpenses') ? undefined : ((json['Dentalexpenses'] as Array<any>).map(EntDentalexpenseFromJSON)),
+        'dentists': !exists(json, 'Dentists') ? undefined : ((json['Dentists'] as Array<any>).map(EntDentistFromJSON)),
+        'medicalfiles': !exists(json, 'Medicalfiles') ? undefined : ((json['Medicalfiles'] as Array<any>).map(EntMedicalfileFromJSON)),
+        'patients': !exists(json, 'Patients') ? undefined : ((json['Patients'] as Array<any>).map(EntPatientFromJSON)),
+        'queue': !exists(json, 'Queue') ? undefined : ((json['Queue'] as Array<any>).map(EntQueueFromJSON)),
     };
 }
 

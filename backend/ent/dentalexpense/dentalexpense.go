@@ -13,8 +13,8 @@ const (
 	FieldPhone = "phone"
 	// FieldAddedTime holds the string denoting the addedtime field in the database.
 	FieldAddedTime = "added_time"
-	// FieldRates holds the string denoting the rates field in the database.
-	FieldRates = "rates"
+	// FieldAmount holds the string denoting the amount field in the database.
+	FieldAmount = "amount"
 	// FieldTax holds the string denoting the tax field in the database.
 	FieldTax = "tax"
 
@@ -56,7 +56,7 @@ var Columns = []string{
 	FieldName,
 	FieldPhone,
 	FieldAddedTime,
-	FieldRates,
+	FieldAmount,
 	FieldTax,
 }
 
@@ -72,8 +72,8 @@ var (
 	NameValidator func(string) error
 	// PhoneValidator is a validator for the "Phone" field. It is called by the builders before save.
 	PhoneValidator func(string) error
-	// RatesValidator is a validator for the "Rates" field. It is called by the builders before save.
-	RatesValidator func(float64) error
+	// AmountValidator is a validator for the "Amount" field. It is called by the builders before save.
+	AmountValidator func(int) error
 	// TaxValidator is a validator for the "Tax" field. It is called by the builders before save.
 	TaxValidator func(string) error
 )

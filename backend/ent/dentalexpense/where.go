@@ -114,10 +114,10 @@ func AddedTime(v time.Time) predicate.Dentalexpense {
 	})
 }
 
-// Rates applies equality check predicate on the "Rates" field. It's identical to RatesEQ.
-func Rates(v float64) predicate.Dentalexpense {
+// Amount applies equality check predicate on the "Amount" field. It's identical to AmountEQ.
+func Amount(v int) predicate.Dentalexpense {
 	return predicate.Dentalexpense(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldRates), v))
+		s.Where(sql.EQ(s.C(FieldAmount), v))
 	})
 }
 
@@ -426,22 +426,22 @@ func AddedTimeLTE(v time.Time) predicate.Dentalexpense {
 	})
 }
 
-// RatesEQ applies the EQ predicate on the "Rates" field.
-func RatesEQ(v float64) predicate.Dentalexpense {
+// AmountEQ applies the EQ predicate on the "Amount" field.
+func AmountEQ(v int) predicate.Dentalexpense {
 	return predicate.Dentalexpense(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldRates), v))
+		s.Where(sql.EQ(s.C(FieldAmount), v))
 	})
 }
 
-// RatesNEQ applies the NEQ predicate on the "Rates" field.
-func RatesNEQ(v float64) predicate.Dentalexpense {
+// AmountNEQ applies the NEQ predicate on the "Amount" field.
+func AmountNEQ(v int) predicate.Dentalexpense {
 	return predicate.Dentalexpense(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldRates), v))
+		s.Where(sql.NEQ(s.C(FieldAmount), v))
 	})
 }
 
-// RatesIn applies the In predicate on the "Rates" field.
-func RatesIn(vs ...float64) predicate.Dentalexpense {
+// AmountIn applies the In predicate on the "Amount" field.
+func AmountIn(vs ...int) predicate.Dentalexpense {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -453,12 +453,12 @@ func RatesIn(vs ...float64) predicate.Dentalexpense {
 			s.Where(sql.False())
 			return
 		}
-		s.Where(sql.In(s.C(FieldRates), v...))
+		s.Where(sql.In(s.C(FieldAmount), v...))
 	})
 }
 
-// RatesNotIn applies the NotIn predicate on the "Rates" field.
-func RatesNotIn(vs ...float64) predicate.Dentalexpense {
+// AmountNotIn applies the NotIn predicate on the "Amount" field.
+func AmountNotIn(vs ...int) predicate.Dentalexpense {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -470,35 +470,35 @@ func RatesNotIn(vs ...float64) predicate.Dentalexpense {
 			s.Where(sql.False())
 			return
 		}
-		s.Where(sql.NotIn(s.C(FieldRates), v...))
+		s.Where(sql.NotIn(s.C(FieldAmount), v...))
 	})
 }
 
-// RatesGT applies the GT predicate on the "Rates" field.
-func RatesGT(v float64) predicate.Dentalexpense {
+// AmountGT applies the GT predicate on the "Amount" field.
+func AmountGT(v int) predicate.Dentalexpense {
 	return predicate.Dentalexpense(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldRates), v))
+		s.Where(sql.GT(s.C(FieldAmount), v))
 	})
 }
 
-// RatesGTE applies the GTE predicate on the "Rates" field.
-func RatesGTE(v float64) predicate.Dentalexpense {
+// AmountGTE applies the GTE predicate on the "Amount" field.
+func AmountGTE(v int) predicate.Dentalexpense {
 	return predicate.Dentalexpense(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldRates), v))
+		s.Where(sql.GTE(s.C(FieldAmount), v))
 	})
 }
 
-// RatesLT applies the LT predicate on the "Rates" field.
-func RatesLT(v float64) predicate.Dentalexpense {
+// AmountLT applies the LT predicate on the "Amount" field.
+func AmountLT(v int) predicate.Dentalexpense {
 	return predicate.Dentalexpense(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldRates), v))
+		s.Where(sql.LT(s.C(FieldAmount), v))
 	})
 }
 
-// RatesLTE applies the LTE predicate on the "Rates" field.
-func RatesLTE(v float64) predicate.Dentalexpense {
+// AmountLTE applies the LTE predicate on the "Amount" field.
+func AmountLTE(v int) predicate.Dentalexpense {
 	return predicate.Dentalexpense(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldRates), v))
+		s.Where(sql.LTE(s.C(FieldAmount), v))
 	})
 }
 
