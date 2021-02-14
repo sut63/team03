@@ -125,7 +125,7 @@ export default function ComponentsTable() {
     }
     console.log(checkqueue)
     if (queueID == "") {
-      alertMessage("info", "แสดงข้อมูลประวัติทันตกรรม");
+      alertMessage("info", "แสดงข้อมูลใบจองคิวผู้ป่วย");
     }
   };
 
