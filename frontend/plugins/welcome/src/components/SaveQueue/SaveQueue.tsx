@@ -128,7 +128,7 @@ const SaveQueue: FC<{}> = () => {
 
   // ฟังก์ชั่นสำหรับ validate โทรศัพท์
   const validatePhone = (val: string) => {
-    return val.length == 10 ? true : false;
+    return val.match("^[0]\\d{9}")&& val.length <= 10 ;
   }
  
   // ฟังก์ชั่นสำหรับ validate ทันตกรรม
@@ -143,7 +143,7 @@ const SaveQueue: FC<{}> = () => {
         validateQueueID(value) ? setQueueIDError('') : setQueueIDError('รหัสคิวขึ้นต้นด้วย Q ตามด้วยตัวเลข 3 ตัว');
         return;
       case 'Phone':
-        validatePhone(value) ? setPhoneError('') : setPhoneError('หมายเลขโทรศัพท์ต้องมี 10 หลัก');
+        validatePhone(value) ? setPhoneError('') : setPhoneError('หมายเลขโทรศัพท์ 10 หลักขึ้นต้นด้วย 0 ตามด้วยตัวเลข 9 ตัว');
         return;
         case 'Dental':
         validateDental(value) ? setDentalError('') : setDentalError('มีตัวอักษรเกิน 30 ตัวอักษร');
@@ -167,7 +167,7 @@ const SaveQueue: FC<{}> = () => {
         alertMessage("error", "รหัสคิวขึ้นต้นด้วย Q ตามด้วยตัวเลข 3 ตัว");
         return;
       case 'Phone':
-        alertMessage("error", "หมายเลขโทรศัพท์ต้องมี 10 หลัก");
+        alertMessage("error", "หมายเลขโทรศัพท์ 10 หลักขึ้นต้นด้วย 0 ตามด้วยตัวเลข 9 ตัว");
         return;
       case 'Dental':
         alertMessage("error", "มีตัวอักษรเกิน 30 ตัวอักษร");
