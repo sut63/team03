@@ -154,13 +154,13 @@ const alertMessage = (icon: any, title: any) => {
  const checkCaseSaveError = (s: string) => {
   switch(s) {
     case 'AppointID':
-      alertMessage("error", "รหัสการนัดหมายขึ้นต้นด้วย A ตามด้วยตัวเลข 5 ตัว");
+      alertMessage("error", "รูปแบบรหัสการนัดหมายไม่ถูกต้อง");
       return;
     case 'Detail':
-      alertMessage("error", " สาเหตุการนัดหมายจำนวนตัวอักษรต่ำกว่า 5 ตัวอักษร");
+      alertMessage("error", "รูปแบบสาเหตุการนัดหมายไม่ถูกต้อง");
       return;
     case 'Remark':
-      alertMessage("error", " หมายเหตุจำนวนตัวอักษรมากกว่า 30 ตัวอักษร");
+      alertMessage("error", "รูปแบบหมายเหตุไม่ถูกต้อง");
       return;
     default:
       alertMessage("error", " บันทึกข้อมูลไม่สำเร็จ");
