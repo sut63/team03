@@ -20,7 +20,7 @@ func (Dentist) Fields() []ent.Field {
 	field.Int("age").Min(0),
 
 	field.String("cardid").Validate(func(s string) error {
-	match, _ := regexp.MatchString("[0123456789]\\d{12}", s)
+	match, _ := regexp.MatchString("[0-9]{13}", s)
 	if !match {
 		return errors.New("รูปแบบเลขบัตรประชาชน 13 หลัก ผิดพลาด")
 	}
@@ -38,7 +38,7 @@ func (Dentist) Fields() []ent.Field {
 	}),
 
     field.String("email").Validate(func(c string) error {
-	match, _ := regexp.MatchString("^[a-zA-Z0-9.!#$%&'*+\\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$", c)
+	match, _ := regexp.MatchString("[a-zA-Z0-9.!#$%&'*+\\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$", c)
 	if !match {
 		return errors.New("รูปแบบอีเมล ผิดพลาด")
 	}
@@ -46,8 +46,7 @@ func (Dentist) Fields() []ent.Field {
 	}),
 	field.String("password").NotEmpty(),
 	
-	//	field.String("cardid").Match(regexp.MustCompile("[0123456789]\\d{12}")),
-	//field.String("email").Match(regexp.MustCompile("^[a-zA-Z0-9.!#$%&'*+\\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$")),
+	
 	//	field.String("tel").Match(regexp.MustCompile("[0]\\d{9}")),
    }
 }
