@@ -4,8 +4,8 @@ import (
 	"github.com/facebookincubator/ent"
 	"github.com/facebookincubator/ent/schema/edge"
 	"github.com/facebookincubator/ent/schema/field"
-	//"errors"
-	//"regexp"
+	"errors"
+	"regexp"
 )
 
 // Patient holds the schema definition for the Patient entity.
@@ -16,11 +16,31 @@ type Patient struct {
 // Fields of the Patient.
 func (Patient) Fields() []ent.Field {
 	return []ent.Field{
-		field.String("PatientID").Unique().MaxLen(6).MinLen(6),
+		field.String("PatientID").Validate(func(s string) error {
+			match, _ := regexp.MatchString("[P]\\d{6}", s)
+			if !match {
+				return errors.New("รูปแบบรหัสประจำตัวผู้ป่วยไม่ถูกต้อง")
+			}
+			return nil
+		}),
 		field.String("Name").NotEmpty(),
-		field.String("CardID").Unique().MaxLen(13).MinLen(13),
-		field.String("Tel").Unique().MaxLen(10).MinLen(10),
-		field.Int("Age").Min(0),
+		field.String("CardID").Validate(func(s string) error {
+			match, _ := regexp.MatchString("^[0-9]{13}", s)
+			if !match {
+				return errors.New("รูปแบบเลขบัตรประชาชน 13 หลักไม่ถูกต้อง")
+			}
+			return nil
+		}),
+		//field.String("CardID").MaxLen(13).MinLen(13),
+		field.String("Tel").Validate(func(s string) error {
+			match, _ := regexp.MatchString("[0]\\d{9}", s)
+			if !match {
+				return errors.New("รูปแบบหมายเลขโทรศัพท์ 10 หลักไม่ถูกต้อง")
+			}
+			return nil
+			}),
+		//field.String("Tel").MaxLen(10).MinLen(10),
+		field.Int("Age").Range(1,200),
 		field.Time("Birthday"),
 	}
 }

@@ -185,7 +185,7 @@ export default function ComponentsTable() {
                     className={classes.margin}
                     variant="outlined"
                   >
-                    <div className={classes.paper}><strong>หมายเลขประจำตัวผู้ป่วย EX.000001</strong></div>
+                    <div className={classes.paper}><strong>รหัสประจำตัวผู้ป่วย EX.P000001</strong></div>
                     <TextField
                       id="patientid"
                       value={patientid}
