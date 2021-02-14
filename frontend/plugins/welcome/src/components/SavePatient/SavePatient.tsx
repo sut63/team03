@@ -70,7 +70,7 @@ const SavePatient: FC<{}> = () => {
 
   const [patient, setPatient] = React.useState<Partial<savePatient>>({});
   const [patientIDError, setPatientIDError] = React.useState('');
-  //const [nameError, setnameError] = React.useState('');
+  const [nameError, setnameError] = React.useState('');
   const [cardIDError, setCardIDError] = React.useState('');
   const [telError, setTelError] = React.useState('');
   const [ageError, setAgeError] = React.useState('');
@@ -120,48 +120,49 @@ const SavePatient: FC<{}> = () => {
     console.log(patient);
   }; 
 
-  const handleNumberChange = (
-    event: React.ChangeEvent<{ name: string; value: number }>,) => {
-    const name = event.target.name as keyof typeof patient;
-    const { value } = event.target;
-    setPatient({ ...patient, [name]: + value });
-   // console.log(patient);
-  }; 
 
   //ฟังก์ชั่นสำหรับ validate เลขประจำตัวผู้ป่วย
   const validatepatientID = (val: string) => {
-    return val.match("^[0-9]{6}$");
+    return val.match("[P]\\d{6}");
   }
   
   //ฟังก์ชั่นสำหรับ validate ชื่อ
- /* const Validatename = (val: string) => {
-    return val.match("^[ก-๏]+$");
-  } */
+  const Validatename = (val: string) => {
+    return val.match("");
+  } 
 
   // ฟังก์ชั่นสำหรับ validate เลขประจำตัวประชาชน
   const validatecardID = (val: string) => {
-    return val.match("^[0-9]{13}$");
+    return val.match("^[0-9]{13}") && val.length <= 13;
+    //return val.match("^[0-9]{13}$");
   }
 
   // ฟังก์ชั่นสำหรับ validate เบอร์โทรศัพท์
   const validatetTel = (val: string) => {
-    return val.match("^[0-9]{10}$");
+    return val.match("^[0]\\d{9}")&& val.length <= 10 ;
+  }
+
+  const ValidateAge = (val: number) => {
+    return val <= 200 && val >= 1 ? true : false;
   }
 
   // สำหรับตรวจสอบรูปแบบข้อมูลที่กรอก ว่าเป็นไปตามที่กำหนดหรือไม่
   const checkPattern = (id: string, value: string) => {
     switch(id) {
       case 'PatientID':
-        validatepatientID(value) ? setPatientIDError('') : setPatientIDError('กรุณากรอกเลขประจำตัวผู้ป่วย 6 หลักเท่านั้น');
+        validatepatientID(value) ? setPatientIDError('') : setPatientIDError('รหัสประจำตัวผู้ป่วยขึ้นต้นด้วย P ตามด้วยตัวเลข 6 ตัว');
         return;
-     /* case 'name' :    
-        Validatename(value) ? setnameError('') : setnameError("กรุณากรอกชื่อเป็นภาษาไทยเท่านั้น");
-        return; */
+      case 'name' :    
+        Validatename(value) ? setnameError('') : setnameError("กรุณากรอกชื่อ-นามสกุล");
+        return; 
       case 'CardID':
         validatecardID(value) ? setCardIDError('') : setCardIDError('กรุณากรอกเลขประจำตัวประชาชน 13 หลัก');
         return;
       case 'Tel':
-        validatetTel(value) ? setTelError('') : setTelError('กรุณากรอกเบอร์โทรศัพท์ 10 หลัก');
+        validatetTel(value) ? setTelError('') : setTelError('กรุณากรอกเบอร์โทรศัพท์ขึ้นต้นด้วย 0 ตามด้วยเลข 9 ตัว');
+        return;
+      case 'Age':
+        ValidateAge(Number(value)) ? setAgeError('') : setAgeError("กรอกอายุตั้งแต่ 1-200 ปีเท่านั้น");
         return;
       default:
         return;
@@ -183,19 +184,19 @@ const SavePatient: FC<{}> = () => {
   const checkCaseSaveError = (field: string) => {
     switch(field) {
       case 'PatientID':
-        alertMessage("error","กรุณากรอกเลขประจำตัวผู้ป่วย 6 หลัก");
+        alertMessage("error","รหัสประจำตัวผู้ป่วยขึ้นต้นด้วย P ตามด้วยตัวเลข 6 ตัว");
         return;
       case 'Name':
-        alertMessage("error","กรุณากรอกชื่อเป็นภาษาไทยเท่านั้น");
+        alertMessage("error","กรุณากรอกชื่อ-นามสกุล");
         return;
       case 'CardID':
         alertMessage("error","กรุณากรอกเลขประจำตัวประชาชน 13 หลัก");
         return; 
       case 'Tel':
-        alertMessage("error","กรุณากรอกเบอร์โทรศัพท์ 10 หลักเท่านั้น");
+        alertMessage("error","กรุณากรอกเบอร์โทรศัพท์ขึ้นต้นด้วย 0 ตามด้วยเลข 9 ตัว");
         return; 
       case 'Age':
-        alertMessage("error","กรุณากรอกอายุเป็นจำนวนเต็มบวกเท่านั้น");
+        alertMessage("error","กรอกอายุตั้งแต่ 1-200 ปีเท่านั้น");
         return;
       default:
         alertMessage("error","บันทึกข้อมูลไม่สำเร็จ");
@@ -244,7 +245,7 @@ const SavePatient: FC<{}> = () => {
           <Grid container spacing={3}>
             <Grid item xs={12}></Grid>
             <Grid item xs={3}>
-              <div className={classes.paper}>เลขประจำตัวผู้ป่วย</div>
+              <div className={classes.paper}>รหัสประจำตัวผู้ป่วย</div>
             </Grid>
             <Grid item xs={6}>
             <FormControl
@@ -253,9 +254,10 @@ const SavePatient: FC<{}> = () => {
                   variant="outlined">
                   <TextField
                     error={patientIDError ? true : false}
-                    label="เลขประจำตัวผู้ป่วย"
+                    label="รหัสประจำตัวผู้ป่วย"
                     name="PatientID"
                     variant="outlined"
+                    inputProps={{ maxLength: 7 }}
                     helperText= {patientIDError}
                     size="medium"
                     value={patient.PatientID || ''}
@@ -271,13 +273,12 @@ const SavePatient: FC<{}> = () => {
             <Grid item xs={6}>
             <FormControl
                   fullWidth
+                  className={classes.formControl}
                   variant="outlined">
                   <TextField
-                 // error={nameError ? true : false}
                     label="กรอกชื่อ - นามสกุล"
                     name="Name"
                     variant="outlined"
-                   // helperText= {nameError}
                     size="medium"
                     value={patient.Name || ''}
                     onChange={handleChange}
@@ -299,6 +300,7 @@ const SavePatient: FC<{}> = () => {
                     label="กรอกเลขบัตรประจำตัวประชาชน"
                     name="CardID"
                     variant="outlined"
+                    inputProps={{ maxLength: 13 }}
                     helperText= {cardIDError}
                     size="medium"
                     value={patient.CardID || ''}
@@ -345,6 +347,7 @@ const SavePatient: FC<{}> = () => {
                     label="กรอกเบอร์โทรศัพท์"
                     name="Tel"
                     variant="outlined"
+                    inputProps={{ maxLength: 10 }}
                     helperText= {telError}
                     size="medium"
                     value={patient.Tel || ''}
@@ -384,15 +387,13 @@ const SavePatient: FC<{}> = () => {
                   variant="outlined">
                   <TextField
                     error={ageError ? true : false}
-                    label="กรอกอายุ"
                     name="Age"
-                    type="Number"
-                    InputProps={{ inputProps: { min: 0 } }}
+                    label="อายุ"
                     variant="outlined"
-                    helperText={ageError}
                     size="medium"
                     value={patient.Age || ''}
-                    onChange={handleNumberChange}
+                    helperText={ageError}
+                    onChange={handleChange}
                   />
                 </FormControl>
             </Grid>
