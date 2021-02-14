@@ -23,7 +23,13 @@ func (Queue) Fields() []ent.Field {
 			}
 			return nil
 		}),
-		field.String("Phone").MaxLen(10).MinLen(10),
+		field.String("Phone").Validate(func(s string) error {
+			match, _ := regexp.MatchString("[0]\\d{9}", s)
+			if !match {
+				return errors.New("รูปแบบหมายเลขโทรศัพท์ 10 หลักไม่ถูกต้อง")
+			}
+			return nil
+			}),
 		field.String("Dental").NotEmpty().MaxLen(30),
 		field.Time("QueueTime"),
 	}

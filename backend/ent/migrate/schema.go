@@ -330,7 +330,7 @@ var (
 	QueuesColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt, Increment: true},
 		{Name: "queue_id", Type: field.TypeString},
-		{Name: "phone", Type: field.TypeString, Size: 10},
+		{Name: "phone", Type: field.TypeString},
 		{Name: "dental", Type: field.TypeString, Size: 30},
 		{Name: "queue_time", Type: field.TypeTime},
 		{Name: "dentist_id", Type: field.TypeInt, Nullable: true},

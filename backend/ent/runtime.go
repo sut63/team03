@@ -208,21 +208,7 @@ func init() {
 	// queueDescPhone is the schema descriptor for Phone field.
 	queueDescPhone := queueFields[1].Descriptor()
 	// queue.PhoneValidator is a validator for the "Phone" field. It is called by the builders before save.
-	queue.PhoneValidator = func() func(string) error {
-		validators := queueDescPhone.Validators
-		fns := [...]func(string) error{
-			validators[0].(func(string) error),
-			validators[1].(func(string) error),
-		}
-		return func(_Phone string) error {
-			for _, fn := range fns {
-				if err := fn(_Phone); err != nil {
-					return err
-				}
-			}
-			return nil
-		}
-	}()
+	queue.PhoneValidator = queueDescPhone.Validators[0].(func(string) error)
 	// queueDescDental is the schema descriptor for Dental field.
 	queueDescDental := queueFields[2].Descriptor()
 	// queue.DentalValidator is a validator for the "Dental" field. It is called by the builders before save.
