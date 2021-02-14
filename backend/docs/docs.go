@@ -1942,6 +1942,10 @@ var doc = `{
                     "description": "AddedTime holds the value of the \"AddedTime\" field.",
                     "type": "string"
                 },
+                "Amount": {
+                    "description": "Amount holds the value of the \"Amount\" field.",
+                    "type": "integer"
+                },
                 "Name": {
                     "description": "Name holds the value of the \"Name\" field.",
                     "type": "string"
@@ -1949,10 +1953,6 @@ var doc = `{
                 "Phone": {
                     "description": "Phone holds the value of the \"Phone\" field.",
                     "type": "string"
-                },
-                "Rates": {
-                    "description": "Rates holds the value of the \"Rates\" field.",
-                    "type": "number"
                 },
                 "Tax": {
                     "description": "Tax holds the value of the \"Tax\" field.",

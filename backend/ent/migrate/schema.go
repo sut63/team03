@@ -71,10 +71,10 @@ var (
 	// DentalexpensesColumns holds the columns for the "dentalexpenses" table.
 	DentalexpensesColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt, Increment: true},
-		{Name: "name", Type: field.TypeString, Size: 30},
+		{Name: "name", Type: field.TypeString},
 		{Name: "phone", Type: field.TypeString, Size: 10},
 		{Name: "added_time", Type: field.TypeTime},
-		{Name: "rates", Type: field.TypeFloat64},
+		{Name: "amount", Type: field.TypeInt},
 		{Name: "tax", Type: field.TypeString},
 		{Name: "medicalfile_id", Type: field.TypeInt, Nullable: true},
 		{Name: "nurse_id", Type: field.TypeInt, Nullable: true},
@@ -267,10 +267,10 @@ var (
 	// PatientsColumns holds the columns for the "patients" table.
 	PatientsColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt, Increment: true},
-		{Name: "patient_id", Type: field.TypeString, Unique: true, Size: 6},
+		{Name: "patient_id", Type: field.TypeString},
 		{Name: "name", Type: field.TypeString},
-		{Name: "card_id", Type: field.TypeString, Unique: true, Size: 13},
-		{Name: "tel", Type: field.TypeString, Unique: true, Size: 10},
+		{Name: "card_id", Type: field.TypeString},
+		{Name: "tel", Type: field.TypeString},
 		{Name: "age", Type: field.TypeInt},
 		{Name: "birthday", Type: field.TypeTime},
 		{Name: "disease_id", Type: field.TypeInt, Nullable: true},

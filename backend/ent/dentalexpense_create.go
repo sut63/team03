@@ -41,9 +41,9 @@ func (dc *DentalexpenseCreate) SetAddedTime(t time.Time) *DentalexpenseCreate {
 	return dc
 }
 
-// SetRates sets the Rates field.
-func (dc *DentalexpenseCreate) SetRates(f float64) *DentalexpenseCreate {
-	dc.mutation.SetRates(f)
+// SetAmount sets the Amount field.
+func (dc *DentalexpenseCreate) SetAmount(i int) *DentalexpenseCreate {
+	dc.mutation.SetAmount(i)
 	return dc
 }
 
@@ -136,12 +136,12 @@ func (dc *DentalexpenseCreate) Save(ctx context.Context) (*Dentalexpense, error)
 	if _, ok := dc.mutation.AddedTime(); !ok {
 		return nil, &ValidationError{Name: "AddedTime", err: errors.New("ent: missing required field \"AddedTime\"")}
 	}
-	if _, ok := dc.mutation.Rates(); !ok {
-		return nil, &ValidationError{Name: "Rates", err: errors.New("ent: missing required field \"Rates\"")}
+	if _, ok := dc.mutation.Amount(); !ok {
+		return nil, &ValidationError{Name: "Amount", err: errors.New("ent: missing required field \"Amount\"")}
 	}
-	if v, ok := dc.mutation.Rates(); ok {
-		if err := dentalexpense.RatesValidator(v); err != nil {
-			return nil, &ValidationError{Name: "Rates", err: fmt.Errorf("ent: validator failed for field \"Rates\": %w", err)}
+	if v, ok := dc.mutation.Amount(); ok {
+		if err := dentalexpense.AmountValidator(v); err != nil {
+			return nil, &ValidationError{Name: "Amount", err: fmt.Errorf("ent: validator failed for field \"Amount\": %w", err)}
 		}
 	}
 	if _, ok := dc.mutation.Tax(); !ok {
@@ -236,13 +236,13 @@ func (dc *DentalexpenseCreate) createSpec() (*Dentalexpense, *sqlgraph.CreateSpe
 		})
 		d.AddedTime = value
 	}
-	if value, ok := dc.mutation.Rates(); ok {
+	if value, ok := dc.mutation.Amount(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeFloat64,
+			Type:   field.TypeInt,
 			Value:  value,
-			Column: dentalexpense.FieldRates,
+			Column: dentalexpense.FieldAmount,
 		})
-		d.Rates = value
+		d.Amount = value
 	}
 	if value, ok := dc.mutation.Tax(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{

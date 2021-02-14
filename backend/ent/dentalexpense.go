@@ -25,8 +25,8 @@ type Dentalexpense struct {
 	Phone string `json:"Phone,omitempty"`
 	// AddedTime holds the value of the "AddedTime" field.
 	AddedTime time.Time `json:"AddedTime,omitempty"`
-	// Rates holds the value of the "Rates" field.
-	Rates float64 `json:"Rates,omitempty"`
+	// Amount holds the value of the "Amount" field.
+	Amount int `json:"Amount,omitempty"`
 	// Tax holds the value of the "Tax" field.
 	Tax string `json:"Tax,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
@@ -95,12 +95,12 @@ func (e DentalexpenseEdges) PricetypeOrErr() (*Pricetype, error) {
 // scanValues returns the types for scanning values from sql.Rows.
 func (*Dentalexpense) scanValues() []interface{} {
 	return []interface{}{
-		&sql.NullInt64{},   // id
-		&sql.NullString{},  // Name
-		&sql.NullString{},  // Phone
-		&sql.NullTime{},    // AddedTime
-		&sql.NullFloat64{}, // Rates
-		&sql.NullString{},  // Tax
+		&sql.NullInt64{},  // id
+		&sql.NullString{}, // Name
+		&sql.NullString{}, // Phone
+		&sql.NullTime{},   // AddedTime
+		&sql.NullInt64{},  // Amount
+		&sql.NullString{}, // Tax
 	}
 }
 
@@ -140,10 +140,10 @@ func (d *Dentalexpense) assignValues(values ...interface{}) error {
 	} else if value.Valid {
 		d.AddedTime = value.Time
 	}
-	if value, ok := values[3].(*sql.NullFloat64); !ok {
-		return fmt.Errorf("unexpected type %T for field Rates", values[3])
+	if value, ok := values[3].(*sql.NullInt64); !ok {
+		return fmt.Errorf("unexpected type %T for field Amount", values[3])
 	} else if value.Valid {
-		d.Rates = value.Float64
+		d.Amount = int(value.Int64)
 	}
 	if value, ok := values[4].(*sql.NullString); !ok {
 		return fmt.Errorf("unexpected type %T for field Tax", values[4])
@@ -218,8 +218,8 @@ func (d *Dentalexpense) String() string {
 	builder.WriteString(d.Phone)
 	builder.WriteString(", AddedTime=")
 	builder.WriteString(d.AddedTime.Format(time.ANSIC))
-	builder.WriteString(", Rates=")
-	builder.WriteString(fmt.Sprintf("%v", d.Rates))
+	builder.WriteString(", Amount=")
+	builder.WriteString(fmt.Sprintf("%v", d.Amount))
 	builder.WriteString(", Tax=")
 	builder.WriteString(d.Tax)
 	builder.WriteByte(')')

@@ -33,6 +33,12 @@ export interface EntDentalexpense {
      */
     addedTime?: string;
     /**
+     * Amount holds the value of the "Amount" field.
+     * @type {number}
+     * @memberof EntDentalexpense
+     */
+    amount?: number;
+    /**
      * Name holds the value of the "Name" field.
      * @type {string}
      * @memberof EntDentalexpense
@@ -44,12 +50,6 @@ export interface EntDentalexpense {
      * @memberof EntDentalexpense
      */
     phone?: string;
-    /**
-     * Rates holds the value of the "Rates" field.
-     * @type {number}
-     * @memberof EntDentalexpense
-     */
-    rates?: number;
     /**
      * Tax holds the value of the "Tax" field.
      * @type {string}
@@ -81,9 +81,9 @@ export function EntDentalexpenseFromJSONTyped(json: any, ignoreDiscriminator: bo
     return {
         
         'addedTime': !exists(json, 'AddedTime') ? undefined : json['AddedTime'],
+        'amount': !exists(json, 'Amount') ? undefined : json['Amount'],
         'name': !exists(json, 'Name') ? undefined : json['Name'],
         'phone': !exists(json, 'Phone') ? undefined : json['Phone'],
-        'rates': !exists(json, 'Rates') ? undefined : json['Rates'],
         'tax': !exists(json, 'Tax') ? undefined : json['Tax'],
         'edges': !exists(json, 'edges') ? undefined : EntDentalexpenseEdgesFromJSON(json['edges']),
         'id': !exists(json, 'id') ? undefined : json['id'],
@@ -100,9 +100,9 @@ export function EntDentalexpenseToJSON(value?: EntDentalexpense | null): any {
     return {
         
         'AddedTime': value.addedTime,
+        'Amount': value.amount,
         'Name': value.name,
         'Phone': value.phone,
-        'Rates': value.rates,
         'Tax': value.tax,
         'edges': EntDentalexpenseEdgesToJSON(value.edges),
         'id': value.id,

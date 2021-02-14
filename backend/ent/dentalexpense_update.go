@@ -49,16 +49,16 @@ func (du *DentalexpenseUpdate) SetAddedTime(t time.Time) *DentalexpenseUpdate {
 	return du
 }
 
-// SetRates sets the Rates field.
-func (du *DentalexpenseUpdate) SetRates(f float64) *DentalexpenseUpdate {
-	du.mutation.ResetRates()
-	du.mutation.SetRates(f)
+// SetAmount sets the Amount field.
+func (du *DentalexpenseUpdate) SetAmount(i int) *DentalexpenseUpdate {
+	du.mutation.ResetAmount()
+	du.mutation.SetAmount(i)
 	return du
 }
 
-// AddRates adds f to Rates.
-func (du *DentalexpenseUpdate) AddRates(f float64) *DentalexpenseUpdate {
-	du.mutation.AddRates(f)
+// AddAmount adds i to Amount.
+func (du *DentalexpenseUpdate) AddAmount(i int) *DentalexpenseUpdate {
+	du.mutation.AddAmount(i)
 	return du
 }
 
@@ -160,9 +160,9 @@ func (du *DentalexpenseUpdate) Save(ctx context.Context) (int, error) {
 			return 0, &ValidationError{Name: "Phone", err: fmt.Errorf("ent: validator failed for field \"Phone\": %w", err)}
 		}
 	}
-	if v, ok := du.mutation.Rates(); ok {
-		if err := dentalexpense.RatesValidator(v); err != nil {
-			return 0, &ValidationError{Name: "Rates", err: fmt.Errorf("ent: validator failed for field \"Rates\": %w", err)}
+	if v, ok := du.mutation.Amount(); ok {
+		if err := dentalexpense.AmountValidator(v); err != nil {
+			return 0, &ValidationError{Name: "Amount", err: fmt.Errorf("ent: validator failed for field \"Amount\": %w", err)}
 		}
 	}
 	if v, ok := du.mutation.Tax(); ok {
@@ -259,18 +259,18 @@ func (du *DentalexpenseUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Column: dentalexpense.FieldAddedTime,
 		})
 	}
-	if value, ok := du.mutation.Rates(); ok {
+	if value, ok := du.mutation.Amount(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeFloat64,
+			Type:   field.TypeInt,
 			Value:  value,
-			Column: dentalexpense.FieldRates,
+			Column: dentalexpense.FieldAmount,
 		})
 	}
-	if value, ok := du.mutation.AddedRates(); ok {
+	if value, ok := du.mutation.AddedAmount(); ok {
 		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeFloat64,
+			Type:   field.TypeInt,
 			Value:  value,
-			Column: dentalexpense.FieldRates,
+			Column: dentalexpense.FieldAmount,
 		})
 	}
 	if value, ok := du.mutation.Tax(); ok {
@@ -421,16 +421,16 @@ func (duo *DentalexpenseUpdateOne) SetAddedTime(t time.Time) *DentalexpenseUpdat
 	return duo
 }
 
-// SetRates sets the Rates field.
-func (duo *DentalexpenseUpdateOne) SetRates(f float64) *DentalexpenseUpdateOne {
-	duo.mutation.ResetRates()
-	duo.mutation.SetRates(f)
+// SetAmount sets the Amount field.
+func (duo *DentalexpenseUpdateOne) SetAmount(i int) *DentalexpenseUpdateOne {
+	duo.mutation.ResetAmount()
+	duo.mutation.SetAmount(i)
 	return duo
 }
 
-// AddRates adds f to Rates.
-func (duo *DentalexpenseUpdateOne) AddRates(f float64) *DentalexpenseUpdateOne {
-	duo.mutation.AddRates(f)
+// AddAmount adds i to Amount.
+func (duo *DentalexpenseUpdateOne) AddAmount(i int) *DentalexpenseUpdateOne {
+	duo.mutation.AddAmount(i)
 	return duo
 }
 
@@ -532,9 +532,9 @@ func (duo *DentalexpenseUpdateOne) Save(ctx context.Context) (*Dentalexpense, er
 			return nil, &ValidationError{Name: "Phone", err: fmt.Errorf("ent: validator failed for field \"Phone\": %w", err)}
 		}
 	}
-	if v, ok := duo.mutation.Rates(); ok {
-		if err := dentalexpense.RatesValidator(v); err != nil {
-			return nil, &ValidationError{Name: "Rates", err: fmt.Errorf("ent: validator failed for field \"Rates\": %w", err)}
+	if v, ok := duo.mutation.Amount(); ok {
+		if err := dentalexpense.AmountValidator(v); err != nil {
+			return nil, &ValidationError{Name: "Amount", err: fmt.Errorf("ent: validator failed for field \"Amount\": %w", err)}
 		}
 	}
 	if v, ok := duo.mutation.Tax(); ok {
@@ -629,18 +629,18 @@ func (duo *DentalexpenseUpdateOne) sqlSave(ctx context.Context) (d *Dentalexpens
 			Column: dentalexpense.FieldAddedTime,
 		})
 	}
-	if value, ok := duo.mutation.Rates(); ok {
+	if value, ok := duo.mutation.Amount(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeFloat64,
+			Type:   field.TypeInt,
 			Value:  value,
-			Column: dentalexpense.FieldRates,
+			Column: dentalexpense.FieldAmount,
 		})
 	}
-	if value, ok := duo.mutation.AddedRates(); ok {
+	if value, ok := duo.mutation.AddedAmount(); ok {
 		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeFloat64,
+			Type:   field.TypeInt,
 			Value:  value,
-			Column: dentalexpense.FieldRates,
+			Column: dentalexpense.FieldAmount,
 		})
 	}
 	if value, ok := duo.mutation.Tax(); ok {

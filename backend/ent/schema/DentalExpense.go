@@ -16,10 +16,21 @@ type Dentalexpense struct {
 // Fields of the Dentalexpense.
 func (Dentalexpense) Fields() []ent.Field {
    return []ent.Field{
-        field.String("Name").NotEmpty().MaxLen(30),
+        field.String("Name").Validate(func(s string) error {
+			match, _ := regexp.MatchString("^[ก-๏\\s]+$",s)
+			if !match {
+				return errors.New("กรุณากรอกเฉพาะภาษาไทยเท่านั้น")
+			}
+			return nil
+		}),
 	    field.String("Phone").MaxLen(10).MinLen(10),
 	    field.Time("AddedTime"),
-	    field.Float("Rates").Min(0),
+		field.Int("Amount").Validate(func(s int) error{
+			if (s < 0) {
+				return errors.New("Amount have to be Positive")
+			}
+			return nil
+		}),
         field.String("Tax").Validate(func(s string) error {
 			match, _ := regexp.MatchString("[R]\\d{10}",s)
 			if !match {

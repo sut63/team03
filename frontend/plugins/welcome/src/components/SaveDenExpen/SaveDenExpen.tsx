@@ -59,7 +59,7 @@ interface saveDenExpen {
   Medicalfile: Number;
   Pricetype: Number;
   Nurse: Number;
-  Rates: Number;
+  Amount: String;
   AddedTime: String;
   Tax: String;
   Name: String;
@@ -77,8 +77,8 @@ const SaveDenExpen: FC<{}> = () => {
   const [TaxError, setTaxError] = React.useState('');
   const [NameError, setNameError] = React.useState('');
   const [PhoneError, setPhoneError] = React.useState('');
-  const [errorRates, setErrorRates] = React.useState(true);
-  const [rates, setRates] =  React.useState(Number);
+  
+ 
 
   // alert setting
   const Toast = Swal.mixin({
@@ -107,10 +107,7 @@ const SaveDenExpen: FC<{}> = () => {
     checkPattern(name, validateValue)
     console.log(dentalexpense);
   };
-  const Rates_handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setRates(event.target.value as number);
-    ValidateRates(event.target.value as number)
-   };
+  
   
   const getPricetype = async () => {
     const res = await http.listPricetype({ limit: 10, offset: 0 });
@@ -134,17 +131,14 @@ const SaveDenExpen: FC<{}> = () => {
 
   
   const validateName = (val: string) => {
-    return val.match("^[ก-๏]+$") 
+    return val.match("^[ก-๏\\s]+$"); 
   }
 
   
   const validatePhone = (val: string) => {
     return val.match("^[0-9]{10}$");
   }
-  const ValidateRates = (value : number) => {
-    value > 0 ? setErrorRates(true) : setErrorRates(false);
-  } 
-
+  
   
   const checkPattern  = (id: string, value: string) => {
     switch(id) {
@@ -154,7 +148,7 @@ const SaveDenExpen: FC<{}> = () => {
       case 'Name':
         validateName(value) ? setNameError('') : setNameError('กรอกชื่อเป็นภาษาไทยเท่านั้น');
         return;
-        case 'Phone':
+      case 'Phone':
         validatePhone(value) ? setPhoneError('') : setPhoneError('กรอกเบอร์โทรศัพท์10ตัวเท่านั้น');
         return;
       default:
@@ -170,19 +164,22 @@ const SaveDenExpen: FC<{}> = () => {
   }
 
   //กำหนดข้อความ error
-  const checkCaseSaveError = (s: string) => {
-    switch(s) {
+  const checkCaseSaveError = (field: string) => {
+    switch(field) {
       case 'Tax':
         alertMessage("error", "รูปแบบหมายเลขกำกับภาษีไม่ถูกต้อง");
         return;
       case 'Name':
-        alertMessage("error", " กรอกชื่อเป็นภาษาไทยเท่านั้น");
+        alertMessage("error", "กรุณากรอกเฉพาะภาษาไทย");
         return;
       case 'Phone':
         alertMessage("error", " กรอกเบอร์โทรศัพท์10ตัวเท่านั้น");
         return;
+      case 'Amount':
+        alertMessage("error","กรุณากรอกเป็นตัวเลขและมีค่าไม่น้อยกว่า 0"); 
+        return;
       default:
-        alertMessage("error", " บันทึกข้อมูลไม่สำเร็จ");
+        alertMessage("error","บันทึกข้อมูลไม่สำเร็จ");
         return;
     }
   }
@@ -280,15 +277,15 @@ const SaveDenExpen: FC<{}> = () => {
               <FormControl variant="outlined" className={classes.formControl}>
               
               <TextField
-              id="Rates"
-              name = "Rates"
+              id="Amount"
+              name = "amount"
               label="ค่าบริการ" 
               variant="outlined"
               
-              value={rates}
-              helperText={errorRates? "" : "กรอกรูปแบบจำนวนเงินให้ถูกต้อง"}
-              error={errorRates? false : true}
-              onChange={Rates_handleChange}
+              value={dentalexpense.Amount}
+              
+              
+              onChange={handleChange}
               style={{ width: 300 }}
               />
 
@@ -325,7 +322,7 @@ const SaveDenExpen: FC<{}> = () => {
                 <TextField 
                 error = {NameError ? true : false}
                 helperText={NameError}
-                label="ระบุชื่อผู้ชำระค่าบริการ" 
+                label="ชื่อผู้ชำระค่าบริการ" 
                 variant="outlined" 
                 name="Name"
                 type="string"
