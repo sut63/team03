@@ -276,8 +276,8 @@ export default function ComponentsTable() {
                               <TableCell align="center">{item.age}</TableCell>
                               <TableCell align="center">{moment(item.birthday).format('DD/MM/YYYY HH:mm')}</TableCell>
                               <TableCell align="center">{item.cardid}</TableCell>
-                              <TableCell align="center">{item.edges?.gender?.name}</TableCell>
                               <TableCell align="center">{item.edges?.degree?.name}</TableCell>
+                              <TableCell align="center">{item.edges?.gender?.name}</TableCell>
                               <TableCell align="center">{item.edges?.expert?.name}</TableCell>
                               <TableCell align="center">{item.experience}</TableCell>
                               <TableCell align="center">{item.email}</TableCell>
