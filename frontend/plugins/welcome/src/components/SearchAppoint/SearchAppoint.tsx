@@ -9,7 +9,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { DefaultApi } from '../../api/apis';
 import Swal from 'sweetalert2'
-import { Link as RouterLink } from 'react-router-dom';
+import ExitToAppRoundedIcon from '@material-ui/icons/ExitToAppRounded';
 import moment from 'moment';
 import { Page, pageTheme, Header, Content, Link } from '@backstage/core';
 import { Grid, Button, TextField, Typography, FormControl } from '@material-ui/core';
@@ -135,21 +135,8 @@ export default function ComponentsTable() {
         title={`Dental System`}
         subtitle="ค้นหาการนัดหมายผู้ป่วย">
         <table>
-          <Link component={RouterLink} to="/Menu">
-                <Button variant="contained" style={{ height: 40 }}>
-                  <h3
-                    style={
-                      {
-                        color: "#1167b1",
-                        borderRadius: 10,
-                        height: 25,
-                        padding: '0 20px',
-                      }
-                    }>
-                    Back
-            </h3>
-                </Button>
-              </Link>
+        <Button variant="contained" color="default" href="/" startIcon={<ExitToAppRoundedIcon />}> Logout
+        </Button>
         </table>
 
       </Header>
@@ -251,6 +238,7 @@ export default function ComponentsTable() {
                           <TableCell align="left">No.</TableCell>
                           <TableCell align="left">Appointment ID</TableCell>
                           <TableCell align="left">Patient</TableCell>
+                          <TableCell align="left">Detail</TableCell>
                           <TableCell align="left">Date-Time</TableCell>
                           <TableCell align="left">Room</TableCell>
                           <TableCell align="left">Remark</TableCell>
@@ -263,6 +251,7 @@ export default function ComponentsTable() {
                               <TableCell align="left">{item.id}</TableCell>
                               <TableCell align="left">{item.appointID}</TableCell>
                               <TableCell align="left">{item.edges?.patient?.name}</TableCell>
+                              <TableCell align="left">{item.detail}</TableCell>
                               <TableCell align="left">{moment(item.datetime).format('DD/MM/YYYY HH:mm')}</TableCell>
                               <TableCell align="left">{item.edges.room.name}</TableCell>
                               <TableCell align="left">{item.remark}</TableCell>
@@ -282,6 +271,7 @@ export default function ComponentsTable() {
                             <TableCell align="left">No.</TableCell>
                             <TableCell align="left">Appointment ID</TableCell>
                             <TableCell align="left">Patient</TableCell>
+                            <TableCell align="left">Detail</TableCell>
                             <TableCell align="left">Date-Time</TableCell>
                             <TableCell align="left">Room</TableCell>
                             <TableCell align="left">Remark</TableCell>
@@ -294,6 +284,7 @@ export default function ComponentsTable() {
                               <TableCell align="left">{item.id}</TableCell>
                               <TableCell align="left">{item.appointID}</TableCell>
                               <TableCell align="left">{item.edges?.patient?.name}</TableCell>
+                              <TableCell align="left">{item.detail}</TableCell>
                               <TableCell align="left">{moment(item.datetime).format('DD/MM/YYYY HH:mm')}</TableCell>
                               <TableCell align="left">{item.edges.room.name}</TableCell>
                               <TableCell align="left">{item.remark}</TableCell>
