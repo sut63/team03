@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -8,10 +8,9 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { DefaultApi } from '../../api/apis';
-import Swal from 'sweetalert2'
 import ExitToAppRoundedIcon from '@material-ui/icons/ExitToAppRounded';
 import moment from 'moment';
-import { Page, pageTheme, Header, Content, Link } from '@backstage/core';
+import { Page, pageTheme, Header, Content} from '@backstage/core';
 import { Grid, Button, TextField, Typography, FormControl } from '@material-ui/core';
 import SearchTwoToneIcon from '@material-ui/icons/SearchTwoTone';
 import { EntAppointment } from '../../api';
@@ -54,27 +53,18 @@ const useStyles = makeStyles((theme: Theme) =>
 
   }),
 );
-const Toast = Swal.mixin({
-  toast: true,
-  position: 'center',
-  showConfirmButton: false,
-  timer: 3000,
-  timerProgressBar: true,
-
-});
-
 
 export default function ComponentsTable() {
   const classes = useStyles();
-  const api = new DefaultApi();
 
-  //---------------------------
   const [appointID, setAppointID] = useState(String);
   const [appointment, setAppointment] = useState<EntAppointment[]>([])
   const [alert, setAlert] = useState(true);
   const [status, setStatus] = useState(false);
 
-  //-------------------
+
+
+
   const AppointIDhandlehange = (event: React.ChangeEvent<{ value: unknown }>) => {
     setStatus(false);
     setAppointID(event.target.value as string);
@@ -86,6 +76,8 @@ export default function ComponentsTable() {
     setAppointment([]);
 
   }
+
+  
 
   const SearchAppointment = async () => {
     setStatus(true);
