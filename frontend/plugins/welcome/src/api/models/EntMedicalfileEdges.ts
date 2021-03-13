@@ -74,10 +74,10 @@ export function EntMedicalfileEdgesFromJSONTyped(json: any, ignoreDiscriminator:
     }
     return {
         
-        'dentalexpenses': !exists(json, 'Dentalexpenses') ? undefined : ((json['Dentalexpenses'] as Array<any>).map(EntDentalexpenseFromJSON)),
-        'dentist': !exists(json, 'Dentist') ? undefined : EntDentistFromJSON(json['Dentist']),
-        'nurse': !exists(json, 'Nurse') ? undefined : EntNurseFromJSON(json['Nurse']),
-        'patient': !exists(json, 'Patient') ? undefined : EntPatientFromJSON(json['Patient']),
+        'dentalexpenses': !exists(json, 'dentalexpenses') ? undefined : ((json['dentalexpenses'] as Array<any>).map(EntDentalexpenseFromJSON)),
+        'dentist': !exists(json, 'dentist') ? undefined : EntDentistFromJSON(json['dentist']),
+        'nurse': !exists(json, 'nurse') ? undefined : EntNurseFromJSON(json['nurse']),
+        'patient': !exists(json, 'patient') ? undefined : EntPatientFromJSON(json['patient']),
     };
 }
 

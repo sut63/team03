@@ -44,7 +44,7 @@ export function EntDegreeEdgesFromJSONTyped(json: any, ignoreDiscriminator: bool
     }
     return {
         
-        'dentists': !exists(json, 'Dentists') ? undefined : ((json['Dentists'] as Array<any>).map(EntDentistFromJSON)),
+        'dentists': !exists(json, 'dentists') ? undefined : ((json['dentists'] as Array<any>).map(EntDentistFromJSON)),
     };
 }
 

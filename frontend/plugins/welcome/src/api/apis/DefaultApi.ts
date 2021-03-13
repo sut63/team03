@@ -114,6 +114,10 @@ export interface GetAppointmentRequest {
     id: number;
 }
 
+export interface GetAppointmentBySearchRequest {
+    appointment?: string;
+}
+
 export interface GetDegreeRequest {
     id: number;
 }
@@ -694,6 +698,38 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
+     * get Appointment by Search
+     * Get a Appointment entity by Search
+     */
+    async getAppointmentBySearchRaw(requestParameters: GetAppointmentBySearchRequest): Promise<runtime.ApiResponse<EntAppointment>> {
+        const queryParameters: runtime.HTTPQuery = {};
+
+        if (requestParameters.appointment !== undefined) {
+            queryParameters['Appointment'] = requestParameters.appointment;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/searchappointments`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => EntAppointmentFromJSON(jsonValue));
+    }
+
+    /**
+     * get Appointment by Search
+     * Get a Appointment entity by Search
+     */
+    async getAppointmentBySearch(requestParameters: GetAppointmentBySearchRequest): Promise<EntAppointment> {
+        const response = await this.getAppointmentBySearchRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
      * get degree by ID
      * Get a Degree entity by ID
      */
@@ -1110,8 +1146,8 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * list appointment entities
-     * List appointment entities
+     * list Appointment entities
+     * List Appointment entities
      */
     async listAppointmentRaw(requestParameters: ListAppointmentRequest): Promise<runtime.ApiResponse<Array<EntAppointment>>> {
         const queryParameters: runtime.HTTPQuery = {};
@@ -1137,8 +1173,8 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * list appointment entities
-     * List appointment entities
+     * list Appointment entities
+     * List Appointment entities
      */
     async listAppointment(requestParameters: ListAppointmentRequest): Promise<Array<EntAppointment>> {
         const response = await this.listAppointmentRaw(requestParameters);

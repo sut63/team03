@@ -120,8 +120,13 @@ func (ctl *AppointmentController) GetAppointment(c *gin.Context) {
 		})
 		return
 	}
+
 	ap, err := ctl.client.Appointment.
 		Query().
+		WithDentist().
+		WithPatient().
+		WithRoom().
+		WithNurse().
 		Where(appointment.IDEQ(int(id))).
 		Only(context.Background())
 
@@ -135,10 +140,44 @@ func (ctl *AppointmentController) GetAppointment(c *gin.Context) {
 	c.JSON(200, ap)
 }
 
-// ListAppointment handles request to get a list of appointment entities
-// @Summary List appointment entities
-// @Description list appointment entities
-// @ID list-appointment
+
+// GetSearchAppointment handles GET requests to retrieve a Appointment entity
+// @Summary Get a Appointment entity by Search
+// @Description get Appointment by Search
+// @ID get-Appointment-by-search
+// @Produce  json
+// @Param Appointment query string false "Search Appointment"
+// @Success 200 {object} ent.Appointment
+// @Failure 400 {object} gin.H
+// @Failure 404 {object} gin.H
+// @Failure 500 {object} gin.H
+// @Router /searchappointments [get]
+func (ctl *AppointmentController) GetSearchAppointment(c *gin.Context) {
+	appointmentsearch := c.Query("appointment")
+
+	aps, err := ctl.client.Appointment.
+		Query().
+		WithPatient().
+		WithRoom().
+		Where(appointment.AppointIDContains(appointmentsearch)).
+		All(context.Background())
+
+	if err != nil {
+		c.JSON(404, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
+	c.JSON(200, gin.H{
+		"data": aps,
+	})
+}
+
+// ListAppointment handles request to get a list of Appointment entities
+// @Summary List Appointment entities
+// @Description list Appointment entities
+// @ID list-Appointment
 // @Produce json
 // @Param limit  query int false "Limit"
 // @Param offset query int false "Offset"
@@ -197,8 +236,10 @@ func NewAppointmentController(router gin.IRouter, client *ent.Client) *Appointme
 
 func (ctl *AppointmentController) register() {
 	appointments := ctl.router.Group("/appointments")
-
 	appointments.GET(":id", ctl.GetAppointment)
+
+	searchappointments := ctl.router.Group("/searchappointments")
+	searchappointments.GET("",ctl.GetSearchAppointment)
 
 	// CRUD
 	appointments.POST("", ctl.AppointmentCreate)

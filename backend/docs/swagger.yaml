@@ -559,8 +559,8 @@ info:
 paths:
   /appointments:
     get:
-      description: list appointment entities
-      operationId: list-appointment
+      description: list Appointment entities
+      operationId: list-Appointment
       parameters:
       - description: Limit
         in: query
@@ -587,7 +587,7 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/gin.H'
-      summary: List appointment entities
+      summary: List Appointment entities
     post:
       consumes:
       - application/json
@@ -1747,6 +1747,35 @@ paths:
           schema:
             $ref: '#/definitions/gin.H'
       summary: Get a Room entity by ID
+  /searchappointments:
+    get:
+      description: get Appointment by Search
+      operationId: get-Appointment-by-search
+      parameters:
+      - description: Search Appointment
+        in: query
+        name: Appointment
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.Appointment'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Get a Appointment entity by Search
 securityDefinitions:
   ApiKeyAuth:
     in: header

@@ -74,10 +74,10 @@ export function EntAppointmentEdgesFromJSONTyped(json: any, ignoreDiscriminator:
     }
     return {
         
-        'dentist': !exists(json, 'Dentist') ? undefined : EntDentistFromJSON(json['Dentist']),
-        'nurse': !exists(json, 'Nurse') ? undefined : EntNurseFromJSON(json['Nurse']),
-        'patient': !exists(json, 'Patient') ? undefined : EntPatientFromJSON(json['Patient']),
-        'room': !exists(json, 'Room') ? undefined : EntRoomFromJSON(json['Room']),
+        'dentist': !exists(json, 'dentist') ? undefined : EntDentistFromJSON(json['dentist']),
+        'nurse': !exists(json, 'nurse') ? undefined : EntNurseFromJSON(json['nurse']),
+        'patient': !exists(json, 'patient') ? undefined : EntPatientFromJSON(json['patient']),
+        'room': !exists(json, 'room') ? undefined : EntRoomFromJSON(json['room']),
     };
 }
 

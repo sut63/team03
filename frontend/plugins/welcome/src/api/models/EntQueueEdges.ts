@@ -64,9 +64,9 @@ export function EntQueueEdgesFromJSONTyped(json: any, ignoreDiscriminator: boole
     }
     return {
         
-        'dentist': !exists(json, 'Dentist') ? undefined : EntDentistFromJSON(json['Dentist']),
-        'nurse': !exists(json, 'Nurse') ? undefined : EntNurseFromJSON(json['Nurse']),
-        'patient': !exists(json, 'Patient') ? undefined : EntPatientFromJSON(json['Patient']),
+        'dentist': !exists(json, 'dentist') ? undefined : EntDentistFromJSON(json['dentist']),
+        'nurse': !exists(json, 'nurse') ? undefined : EntNurseFromJSON(json['nurse']),
+        'patient': !exists(json, 'patient') ? undefined : EntPatientFromJSON(json['patient']),
     };
 }
 

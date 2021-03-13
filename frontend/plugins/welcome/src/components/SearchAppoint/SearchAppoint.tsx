@@ -15,7 +15,7 @@ import { Page, pageTheme, Header, Content, Link } from '@backstage/core';
 import { Grid, Button, TextField, Typography, FormControl } from '@material-ui/core';
 import SearchTwoToneIcon from '@material-ui/icons/SearchTwoTone';
 import { EntAppointment } from '../../api';
-
+import { Alert } from '@material-ui/lab';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -67,66 +67,52 @@ const Toast = Swal.mixin({
 export default function ComponentsTable() {
   const classes = useStyles();
   const api = new DefaultApi();
-  const [loading, setLoading] = useState(true);
-  const [search, setSearch] = useState(false);
 
   //---------------------------
-  const [checkAppointID, setCheckAppointID] = useState(false);
-  const [appointment, setAppointment] = useState<EntAppointment[]>([]);
   const [appointID, setAppointID] = useState(String);
-
-  const alertMessage = (icon: any, title: any) => {
-    Toast.fire({
-      icon: icon,
-      title: title,
-    });
-    setSearch(false);
-  }
-
-  useEffect(() => {
-    const getAppointment = async () => {
-      const res = await api.listAppointment({ offset: 0 });
-      setLoading(false);
-      setAppointment(res);
-    };
-    getAppointment();
-  }, [loading]);
+  const [appointment, setAppointment] = useState<EntAppointment[]>([])
+  const [alert, setAlert] = useState(true);
+  const [status, setStatus] = useState(false);
 
   //-------------------
   const AppointIDhandlehange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setSearch(false);
-    setCheckAppointID(false);
+    setStatus(false);
     setAppointID(event.target.value as string);
-
   };
 
   const cleardata = () => {
     setAppointID("");
-    setSearch(false);
-    setCheckAppointID(false);
-    setSearch(false);
+    setStatus(false);
+    setAppointment([]);
 
   }
-  //---------------------
-  const CheckAppointment = async () => {
-    var check = false;
-    appointment.map(item => {
-      if (appointID != "") {
-        if (item.appointID?.includes(appointID)) {
-          setCheckAppointID(true);
-          alertMessage("success", "พบข้อมูล");
-          check = true;
-        }
-      }
-    })
-    if (!check) {
-      alertMessage("error", "ไม่พบข้อมูล");
-    }
-    console.log(checkAppointID)
-    if (appointID == "") {
-      alertMessage("info", "แสดงข้อมูลการนัดหมายผู้ป่วย");
-    }
-  };
+
+  const SearchAppointment = async () => {
+    setStatus(true);
+    setAlert(true);
+    const apiUrl = `http://localhost:8080/api/v1/searchappointments?appointment=${appointID}`;
+    const requestOptions = {
+        method: 'GET',
+    };
+    fetch(apiUrl, requestOptions)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data.data)
+            setStatus(true);
+            setAlert(false);
+            setAppointment([]);
+
+          if (data.data != null) {
+                if(data.data.length >= 1) {
+                  setStatus(true);
+                  setAlert(true);
+                  console.log(data.data)
+                  setAppointment(data.data);
+                }
+            }
+        });
+
+}
 
   return (
 
@@ -164,11 +150,11 @@ export default function ComponentsTable() {
                     className={classes.margin}
                     variant="outlined"
                   >
-                    <div className={classes.paper}>รหัสการนัดหมายผู้ป่วย ex.A00001</div>
+                    <div className={classes.paper}>รหัสการนัดหมายผู้ป่วย ex.1</div>
                     <TextField
                       id="appointID"
                       value={appointID}
-                      onChange={AppointIDhandlehange}
+                      onChange={AppointIDhandlehange || ''}
                       type="string"
                       size="medium"
 
@@ -181,10 +167,9 @@ export default function ComponentsTable() {
                 
                 <Button
                   onClick={() => {
-                    CheckAppointment();
-                    setSearch(true);
-
+                    SearchAppointment();
                   }}
+
                   endIcon={<SearchTwoToneIcon />}
                   className={classes.margins}
                   variant="contained"
@@ -221,87 +206,62 @@ export default function ComponentsTable() {
                 </Button>
               </Typography>
             </Paper>
+
+            {status ? (
+              <div>
+                {alert ? (
+                  <Alert severity="success">
+                    แสดงข้อมูลการนัดหมาย {appointID} 
+                  </Alert>
+                )
+                  : (
+                  <Alert severity="warning" style={{ marginTop: 20 }}>
+                    ไม่พบข้อมูลการนัดหมายที่ค้นหา
+                  </Alert>
+                  )}
+              </div>
+            ) : null}
+
           </Grid>
         </Grid>
+        
 
-
-        <Grid container justify="center">
-          <Grid item xs={12} md={10}>
-            <Paper>
-              {search ? (
-                <div>
-                  {  checkAppointID ? (
-                    <TableContainer component={Paper}>
-                      <Table className={classes.table} aria-label="simple table">
-                        <TableHead>
-                          <TableRow>
-                          <TableCell align="left">No.</TableCell>
-                          <TableCell align="left">Appointment ID</TableCell>
-                          <TableCell align="left">Patient</TableCell>
-                          <TableCell align="left">Detail</TableCell>
-                          <TableCell align="left">Date-Time</TableCell>
-                          <TableCell align="left">Room</TableCell>
-                          <TableCell align="left">Remark</TableCell>
-                          </TableRow>
-                        </TableHead>
-                        <TableBody>
-
-                          {appointment.filter((filter: any) => filter.appointID.includes(appointID)).map((item: any) => (
-                            <TableRow key={item.id}>
-                              <TableCell align="left">{item.id}</TableCell>
-                              <TableCell align="left">{item.appointID}</TableCell>
-                              <TableCell align="left">{item.edges?.patient?.name}</TableCell>
-                              <TableCell align="left">{item.detail}</TableCell>
-                              <TableCell align="left">{moment(item.datetime).format('DD/MM/YYYY HH:mm')}</TableCell>
-                              <TableCell align="left">{item.edges.room.name}</TableCell>
-                              <TableCell align="left">{item.remark}</TableCell>
-                              
-                            </TableRow>
-                          ))}
-                        </TableBody>
-                      </Table>
-                    </TableContainer>
-                  )
-                    : appointID == "" ? (
-                      <div>
-                        <TableContainer component={Paper}>
-                          <Table className={classes.table} aria-label="simple table">
-                          <TableHead>
-                            <TableRow>
-                            <TableCell align="left">No.</TableCell>
-                            <TableCell align="left">Appointment ID</TableCell>
-                            <TableCell align="left">Patient</TableCell>
-                            <TableCell align="left">Detail</TableCell>
-                            <TableCell align="left">Date-Time</TableCell>
-                            <TableCell align="left">Room</TableCell>
-                            <TableCell align="left">Remark</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-
-                        {appointment.map((item: any) => (
-                            <TableRow key={item.id}>
-                              <TableCell align="left">{item.id}</TableCell>
-                              <TableCell align="left">{item.appointID}</TableCell>
-                              <TableCell align="left">{item.edges?.patient?.name}</TableCell>
-                              <TableCell align="left">{item.detail}</TableCell>
-                              <TableCell align="left">{moment(item.datetime).format('DD/MM/YYYY HH:mm')}</TableCell>
-                              <TableCell align="left">{item.edges.room.name}</TableCell>
-                              <TableCell align="left">{item.remark}</TableCell>
-                              
-                                </TableRow>
-                              ))}
-                            </TableBody>
-                          </Table>
-                        </TableContainer>
-
-                      </div>
-                    ) : null}
-                </div>
-              ) : null}
-            </Paper>
-          </Grid>
+        
+        <Grid  className={classes.paper}>
+        <TableContainer component={Paper}>
+          <Table className={classes.table} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell align="left">id</TableCell>
+                <TableCell align="left">รหัสการนัดหมาย</TableCell>
+                <TableCell align="left">รหัสผู้ป่วย</TableCell>
+                <TableCell align="left">ชื่อผู้ป่วย</TableCell>
+                <TableCell align="left">สาเหตุการนัดหมาย</TableCell>
+                <TableCell align="left">วันที่และเวลา</TableCell>
+                <TableCell align="left">Room</TableCell>
+                <TableCell align="left">หมายเหตุ</TableCell>
+              </TableRow>
+            </TableHead>
+          <TableBody>
+            {appointment.map((item: any) => (
+                <TableRow key={item.id}>
+                  <TableCell align="left">{item.id}</TableCell>
+                  <TableCell align="left">{item.AppointID}</TableCell>
+                  <TableCell align="left">{item.edges?.Patient?.PatientID}</TableCell>
+                  <TableCell align="left">{item.edges?.Patient?.Name}</TableCell>
+                  <TableCell align="left">{item.Detail}</TableCell>
+                  <TableCell align="left">{moment(item.Datetime).format('DD/MM/YYYY HH:mm')}</TableCell>
+                  <TableCell align="left">{item.edges?.Room?.name}</TableCell>
+                  <TableCell align="left">{item.Remark}</TableCell>
+                                    
+                </TableRow>
+                ))}
+            </TableBody>
+            </Table>
+        </TableContainer>
+        
         </Grid>
+
       </Content>
     </Page>
   );
