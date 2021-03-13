@@ -35,12 +35,12 @@ var doc = `{
     "paths": {
         "/appointments": {
             "get": {
-                "description": "list appointment entities",
+                "description": "list Appointment entities",
                 "produces": [
                     "application/json"
                 ],
-                "summary": "List appointment entities",
-                "operationId": "list-appointment",
+                "summary": "List Appointment entities",
+                "operationId": "list-Appointment",
                 "parameters": [
                     {
                         "type": "integer",
@@ -1802,6 +1802,50 @@ var doc = `{
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/ent.Room"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    }
+                }
+            }
+        },
+        "/searchappointments": {
+            "get": {
+                "description": "get Appointment by Search",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get a Appointment entity by Search",
+                "operationId": "get-Appointment-by-search",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Search Appointment",
+                        "name": "Appointment",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ent.Appointment"
                         }
                     },
                     "400": {
