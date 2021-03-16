@@ -142,6 +142,10 @@ func (ctl *DentistController) GetDentist(c *gin.Context) {
 
 	d, err := ctl.client.Dentist.
 		Query().
+		WithDegree().
+		WithExpert().
+		WithGender().
+		WithNurse().
 		Where(dentist.IDEQ(int(id))).
 		Only(context.Background())
 	if err != nil {
@@ -152,6 +156,40 @@ func (ctl *DentistController) GetDentist(c *gin.Context) {
 	}
 
 	c.JSON(200, d)
+}
+
+// GetSearchDentist handles GET requests to retrieve a dentist entity
+// @Summary Get a Dentist entity by Search
+// @Description get dentist by Search
+// @ID get-Dentist-by-search
+// @Produce  json
+// @Param Dentist query string false "Search Dentist"
+// @Success 200 {object} ent.Dentist
+// @Failure 400 {object} gin.H
+// @Failure 404 {object} gin.H
+// @Failure 500 {object} gin.H
+// @Router /searchdentists [get]
+func (ctl *DentistController) GetSearchDentist(c *gin.Context) {
+	dentistsearch := c.Query("dentist")
+
+	dts, err := ctl.client.Dentist.
+		Query().
+		WithDegree().
+		WithExpert().
+		WithGender().
+		Where(dentist.CardidContains(dentistsearch)).
+		All(context.Background())
+
+	if err != nil {
+		c.JSON(404, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
+	c.JSON(200, gin.H{
+		"data": dts,
+	})
 }
 
 // ListDentist handles request to get a list of dentist entities
@@ -222,5 +260,7 @@ func (ctl *DentistController) register() {
 	dentists.POST("", ctl.CreateDentist)
 	dentists.GET(":id", ctl.GetDentist) 
 
-
+	
+	searchdentists := ctl.router.Group("/searchdentists")
+	searchdentists.GET("",ctl.GetSearchDentist)
 }
