@@ -82,20 +82,20 @@ export default function ComponentsTable() {
             setDentist([]);
 
           if (data.data != null) {
-                if(data.data.length == 1) {
+                if(data.data.length == 1 && cardid != "") {
         
                   console.log(data.data)
                   setDentist(data.data);
                   Toast.fire({
                     icon: 'success',
-                    title: 'ค้นหาข้อมูลสำเร็จ',
+                    title: 'พบข้อมูล',
                   });
                  
                 }
                 else if(data.data.length < 1){
                   Toast.fire({
                     icon: 'error',
-                    title: 'ไม่สำเร็จ',
+                    title: 'ไม่พบข้อมูล',
                   });
                 }
                 else{
