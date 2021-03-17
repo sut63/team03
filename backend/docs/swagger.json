@@ -1853,6 +1853,50 @@
                     }
                 }
             }
+        },
+        "/searchdentists": {
+            "get": {
+                "description": "get dentist by Search",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get a Dentist entity by Search",
+                "operationId": "get-Dentist-by-search",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Search Dentist",
+                        "name": "Dentist",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ent.Dentist"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
