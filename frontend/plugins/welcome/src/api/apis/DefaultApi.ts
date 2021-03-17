@@ -130,6 +130,10 @@ export interface GetDentistRequest {
     id: number;
 }
 
+export interface GetDentistBySearchRequest {
+    dentist?: string;
+}
+
 export interface GetDiseaseRequest {
     id: number;
 }
@@ -822,6 +826,38 @@ export class DefaultApi extends runtime.BaseAPI {
      */
     async getDentist(requestParameters: GetDentistRequest): Promise<EntDentist> {
         const response = await this.getDentistRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
+     * get dentist by Search
+     * Get a Dentist entity by Search
+     */
+    async getDentistBySearchRaw(requestParameters: GetDentistBySearchRequest): Promise<runtime.ApiResponse<EntDentist>> {
+        const queryParameters: runtime.HTTPQuery = {};
+
+        if (requestParameters.dentist !== undefined) {
+            queryParameters['Dentist'] = requestParameters.dentist;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/searchdentists`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => EntDentistFromJSON(jsonValue));
+    }
+
+    /**
+     * get dentist by Search
+     * Get a Dentist entity by Search
+     */
+    async getDentistBySearch(requestParameters: GetDentistBySearchRequest): Promise<EntDentist> {
+        const response = await this.getDentistBySearchRaw(requestParameters);
         return await response.value();
     }
 

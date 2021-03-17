@@ -50,8 +50,6 @@ const useStyles = makeStyles((theme: Theme) =>
     table: {
       minWidth: 500,
     },
-
-
   }),
 );
 const Toast = Swal.mixin({
@@ -61,74 +59,67 @@ const Toast = Swal.mixin({
   timer: 3000,
   timerProgressBar: true,
   //showCloseButton: true,
-
 });
 
 
 export default function ComponentsTable() {
   const classes = useStyles();
-  const api = new DefaultApi();
-  const [loading, setLoading] = useState(true);
-  const [search, setSearch] = useState(false);
-
-  //---------------------------
-  const [checkcardid, setcheckCardids] = useState(false);
   const [dentist, setDentist] = useState<EntDentist[]>([]);
   //--------------------------
   const [cardid, setCardids] = useState(String);
   const profile = { givenName: 'ระบบค้นหาข้อมูลทันตแพทย์' };
-  const alertMessage = (icon: any, title: any) => {
-    Toast.fire({
-      icon: icon,
-      title: title,
-    });
-    setSearch(false);
-  }
 
-  useEffect(() => {
-    const getDentist = async () => {
-      const res = await api.listDentist({ offset: 0 });
-      setLoading(false);
-      setDentist(res);
+  const SearchDentist = async () => {
+   
+    const apiUrl = `http://localhost:8080/api/v1/searchdentists?dentist=${cardid}`;
+    const requestOptions = {
+        method: 'GET',
     };
-    getDentist();
-  }, [loading]);
+    fetch(apiUrl, requestOptions)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data.data)
+            setDentist([]);
 
+          if (data.data != null) {
+                if(data.data.length == 1) {
+        
+                  console.log(data.data)
+                  setDentist(data.data);
+                  Toast.fire({
+                    icon: 'success',
+                    title: 'ค้นหาข้อมูลสำเร็จ',
+                  });
+                 
+                }
+                else if(data.data.length < 1){
+                  Toast.fire({
+                    icon: 'error',
+                    title: 'ไม่สำเร็จ',
+                  });
+                }
+                else{
+                  console.log(data.data)
+                  setDentist(data.data);
+                  Toast.fire({
+                    icon: 'info',
+                    title: 'แสดงข้อมูลทั้งหมด',
+                  });
+          
+            }
+          }  
+        });
+      
+}
   //-------------------
   const Cardidhandlehange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setSearch(false);
-    setcheckCardids(false);
     setCardids(event.target.value as string);
 
   };
-
   const cleardata = () => {
     setCardids("");
-    setSearch(false);
-    setcheckCardids(false);
-    setSearch(false);
-
+    setDentist([]);
   }
-  //---------------------
-  const checkdentist = async () => {
-    var check = false;
-    dentist.map(item => {
-      if (cardid != "") {
-        if (item.cardid?.includes(cardid)) {
-          setcheckCardids(true);
-          alertMessage("success", "พบข้อมูล");
-          check = true;
-        }
-      }
-    })
-    if (!check) {
-      alertMessage("error", "ไม่พบข้อมูล");
-    }
-    console.log(checkcardid)
-    if (cardid == "") {
-      alertMessage("info", "แสดงข้อมูลทันตแพทย์");
-    }
-  };
 
   return (
 
@@ -200,9 +191,9 @@ export default function ComponentsTable() {
                 <div></div>
                 <Button
                   onClick={() => {
-                    checkdentist();
-                    setSearch(true);
-
+                    SearchDentist();
+              
+                 
                   }}
                   endIcon={<SearchTwoToneIcon />}
                   className={classes.margins}
@@ -243,55 +234,8 @@ export default function ComponentsTable() {
           </Grid>
         </Grid>
 
-
-        <Grid container justify="center">
-          <Grid item xs={12} md={10}>
-            <Paper>
-              {search ? (
-                <div>
-                  {  checkcardid ? (
-                    <TableContainer component={Paper}>
-                      <Table className={classes.table} aria-label="simple table">
-                        <TableHead>
-                          <TableRow>
-                          <TableCell align="center">Dentist_ID</TableCell>
-                          <TableCell align="center">Dentist_Name</TableCell>
-                          <TableCell align="center">age</TableCell>
-                          <TableCell align="center">BirthDay</TableCell>
-                          <TableCell align="center">CartID</TableCell>
-                          <TableCell align="center">Degree</TableCell>
-                          <TableCell align="center">Gender</TableCell>
-                          <TableCell align="center">Expert</TableCell>
-                          <TableCell align="center">Experience</TableCell>
-                          <TableCell align="center">Email</TableCell>
-                          <TableCell align="center">Tel</TableCell>
-                          <TableCell align="center">Password</TableCell>
-                          </TableRow>
-                        </TableHead>
-                        <TableBody>
-                          {dentist.filter((filter: any) => filter.cardid.includes(cardid)).map((item: any) => (
-                            <TableRow key={item.id}>
-                              <TableCell align="center">{item.id}</TableCell>
-                              <TableCell align="center">{item.name}</TableCell>
-                              <TableCell align="center">{item.age}</TableCell>
-                              <TableCell align="center">{moment(item.birthday).format('DD/MM/YYYY HH:mm')}</TableCell>
-                              <TableCell align="center">{item.cardid}</TableCell>
-                              <TableCell align="center">{item.edges?.degree?.name}</TableCell>
-                              <TableCell align="center">{item.edges?.gender?.name}</TableCell>
-                              <TableCell align="center">{item.edges?.expert?.name}</TableCell>
-                              <TableCell align="center">{item.experience}</TableCell>
-                              <TableCell align="center">{item.email}</TableCell>
-                              <TableCell align="center">{item.tel}</TableCell>
-                              <TableCell align="center">{item.password}</TableCell>
-                            </TableRow>
-                          ))}
-                        </TableBody>
-                      </Table>
-                    </TableContainer>
-                  )
-                    : cardid == "" ? (
-                      <div>
-                        <TableContainer component={Paper}>
+                   <Grid  className={classes.paper}>
+                <TableContainer component={Paper}>
                           <Table className={classes.table} aria-label="simple table">
                             <TableHead>
                               <TableRow>
@@ -318,9 +262,9 @@ export default function ComponentsTable() {
                               <TableCell align="center">{item.age}</TableCell>
                               <TableCell align="center">{moment(item.birthday).format('DD/MM/YYYY HH:mm')}</TableCell>
                               <TableCell align="center">{item.cardid}</TableCell>
-                              <TableCell align="center">{item.edges?.degree?.name}</TableCell>
-                              <TableCell align="center">{item.edges?.gender?.name}</TableCell>
-                              <TableCell align="center">{item.edges?.expert?.name}</TableCell>
+                              <TableCell align="center">{item.edges?.Degree?.name}</TableCell>
+                              <TableCell align="center">{item.edges?.Gender?.name}</TableCell>
+                              <TableCell align="center">{item.edges?.Expert?.name}</TableCell>
                               <TableCell align="center">{item.experience}</TableCell>
                               <TableCell align="center">{item.email}</TableCell>
                               <TableCell align="center">{item.tel}</TableCell>
@@ -330,16 +274,10 @@ export default function ComponentsTable() {
                             </TableBody>
                           </Table>
                         </TableContainer>
-
-                      </div>
-                    ) : null}
-                </div>
-              ) : null}
-            </Paper>
-          </Grid>
         </Grid>
       </Content>
     </Page>
   );
 
 }
+
