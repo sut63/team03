@@ -203,12 +203,12 @@ export default function ComponentsTable() {
               <div>
                 {alert ? (
                   <Alert severity="success">
-                    แสดงข้อมูลการนัดหมาย {appointID} 
+                    แสดงข้อมูลการนัดหมาย
                   </Alert>
                 )
                   : (
                   <Alert severity="warning" style={{ marginTop: 20 }}>
-                    ไม่พบข้อมูลการนัดหมายที่ค้นหา
+                    ไม่พบข้อมูล
                   </Alert>
                   )}
               </div>
