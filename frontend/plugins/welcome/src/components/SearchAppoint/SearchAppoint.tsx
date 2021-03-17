@@ -7,7 +7,6 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { DefaultApi } from '../../api/apis';
 import ExitToAppRoundedIcon from '@material-ui/icons/ExitToAppRounded';
 import moment from 'moment';
 import { Page, pageTheme, Header, Content} from '@backstage/core';
@@ -142,7 +141,7 @@ export default function ComponentsTable() {
                     className={classes.margin}
                     variant="outlined"
                   >
-                    <div className={classes.paper}>รหัสการนัดหมายผู้ป่วย ex.1</div>
+                    <div className={classes.paper}>รหัสการนัดหมายผู้ป่วย</div>
                     <TextField
                       id="appointID"
                       value={appointID}
