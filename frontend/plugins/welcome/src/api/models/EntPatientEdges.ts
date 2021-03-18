@@ -104,7 +104,6 @@ export function EntPatientEdgesFromJSONTyped(json: any, ignoreDiscriminator: boo
     }
     return {
         
-<<<<<<< HEAD
         'appointment': !exists(json, 'appointment') ? undefined : ((json['appointment'] as Array<any>).map(EntAppointmentFromJSON)),
         'disease': !exists(json, 'disease') ? undefined : EntDiseaseFromJSON(json['disease']),
         'gender': !exists(json, 'gender') ? undefined : EntGenderFromJSON(json['gender']),
@@ -112,15 +111,6 @@ export function EntPatientEdgesFromJSONTyped(json: any, ignoreDiscriminator: boo
         'medicalfiles': !exists(json, 'medicalfiles') ? undefined : ((json['medicalfiles'] as Array<any>).map(EntMedicalfileFromJSON)),
         'nurse': !exists(json, 'nurse') ? undefined : EntNurseFromJSON(json['nurse']),
         'queue': !exists(json, 'queue') ? undefined : ((json['queue'] as Array<any>).map(EntQueueFromJSON)),
-=======
-        'appointment': !exists(json, 'Appointment') ? undefined : ((json['Appointment'] as Array<any>).map(EntAppointmentFromJSON)),
-        'disease': !exists(json, 'Disease') ? undefined : EntDiseaseFromJSON(json['Disease']),
-        'gender': !exists(json, 'Gender') ? undefined : EntGenderFromJSON(json['Gender']),
-        'medicalcare': !exists(json, 'Medicalcare') ? undefined : EntMedicalCareFromJSON(json['Medicalcare']),
-        'medicalfiles': !exists(json, 'Medicalfiles') ? undefined : ((json['Medicalfiles'] as Array<any>).map(EntMedicalfileFromJSON)),
-        'nurse': !exists(json, 'Nurse') ? undefined : EntNurseFromJSON(json['Nurse']),
-        'queue': !exists(json, 'Queue') ? undefined : ((json['Queue'] as Array<any>).map(EntQueueFromJSON)),
->>>>>>> 7a789ccb1be8bf1eebbd06a461c3ddebabecc636
     };
 }
 

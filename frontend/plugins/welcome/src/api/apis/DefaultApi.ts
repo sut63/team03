@@ -158,6 +158,10 @@ export interface GetMedicalfileRequest {
     id: number;
 }
 
+export interface GetMedicalfileBySearchRequest {
+    medicalfile?: string;
+}
+
 export interface GetNurseRequest {
     id: number;
 }
@@ -1058,6 +1062,38 @@ export class DefaultApi extends runtime.BaseAPI {
      */
     async getMedicalfile(requestParameters: GetMedicalfileRequest): Promise<EntMedicalfile> {
         const response = await this.getMedicalfileRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
+     * get Medicalfile by Search
+     * Get a Medicalfile entity by Search
+     */
+    async getMedicalfileBySearchRaw(requestParameters: GetMedicalfileBySearchRequest): Promise<runtime.ApiResponse<EntMedicalfile>> {
+        const queryParameters: runtime.HTTPQuery = {};
+
+        if (requestParameters.medicalfile !== undefined) {
+            queryParameters['Medicalfile'] = requestParameters.medicalfile;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/searchmedicalfiles`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => EntMedicalfileFromJSON(jsonValue));
+    }
+
+    /**
+     * get Medicalfile by Search
+     * Get a Medicalfile entity by Search
+     */
+    async getMedicalfileBySearch(requestParameters: GetMedicalfileBySearchRequest): Promise<EntMedicalfile> {
+        const response = await this.getMedicalfileBySearchRaw(requestParameters);
         return await response.value();
     }
 

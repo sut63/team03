@@ -1834,6 +1834,35 @@ paths:
           schema:
             $ref: '#/definitions/gin.H'
       summary: Get a Dentist entity by Search
+  /searchmedicalfiles:
+    get:
+      description: get Medicalfile by Search
+      operationId: get-Medicalfile-by-search
+      parameters:
+      - description: Search Medicalfile
+        in: query
+        name: Medicalfile
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.Medicalfile'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Get a Medicalfile entity by Search
   /searchqueues:
     get:
       description: get queue by Search

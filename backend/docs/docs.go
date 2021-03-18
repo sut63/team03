@@ -1957,6 +1957,50 @@ var doc = `{
                 }
             }
         },
+        "/searchmedicalfiles": {
+            "get": {
+                "description": "get Medicalfile by Search",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get a Medicalfile entity by Search",
+                "operationId": "get-Medicalfile-by-search",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Search Medicalfile",
+                        "name": "Medicalfile",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ent.Medicalfile"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    }
+                }
+            }
+        },
         "/searchqueues": {
             "get": {
                 "description": "get queue by Search",
