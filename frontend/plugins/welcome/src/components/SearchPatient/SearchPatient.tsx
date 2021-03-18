@@ -202,7 +202,7 @@ export default function ComponentsTable() {
               <div>
                 {alert ? (
                   <Alert severity="success">
-                    แสดงประวัติผู้ป้วย
+                    แสดงประวัติผู้ป่วย
                   </Alert>
                 )
                   : (
