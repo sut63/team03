@@ -7,14 +7,13 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { DefaultApi } from '../../api/apis';
-import { EntMedicalfile } from '../../api/models/EntMedicalfile';
-import Swal from 'sweetalert2'
 import { Link as RouterLink } from 'react-router-dom';
 import moment from 'moment';
 import { Page, pageTheme, Header, Content, Link } from '@backstage/core';
 import { Grid, Button, TextField, Typography, FormControl } from '@material-ui/core';
 import SearchTwoToneIcon from '@material-ui/icons/SearchTwoTone';
+import { EntMedicalfile } from '../../api';
+import { Alert } from '@material-ui/lab';
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -54,81 +53,57 @@ const useStyles = makeStyles((theme: Theme) =>
 
   }),
 );
-const Toast = Swal.mixin({
-  toast: true,
-  position: 'top-end',
-  showConfirmButton: false,
-  timer: 3000,
-  timerProgressBar: true,
-  //showCloseButton: true,
-
-});
 
 
 export default function ComponentsTable() {
   const classes = useStyles();
-  const api = new DefaultApi();
-  const [loading, setLoading] = useState(true);
-  const [search, setSearch] = useState(false);
-
-  //---------------------------
-  const [checkmedno, setcheckMednos] = useState(false);
+  const [medno, setMedno] = useState(String);
   const [medicalfile, setMedicalfile] = useState<EntMedicalfile[]>([]);
-  //--------------------------
-  const [medno, setMednos] = useState(String);
-  const profile = { givenName: 'ระบบค้นหาประวัติทันตกรรม' };
-  const alertMessage = (icon: any, title: any) => {
-    Toast.fire({
-      icon: icon,
-      title: title,
-    });
-    setSearch(false);
-  }
+  const [alert, setAlert] = useState(true);
+  const [status, setStatus] = useState(false);
 
-  useEffect(() => {
-    const getMedicalfile = async () => {
-      const res = await api.listMedicalfile({ offset: 0 });
-      setLoading(false);
-      setMedicalfile(res);
-    };
-    getMedicalfile();
-  }, [loading]);
-
-  //-------------------
-  const Mednohandlehange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setSearch(false);
-    setcheckMednos(false);
-    setMednos(event.target.value as string);
-
+  
+  const Mednohandlechange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    setStatus(false);
+    setMedno(event.target.value as string);
   };
 
   const cleardata = () => {
-    setMednos("");
-    setSearch(false);
-    setcheckMednos(false);
-    setSearch(false);
+    setMedno("");
+    setStatus(false);
+    setMedicalfile([]);
 
   }
-  //---------------------
-  const checkmedicalfile = async () => {
-    var check = false;
-    medicalfile.map(item => {
-      if (medno != "") {
-        if (item.medno?.includes(medno)) {
-          setcheckMednos(true);
-          alertMessage("success", "พบข้อมูล");
-          check = true;
-        }
-      }
-    })
-    if (!check) {
-      alertMessage("error", "ไม่พบข้อมูล");
-    }
-    console.log(checkmedno)
-    if (medno == "") {
-      alertMessage("info", "แสดงข้อมูลประวัติทันตกรรม");
-    }
-  };
+
+  const SearchMedicalfile = async () => {
+    setStatus(true);
+    setAlert(true);
+    const apiUrl = `http://localhost:8080/api/v1/searchmedicalfiles?medicalfile=${medno}`;
+    const requestOptions = {
+        method: 'GET',
+    };
+    fetch(apiUrl, requestOptions)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data.data)
+            setStatus(true);
+            setAlert(false);
+            setMedicalfile([]);
+
+          if (data.data != null) {
+                if(data.data.length >= 1) {
+                  setStatus(true);
+                  setAlert(true);
+                  console.log(data.data)
+                  setMedicalfile(data.data);
+                }
+            }
+        });
+
+}
+
+
+
 
   return (
 
@@ -189,7 +164,7 @@ export default function ComponentsTable() {
                     <TextField
                       id="medno"
                       value={medno}
-                      onChange={Mednohandlehange}
+                      onChange={Mednohandlechange}
                       type="string"
                       size="small"
 
@@ -200,8 +175,7 @@ export default function ComponentsTable() {
                 <div></div>
                 <Button
                   onClick={() => {
-                    checkmedicalfile();
-                    setSearch(true);
+                    SearchMedicalfile();
 
                   }}
                   endIcon={<SearchTwoToneIcon />}
@@ -240,20 +214,31 @@ export default function ComponentsTable() {
                 </Button>
               </Typography>
             </Paper>
+
+            {status ? (
+              <div>
+                {alert ? (
+                  <Alert severity="success">
+                    แสดงข้อมูลประวัติทันตกรรม
+                  </Alert>
+                )
+                  : (
+                  <Alert severity="warning" style={{ marginTop: 20 }}>
+                    ไม่พบข้อมูล
+                  </Alert>
+                  )}
+              </div>
+            ) : null}
+
           </Grid>
         </Grid>
 
 
-        <Grid container justify="center">
-          <Grid item xs={12} md={10}>
-            <Paper>
-              {search ? (
-                <div>
-                  {  checkmedno ? (
-                    <TableContainer component={Paper}>
-                      <Table className={classes.table} aria-label="simple table">
-                        <TableHead>
-                          <TableRow>
+        <Grid  className={classes.paper}>
+        <TableContainer component={Paper}>
+          <Table className={classes.table} aria-label="simple table">
+            <TableHead>
+              <TableRow>
                           <TableCell align="center">Medicalfile_ID</TableCell>
                           <TableCell align="center">Medicalfile_No</TableCell>
                           <TableCell align="center">Patient</TableCell>
@@ -264,56 +249,21 @@ export default function ComponentsTable() {
                         </TableHead>
                         <TableBody>
 
-                          {medicalfile.filter((filter: any) => filter.medno.includes(medno)).map((item: any) => (
+                          {medicalfile.map((item: any) => (
                             <TableRow key={item.id}>
                               <TableCell align="center">{item.id}</TableCell>
-                              <TableCell align="center">{item.medno}</TableCell>
-                              <TableCell align="center">{item.edges?.patient?.name}</TableCell>
-                              <TableCell align="center">{item.detial}</TableCell>
-                              <TableCell align="center">{item.edges?.dentist?.name}</TableCell>
-                              <TableCell align="center">{moment(item.addedTime).format('DD/MM/YYYY HH:mm')}</TableCell>
+                              <TableCell align="center">{item.Medno}</TableCell>
+                              <TableCell align="center">{item.edges?.Patient?.Name}</TableCell>
+                              <TableCell align="center">{item.Detial}</TableCell>
+                              <TableCell align="center">{item.edges?.Dentist?.name}</TableCell>
+                              <TableCell align="center">{moment(item.AddedTime).format('DD/MM/YYYY HH:mm')}</TableCell>
                             </TableRow>
                           ))}
                         </TableBody>
                       </Table>
                     </TableContainer>
-                  )
-                    : medno == "" ? (
-                      <div>
-                        <TableContainer component={Paper}>
-                          <Table className={classes.table} aria-label="simple table">
-                            <TableHead>
-                              <TableRow>
-                              <TableCell align="center">Medicalfile_ID</TableCell>
-                              <TableCell align="center">Medicalfile_No</TableCell>
-                              <TableCell align="center">Patient</TableCell>
-                              <TableCell align="center">Detail</TableCell>
-                              <TableCell align="center">Dentist</TableCell>
-                              <TableCell align="center">Date</TableCell>
-                              </TableRow>
-                            </TableHead>
-                            <TableBody>
-
-                              {medicalfile.map((item: any) => (
-                                <TableRow key={item.id}>
-                                  <TableCell align="center">{item.id}</TableCell>
-                                  <TableCell align="center">{item.medno}</TableCell>
-                                  <TableCell align="center">{item.edges?.patient?.name}</TableCell>
-                                  <TableCell align="center">{item.detial}</TableCell>
-                                  <TableCell align="center">{item.edges?.dentist?.name}</TableCell>
-                                  <TableCell align="center">{moment(item.addedTime).format('DD/MM/YYYY HH:mm')}</TableCell>
-                                </TableRow>
-                              ))}
-                            </TableBody>
-                          </Table>
-                        </TableContainer>
-
-                      </div>
-                    ) : null}
-                </div>
-              ) : null}
-            </Paper>
-          </Grid>
+                  
+         
         </Grid>
       </Content>
     </Page>

@@ -121,6 +121,9 @@ func (ctl *MedicalfileController) GetMedicalfile(c *gin.Context) { //เลื�
 	}
 	m, err := ctl.client.Medicalfile.
 		Query().
+		WithDentist().
+		WithNurse().
+		WithPatient().
 		Where(medicalfile.IDEQ(int(id))).
 		Only(context.Background())
 	if err != nil {
@@ -131,6 +134,40 @@ func (ctl *MedicalfileController) GetMedicalfile(c *gin.Context) { //เลื�
 	}
 	c.JSON(200, m)
 }
+
+// GetSearchMedicalfile handles GET requests to retrieve a Medicalfile entity
+// @Summary Get a Medicalfile entity by Search
+// @Description get Medicalfile by Search
+// @ID get-Medicalfile-by-search
+// @Produce  json
+// @Param Medicalfile query string false "Search Medicalfile"
+// @Success 200 {object} ent.Medicalfile
+// @Failure 400 {object} gin.H
+// @Failure 404 {object} gin.H
+// @Failure 500 {object} gin.H
+// @Router /searchmedicalfiles [get]
+func (ctl *MedicalfileController) GetSearchMedicalfile(c *gin.Context) {
+	medicalfilesearch := c.Query("medicalfile")
+
+	ms, err := ctl.client.Medicalfile.
+		Query().
+		WithPatient().
+		WithDentist().
+		Where(medicalfile.MednoContains(medicalfilesearch)).
+		All(context.Background())
+
+	if err != nil {
+		c.JSON(404, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
+	c.JSON(200, gin.H{
+		"data": ms,
+	})
+}
+
 
 // ListMedicalfile handles request to get a list of Medicalfile entities
 // @Summary List Medicalfile entities
@@ -195,4 +232,6 @@ func (ctl *MedicalfileController) register() {
 	medicalfiles.GET("", ctl.ListMedicalfile)
 	medicalfiles.POST("", ctl.MedicalfileCreate)
 	medicalfiles.GET(":id", ctl.GetMedicalfile)
+	searchmedicalfiles := ctl.router.Group("/searchmedicalfiles")
+	searchmedicalfiles.GET("",ctl.GetSearchMedicalfile)
 }
