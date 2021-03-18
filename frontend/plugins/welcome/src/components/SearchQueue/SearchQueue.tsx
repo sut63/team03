@@ -7,7 +7,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { DefaultApi } from '../../api/apis'
+import { DefaultApi } from '../../api/apis';
 import Swal from 'sweetalert2'
 import { Link as RouterLink } from 'react-router-dom';
 import moment from 'moment';
@@ -49,10 +49,9 @@ const useStyles = makeStyles((theme: Theme) =>
     table: {
       minWidth: 500,
     },
-
-
   }),
 );
+
 const Toast = Swal.mixin({
   toast: true,
   position: 'top-end',
@@ -60,74 +59,65 @@ const Toast = Swal.mixin({
   timer: 3000,
   timerProgressBar: true,
   //showCloseButton: true,
-
 });
-
 
 export default function ComponentsTable() {
   const classes = useStyles();
-  const api = new DefaultApi();
-  const [loading, setLoading] = useState(true);
-  const [search, setSearch] = useState(false);
-
-  //---------------------------
-  const [checkqueueID, setcheckQueueIDs] = useState(false);
   const [queue, setQueue] = useState<EntQueue[]>([]);
-  //--------------------------
-  const [queueID, setQueueIDs] = useState(String);
+  const [QueueID, setQueueID] = useState(String);
   const profile = { givenName: 'ระบบค้นหาใบจองคิวผู้ป่วย' };
-  const alertMessage = (icon: any, title: any) => {
-    Toast.fire({
-      icon: icon,
-      title: title,
-    });
-    setSearch(false);
-  }
 
-  useEffect(() => {
-    const getQueue = async () => {
-      const res = await api.listQueue({ offset: 0 });
-      setLoading(false);
-      setQueue(res);
+  const SearchQueue = async () => {
+   
+    const apiUrl = `http://localhost:8080/api/v1/searchqueues?queue=${QueueID}`;
+    const requestOptions = {
+        method: 'GET',
     };
-    getQueue();
-  }, [loading]);
+    fetch(apiUrl, requestOptions)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data.data)
+            setQueue([]);
 
-  //-------------------
+          if (data.data != null) {
+                if(data.data.length == 1 && QueueID != "") {
+        
+                  console.log(data.data)
+                  setQueue(data.data);
+                  Toast.fire({
+                    icon: 'success',
+                    title: 'พบข้อมูล',
+                  });
+                 
+                }
+                else if(data.data.length < 1){
+                  Toast.fire({
+                    icon: 'error',
+                    title: 'ไม่พบข้อมูล',
+                  });
+                }
+                else{
+                  console.log(data.data)
+                  setQueue(data.data);
+                  Toast.fire({
+                    icon: 'info',
+                    title: 'แสดงข้อมูลทั้งหมด',
+                  });
+          
+            }
+          }  
+        });
+      
+}
+  
   const QueueIDhandlehange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setSearch(false);
-    setcheckQueueIDs(false);
-    setQueueIDs(event.target.value as string);
+    setQueueID(event.target.value as string);
 
   };
-
   const cleardata = () => {
-    setQueueIDs("");
-    setSearch(false);
-    setcheckQueueIDs(false);
-    setSearch(false);
-
+    setQueueID("");
+    setQueue([]);
   }
-  //---------------------
-  const checkqueue = async () => {
-    var check = false;
-    queue.map(item => {
-      if (queueID != "") {
-        if (item.queueID?.includes(queueID)) {
-          setcheckQueueIDs(true);
-          alertMessage("success", "พบข้อมูล");
-          check = true;
-        }
-      }
-    })
-    if (!check) {
-      alertMessage("error", "ไม่พบข้อมูล");
-    }
-    console.log(checkqueue)
-    if (queueID == "") {
-      alertMessage("info", "แสดงข้อมูลใบจองคิวผู้ป่วย");
-    }
-  };
 
   return (
 
@@ -166,7 +156,7 @@ export default function ComponentsTable() {
             <Paper>
 
               <Typography align="center" >
-                <div style={{ background: "#37d67a", height: 60 }}>
+                <div style={{ background: "#37d67a", height: 50 }}>
                   <h1 style={
                     {
                       color: "#FFFFFF",
@@ -184,24 +174,22 @@ export default function ComponentsTable() {
                     className={classes.margin}
                     variant="outlined"
                   >
-                    <div className={classes.paper}><strong>หมายเลขใบจองคิว ex.Q001</strong></div>
+                    <div className={classes.paper}><strong>รหัสคิวผู้ป่วยขึ้นต้นด้วย Q ตามด้วยตัวเลข 3 หลัก ex.Q001</strong></div>
                     <TextField
-                      id="queueID"
-                      value={queueID}
+                      id="QueueID"
+                      value={QueueID}
                       onChange={QueueIDhandlehange}
                       type="string"
-                      size="small"
+                      size="medium"
 
-                      style={{ width: 200 }}
+                      style={{ width: 300 }}
                     />
                   </FormControl>
                 </div>
                 <div></div>
                 <Button
                   onClick={() => {
-                    checkqueue();
-                    setSearch(true);
-
+                    SearchQueue();
                   }}
                   endIcon={<SearchTwoToneIcon />}
                   className={classes.margins}
@@ -212,7 +200,6 @@ export default function ComponentsTable() {
                       {
                         color: "#FFFFFF",
                         padding: '0 10px',
-
                       }
                     }>
                     ค้นหาข้อมูล
@@ -221,7 +208,6 @@ export default function ComponentsTable() {
                 <Button
                   onClick={() => {
                     cleardata();
-
                   }}
                   className={classes.margins}
                   variant="contained"
@@ -242,84 +228,38 @@ export default function ComponentsTable() {
           </Grid>
         </Grid>
 
-
-        <Grid container justify="center">
-          <Grid item xs={12} md={10}>
-            <Paper>
-              {search ? (
-                <div>
-                  {  checkqueueID ? (
-                    <TableContainer component={Paper}>
-                      <Table className={classes.table} aria-label="simple table">
-                        <TableHead>
-                          <TableRow>
-                          <TableCell align="center">No.</TableCell>
-                          <TableCell align="center">Queue_ID</TableCell>
-                          <TableCell align="center">Patient</TableCell>
-                          <TableCell align="center">Phone</TableCell>
-                          <TableCell align="center">Dental</TableCell>
-                          <TableCell align="center">Dentist</TableCell>
-                          <TableCell align="center">Date</TableCell>
-                          </TableRow>
-                        </TableHead>
-                        <TableBody>
-
-                          {queue.filter((filter: any) => filter.queueID.includes(queueID)).map((item: any) => (
-                            <TableRow key={item.id}>
-                              <TableCell align="center">{item.id}</TableCell>
-                              <TableCell align="center">{item.queueID}</TableCell>
-                              <TableCell align="center">{item.edges?.patient?.name}</TableCell>
-                              <TableCell align="center">{item.phone}</TableCell>
-                              <TableCell align="center">{item.dental}</TableCell>
-                              <TableCell align="center">{item.edges?.dentist?.name}</TableCell>
-                              <TableCell align="center">{moment(item.queueTime).format('DD/MM/YYYY HH:mm')}</TableCell>
-                            </TableRow>
-                          ))}
-                        </TableBody>
-                      </Table>
-                    </TableContainer>
-                  )
-                    : queueID == "" ? (
-                      <div>
+          <Grid  className={classes.paper}>
                         <TableContainer component={Paper}>
                           <Table className={classes.table} aria-label="simple table">
                             <TableHead>
-                              <TableRow>
-                                <TableCell align="center">No.</TableCell>
-                                <TableCell align="center">Queue_ID</TableCell>
-                                <TableCell align="center">Patient</TableCell>
-                                <TableCell align="center">Phone</TableCell>
-                                <TableCell align="center">Dental</TableCell>
-                                <TableCell align="center">Dentist</TableCell>
-                                <TableCell align="center">Date</TableCell>
-                              </TableRow>
+                            <TableRow>
+                             <TableCell align="center">No.</TableCell>
+                             <TableCell align="center">Queue_ID</TableCell>
+                             <TableCell align="center">Patient</TableCell>
+                             <TableCell align="center">Phone</TableCell>
+                             <TableCell align="center">Dental</TableCell>
+                             <TableCell align="center">Dentist</TableCell>
+                             <TableCell align="center">Date</TableCell>
+                            </TableRow>
                             </TableHead>
                             <TableBody>
 
                               {queue.map((item: any) => (
                                 <TableRow key={item.id}>
                                   <TableCell align="center">{item.id}</TableCell>
-                                  <TableCell align="center">{item.queueID}</TableCell>
-                                  <TableCell align="center">{item.edges?.patient?.name}</TableCell>
-                                  <TableCell align="center">{item.phone}</TableCell>
-                                  <TableCell align="center">{item.dental}</TableCell>
-                                  <TableCell align="center">{item.edges?.dentist?.name}</TableCell>
-                                  <TableCell align="center">{moment(item.queueTime).format('DD/MM/YYYY HH:mm')}</TableCell>
-                               </TableRow>
+                                  <TableCell align="center">{item.QueueID}</TableCell>
+                                  <TableCell align="center">{item.edges?.Patient?.Name}</TableCell>
+                                  <TableCell align="center">{item.Phone}</TableCell>
+                                  <TableCell align="center">{item.Dental}</TableCell>
+                                  <TableCell align="center">{item.edges?.Dentist?.name}</TableCell>
+                                  <TableCell align="center">{moment(item.QueueTime).format('DD/MM/YYYY HH:mm')}</TableCell>
+                                </TableRow>
                               ))}
                             </TableBody>
                           </Table>
                         </TableContainer>
-
-                      </div>
-                    ) : null}
-                </div>
-              ) : null}
-            </Paper>
-          </Grid>
         </Grid>
       </Content>
     </Page>
   );
-
 }

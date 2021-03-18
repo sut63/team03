@@ -170,6 +170,10 @@ export interface GetQueueRequest {
     id: number;
 }
 
+export interface GetQueueBySearchRequest {
+    queue?: string;
+}
+
 export interface GetRoomRequest {
     id: number;
 }
@@ -1146,6 +1150,38 @@ export class DefaultApi extends runtime.BaseAPI {
      */
     async getQueue(requestParameters: GetQueueRequest): Promise<EntQueue> {
         const response = await this.getQueueRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
+     * get queue by Search
+     * Get a Queue entity by Search
+     */
+    async getQueueBySearchRaw(requestParameters: GetQueueBySearchRequest): Promise<runtime.ApiResponse<EntQueue>> {
+        const queryParameters: runtime.HTTPQuery = {};
+
+        if (requestParameters.queue !== undefined) {
+            queryParameters['Queue'] = requestParameters.queue;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/searchqueues`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => EntQueueFromJSON(jsonValue));
+    }
+
+    /**
+     * get queue by Search
+     * Get a Queue entity by Search
+     */
+    async getQueueBySearch(requestParameters: GetQueueBySearchRequest): Promise<EntQueue> {
+        const response = await this.getQueueBySearchRaw(requestParameters);
         return await response.value();
     }
 
