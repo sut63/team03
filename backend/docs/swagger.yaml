@@ -769,8 +769,8 @@ paths:
     post:
       consumes:
       - application/json
-      description: Create dentalexpense
-      operationId: create-dentalexpense
+      description: Create Dentalexpense
+      operationId: create-Dentalexpense
       parameters:
       - description: Dentalexpense entity
         in: body
@@ -793,7 +793,7 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/gin.H'
-      summary: Create dentalexpense
+      summary: Create Dentalexpense
   /dentalexpenses/{id}:
     get:
       description: get Dentalexpense by ID
@@ -1776,6 +1776,35 @@ paths:
           schema:
             $ref: '#/definitions/gin.H'
       summary: Get a Appointment entity by Search
+  /searchdentalexpenses:
+    get:
+      description: get Dentalexpense by Search
+      operationId: get-Dentalexpense-by-search
+      parameters:
+      - description: Search Dentalexpense
+        in: query
+        name: Dentalexpense
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.Dentalexpense'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Get a Dentalexpense entity by Search
   /searchdentists:
     get:
       description: get dentist by Search
