@@ -1912,6 +1912,50 @@ var doc = `{
                     }
                 }
             }
+        },
+        "/searchqueues": {
+            "get": {
+                "description": "get queue by Search",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get a Queue entity by Search",
+                "operationId": "get-Queue-by-search",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Search Queue",
+                        "name": "Queue",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ent.Queue"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {

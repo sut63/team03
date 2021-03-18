@@ -118,6 +118,9 @@ func (ctl *QueueController) GetQueue(c *gin.Context) {
 	}
 	q, err := ctl.client.Queue.
 		Query().
+		WithDentist().
+		WithPatient().
+		WithNurse().
 		Where(queue.IDEQ(int(id))).
 		Only(context.Background())
 	if err != nil {
@@ -127,6 +130,39 @@ func (ctl *QueueController) GetQueue(c *gin.Context) {
 		return
 	}
 	c.JSON(200, q)
+}
+
+// GetSearchQueue handles GET requests to retrieve a queue entity
+// @Summary Get a Queue entity by Search
+// @Description get queue by Search
+// @ID get-Queue-by-search
+// @Produce  json
+// @Param Queue query string false "Search Queue"
+// @Success 200 {object} ent.Queue
+// @Failure 400 {object} gin.H
+// @Failure 404 {object} gin.H
+// @Failure 500 {object} gin.H
+// @Router /searchqueues [get]
+func (ctl *QueueController) GetSearchQueue(c *gin.Context) {
+	queuesearch := c.Query("queue")
+
+	qs, err := ctl.client.Queue.
+		Query().
+		WithDentist().
+		WithPatient().
+		Where(queue.QueueIDContains(queuesearch)).
+		All(context.Background())
+
+	if err != nil {
+		c.JSON(404, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
+	c.JSON(200, gin.H{
+		"data": qs,
+	})
 }
 
 // ListQueue handles request to get a list of queue entities
@@ -196,6 +232,9 @@ func (ctl *QueueController) register() {
 	queues.POST("", ctl.QueueCreate)
 	queues.GET("", ctl.ListQueue)
 	queues.GET(":id", ctl.GetQueue)
+
+	searchqueues := ctl.router.Group("/searchqueues")
+	searchqueues.GET("",ctl.GetSearchQueue)
 	
 
 }
