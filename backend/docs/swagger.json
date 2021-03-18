@@ -333,15 +333,15 @@
                 }
             },
             "post": {
-                "description": "Create dentalexpense",
+                "description": "Create Dentalexpense",
                 "consumes": [
                     "application/json"
                 ],
                 "produces": [
                     "application/json"
                 ],
-                "summary": "Create dentalexpense",
-                "operationId": "create-dentalexpense",
+                "summary": "Create Dentalexpense",
+                "operationId": "create-Dentalexpense",
                 "parameters": [
                     {
                         "description": "Dentalexpense entity",
@@ -1831,6 +1831,50 @@
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/ent.Appointment"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    }
+                }
+            }
+        },
+        "/searchdentalexpenses": {
+            "get": {
+                "description": "get Dentalexpense by Search",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get a Dentalexpense entity by Search",
+                "operationId": "get-Dentalexpense-by-search",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Search Dentalexpense",
+                        "name": "Dentalexpense",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ent.Dentalexpense"
                         }
                     },
                     "400": {
