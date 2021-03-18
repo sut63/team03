@@ -13,13 +13,14 @@ import (
 	"github.com/team03/app/ent/pricetype"
 )
 
-// DentalexpenseController defines the struct for the dentalexpense controller
+//DentalexpenseController defind the struct for Dentalexpense controller
 type DentalexpenseController struct {
 	client *ent.Client
 	router gin.IRouter
 }
 
-type Dentalexpense struct { 
+//Dentalexpense defind the struct for the Dentalexpense controller
+type Dentalexpense struct {
 	Medicalfile 	int
 	Pricetype  	    int
 	Name   	        string
@@ -30,13 +31,13 @@ type Dentalexpense struct {
 	
 }
 
-// DentalexpenseCreate handles POST requests for adding dentalexpense entities
-// @Summary Create dentalexpense
-// @Description Create dentalexpense
-// @ID create-dentalexpense
+// DentalexpenseCreate handles POST requests for adding  Dentalexpense entities
+// @Summary Create Dentalexpense
+// @Description Create Dentalexpense
+// @ID create-Dentalexpense
 // @Accept   json
 // @Produce  json
-// @Param Dentalexpense body ent.Dentalexpense true "Dentalexpense entity"
+// @Param  Dentalexpense body ent.Dentalexpense true "Dentalexpense entity"
 // @Success 200 {object} ent.Dentalexpense
 // @Failure 400 {object} gin.H
 // @Failure 500 {object} gin.H
@@ -45,9 +46,9 @@ func (ctl *DentalexpenseController) DentalexpenseCreate(c *gin.Context) {
 	obj := Dentalexpense{}
 	if err := c.ShouldBind(&obj); err != nil {
 		c.JSON(400, gin.H{
-			"error": "dentalexpense binding failed",
+			"error": "Dentalexpense binding failed",
 		})
-		return 
+		return
 	}
 
 	m, err := ctl.client.Medicalfile.
@@ -74,18 +75,18 @@ func (ctl *DentalexpenseController) DentalexpenseCreate(c *gin.Context) {
 		return
 	}
 
+	
 	time, err := time.Parse(time.RFC3339, obj.AddedTime)
 	am, err := strconv.Atoi(obj.Amount)
 	de, err := ctl.client.Dentalexpense.
-		Create().
-		SetMedicalfile(m).
-		SetPricetype(pt).
-		SetName(obj.Name).
-		SetTax(obj.Tax).
-		SetPhone(obj.Phone).
-		SetAmount(am).
-		SetAddedTime(time).
-		
+	    Create().
+	    SetMedicalfile(m).
+	    SetPricetype(pt).
+	    SetName(obj.Name).
+	    SetTax(obj.Tax).
+	    SetPhone(obj.Phone).
+	    SetAmount(am).
+	    SetAddedTime(time).
 		Save(context.Background())
 
 	if err != nil {
@@ -96,11 +97,11 @@ func (ctl *DentalexpenseController) DentalexpenseCreate(c *gin.Context) {
 		})
 		return
 	}
+
 	c.JSON(200, gin.H{
 		"status": true,
 		"data":   de,
 	})
-
 }
 
 // GetDentalexpense handles GET requests to retrieve a Dentalexpense entity
@@ -114,7 +115,7 @@ func (ctl *DentalexpenseController) DentalexpenseCreate(c *gin.Context) {
 // @Failure 404 {object} gin.H
 // @Failure 500 {object} gin.H
 // @Router /dentalexpenses/{id} [get]
-func (ctl *DentalexpenseController) GetDentalexpense(c *gin.Context) { //เลือก ที่ไหน id อะไร ดึงตาม pk
+func (ctl *DentalexpenseController) GetDentalexpense(c *gin.Context) {
 	id, err := strconv.ParseInt(c.Param("id"), 10, 64)
 	if err != nil {
 		c.JSON(400, gin.H{
@@ -122,20 +123,61 @@ func (ctl *DentalexpenseController) GetDentalexpense(c *gin.Context) { //เล�
 		})
 		return
 	}
+
 	de, err := ctl.client.Dentalexpense.
 		Query().
+		WithMedicalfile().
+		WithPricetype().
+		
+		WithNurse().
 		Where(dentalexpense.IDEQ(int(id))).
 		Only(context.Background())
+
 	if err != nil {
 		c.JSON(404, gin.H{
 			"error": err.Error(),
 		})
 		return
 	}
+
 	c.JSON(200, de)
 }
 
-// ListDentalexpense handles request to get a list of dentalexpense entities
+
+// GetSearchDentalexpense handles GET requests to retrieve a Dentalexpense entity
+// @Summary Get a Dentalexpense entity by Search
+// @Description get Dentalexpense by Search
+// @ID get-Dentalexpense-by-search
+// @Produce  json
+// @Param Dentalexpense query string false "Search Dentalexpense"
+// @Success 200 {object} ent.Dentalexpense
+// @Failure 400 {object} gin.H
+// @Failure 404 {object} gin.H
+// @Failure 500 {object} gin.H
+// @Router /searchdentalexpenses [get]
+func (ctl *DentalexpenseController) GetSearchDentalexpense(c *gin.Context) {
+	dentalexpensesearch := c.Query("dentalexpense")
+
+	des, err := ctl.client.Dentalexpense.
+		Query().
+		WithMedicalfile().
+		WithPricetype().
+		Where(dentalexpense.TaxContains(dentalexpensesearch)).
+		All(context.Background())
+
+	if err != nil {
+		c.JSON(404, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
+	c.JSON(200, gin.H{
+		"data": des,
+	})
+}
+
+// ListDentalexpense handles request to get a list of Dentalexpense entities
 // @Summary List Dentalexpense entities
 // @Description list Dentalexpense entities
 // @ID list-Dentalexpense
@@ -146,7 +188,7 @@ func (ctl *DentalexpenseController) GetDentalexpense(c *gin.Context) { //เล�
 // @Failure 400 {object} gin.H
 // @Failure 500 {object} gin.H
 // @Router /dentalexpenses [get]
-func (ctl *DentalexpenseController) ListDentalexpense(c *gin.Context) { //การเลือกทั้งหมด ตารางนี้มีกี่คอมลัมน์เอามาหมดเลย combobox 
+func (ctl *DentalexpenseController) ListDentalexpense(c *gin.Context) {
 	limitQuery := c.Query("limit")
 	limit := 10
 	if limitQuery != "" {
@@ -155,6 +197,7 @@ func (ctl *DentalexpenseController) ListDentalexpense(c *gin.Context) { //กา
 			limit = int(limit64)
 		}
 	}
+
 	offsetQuery := c.Query("offset")
 	offset := 0
 	if offsetQuery != "" {
@@ -163,6 +206,7 @@ func (ctl *DentalexpenseController) ListDentalexpense(c *gin.Context) { //กา
 			offset = int(offset64)
 		}
 	}
+
 	dentalexpenses, err := ctl.client.Dentalexpense.
 		Query().
 		WithMedicalfile().
@@ -177,25 +221,31 @@ func (ctl *DentalexpenseController) ListDentalexpense(c *gin.Context) { //กา
 		})
 		return
 	}
+
 	c.JSON(200, dentalexpenses)
 }
 
-// NewDentalexpenseController creates and registers handles for the Dentalexpense controller
-//สร้าง router ให้ Controller เป็น path ควบคุม Controller
+// NewDentalexpenseController creates and registers handles for the dentalexpense controller
 func NewDentalexpenseController(router gin.IRouter, client *ent.Client) *DentalexpenseController {
 	dec := &DentalexpenseController{
 		client: client,
 		router: router,
 	}
+
 	dec.register()
 	return dec
+
 }
 
-// InitDentalexpensesController registers routes to the main engine
-//การประกาศ path
 func (ctl *DentalexpenseController) register() {
 	dentalexpenses := ctl.router.Group("/dentalexpenses")
-	dentalexpenses.GET("", ctl.ListDentalexpense)
-	dentalexpenses.POST("", ctl.DentalexpenseCreate)
 	dentalexpenses.GET(":id", ctl.GetDentalexpense)
+
+	searchdentalexpenses := ctl.router.Group("/searchdentalexpenses")
+	searchdentalexpenses.GET("",ctl.GetSearchDentalexpense)
+
+	// CRUD
+	dentalexpenses.POST("", ctl.DentalexpenseCreate)
+	dentalexpenses.GET("", ctl.ListDentalexpense)
+
 }
