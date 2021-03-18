@@ -25,8 +25,8 @@ const useStyles = makeStyles((theme: Theme) =>
     headsearch: {
       width: 'auto',
       margin: '10px',
-      color: '#FFFFFF',
-      background: '#2196F3',
+      color: '#000000 ',
+      background: '#1C2951',
     },
     margin: {
       margin: theme.spacing(1),
@@ -123,10 +123,10 @@ export default function ComponentsTable() {
             <Paper>
 
               <Typography align="center" >
-                <div style={{ background: "#709fb0", height: 50 }}>
+                <div style={{ background: "#008891", height: 50 }}>
                   <h1 style={
                     {
-                      color: "#FFFFFF",
+                      color: "#FFFFF",
                       borderRadius: 5,
                       height: 18,
                       padding: '0 30px',
@@ -164,7 +164,7 @@ export default function ComponentsTable() {
                   endIcon={<SearchTwoToneIcon />}
                   className={classes.margins}
                   variant="contained"
-                  style={{ background: "#A1C4D8", height: 40 }}>
+                  style={{ background: "#ac4b1c", height: 40 }}>
                   <h3
                     style={
                       {
@@ -183,11 +183,11 @@ export default function ComponentsTable() {
                   }}
                   className={classes.margins}
                   variant="contained"
-                  style={{ background: "#3792cb", height: 40 }}>
+                  style={{ background: "#ffd57e", height: 40 }}>
                   <h3
                     style={
                       {
-                        color: "#c6a9a3",
+                        color: "#FFFFFF",
                         padding: '0 25px',
 
                       }
