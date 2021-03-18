@@ -170,6 +170,10 @@ export interface GetPatientRequest {
     id: number;
 }
 
+export interface GetPatientBySearchRequest {
+    patient?: string;
+}
+
 export interface GetPricetypeRequest {
     id: number;
 }
@@ -1158,6 +1162,38 @@ export class DefaultApi extends runtime.BaseAPI {
      */
     async getPatient(requestParameters: GetPatientRequest): Promise<EntPatient> {
         const response = await this.getPatientRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
+     * get patient by Search
+     * Get a Patient entity by Search
+     */
+    async getPatientBySearchRaw(requestParameters: GetPatientBySearchRequest): Promise<runtime.ApiResponse<EntPatient>> {
+        const queryParameters: runtime.HTTPQuery = {};
+
+        if (requestParameters.patient !== undefined) {
+            queryParameters['Patient'] = requestParameters.patient;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/searchpatients`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => EntPatientFromJSON(jsonValue));
+    }
+
+    /**
+     * get patient by Search
+     * Get a Patient entity by Search
+     */
+    async getPatientBySearch(requestParameters: GetPatientBySearchRequest): Promise<EntPatient> {
+        const response = await this.getPatientBySearchRaw(requestParameters);
         return await response.value();
     }
 
