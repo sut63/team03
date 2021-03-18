@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -7,15 +7,13 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { DefaultApi } from '../../api/apis';
-import { EntPatient } from '../../api/models/EntPatient';
-import Swal from 'sweetalert2'
-import { Link as RouterLink } from 'react-router-dom';
+import ExitToAppRoundedIcon from '@material-ui/icons/ExitToAppRounded';
 import moment from 'moment';
-import { Page, pageTheme, Header, Content, Link } from '@backstage/core';
+import { Page, pageTheme, Header, Content} from '@backstage/core';
 import { Grid, Button, TextField, Typography, FormControl } from '@material-ui/core';
 import SearchTwoToneIcon from '@material-ui/icons/SearchTwoTone';
-
+import { EntDentalexpense, EntPatient } from '../../api';
+import { Alert } from '@material-ui/lab';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -54,81 +52,58 @@ const useStyles = makeStyles((theme: Theme) =>
 
   }),
 );
-const Toast = Swal.mixin({
-  toast: true,
-  position: 'top-end',
-  showConfirmButton: false,
-  timer: 3000,
-  timerProgressBar: true,
-  //showCloseButton: true,
-
-});
-
 
 export default function ComponentsTable() {
   const classes = useStyles();
-  const api = new DefaultApi();
-  const [loading, setLoading] = useState(true);
-  const [search, setSearch] = useState(false);
 
-  //---------------------------
-  const [checkpatientid, setcheckPatientids] = useState(false);
-  const [patient, setPatient] = useState<EntPatient[]>([]);
-  //--------------------------
-  const [patientid, setPatientids] = useState(String);
-  const profile = { givenName: 'ระบบค้นหาประวัติผู้ป่วย' };
-  const alertMessage = (icon: any, title: any) => {
-    Toast.fire({
-      icon: icon,
-      title: title,
-    });
-    setSearch(false);
-  }
+  const [patient, setPatient] = useState<EntPatient[]>([])
+  const [patientID, setPatientID] = useState(String);
+  const [alert, setAlert] = useState(true);
+  const [status, setStatus] = useState(false);
 
-  useEffect(() => {
-    const getPatient = async () => {
-      const res = await api.listPatient({ offset: 0 });
-      setLoading(false);
-      setPatient(res);
-    };
-    getPatient();
-  }, [loading]);
 
-  //-------------------
-  const handlehange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setSearch(false);
-    setcheckPatientids(false);
-    setPatientids(event.target.value as string);
 
+
+  const PatientIDhandlehange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    setStatus(false);
+    setPatientID(event.target.value as string);
   };
 
   const cleardata = () => {
-    setPatientids("");
-    setSearch(false);
-    setcheckPatientids(false);
-    setSearch(false);
+    setPatientID("");
+    setStatus(false);
+    setPatient([]);
 
   }
-  //---------------------
-  const checkpatient = async () => {
-    var check = false;
-    patient.map(item => {
-      if (patientid != "") {
-        if (item.patientID?.includes(patientid)) {
-          setcheckPatientids(true);
-          alertMessage("success", "พบข้อมูล");
-          check = true;
-        }
-      }
-    })
-    if (!check) {
-      alertMessage("error", "ไม่พบข้อมูล");
-    }
-    console.log(checkpatientid)
-    if (patientid == "") {
-      alertMessage("info", "แสดงข้อมูลประวัติผู้ป่วย");
-    }
-  };
+
+  
+
+  const SearchPatient = async () => {
+    setStatus(true);
+    setAlert(true);
+    const apiUrl = `http://localhost:8080/api/v1/searchpatients?patient=${patientID}`;
+    const requestOptions = {
+        method: 'GET',
+    };
+    fetch(apiUrl, requestOptions)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data.data)
+            setStatus(true);
+            setAlert(false);
+            setPatient([]);
+
+          if (data.data != null) {
+                if(data.data.length >= 1) {
+                  setStatus(true);
+                  setAlert(true);
+                  console.log(data.data)
+                  setPatient(data.data);
+                }
+            }
+        });
+
+}
 
   return (
 
@@ -137,27 +112,8 @@ export default function ComponentsTable() {
         title={`Dental System`}
         subtitle="ค้นหาประวัติผู้ป่วย">
         <table>
-          <tr>
-           
-            <th>
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <Link component={RouterLink} to="/Menu">
-                <Button variant="contained" style={{ height: 40 }}>
-                  <h3
-                    style={
-                      {
-                        color: "#000000",
-                        borderRadius: 10,
-                        height: 25,
-                        padding: '0 20px',
-                      }
-                    }>
-                    Back
-            </h3>
-                </Button>
-              </Link>
-            </th>
-          </tr>
+        <Button variant="contained" color="default" href="/" startIcon={<ExitToAppRoundedIcon />}> Logout
+        </Button>
         </table>
 
       </Header>
@@ -185,25 +141,26 @@ export default function ComponentsTable() {
                     className={classes.margin}
                     variant="outlined"
                   >
-                    <div className={classes.paper}><strong>รหัสประจำตัวผู้ป่วย EX.P000001</strong></div>
+                    <div className={classes.paper}>รหัสประจำตัวผู้ป่วย EX.P000001</div>
                     <TextField
-                      id="patientid"
-                      value={patientid}
-                      onChange={handlehange}
+                      id="patientID"
+                      value={patientID}
+                      onChange={PatientIDhandlehange || ''}
                       type="string"
-                      size="small"
+                      size="medium"
 
-                      style={{ width: 200 }}
+                      style={{ width: 300 }}
                     />
                   </FormControl>
                 </div>
+
                 <div></div>
+                
                 <Button
                   onClick={() => {
-                    checkpatient();
-                    setSearch(true);
-
+                    SearchPatient();
                   }}
+
                   endIcon={<SearchTwoToneIcon />}
                   className={classes.margins}
                   variant="contained"
@@ -240,85 +197,60 @@ export default function ComponentsTable() {
                 </Button>
               </Typography>
             </Paper>
+
+            {status ? (
+              <div>
+                {alert ? (
+                  <Alert severity="success">
+                    แสดงประวัติผู้ป้วย
+                  </Alert>
+                )
+                  : (
+                  <Alert severity="warning" style={{ marginTop: 20 }}>
+                    ไม่พบข้อมูล
+                  </Alert>
+                  )}
+              </div>
+            ) : null}
+
           </Grid>
         </Grid>
+        
 
-
-        <Grid container justify="center">
-          <Grid item xs={12} md={10}>
-            <Paper>
-              {search ? (
-                <div>
-                  {  checkpatientid ? (
-                    <TableContainer component={Paper}>
-                      <Table className={classes.table} aria-label="simple table">
-                        <TableHead>
-                          <TableRow>
-                          <TableCell align="center">Patient No.</TableCell>
-                          <TableCell align="center">Name</TableCell>
-                          <TableCell align="center">Age</TableCell>
-                          <TableCell align="center">Disease</TableCell>
-                          <TableCell align="center">MedicalCare</TableCell>
-                          <TableCell align="center">Tel.</TableCell>
-                          <TableCell align="center">BirthDay</TableCell>
-                          </TableRow>
-                        </TableHead>
-                        <TableBody>
-
-                          {patient.filter((filter: any) => filter.patientID.includes(patientid)).map((item: any) => (
-                            <TableRow key={item.id}>
-                               <TableCell align="center">{item.patientID}</TableCell>
-                               <TableCell align="center">{item.name}</TableCell>
-                               <TableCell align="center">{item.age}</TableCell>
-                               <TableCell align="center">{item.edges?.disease?.name}</TableCell>
-                               <TableCell align="center">{item.edges?.medicalcare?.name}</TableCell>
-                               <TableCell align="center">{item.tel}</TableCell>
-                               <TableCell align="center">{moment(item.birthday).format('DD/MM/YYYY')}</TableCell>
-                            </TableRow>
-                          ))}
-                        </TableBody>
-                      </Table>
-                    </TableContainer>
-                  )
-                    : patientid == "" ? (
-                      <div>
-                        <TableContainer component={Paper}>
-                          <Table className={classes.table} aria-label="simple table">
-                            <TableHead>
-                              <TableRow>
-                              <TableCell align="center">Patient No.</TableCell>
-                              <TableCell align="center">Name</TableCell>
-                              <TableCell align="center">Age</TableCell>
-                              <TableCell align="center">Disease</TableCell>
-                              <TableCell align="center">MedicalCare</TableCell>
-                              <TableCell align="center">Tel.</TableCell>
-                              <TableCell align="center">BirthDay</TableCell>
-                              </TableRow>
-                            </TableHead>
-                            <TableBody>
-
-                              {patient.map((item: any) => (
-                                <TableRow key={item.id}>
-                                  <TableCell align="center">{item.patientID}</TableCell>
-                                  <TableCell align="center">{item.name}</TableCell>
-                                  <TableCell align="center">{item.age}</TableCell>
-                                  <TableCell align="center">{item.edges?.disease?.name}</TableCell>
-                                  <TableCell align="center">{item.edges?.medicalcare?.name}</TableCell>
-                                  <TableCell align="center">{item.tel}</TableCell>
-                                  <TableCell align="center">{moment(item.birthday).format('DD/MM/YYYY')}</TableCell>
-                                </TableRow>
-                              ))}
-                            </TableBody>
-                          </Table>
-                        </TableContainer>
-
-                      </div>
-                    ) : null}
-                </div>
-              ) : null}
-            </Paper>
-          </Grid>
+        
+        <Grid  className={classes.paper}>
+        <TableContainer component={Paper}>
+          <Table className={classes.table} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+              <TableCell align="center">PatientID</TableCell>
+              <TableCell align="center">Name</TableCell>
+              <TableCell align="center">Age</TableCell>
+              <TableCell align="center">Disease</TableCell>
+              <TableCell align="center">MedicalCare</TableCell>
+              <TableCell align="center">Tel.</TableCell>
+              <TableCell align="center">BirthDay</TableCell>
+              </TableRow>
+            </TableHead>
+          <TableBody>
+            {patient.map((item: any) => (
+                <TableRow key={item.id}>
+                  <TableCell align="center">{item.PatientID}</TableCell>
+                    <TableCell align="center">{item.Name}</TableCell>
+                    <TableCell align="center">{item.Age}</TableCell>
+                    <TableCell align="center">{item.edges?.Disease?.name}</TableCell>
+                    <TableCell align="center">{item.edges?.Medicalcare?.name}</TableCell>
+                    <TableCell align="center">{item.Tel}</TableCell>
+                    <TableCell align="center">{moment(item.Birthday).format('DD/MM/YYYY')}</TableCell>
+                                    
+                </TableRow>
+                ))}
+            </TableBody>
+            </Table>
+        </TableContainer>
+        
         </Grid>
+
       </Content>
     </Page>
   );
