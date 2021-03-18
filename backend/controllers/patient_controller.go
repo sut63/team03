@@ -4,12 +4,12 @@ import (
 	"context"
 	"strconv"
 	"time"
+	"fmt"
 
 	"github.com/team03/app/ent/disease"
 	"github.com/team03/app/ent/gender"
 	"github.com/team03/app/ent/medicalcare"
 	"github.com/team03/app/ent/patient"
-	"fmt"
 	"github.com/team03/app/ent"
 	"github.com/gin-gonic/gin"
 )
@@ -25,7 +25,6 @@ type Patient struct {
 	Name        string
 	CardID      string
 	Gender      int
-	Address     string
 	Tel         string
 	Birthday    string
 	Age         int
@@ -142,6 +141,10 @@ func (ctl *PatientController) GetPatient(c *gin.Context) {
 
 	p, err := ctl.client.Patient.
 		Query().
+		WithGender().
+		WithDisease().
+		WithMedicalcare().
+		WithNurse().
 		Where(patient.IDEQ(int(id))).
 		Only(context.Background())
 	if err != nil {
@@ -152,6 +155,40 @@ func (ctl *PatientController) GetPatient(c *gin.Context) {
 	}
 
 	c.JSON(200, p)
+}
+
+// GetSearchPatient handles GET requests to retrieve a patient entity
+// @Summary Get a Patient entity by Search
+// @Description get patient by Search
+// @ID get-Patient-by-search
+// @Produce  json
+// @Param Patient query string false "Search Patient"
+// @Success 200 {object} ent.Patient
+// @Failure 400 {object} gin.H
+// @Failure 404 {object} gin.H
+// @Failure 500 {object} gin.H
+// @Router /searchpatients [get]
+func (ctl *PatientController) GetSearchPatient(c *gin.Context) {
+	patientsearch := c.Query("patient")
+
+	ps, err := ctl.client.Patient.
+		Query().
+		WithGender().
+		WithDisease().
+		WithMedicalcare().
+		Where(patient.PatientIDContains(patientsearch)).
+		All(context.Background())
+
+	if err != nil {
+		c.JSON(404, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
+	c.JSON(200, gin.H{
+		"data": ps,
+	})
 }
 
 // ListPatient handles request to get a list of patient entities
@@ -214,8 +251,12 @@ func NewPatientController(router gin.IRouter, client *ent.Client) *PatientContro
 // InitUserController patient routes to the main engine
 func (ctl *PatientController) register() {
 	patients := ctl.router.Group("/patients")
-
-	patients.POST("", ctl.PatientCreate)
+	
+	patients.POST("", ctl.PatientCreate)	
 	patients.GET(":id", ctl.GetPatient)
 	patients.GET("", ctl.ListPatient)
+
+	searchpatients := ctl.router.Group("/searchpatients")
+	searchpatients.GET("",ctl.GetSearchPatient)
+
 }
