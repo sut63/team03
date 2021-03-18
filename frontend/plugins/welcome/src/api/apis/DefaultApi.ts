@@ -126,6 +126,10 @@ export interface GetDentalexpenseRequest {
     id: number;
 }
 
+export interface GetDentalexpenseBySearchRequest {
+    dentalexpense?: string;
+}
+
 export interface GetDentistRequest {
     id: number;
 }
@@ -324,8 +328,8 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create dentalexpense
-     * Create dentalexpense
+     * Create Dentalexpense
+     * Create Dentalexpense
      */
     async createDentalexpenseRaw(requestParameters: CreateDentalexpenseRequest): Promise<runtime.ApiResponse<EntDentalexpense>> {
         if (requestParameters.dentalexpense === null || requestParameters.dentalexpense === undefined) {
@@ -350,8 +354,8 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create dentalexpense
-     * Create dentalexpense
+     * Create Dentalexpense
+     * Create Dentalexpense
      */
     async createDentalexpense(requestParameters: CreateDentalexpenseRequest): Promise<EntDentalexpense> {
         const response = await this.createDentalexpenseRaw(requestParameters);
@@ -798,6 +802,38 @@ export class DefaultApi extends runtime.BaseAPI {
      */
     async getDentalexpense(requestParameters: GetDentalexpenseRequest): Promise<EntDentalexpense> {
         const response = await this.getDentalexpenseRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
+     * get Dentalexpense by Search
+     * Get a Dentalexpense entity by Search
+     */
+    async getDentalexpenseBySearchRaw(requestParameters: GetDentalexpenseBySearchRequest): Promise<runtime.ApiResponse<EntDentalexpense>> {
+        const queryParameters: runtime.HTTPQuery = {};
+
+        if (requestParameters.dentalexpense !== undefined) {
+            queryParameters['Dentalexpense'] = requestParameters.dentalexpense;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/searchdentalexpenses`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => EntDentalexpenseFromJSON(jsonValue));
+    }
+
+    /**
+     * get Dentalexpense by Search
+     * Get a Dentalexpense entity by Search
+     */
+    async getDentalexpenseBySearch(requestParameters: GetDentalexpenseBySearchRequest): Promise<EntDentalexpense> {
+        const response = await this.getDentalexpenseBySearchRaw(requestParameters);
         return await response.value();
     }
 
