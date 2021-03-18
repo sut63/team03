@@ -1863,6 +1863,35 @@ paths:
           schema:
             $ref: '#/definitions/gin.H'
       summary: Get a Medicalfile entity by Search
+  /searchpatients:
+    get:
+      description: get patient by Search
+      operationId: get-Patient-by-search
+      parameters:
+      - description: Search Patient
+        in: query
+        name: Patient
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.Patient'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Get a Patient entity by Search
   /searchqueues:
     get:
       description: get queue by Search

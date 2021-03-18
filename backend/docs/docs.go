@@ -2001,6 +2001,50 @@ var doc = `{
                 }
             }
         },
+        "/searchpatients": {
+            "get": {
+                "description": "get patient by Search",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get a Patient entity by Search",
+                "operationId": "get-Patient-by-search",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Search Patient",
+                        "name": "Patient",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ent.Patient"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    }
+                }
+            }
+        },
         "/searchqueues": {
             "get": {
                 "description": "get queue by Search",
