@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -7,17 +7,14 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { DefaultApi } from '../../api/apis';
-
-import { EntDentalexpense } from '../../api/models/EntDentalexpense';
-
-
-import Swal from 'sweetalert2'
-import { Link as RouterLink } from 'react-router-dom';
+import ExitToAppRoundedIcon from '@material-ui/icons/ExitToAppRounded';
 import moment from 'moment';
-import { Page, pageTheme, Header, Content, Link } from '@backstage/core';
+import { Page, pageTheme, Header, Content} from '@backstage/core';
 import { Grid, Button, TextField, Typography, FormControl } from '@material-ui/core';
 import SearchTwoToneIcon from '@material-ui/icons/SearchTwoTone';
+import { EntDentalexpense } from '../../api';
+import { Alert } from '@material-ui/lab';
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -55,115 +52,70 @@ const useStyles = makeStyles((theme: Theme) =>
 
   }),
 );
-const Toast = Swal.mixin({
-  toast: true,
-  position: 'top-end',
-  showConfirmButton: false,
-  timer: 3000,
-  timerProgressBar: true,
-  //showCloseButton: true,
 
-});
 export default function ComponentsTable() {
-
- 
-
   const classes = useStyles();
-  const api = new DefaultApi();
-  const [loading, setLoading] = useState(true);
-  const [search, setSearch] = useState(false);
 
-  
-  const [checktax, setcheckTaxs] = useState(false);
+  const [tax, setTax] = useState(String);
   const [dentalexpense, setDentalexpense] = useState<EntDentalexpense[]>([])
+  const [alert, setAlert] = useState(true);
+  const [status, setStatus] = useState(false);
 
-  
-  const [tax, setTaxs] = useState(String);
-  const profile = { givenName: 'ระบบค้นหารายการค่ารักษา' };
-  const alertMessage = (icon: any, title: any) => {
-    Toast.fire({
-      icon: icon,
-      title: title,
-    });
-    setSearch(false);
-  }
 
-  useEffect(() => {
-    const getDentalexpense = async () => {
-      const res = await api.listDentalexpense({ offset: 0 });
-      setLoading(false);
-      setDentalexpense(res);
-    };
-    getDentalexpense();
-  }, [loading]);
 
-  //-------------------
+
   const Taxhandlehange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setSearch(false);
-    setcheckTaxs(false);
-    setTaxs(event.target.value as string);
-
+    setStatus(false);
+    setTax(event.target.value as string);
   };
 
   const cleardata = () => {
-    setTaxs("");
-    setSearch(false);
-    setcheckTaxs(false);
-    setSearch(false);
+    setTax("");
+    setStatus(false);
+    setDentalexpense([]);
 
   }
-  //---------------------
-  const checkdentalexpense = async () => {
-    var check = false;
-    dentalexpense.map(item => {
-      if (tax != "") {
-        if (item.tax?.includes(tax)) {
-          setcheckTaxs(true);
-          alertMessage("success", "พบข้อมูล");
-          check = true;
-        }
-      }
-    })
-    if (!check) {
-      alertMessage("error", "ไม่พบข้อมูล");
-    }
-    console.log(checktax)
-    if (tax == "") {
-      alertMessage("info", "แสดงข้อมูลรายการค่ารักษา");
-    }
-  };
+
+  
+
+  const SearchDentalexpense = async () => {
+    setStatus(true);
+    setAlert(true);
+    const apiUrl = `http://localhost:8080/api/v1/searchdentalexpenses?dentalexpense=${tax}`;
+    const requestOptions = {
+        method: 'GET',
+    };
+    fetch(apiUrl, requestOptions)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data.data)
+            setStatus(true);
+            setAlert(false);
+            setDentalexpense([]);
+
+          if (data.data != null) {
+                if(data.data.length >= 1) {
+                  setStatus(true);
+                  setAlert(true);
+                  console.log(data.data)
+                  setDentalexpense(data.data);
+                }
+            }
+        });
+
+}
 
   return (
 
     <Page theme={pageTheme.service}>
       <Header
         title={`Dental System`}
-        subtitle = "ระบบค้นหารายการค่ารักษา">
-      
+        subtitle="ค้นหารายการค่ารักษา">
         <table>
-          <tr>
-            
-            <th>
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <Link component={RouterLink} to="/Menu">
-                <Button variant="contained" style={{  height: 40 }}>
-                  <h3
-                    style={
-                      {
-                        color: "#FFFAF0",
-                        borderRadius: 10,
-                        height: 25,
-                        padding: '0 20px',
-                      }
-                    }>
-                    Back
-            </h3>
-                </Button>
-              </Link>
-            </th>
-          </tr>
+        <Button variant="contained" color="default" href="/" startIcon={<ExitToAppRoundedIcon />}> Logout
+        </Button>
         </table>
-      
+
       </Header>
       <Content>
         <Grid container item xs={12} justify="center">
@@ -171,14 +123,14 @@ export default function ComponentsTable() {
             <Paper>
 
               <Typography align="center" >
-                <div style={{ background: 'linear-gradient(45deg, #00FFCC 15%, #9900FF 120%)', height: 55 }}>
+                <div style={{ background: "#709fb0", height: 50 }}>
                   <h1 style={
                     {
-                      color: "#000000",
+                      color: "#FFFFFF",
                       borderRadius: 5,
                       height: 18,
                       padding: '0 30px',
-                      fontSize: '40px',
+                      fontSize: '30px',
                     }}>
                     ค้นหารายการค่ารักษา
             </h1>
@@ -189,29 +141,30 @@ export default function ComponentsTable() {
                     className={classes.margin}
                     variant="outlined"
                   >
-                    <div className={classes.paper}><strong>เลขที่กำกับภาษี(TAX NO.)</strong></div>
+                    <div className={classes.paper}>เลขที่กำกับภาษี</div>
                     <TextField
                       id="tax"
                       value={tax}
-                      onChange={Taxhandlehange}
+                      onChange={Taxhandlehange || ''}
                       type="string"
-                      size="small"
+                      size="medium"
 
-                      style={{ width: 200 }}
+                      style={{ width: 300 }}
                     />
                   </FormControl>
                 </div>
+
                 <div></div>
+                
                 <Button
                   onClick={() => {
-                    checkdentalexpense();
-                    setSearch(true);
-
+                    SearchDentalexpense();
                   }}
+
                   endIcon={<SearchTwoToneIcon />}
                   className={classes.margins}
                   variant="contained"
-                  style={{ background: "#9900FF", height: 40 }}>
+                  style={{ background: "#A1C4D8", height: 40 }}>
                   <h3
                     style={
                       {
@@ -220,7 +173,7 @@ export default function ComponentsTable() {
 
                       }
                     }>
-                    ค้นหา
+                    ค้นหาข้อมูล
             </h3>
                 </Button>
                 <Button
@@ -230,11 +183,11 @@ export default function ComponentsTable() {
                   }}
                   className={classes.margins}
                   variant="contained"
-                  style={{ background: "#9900FF", height: 40 }}>
+                  style={{ background: "#3792cb", height: 40 }}>
                   <h3
                     style={
                       {
-                        color: "#FFFFFF",
+                        color: "#c6a9a3",
                         padding: '0 25px',
 
                       }
@@ -244,88 +197,62 @@ export default function ComponentsTable() {
                 </Button>
               </Typography>
             </Paper>
+
+            {status ? (
+              <div>
+                {alert ? (
+                  <Alert severity="success">
+                    แสดงรายการค่ารักษา
+                  </Alert>
+                )
+                  : (
+                  <Alert severity="warning" style={{ marginTop: 20 }}>
+                    ไม่พบข้อมูล
+                  </Alert>
+                  )}
+              </div>
+            ) : null}
+
           </Grid>
         </Grid>
+        
 
-
-        <Grid container justify="center">
-          <Grid item xs={12} md={10}>
-            <Paper>
-              {search ? (
-                <div>
-                  {  checktax ? (
-                    <TableContainer component={Paper}>
-                      <Table className={classes.table} aria-label="simple table">
-                        <TableHead>
-                        <TableRow>
-                                <TableCell align="center">ลำดับที่</TableCell>
-                                <TableCell align="center">เลขที่กำกับภาษี</TableCell>
-                                <TableCell align="center">ชื่อผู้ชำระค่าบริการ</TableCell>
-                                <TableCell align="center">บริการทันตกรรม</TableCell>
-                                <TableCell align="center">ค่าบริการ</TableCell>
-                                <TableCell align="center">ประเภทการชำระ</TableCell>
-                                <TableCell align="center">วันที่ชำระ</TableCell>
-                              </TableRow>
-                        </TableHead>
-                        <TableBody>
-
-                          {dentalexpense.filter((filter: any) => filter.tax.includes(tax)).map((item: any) => (
-                            <TableRow key={item.id}>
-                            <TableCell align="center">{item.id}</TableCell>
-                            <TableCell align="center">{item.tax}</TableCell>
-                            <TableCell align="center">{item.name}</TableCell>
-                            <TableCell align="center">{item.edges?.medicalfile?.detial}</TableCell>
-                            <TableCell align="center">{item.amount}</TableCell>
-                            <TableCell align="center">{item.edges?.pricetype?.name}</TableCell>
-                            <TableCell align="center">{moment(item.AddedTime).format('DD/MM/YYYY HH.mm น.')}</TableCell>
-                          </TableRow>
-                          ))}
-                        </TableBody>
-                      </Table>
-                    </TableContainer>
-                  )
-                    : tax == "" ? (
-                      <div>
-                        <TableContainer component={Paper}>
-                          <Table className={classes.table} aria-label="simple table">
-                            <TableHead>
-                            <TableRow>
-                                <TableCell align="center">ลำดับที่</TableCell>
-                                <TableCell align="center">เลขที่กำกับภาษี</TableCell>
-                                <TableCell align="center">ชื่อผู้ชำระค่าบริการ</TableCell>
-                                <TableCell align="center">บริการทันตกรรม</TableCell>
-                                <TableCell align="center">ค่าบริการ</TableCell>
-                                <TableCell align="center">ประเภทการชำระ</TableCell>
-                                <TableCell align="center">วันที่ชำระ</TableCell>
-                              </TableRow>
-                            </TableHead>
-                            <TableBody>
-
-                              {dentalexpense.map((item: any) => (
-                                 <TableRow key={item.id}>
-                                 <TableCell align="center">{item.id}</TableCell>
-                                 <TableCell align="center">{item.tax}</TableCell>
-                                 <TableCell align="center">{item.name}</TableCell>
-                                 <TableCell align="center">{item.edges?.medicalfile?.detial}</TableCell>
-                                 <TableCell align="center">{item.amount}</TableCell>
-                                 <TableCell align="center">{item.edges?.pricetype?.name}</TableCell>
-                                 <TableCell align="center">{moment(item.AddedTime).format('DD/MM/YYYY HH.mm น.')}</TableCell>
-                               </TableRow>
-                              ))}
-                            </TableBody>
-                          </Table>
-                        </TableContainer>
-
-                      </div>
-                    ) : null}
-                </div>
-              ) : null}
-            </Paper>
-          </Grid>
+        
+        <Grid  className={classes.paper}>
+        <TableContainer component={Paper}>
+          <Table className={classes.table} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell align="left">ลำดับที่</TableCell>
+                <TableCell align="left">เลขที่กำกับภาษี</TableCell>
+                <TableCell align="left">ชื่อผู้ชำระค่าบริการ</TableCell>
+                <TableCell align="left">บริการทันตกรรม</TableCell>
+                <TableCell align="left">ค่าบริการ</TableCell>
+                <TableCell align="left">ประเภทการชำระ</TableCell>
+                <TableCell align="left">วันที่และเวลาในการชำระ</TableCell>
+                </TableRow>
+            </TableHead>
+          <TableBody>
+            {dentalexpense.map((item: any) => (
+                <TableRow key={item.id}>
+                  <TableCell align="left">{item.id}</TableCell>
+                  <TableCell align="left">{item.Tax}</TableCell>
+                  <TableCell align="left">{item.Name}</TableCell>
+                  <TableCell align="left">{item.edges?.Medicalfile?.Detial}</TableCell>
+                  <TableCell align="left">{item.Amount}</TableCell>
+                  <TableCell align="left">{item.edges?.Pricetype?.name}</TableCell>
+                  <TableCell align="left">{moment(item.AddedTime).format('DD/MM/YYYY HH.mm น.')}</TableCell>
+                                    
+                </TableRow>
+                ))}
+            </TableBody>
+            </Table>
+        </TableContainer>
+        
         </Grid>
+
       </Content>
     </Page>
   );
 
 }
-
